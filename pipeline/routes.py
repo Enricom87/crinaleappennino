@@ -85,22 +85,46 @@ def fetch_overpass(rel_ids: list[int]) -> dict[int, list[list[list[float]]]]:
     raise RuntimeError(f"Overpass non raggiungibile: {last}")
 
 
+TOPO_URL = "https://api.opentopodata.org/v1/eudem25m"
+
+
+def _elev_opentopodata(grp):
+    r = requests.get(TOPO_URL, params={"locations": "|".join(f"{p[1]:.5f},{p[0]:.5f}" for p in grp)},
+                     headers=UA, timeout=40)
+    r.raise_for_status()
+    out = [x.get("elevation") for x in r.json()["results"]]
+    if any(z is None for z in out):
+        raise ValueError("quote mancanti")
+    return out
+
+
+def _elev_openmeteo(grp):
+    r = requests.get(ELEV_URL, params={"latitude": ",".join(f"{p[1]:.5f}" for p in grp),
+                                       "longitude": ",".join(f"{p[0]:.5f}" for p in grp)}, timeout=40)
+    r.raise_for_status()
+    return r.json()["elevation"]
+
+
 def add_elevation(lines: list[list[list[float]]]) -> None:
-    """Quote dal modello del terreno (Copernicus DEM via Open-Meteo), a gruppi di 100 punti."""
+    """Quote dal modello del terreno: EU-DEM 25 m (OpenTopoData), riserva Copernicus via Open-Meteo.
+    Gruppi di 100 punti, pause e nuovi tentativi per rispettare i limiti dei servizi gratuiti."""
     pts = [p for ln in lines for p in ln if len(p) < 3]
     for i in range(0, len(pts), 100):
         grp = pts[i:i + 100]
-        params = {"latitude": ",".join(f"{p[1]:.5f}" for p in grp),
-                  "longitude": ",".join(f"{p[0]:.5f}" for p in grp)}
-        for attempt in range(3):
-            r = requests.get(ELEV_URL, params=params, timeout=30)
-            if r.status_code != 429:
+        zs, err = None, None
+        for attempt in range(4):
+            src = _elev_opentopodata if attempt % 2 == 0 else _elev_openmeteo
+            try:
+                zs = src(grp)
                 break
-            time.sleep(65)  # limite al minuto dell'API gratuita
-        r.raise_for_status()
-        for p, z in zip(grp, r.json()["elevation"]):
+            except Exception as e:  # timeout, 429, 5xx
+                err = e
+                time.sleep(20 * (attempt + 1))
+        if zs is None:
+            raise RuntimeError(err)
+        for p, z in zip(grp, zs):
             p.append(round(z))
-        time.sleep(3)
+        time.sleep(2)
 
 
 def thin(line: list[list[float]], step: float = 60.0) -> list[list[float]]:
