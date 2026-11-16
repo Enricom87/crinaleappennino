@@ -52,13 +52,14 @@ jobs:
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
         run: python pipeline/newsletter.py
       - name: Salva lo stato degli invii
+        continue-on-error: true  # se il salvataggio fallisce il sito va comunque online
         run: |
           git config user.name "crinale-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/photos data/state.json data/latest.json data/routes data/shop_state.json data/sponsors_sold.json 2>/dev/null || true
           git add data/state.json data/latest.json data/routes data/photos 2>/dev/null || true
           git diff --cached --quiet || git commit -m "stato $(date -u +%F_%H%M)"
-          git push
+          for i in 1 2 3; do git push && break; git pull --rebase -X theirs && sleep 3; done
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
