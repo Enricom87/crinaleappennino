@@ -120,3 +120,10 @@ table{border-collapse:collapse;width:100%}
 .cond h2{margin-top:0}
 .cond ul{padding-left:18px}
 .warn{background:#fbefdc;border-radius:8px;padding:10px 12px;font-size:14px}
+
+.plan-row{border:1px solid var(--line,#ddd);border-radius:10px;padding:1rem 1.2rem;margin:1rem 0}
+.plan-row h2{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:.2rem 0}
+.plan-row .price{font-size:1.1rem}
+.buy{list-style:none;padding:0;margin:.6rem 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.4rem 1rem}
+.buy li{display:flex;align-items:center;gap:.5rem;justify-content:space-between;border-top:1px solid var(--line,#eee);padding:.35rem 0}
+.btn.ghost{background:transparent;color:inherit;border:1px solid currentColor}

@@ -4,27 +4,23 @@
 <section class="hero small"><div class="wrap"><h1>Fatti trovare da chi sta per salire in montagna</h1>
 <p class="lead">Chi apre {{ site.name }} sta decidendo se e dove andare a sciare. È il momento giusto per ricordargli il tuo noleggio, la tua scuola, il tuo rifugio o il tuo hotel.</p></div></section>
 <section class="wrap">
-<div class="plans">
-  <div class="plan">
-    <h3>Località</h3><p class="price">240 €<small> / stagione</small></p>
-    <p>Dicembre–marzo. Il tuo marchio nella scheda della località scelta, con link e due righe di presentazione. Massimo 3 sponsor per località.</p>
-  </div>
-  <div class="plan featured">
-    <h3>Allerta neve</h3><p class="price">180 €<small> / stagione</small></p>
-    <p>Il tuo spazio in ogni email di allerta neve e nel riepilogo del giovedì: arriva proprio quando nevica. Un solo sponsor per categoria.</p>
-  </div>
-  <div class="plan">
-    <h3>Tutto il crinale</h3><p class="price">480 €<small> / stagione</small></p>
-    <p>Home page, tutte le località e la newsletter. Ideale per chi lavora su più comprensori.</p>
-  </div>
+{% for o in offers %}
+<div class="plan-row">
+  <h2>{{ o.name }} <span class="price">{% if o.founder %}<s class="muted">{{ o.full }} €</s> {% endif %}{{ o.price_now }} €<small> / stagione</small></span></h2>
+  <p>{{ o.desc }} {% if o.max > 1 %}Massimo {{ o.max }} sponsor{% if o.scope == 'location' %} per località{% endif %}.{% else %}Un solo sponsor.{% endif %}</p>
+  <ul class="buy">{% for r in o.rows %}<li><span>{{ r.label if o.scope == 'location' else 'Stagione corrente' }}</span>
+    {% if r.left <= 0 %}<span class="muted small">esaurito</span>
+    {% elif r.url %}<a class="btn small" href="{{ r.url }}" rel="noopener">Acquista</a> <span class="muted small">{{ r.left }} {{ 'posto' if r.left == 1 else 'posti' }}</span>
+    {% else %}<a class="btn small ghost" href="mailto:{{ site.contact_email }}?subject={{ ('Sponsor ' ~ o.name ~ ' ' ~ r.label)|urlencode }}">Prenota</a>{% endif %}</li>{% endfor %}</ul>
 </div>
-<p class="note"><strong>Prima stagione, sponsor fondatori:</strong> 40% di sconto per chi aderisce entro il 15 dicembre, con prezzo bloccato anche per la stagione successiva.</p>
+{% endfor %}
+{% if offers and offers[0].founder %}<p class="note"><strong>Prima stagione, sponsor fondatori:</strong> prezzi scontati del 40% fino al 15 dicembre.</p>{% endif %}
+<p class="muted small">Pagamento sicuro con carta tramite Stripe, ricevuta e fattura automatiche. Dopo il pagamento ti chiediamo nome dell'attività, link e una frase: lo spazio va online da solo entro poche ore e resta fino al 31 marzo.</p>
 <h2>Cosa ricevi</h2>
 <ul>
 <li>Link diretto al tuo sito o alla tua pagina di prenotazione.</li>
-<li>Un report mensile con le visite della pagina e le aperture delle email, misurati senza cookie di profilazione.</li>
 <li>Nessun vincolo oltre la stagione.</li>
 </ul>
-<p><a class="btn" href="mailto:{{ site.contact_email }}?subject=Sponsor%20{{ site.name }}">Scrivici per prenotare</a></p>
+<p>Domande? <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></p>
 </section>
 {% endblock %}

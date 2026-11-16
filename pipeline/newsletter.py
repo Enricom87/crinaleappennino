@@ -60,7 +60,10 @@ def send(subject: str, body: str, site: dict) -> bool:
 
 def main() -> None:
     site = load_json(ROOT / "config" / "site.json", {})
-    sponsors = load_json(ROOT / "config" / "sponsors.json", {})
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from shop import merged_sponsors
+    sponsors = merged_sponsors()
     nl_sponsor = (sponsors.get("_newsletter") or [None])[0]
     latest = load_json(ROOT / "data" / "latest.json", {})
     state = load_json(STATE, {"alerted": {}, "weekly": ""})
