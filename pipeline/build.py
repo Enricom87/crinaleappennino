@@ -10,6 +10,7 @@ from zoneinfo import ZoneInfo
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from compute import blend_point, ensemble_probs, name_configuration, synoptic_days
+from cards import cards
 from summer import mountain_days, overview_mtn, summer_text
 from text import location_text, nice_date, overview_text
 
@@ -104,6 +105,11 @@ def main() -> None:
         L["mtn_top"] = top
         L["mtn"] = mountain_days(glob[top["id"]], lam.get(top["id"]), today)
         L["mtn_text"] = summer_text(L["name"], top, L["mtn"])
+        low = min(L["pts"], key=lambda p: p["elev"])
+        L["low_pt"] = low
+        L["cards_top"] = cards(top["days"], L["mtn"], today)
+        L["cards_base"] = cards(low["days"], mountain_days(glob[low["id"]], lam.get(low["id"]), today), today) \
+            if low["id"] != top["id"] else []
         L["sponsors"] = sponsors.get(loc["slug"], []) or []
         L["webcams"] = webcams.get(loc["slug"], []) or []
         L["local"] = [{**src, "entries": src["links"][loc["slug"]]} for src in local_sources if loc["slug"] in src["links"]]

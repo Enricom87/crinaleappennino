@@ -17,6 +17,7 @@
 {% if site.analytics.cloudflare_token %}<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ site.analytics.cloudflare_token }}"}'></script>{% endif %}
 </head>
 <body>
+{% include "_icons.html" %}
 <header class="top">
   <div class="wrap bar">
     <a class="brand" href="{{ u('') }}"><svg viewBox="0 0 40 24" aria-hidden="true"><path d="M2 22 L14 6 L20 13 L26 4 L38 22 Z" fill="currentColor"/><path d="M11 10 L14 6 L17 10 L15.5 9 L14 10.5 L12.5 9 Z M23 8 L26 4 L29 8 L27.5 7 L26 8.5 L24.5 7 Z" fill="#fff"/></svg>{{ site.name }}</a>

@@ -24,23 +24,10 @@
       {% set m0 = L.mtn[0] if L.mtn else none %}
       {% if summer and m0 %}
       <p class="card-title"><span class="pill v-{{ m0.verdict }}">{{ m0.verdict_label }}</span> oggi in quota{% if m0.back_by %} · rientro entro le {{ m0.back_by }}{% endif %}</p>
-      <table class="mini">
-        <tr><th></th><th>Temporali</th><th>Max</th><th>Raffiche</th></tr>
-        {% for r in L.mtn[:3] %}<tr><td>{{ nice_date(r.date, True) }}</td><td>{{ r.storm_label }}</td><td class="num">{{ r.tmax }}°</td><td class="num">{{ r.gust }} km/h</td></tr>{% endfor %}
-      </table>
+      {% if L.cards_top %}<div class="mini-icons">{% for c in L.cards_top[:4] %}<span title="{{ c.phrase }}"><svg viewBox="0 0 64 64"><use href="#ic-{{ c.icon }}"/></svg>{{ c.short }}<strong>{{ c.tmax|n0 }}°</strong></span>{% endfor %}</div>{% endif %}
       {% else %}
       <p class="card-title">{{ L.text.title }}</p>
-      <table class="mini">
-        <tr><th></th><th>3 gg</th><th>4-10 gg</th><th>≥10 cm<br><small>7 gg</small></th></tr>
-        {% for p in L.pts %}
-        {% set s3 = p.days[:3]|sum(attribute='snow') %}
-        {% set s10 = p.days[3:10]|sum(attribute='snow') %}
-        <tr><td>{{ p.name }} <small>{{ p.elev }} m</small></td>
-            <td class="num">{{ '%.0f'|format(s3) }} cm</td>
-            <td class="num">{{ '%.0f'|format(s10) }} cm</td>
-            <td class="num">{% if p.probs.d7 %}{{ p.probs.d7.p10 }}%{% else %}–{% endif %}</td></tr>
-        {% endfor %}
-      </table>
+      {% if L.cards_top %}<div class="mini-icons">{% for c in L.cards_top[:4] %}<span title="{{ c.phrase }}"><svg viewBox="0 0 64 64"><use href="#ic-{{ c.icon }}"/></svg>{{ c.short }}{% if c.snow %}<strong>{{ c.snow }} cm</strong>{% endif %}</span>{% endfor %}</div>{% endif %}
       {% endif %}
     </a>
   {% endfor %}

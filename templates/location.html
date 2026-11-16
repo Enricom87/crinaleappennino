@@ -12,6 +12,16 @@
 
 {% if summer and loc.mtn %}{% include "_mtn.html" %}{% endif %}
 
+<section class="wrap">
+  <h2>Le prossime giornate</h2>
+  <div class="alt-row"><h3>⛰️ In vetta</h3><span class="muted">{{ loc.mtn_top.name }} · {{ loc.mtn_top.elev }} m</span></div>
+  {% with cards = loc.cards_top %}{% include "_cards.html" %}{% endwith %}
+  {% if loc.cards_base %}
+  <div class="alt-row"><h3>🏡 In paese</h3><span class="muted">{{ loc.low_pt.name }} · {{ loc.low_pt.elev }} m</span></div>
+  {% with cards = loc.cards_base %}{% include "_cards.html" %}{% endwith %}
+  {% endif %}
+</section>
+
 <section class="wrap twocol">
   <div>
     <h2>Come la vediamo noi</h2>
@@ -34,16 +44,18 @@
   </aside>
 </section>
 
-<section class="wrap">
+{% if not summer and loc.mtn %}{% include "_mtn.html" %}{% endif %}
+
+<section class="wrap"><details class="tech">
+<summary>🔬 Per i più tecnici: grafico della neve, modelli e probabilità</summary>
+<div>
   <h2>Quanta neve, giorno per giorno <small class="muted">(cm, prossimi 10 giorni)</small></h2>
   <div class="legend">{% for p in loc.pts %}<span class="lg lg{{ loop.index0 }}"></span>{{ p.name }} {{ p.elev }} m &nbsp; {% endfor %}<span class="lg-range"></span>forbice tra modelli</div>
   {{ loc.chart|safe }}
-</section>
-
-{% if not summer and loc.mtn %}{% include "_mtn.html" %}{% endif %}
+</div>
 
 {% for p in loc.pts %}
-<section class="wrap">
+<div>
   <h3>{{ p.name }} · {{ p.elev }} m</h3>
   {% if p.probs.d7 %}
   <div class="probs">
@@ -71,8 +83,9 @@
     {% endfor %}
   </table>
   </div>
-</section>
+</div>
 {% endfor %}
+</details></section>
 
 {% if loc.road %}
 <section class="wrap">
