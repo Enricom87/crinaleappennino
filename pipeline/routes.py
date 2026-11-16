@@ -28,7 +28,42 @@ def haversine(a, b) -> float:
     return 2 * r * math.asin(math.sqrt(h))
 
 
+def fetch_osm_api(rel_id: int) -> list[list[list[float]]]:
+    """Geometria di una relazione dall'API principale di OpenStreetMap (relation/full)."""
+    r = requests.get(f"https://api.openstreetmap.org/api/0.6/relation/{rel_id}/full.json", headers=UA, timeout=60)
+    r.raise_for_status()
+    els = r.json()["elements"]
+    nodes = {e["id"]: (e["lon"], e["lat"]) for e in els if e["type"] == "node"}
+    ways = {e["id"]: e["nodes"] for e in els if e["type"] == "way"}
+    rel = next(e for e in els if e["type"] == "relation" and e["id"] == rel_id)
+    lines = []
+    for m in rel.get("members", []):
+        if m["type"] == "way" and m["ref"] in ways:
+            ln = [list(nodes[n]) for n in ways[m["ref"]] if n in nodes]
+            if len(ln) > 1:
+                lines.append(ln)
+    return lines
+
+
 def fetch_osm_many(rel_ids: list[int]) -> dict[int, list[list[list[float]]]]:
+    out = {}
+    for rid in rel_ids:  # API principale: poche richieste, una alla volta
+        try:
+            out[rid] = fetch_osm_api(rid)
+            print(f"osm api {rid}: {len(out[rid])} tratti", flush=True)
+        except Exception as e:
+            print(f"osm api {rid}: {e}", flush=True)
+        time.sleep(2)
+    missing = [r for r in rel_ids if not out.get(r)]
+    if missing:
+        try:
+            out.update(fetch_overpass(missing))
+        except Exception as e:
+            print(f"overpass: {e}", flush=True)
+    return out
+
+
+def fetch_overpass(rel_ids: list[int]) -> dict[int, list[list[list[float]]]]:
     """Una sola richiesta Overpass per tutte le relazioni mancanti."""
     q = f"[out:json][timeout:180];relation(id:{','.join(map(str, rel_ids))});out geom;"
     last = None
