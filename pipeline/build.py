@@ -139,7 +139,20 @@ def main() -> None:
     for L in locs:
         L["routes"] = [r for r in routes if r["location"] == L["slug"]]
 
-    ctx = {"site": site, "locs": locs, "local_sources": local_sources, "routes": routes, "activity_labels": LABELS, "syn": syn_rows, "summer": IS_SUMMER,
+    pcfg = json.loads((ROOT / "config" / "photos.json").read_text())
+    pcred = {**json.loads((ROOT / "data" / "photos" / "credits.json").read_text())} \
+        if (ROOT / "data" / "photos" / "credits.json").exists() else {}
+    pcred.update(pcfg.get("own", {}))
+    season = "estate" if IS_SUMMER else "inverno"
+
+    def photo_for(slug: str):
+        key = pcfg["locations"].get(slug, {}).get(season)
+        has = key and ((ROOT / "data" / "photos" / f"{key}.jpg").exists() or (ROOT / "static" / "photos" / f"{key}.jpg").exists())
+        return {"key": key, "credit": pcred.get(key, {})} if has else None
+
+    for L in locs:
+        L["photo"] = photo_for(L["slug"])
+    ctx = {"site": site, "locs": locs, "home_photo": photo_for("_home"), "local_sources": local_sources, "routes": routes, "activity_labels": LABELS, "syn": syn_rows, "summer": IS_SUMMER,
            "overview": ((overview_mtn(locs) if IS_SUMMER else overview_text(locs)) if locs else ""),
            "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),
            "updated_rfc": now.strftime("%a, %d %b %Y %H:%M:%S %z"), "today": today, "sample": bool(int(__import__("os").environ.get("SAMPLE", "0"))), "nice_date": nice_date, "global_sponsors": sponsors.get("_global", []), "offers": offers()}
@@ -148,6 +161,17 @@ def main() -> None:
         shutil.rmtree(OUT)
     (OUT / "api" / "v1").mkdir(parents=True)
     shutil.copytree(ROOT / "static", OUT / "static")
+    # foto: originali 1600 px per le testate, miniature 640 px per le schede della home
+    (OUT / "static" / "photos").mkdir(exist_ok=True)
+    for f in (ROOT / "data" / "photos").glob("*.jpg"):
+        shutil.copy(f, OUT / "static" / "photos" / f.name)
+        try:
+            from PIL import Image
+            im = Image.open(f)
+            im.thumbnail((640, 640))
+            im.convert("RGB").save(OUT / "static" / "photos" / f"{f.stem}-640.jpg", quality=78)
+        except Exception:
+            shutil.copy(f, OUT / "static" / "photos" / f"{f.stem}-640.jpg")
 
     env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=select_autoescape(["html", "xml"]))
     env.globals.update(nice_date=nice_date)

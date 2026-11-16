@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block main %}
-<section class="hero">
+<section class="hero{% if home_photo %} has-photo{% endif %}"{% if home_photo %} style="--photo:url('{{ u('static/photos/' ~ home_photo.key ~ '.jpg') }}')"{% endif %}>
   <div class="wrap">
     <p class="kicker">Aggiornato {{ updated }}</p>
     <h1>{% if summer %}Si va in montagna? Ti diciamo dove e fino a che ora.{% else %}Nevica? Quanto? E a che quota? Te lo diciamo prima.{% endif %}</h1>
     <p class="lead">{{ overview }}</p>
     <p>{% if summer %}<a class="btn" href="{{ u('percorsi/') }}">Scegli un percorso</a> {% endif %}<a class="btn{% if summer %} ghost{% endif %}" href="{{ u('newsletter/') }}">❄️ Avvisami quando nevica</a></p>
   </div>
+  {% if home_photo and home_photo.credit %}<span class="photo-credit">Foto: {{ home_photo.credit.artist }} · <a href="{{ home_photo.credit.page }}" rel="noopener">{{ home_photo.credit.license }}</a></span>{% endif %}
 </section>
 
 {% if global_sponsors %}
@@ -19,7 +20,8 @@
   <h2>Scegli la tua montagna</h2>
   <div class="cards">
   {% for L in locs %}
-    <a class="card lvl-{{ L.text.level }}" href="{{ u(L.slug ~ '/') }}">
+    <a class="card lvl-{{ L.text.level }}{% if L.photo %} has-photo{% endif %}" href="{{ u(L.slug ~ '/') }}">
+      {% if L.photo %}<span class="card-photo" style="background-image:url('{{ u('static/photos/' ~ L.photo.key ~ '-640.jpg') }}')" role="img" aria-label="{{ L.name }}"></span>{% endif %}
       <div class="card-head"><h3>{{ L.name }}</h3><span class="area">{{ L.area }}</span></div>
       {% set m0 = L.mtn[0] if L.mtn else none %}
       {% if summer and m0 %}

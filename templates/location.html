@@ -2,12 +2,13 @@
 {% block title %}{{ 'Meteo in quota' if summer else 'Neve' }} {{ loc.name }} · previsioni quota per quota · {{ site.name }}{% endblock %}
 {% block desc %}Previsioni neve per {{ loc.name }}: centimetri attesi a {% for p in loc.pts %}{{ p.elev }} m{% if not loop.last %}, {% endif %}{% endfor %}, probabilità, innevamento artificiale e vento. Aggiornate ogni mattina.{% endblock %}
 {% block main %}
-<section class="hero small lvl-{{ loc.text.level }}">
+<section class="hero small lvl-{{ loc.text.level }}{% if loc.photo %} has-photo{% endif %}"{% if loc.photo %} style="--photo:url('{{ u('static/photos/' ~ loc.photo.key ~ '.jpg') }}')"{% endif %}>
   <div class="wrap">
     <p class="kicker"><a href="{{ u('') }}">Località</a> · {{ loc.area }} · aggiornato {{ updated }}</p>
     <h1>{{ loc.name }}</h1>
     <p class="lead">{{ loc.text.title }}</p>
   </div>
+  {% if loc.photo and loc.photo.credit %}<span class="photo-credit">Foto: {{ loc.photo.credit.artist }} · <a href="{{ loc.photo.credit.page }}" rel="noopener">{{ loc.photo.credit.license }}</a></span>{% endif %}
 </section>
 
 {% if summer and loc.mtn %}{% include "_mtn.html" %}{% endif %}

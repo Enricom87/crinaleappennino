@@ -1,0 +1,36 @@
+{
+  "_doc": "Foto da Wikimedia Commons (licenze libere, con attribuzione). files: chiave -> nome del file su Commons. locations: località -> foto per inverno (nov-apr) e estate (mag-ott). Per aggiungere una foto tua: mettila in static/photos/<chiave>.jpg e aggiungi la chiave in 'own' con il credito.",
+  "files": {
+    "abetone-inverno": "Neve Foresta Abetone.jpg",
+    "abetone-estate": "Abetone (99874).jpg",
+    "cimone-inverno": "Montecimone.jpg",
+    "cimone-estate": "Monte Cimone versante nord.jpg",
+    "cimone-trek": "Hiking at Monte Cimone (52089).jpg",
+    "ninfa": "MonteCimone3.jpg",
+    "polle": "Riolunato - Le Polle - piste da sci.jpg",
+    "corno-inverno": "Corno alle Scale winter.jpg",
+    "corno-estate": "Corno alle Scale 04.jpg",
+    "scaffaiolo": "Lago Scaffaiolo 08.jpg",
+    "lagosanto": "Lago Santo (1).JPG",
+    "cusna-inverno": "Monte Cusna - Villa Minozzo, Reggio Emilia, Italy - February 26, 2017 02.jpg",
+    "cusna-estate": "Monte Cusna - Castenovo ne' Monti, Reggio Emilia, Italy - April 1, 2015.jpg",
+    "cerreto": "Cerreto Laghi (RE) Italy - July 25, 2010 - panoramio.jpg",
+    "doganaccia": "Doganaccia1.jpg",
+    "garfagnana": "San Pellegrino in Alpe - panoramio.jpg"
+  },
+  "own": {},
+  "locations": {
+    "_home": {"inverno": "cusna-inverno", "estate": "scaffaiolo"},
+    "abetone": {"inverno": "abetone-inverno", "estate": "abetone-estate"},
+    "cimone": {"inverno": "cimone-inverno", "estate": "cimone-estate"},
+    "le-polle": {"inverno": "polle", "estate": "ninfa"},
+    "cimoncino": {"inverno": "cimone-inverno", "estate": "cimone-trek"},
+    "doganaccia": {"inverno": "doganaccia", "estate": "doganaccia"},
+    "corno-alle-scale": {"inverno": "corno-inverno", "estate": "corno-estate"},
+    "lago-scaffaiolo": {"inverno": "corno-inverno", "estate": "scaffaiolo"},
+    "lago-santo": {"inverno": "lagosanto", "estate": "lagosanto"},
+    "garfagnana": {"inverno": "garfagnana", "estate": "garfagnana"},
+    "cerreto-laghi": {"inverno": "cerreto", "estate": "cerreto"},
+    "febbio": {"inverno": "cusna-inverno", "estate": "cusna-estate"}
+  }
+}
