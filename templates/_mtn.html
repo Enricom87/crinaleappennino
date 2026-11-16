@@ -1,0 +1,23 @@
+<section class="wrap mtn">
+  <h2>In quota: escursioni, trail e bici <small class="muted">{{ loc.mtn_top.name }} · {{ loc.mtn_top.elev }} m</small></h2>
+  {% for p in loc.mtn_text %}<p>{{ p }}</p>{% endfor %}
+  <div class="scroll">
+  <table class="days">
+    <tr><th>Giorno</th><th>Giudizio</th><th>Temporali</th><th>Rientro entro</th><th>Min / Max</th><th>Zero termico</th><th>Raffiche</th><th>Pioggia</th><th>Fonte</th></tr>
+    {% for r in loc.mtn %}
+    <tr>
+      <td>{{ nice_date(r.date, True) }}</td>
+      <td><span class="pill v-{{ r.verdict }}">{{ r.verdict_label }}</span></td>
+      <td>{{ r.storm_label }}{% if r.start and r.storm >= 1 %} <small class="muted">dalle {{ r.start }}</small>{% endif %}</td>
+      <td class="num">{% if r.back_by %}<strong>{{ r.back_by }}:00</strong>{% else %}–{% endif %}</td>
+      <td class="num">{{ r.tmin }}° / {{ r.tmax }}°</td>
+      <td class="num">{% if r.fl_max %}{{ r.fl_max }} m{% endif %}</td>
+      <td class="num">{% if r.gust is not none %}{{ r.gust }} km/h{% endif %}</td>
+      <td class="num">{{ '%.0f'|format(r.rain) }} mm</td>
+      <td class="muted small">{{ r.source }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+  <p class="muted small">Temporali stimati da energia convettiva (CAPE) e pioggia pomeridiana dei modelli: indicano la tendenza, non il singolo temporale. In montagna controlla il cielo e le allerte della Protezione civile.</p>
+</section>

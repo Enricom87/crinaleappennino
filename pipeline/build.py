@@ -10,6 +10,7 @@ from zoneinfo import ZoneInfo
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from compute import blend_point, ensemble_probs, name_configuration, synoptic_days
+from summer import mountain_days, overview_mtn, summer_text
 from text import location_text, nice_date, overview_text
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -75,6 +76,8 @@ def main() -> None:
 
     now = datetime.now(ZoneInfo("Europe/Rome"))
     today = now.date().isoformat()
+    IS_SUMMER = __import__("os").environ.get("SEASON", "") == "summer" or (
+        __import__("os").environ.get("SEASON", "") != "winter" and now.month in range(5, 11))
 
     pts = {}
     for pid, meta in cfg["points"].items():
@@ -97,6 +100,10 @@ def main() -> None:
         L["pts"] = [pts[p] for p in loc["points"]]
         L["road"] = [pts[p] for p in loc.get("road_points", []) if p in pts]
         L["chart"] = svg_snow_chart(L["pts"])
+        top = max(L["pts"], key=lambda p: p["elev"])
+        L["mtn_top"] = top
+        L["mtn"] = mountain_days(glob[top["id"]], lam.get(top["id"]), today)
+        L["mtn_text"] = summer_text(L["name"], top, L["mtn"])
         L["sponsors"] = sponsors.get(loc["slug"], []) or []
         L["webcams"] = webcams.get(loc["slug"], []) or []
         L["local"] = [{**src, "entries": src["links"][loc["slug"]]} for src in local_sources if loc["slug"] in src["links"]]
@@ -117,11 +124,17 @@ def main() -> None:
         r["profile"] = profile_svg(r)
         r["labels"] = [LABELS.get(a, a) for a in r["activities"]]
         r["geojson_str"] = json.dumps(r["geojson"]["geometry"])
+        m0 = (L["mtn"] or [None])[0]
+        if m0 and m0["storm"] >= 2 and set(r["activities"]) & {"escursionismo", "trail-running", "mtb-gravel"}:
+            when = f": meglio rientrare entro le {m0['back_by']}" if m0["back_by"] else ""
+            r["cond"]["notes"].insert(0, f"Oggi temporali {m0['storm_label']} nel pomeriggio in quota{when}. "
+                                         "Lontano da creste e vette esposte al primo tuono.")
         routes.append(r)
     for L in locs:
         L["routes"] = [r for r in routes if r["location"] == L["slug"]]
 
-    ctx = {"site": site, "locs": locs, "local_sources": local_sources, "routes": routes, "activity_labels": LABELS, "syn": syn_rows, "overview": overview_text(locs) if locs else "",
+    ctx = {"site": site, "locs": locs, "local_sources": local_sources, "routes": routes, "activity_labels": LABELS, "syn": syn_rows, "summer": IS_SUMMER,
+           "overview": ((overview_mtn(locs) if IS_SUMMER else overview_text(locs)) if locs else ""),
            "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),
            "updated_rfc": now.strftime("%a, %d %b %Y %H:%M:%S %z"), "today": today, "sample": bool(int(__import__("os").environ.get("SAMPLE", "0"))), "nice_date": nice_date, "global_sponsors": sponsors.get("_global", []), "offers": offers()}
 
@@ -167,6 +180,7 @@ def main() -> None:
     # API per la futura app
     api = {"generated": ctx["updated_iso"], "licence": "Dati elaborati da modelli open data; vedi /metodo/",
            "locations": [{"slug": L["slug"], "name": L["name"], "summary": L["text"],
+                          "mountain": {"point": L["mtn_top"]["id"], "days": L["mtn"], "text": L["mtn_text"]},
                           "points": [{k: p[k] for k in ("id", "name", "lat", "lon", "elev", "days", "probs")}
                                      for p in L["pts"]]} for L in locs],
            "synoptic": syn_rows}

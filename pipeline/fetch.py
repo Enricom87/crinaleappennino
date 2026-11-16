@@ -23,7 +23,8 @@ ENSEMBLE_URL = ("https://customer-ensemble-api.open-meteo.com/v1/ensemble" if AP
 LAM_MODELS = ["italia_meteo_arpae_icon_2i", "icon_d2", "meteoswiss_icon_ch2", "meteofrance_arome_france"]
 GLOBAL_MODELS = ["ecmwf_ifs025", "gfs_global", "icon_global"]
 ENSEMBLE_MODELS = ["ecmwf_ifs025"]
-SURFACE_VARS = "temperature_2m,relative_humidity_2m,precipitation,freezing_level_height,wind_gusts_10m"
+SURFACE_VARS = ("temperature_2m,relative_humidity_2m,precipitation,freezing_level_height,wind_gusts_10m,"
+                "cape,cloud_cover")
 SYNOPTIC_VARS = "temperature_850hPa,wind_direction_700hPa,wind_speed_700hPa,geopotential_height_500hPa,precipitation"
 
 

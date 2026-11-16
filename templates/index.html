@@ -3,9 +3,9 @@
 <section class="hero">
   <div class="wrap">
     <p class="kicker">Aggiornato {{ updated }}</p>
-    <h1>Quanta neve, e a che quota.</h1>
+    <h1>{% if summer %}Che tempo fa in quota, oggi e nei prossimi giorni.{% else %}Quanta neve, e a che quota.{% endif %}</h1>
     <p class="lead">{{ overview }}</p>
-    <p><a class="btn" href="{{ u('newsletter/') }}">Ricevi l'allerta neve via email</a></p>
+    <p>{% if summer %}<a class="btn" href="{{ u('percorsi/') }}">Scegli un percorso</a> {% endif %}<a class="btn{% if summer %} ghost{% endif %}" href="{{ u('newsletter/') }}">Ricevi l'allerta neve via email</a></p>
   </div>
 </section>
 
@@ -21,6 +21,14 @@
   {% for L in locs %}
     <a class="card lvl-{{ L.text.level }}" href="{{ u(L.slug ~ '/') }}">
       <div class="card-head"><h3>{{ L.name }}</h3><span class="area">{{ L.area }}</span></div>
+      {% set m0 = L.mtn[0] if L.mtn else none %}
+      {% if summer and m0 %}
+      <p class="card-title"><span class="pill v-{{ m0.verdict }}">{{ m0.verdict_label }}</span> oggi in quota{% if m0.back_by %} · rientro entro le {{ m0.back_by }}{% endif %}</p>
+      <table class="mini">
+        <tr><th></th><th>Temporali</th><th>Max</th><th>Raffiche</th></tr>
+        {% for r in L.mtn[:3] %}<tr><td>{{ nice_date(r.date, True) }}</td><td>{{ r.storm_label }}</td><td class="num">{{ r.tmax }}°</td><td class="num">{{ r.gust }} km/h</td></tr>{% endfor %}
+      </table>
+      {% else %}
       <p class="card-title">{{ L.text.title }}</p>
       <table class="mini">
         <tr><th></th><th>3 gg</th><th>4-10 gg</th><th>≥10 cm<br><small>7 gg</small></th></tr>
@@ -33,6 +41,7 @@
             <td class="num">{% if p.probs.d7 %}{{ p.probs.d7.p10 }}%{% else %}–{% endif %}</td></tr>
         {% endfor %}
       </table>
+      {% endif %}
     </a>
   {% endfor %}
   </div>

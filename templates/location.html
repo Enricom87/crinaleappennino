@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Neve {{ loc.name }} · previsioni quota per quota · {{ site.name }}{% endblock %}
+{% block title %}{{ 'Meteo in quota' if summer else 'Neve' }} {{ loc.name }} · previsioni quota per quota · {{ site.name }}{% endblock %}
 {% block desc %}Previsioni neve per {{ loc.name }}: centimetri attesi a {% for p in loc.pts %}{{ p.elev }} m{% if not loop.last %}, {% endif %}{% endfor %}, probabilità, innevamento artificiale e vento. Aggiornate ogni mattina.{% endblock %}
 {% block main %}
 <section class="hero small lvl-{{ loc.text.level }}">
@@ -9,6 +9,8 @@
     <p class="lead">{{ loc.text.title }}</p>
   </div>
 </section>
+
+{% if summer and loc.mtn %}{% include "_mtn.html" %}{% endif %}
 
 <section class="wrap twocol">
   <div>
@@ -37,6 +39,8 @@
   <div class="legend">{% for p in loc.pts %}<span class="lg lg{{ loop.index0 }}"></span>{{ p.name }} {{ p.elev }} m &nbsp; {% endfor %}<span class="lg-range"></span>forbice tra modelli</div>
   {{ loc.chart|safe }}
 </section>
+
+{% if not summer and loc.mtn %}{% include "_mtn.html" %}{% endif %}
 
 {% for p in loc.pts %}
 <section class="wrap">

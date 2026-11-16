@@ -38,13 +38,17 @@ for pid, p in cfg["points"].items():
     for m, b in (("ecmwf_ifs025", 0), ("gfs_global", 1.5), ("icon_global", -0.5)):
         T, P, RH, FL, G = series(p["elev"], 15, b)
         h.update({f"temperature_2m_{m}": T, f"precipitation_{m}": P, f"relative_humidity_2m_{m}": RH,
-                  f"freezing_level_height_{m}": FL, f"wind_gusts_10m_{m}": G})
+                  f"freezing_level_height_{m}": FL, f"wind_gusts_10m_{m}": G,
+                  f"cape_{m}": [round(max(0, 900 * math.sin((i % 24 - 10) / 10 * math.pi)) * (1 if (i // 24) in (0, 3) else 0.2)) for i in range(len(T))],
+                  f"cloud_cover_{m}": [40] * len(T)})
     glob[pid] = {"hourly": h}
     h = {"time": times(3)}
     for m in ("italia_meteo_arpae_icon_2i", "icon_d2", "meteoswiss_icon_ch2", "meteofrance_arome_france"):
         T, P, RH, FL, G = series(p["elev"], 3, random.uniform(-1, 1))
         h.update({f"temperature_2m_{m}": T, f"precipitation_{m}": P, f"relative_humidity_2m_{m}": RH,
-                  f"freezing_level_height_{m}": FL, f"wind_gusts_10m_{m}": G})
+                  f"freezing_level_height_{m}": FL, f"wind_gusts_10m_{m}": G,
+                  f"cape_{m}": [round(max(0, 900 * math.sin((i % 24 - 10) / 10 * math.pi)) * (1 if (i // 24) in (0, 3) else 0.2)) for i in range(len(T))],
+                  f"cloud_cover_{m}": [40] * len(T)})
     lam[pid] = {"hourly": h}
     h = {"time": times(15)}
     for k in range(51):

@@ -127,3 +127,9 @@ table{border-collapse:collapse;width:100%}
 .buy{list-style:none;padding:0;margin:.6rem 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.4rem 1rem}
 .buy li{display:flex;align-items:center;gap:.5rem;justify-content:space-between;border-top:1px solid var(--line,#eee);padding:.35rem 0}
 .btn.ghost{background:transparent;color:inherit;border:1px solid currentColor}
+
+.pill{display:inline-block;padding:.1rem .55rem;border-radius:999px;font-size:.85em;white-space:nowrap}
+.v-ottima{background:#d6f5df;color:#14532d}.v-buona{background:#e3f0ff;color:#1e3a8a}
+.v-mattina{background:#fff1cc;color:#7a4b00}.v-attenzione{background:#ffe2c6;color:#7c2d12}
+.v-sconsigliata{background:#fde0e0;color:#7f1d1d}
+@media (prefers-color-scheme:dark){.v-ottima{background:#14532d;color:#d6f5df}.v-buona{background:#1e3a8a;color:#e3f0ff}.v-mattina{background:#7a4b00;color:#fff1cc}.v-attenzione{background:#7c2d12;color:#ffe2c6}.v-sconsigliata{background:#7f1d1d;color:#fde0e0}}
