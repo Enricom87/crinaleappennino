@@ -1,13 +1,9 @@
 {
   "_doc": "Foto da Wikimedia Commons (licenze libere, con attribuzione). files: chiave -> nome del file su Commons. locations: località -> foto per inverno (nov-apr) e estate (mag-ott). Per aggiungere una foto tua: mettila in static/photos/<chiave>.jpg e aggiungi la chiave in 'own' con il credito.",
   "files": {
-    "abetone-inverno": "Neve Foresta Abetone.jpg",
-    "abetone-estate": "Abetone (99874).jpg",
-    "cimone-inverno": "Montecimone.jpg",
     "cimone-estate": "Monte Cimone versante nord.jpg",
     "cimone-trek": "Hiking at Monte Cimone (52089).jpg",
     "ninfa": "MonteCimone3.jpg",
-    "polle": "Riolunato - Le Polle - piste da sci.jpg",
     "corno-inverno": "Corno alle Scale winter.jpg",
     "corno-estate": "Corno alle Scale 04.jpg",
     "scaffaiolo": "Lago Scaffaiolo 08.jpg",
@@ -18,41 +14,32 @@
     "doganaccia": "Doganaccia1.jpg",
     "garfagnana": "San Pellegrino in Alpe - panoramio.jpg",
     "gomito-selletta": "Monte Gomito e rifugio della Selletta.JPG",
-    "gomito-1761": "Monte Gomito 1761.JPG",
-    "gomito-funivia": "Abetone, monte Gomito, rifugio (stazione funivia) e croce di vetta.jpg",
-    "gomito-croce": "Abetone, monte Gomito, croce di vetta.jpg",
     "tre-potenze": "Alpe Tre Potenze.JPG",
-    "lago-piatto": "Lago Piatto.JPG",
     "cimone-lupo": "Monte Cimone Passo del lupo.jpg",
-    "foresta-libro": "Foresta Abetone Libro Aperto.jpg",
     "cimone-neve-1": "Snow in Monte Cimone in 2023.01.jpg",
-    "cimone-neve-2": "Snow in Monte Cimone in 2023.02.jpg",
-    "cimone-neve-3": "Snow in Monte Cimone in 2023.03.jpg",
-    "cimone-neve-4": "Snow in Monte Cimone in 2023.04.jpg",
-    "cimone-neve-5": "Snow in Monte Cimone in 2023.07.jpg",
-    "cimone-neve-6": "Snow in Monte Cimone in 2023.08.jpg"
+    "cimone-neve-4": "Snow in Monte Cimone in 2023.04.jpg"
   },
   "own": {},
   "locations": {
     "_home": {
-      "inverno": "cimone-inverno",
+      "inverno": "gomito-selletta",
       "estate": "scaffaiolo",
-      "pos": "center 30%"
+      "pos": "center 40%"
     },
     "abetone": {
-      "inverno": "abetone-inverno",
-      "estate": "abetone-estate"
+      "inverno": "gomito-selletta",
+      "estate": "tre-potenze"
     },
     "cimone": {
-      "inverno": "cimone-inverno",
+      "inverno": "cimone-lupo",
       "estate": "cimone-estate"
     },
     "le-polle": {
-      "inverno": "cimone-inverno",
-      "estate": "polle"
+      "inverno": "cimone-neve-1",
+      "estate": "ninfa"
     },
     "cimoncino": {
-      "inverno": "cimone-inverno",
+      "inverno": "cimone-neve-4",
       "estate": "cimone-trek"
     },
     "doganaccia": {
@@ -85,14 +72,16 @@
     }
   },
   "positions": {
-    "cimone-inverno": "center 30%",
     "cusna-inverno": "center 80%",
     "corno-inverno": "center 60%",
-    "abetone-inverno": "center 70%",
     "scaffaiolo": "center 60%",
     "lagosanto": "center 60%",
     "cerreto": "center 55%",
     "doganaccia": "center 70%",
-    "polle": "center 60%"
+    "gomito-selletta": "center 40%",
+    "tre-potenze": "center 45%",
+    "cimone-lupo": "center 45%",
+    "cimone-neve-1": "center 60%",
+    "cimone-neve-4": "center 55%"
   }
 }
