@@ -1,16 +1,16 @@
 {
-  "_doc": "Spazi in vendita. price_eur = prezzo pieno a stagione; sconto fondatori fino a founder_until. max = posti per stagione. shows_on: location (scheda della località acquistata), all_locations, _global (home), _newsletter (email di allerta e giovedì). Cambiando un prezzo il link di pagamento viene ricreato da solo.",
+  "_doc": "Spazi in vendita. price_eur = prezzo pieno a stagione; sconto fondatori fino a founder_until. max = posti disponibili contemporaneamente. shows_on: location (scheda della località acquistata), all_locations, _global (home), _newsletter (email di allerta e giovedì). Cambiando un prezzo il link di pagamento viene ricreato da solo.",
   "founder_discount": 0.4,
   "founder_until": "2026-12-15",
   "products": [
     {"id": "localita", "name": "Scheda località", "scope": "location", "price_eur": 240, "max": 3,
      "shows_on": ["location"],
-     "desc": "Il tuo nome, una frase e il link nella scheda della località, da subito fino al 31 marzo."},
+     "desc": "Il tuo nome, una frase e il link nella scheda della località, per 12 mesi: inverno con le previsioni neve, estate con percorsi e meteo in quota."},
     {"id": "allerta", "name": "Sponsor delle allerte neve", "scope": "_newsletter", "price_eur": 180, "max": 1,
      "shows_on": ["_newsletter"],
-     "desc": "Il tuo spazio in ogni email di allerta neve e nel riepilogo del giovedì, quando la gente decide di salire."},
+     "desc": "Il tuo spazio in ogni email di allerta e nel riepilogo del giovedì per 12 mesi, quando la gente decide di salire."},
     {"id": "crinale", "name": "Tutto il crinale", "scope": "_global", "price_eur": 480, "max": 2,
      "shows_on": ["_global", "all_locations", "_newsletter"],
-     "desc": "Home page, tutte le località e la newsletter."}
+     "desc": "Home page, tutte le località e la newsletter per 12 mesi."}
   ]
 }

@@ -1,7 +1,8 @@
 """Vendita automatica degli spazi sponsor con Stripe Payment Links.
 
+Ogni spazio dura 12 mesi dall'acquisto (sito pensato per tutte e quattro le stagioni).
 Ogni corsa del workflow:
-  1. crea (o ricrea, se cambia prezzo o stagione) un link di pagamento per ogni spazio in vendita;
+  1. crea (o ricrea, se cambia prezzo o si liberano posti) un link di pagamento per ogni spazio in vendita;
      ogni link si disattiva da solo quando i posti sono finiti (restrictions.completed_sessions);
   2. legge gli acquisti pagati e li scrive in data/sponsors_sold.json;
   3. toglie chi è stato rimborsato.
@@ -30,10 +31,13 @@ def load(p: Path, default):
     return json.loads(p.read_text()) if p.exists() else default
 
 
-def season(today: date) -> tuple[str, str]:
-    """Stagione corrente e ultimo giorno di visibilità: da aprile si vende già la stagione successiva."""
-    y = today.year if today.month >= 4 else today.year - 1
-    return f"{y}-{(y + 1) % 100:02d}", f"{y + 1}-03-31"
+def until_from(d: date, months: int = 12) -> str:
+    """Ultimo giorno di visibilità: 12 mesi dall'acquisto."""
+    try:
+        end = d.replace(year=d.year + months // 12)
+    except ValueError:  # 29 febbraio
+        end = d.replace(year=d.year + months // 12, day=28)
+    return end.isoformat()
 
 
 def slots(cfg: dict, locs: list[dict]) -> list[dict]:
@@ -82,28 +86,28 @@ class Stripe:
             after = page["data"][-1]["id"]
 
 
-def make_link(st: Stripe, slot: dict, cents: int, limit: int, seas: str, site: dict) -> dict:
-    prod = st.post("products", {"name": f"{site['name']} · {slot['label']} · stagione {seas}",
-                                "metadata[slot]": slot["id"], "metadata[season]": seas})
+def make_link(st: Stripe, slot: dict, cents: int, limit: int, site: dict) -> dict:
+    prod = st.post("products", {"name": f"{site['name']} · {slot['label']} · 12 mesi",
+                                "metadata[slot]": slot["id"]})
     price = st.post("prices", {"product": prod["id"], "currency": "eur", "unit_amount": cents})
     fields = [("nome", "Nome dell'attività", 60), ("sito", "Sito web o pagina di prenotazione", 200),
               ("frase", "Frase di presentazione (max 100 caratteri)", 100)]
     data = {"line_items[0][price]": price["id"], "line_items[0][quantity]": 1,
-            "metadata[slot]": slot["id"], "metadata[season]": seas,
+            "metadata[slot]": slot["id"],
             "phone_number_collection[enabled]": "true",
             "invoice_creation[enabled]": "true",
             "restrictions[completed_sessions][limit]": limit,
-            "inactive_message": "Posti esauriti per questa stagione. Scrivi a " + site["contact_email"],
+            "inactive_message": "Posti esauriti al momento. Scrivi a " + site["contact_email"],
             "after_completion[type]": "hosted_confirmation",
             "after_completion[hosted_confirmation][custom_message]":
                 "Grazie! Il tuo spazio comparirà su " + site["base_url"].replace("https://", "") +
-                " entro poche ore. Per modifiche scrivi a " + site["contact_email"] + "."}
+                " entro poche ore e resterà per 12 mesi. Per modifiche scrivi a " + site["contact_email"] + "."}
     for i, (k, label, mx) in enumerate(fields):
         data |= {f"custom_fields[{i}][key]": k, f"custom_fields[{i}][type]": "text",
                  f"custom_fields[{i}][label][type]": "custom", f"custom_fields[{i}][label][custom]": label,
                  f"custom_fields[{i}][text][maximum_length]": mx}
     link = st.post("payment_links", data)
-    return {"link_id": link["id"], "url": link["url"], "cents": cents, "season": seas, "limit": limit}
+    return {"link_id": link["id"], "url": link["url"], "cents": cents, "limit": limit}
 
 
 def clean_url(u: str) -> str:
@@ -123,7 +127,6 @@ def sync() -> None:
     site = load(ROOT / "config" / "site.json", {})
     locs = load(ROOT / "config" / "locations.json", {})["locations"]
     today = datetime.now(ZoneInfo("Europe/Rome")).date()
-    seas, until = season(today)
     state = load(STATE, {"links": {}})
     sold = load(SOLD, {"items": []})
     known = {i["session"] for i in sold["items"]}
@@ -140,20 +143,22 @@ def sync() -> None:
                 f = {c["key"]: (c.get("text") or {}).get("value", "") for c in s.get("custom_fields", [])}
                 sold["items"].append({
                     "session": s["id"], "payment_intent": s.get("payment_intent"), "slot": slot["id"],
-                    "where": slot["where"], "product": p["id"], "season": (cur or {}).get("season", seas),
-                    "until": until, "name": f.get("nome", "").strip()[:60] or (s.get("customer_details") or {}).get("name", ""),
+                    "where": slot["where"], "product": p["id"], "link": lid,
+                    "until": until_from(datetime.fromtimestamp(s["created"], ZoneInfo("Europe/Rome")).date()), "name": f.get("nome", "").strip()[:60] or (s.get("customer_details") or {}).get("name", ""),
                     "url": clean_url(f.get("sito", "")), "tagline": f.get("frase", "").strip()[:100],
                     "paid_at": s["created"]})
                 known.add(s["id"])
                 print(f"shop: nuovo sponsor {slot['id']}: {sold['items'][-1]['name']}")
-        taken = sum(1 for i in sold["items"] if i["slot"] == slot["id"] and i["season"] == seas and not i.get("refunded"))
-        left = p["max"] - taken
-        need_new = cur is None or cur["season"] != seas or cur["cents"] != cents
+        active = [i for i in sold["items"] if i["slot"] == slot["id"] and not i.get("refunded")
+                  and i["until"] >= today.isoformat()]
+        left = p["max"] - len(active)
+        on_link = sum(1 for i in sold["items"] if cur and i.get("link") == cur["link_id"])
+        need_new = cur is None or cur["cents"] != cents or (cur["limit"] - on_link) < left
         if need_new and left > 0:
             if cur:
                 st.post(f"payment_links/{cur['link_id']}", {"active": "false"})
-            new = make_link(st, slot, cents, left, seas, site)
-            new["old"] = ((cur or {}).get("old", []) + [cur["link_id"]])[-4:] if cur and cur["season"] == seas else []
+            new = make_link(st, slot, cents, left, site)
+            new["old"] = ((cur or {}).get("old", []) + [cur["link_id"]])[-4:] if cur else []
             state["links"][slot["id"]] = new
             print(f"shop: link {slot['id']} a {cents / 100:.0f} € ({left} posti)")
         if slot["id"] in state["links"]:
