@@ -152,3 +152,14 @@ details.tech>summary{cursor:pointer;font-weight:600;padding:.6rem 0}
 .mini-icons svg{width:38px;height:38px}
 @media (prefers-color-scheme:dark){.daycard.ic-snow,.daycard.ic-snow-heavy{background:linear-gradient(180deg,#14324d,var(--card))}.dc-tag{background:#22303d}}
 @media (max-width:640px){.daycards{grid-template-columns:repeat(5,118px)}}
+
+.appbar{background:linear-gradient(90deg,#e7f1fb,#f3f8fc);border-bottom:1px solid var(--line,#dde5ec)}
+.appbar-in{display:flex;align-items:center;gap:.7rem;padding-top:.55rem;padding-bottom:.55rem}
+.appbar img{border-radius:10px;flex:none}
+.appbar-txt{display:flex;flex-direction:column;font-size:.88rem;line-height:1.35;flex:1}
+.appbar-txt span{display:none}
+.appbar[data-os="ios"] .ab-ios,.appbar[data-os="android"] .ab-android,.appbar[data-os="other"] .ab-other{display:inline}
+.ab-close{background:none;border:0;font-size:1.4rem;line-height:1;cursor:pointer;color:inherit;padding:.2rem .4rem}
+@media (max-width:640px){.appbar .btn.ghost{display:none}}
+@media (prefers-color-scheme:dark){.appbar{background:linear-gradient(90deg,#14283b,#1a2633)}}
+[hidden]{display:none!important}

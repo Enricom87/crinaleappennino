@@ -31,6 +31,20 @@
     </nav>
   </div>
 </header>
+<div class="appbar" id="appbar" hidden>
+  <div class="wrap appbar-in">
+    <img src="{{ u('static/icon-192.png') }}" alt="" width="40" height="40">
+    <div class="appbar-txt">
+      <strong>📲 Scarica l'app di {{ site.name }}</strong>
+      <span class="ab-android">Android: tocca <b>Installa</b> qui accanto, oppure il menu ⋮ di Chrome → <b>Installa app</b>.</span>
+      <span class="ab-ios">iPhone: apri il sito con Safari, tocca <b>Condividi</b> <span aria-hidden="true">⬆️</span> e poi <b>Aggiungi alla schermata Home</b>.</span>
+      <span class="ab-other">Dal telefono: Android con Chrome → <b>Installa app</b>; iPhone con Safari → Condividi → <b>Aggiungi alla schermata Home</b>.</span>
+    </div>
+    <button class="btn small" id="install-btn" hidden>Installa</button>
+    <a class="btn small ghost" href="{{ u('app/') }}">Come fare</a>
+    <button class="ab-close" id="appbar-close" aria-label="Chiudi">×</button>
+  </div>
+</div>
 {% if sample %}<div class="sample">Anteprima grafica con dati di prova: i numeri non sono una previsione reale.</div>{% endif %}
 <main>
 {% block main %}{% endblock %}
@@ -43,16 +57,32 @@
   </div>
 </footer>
 <script>
+(function () {
+  const bar = document.getElementById("appbar");
+  if (!bar) return;
+  const installed = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  let closed = false;
+  try { closed = localStorage.getItem("appbar-closed") === "1"; } catch (e) {}
+  if (installed || closed) return;
+  const ua = navigator.userAgent;
+  const kind = /iPhone|iPad|iPod/.test(ua) ? "ios" : /Android/.test(ua) ? "android" : "other";
+  bar.dataset.os = kind;
+  bar.hidden = false;
+  document.getElementById("appbar-close").addEventListener("click", () => {
+    bar.hidden = true;
+    try { localStorage.setItem("appbar-closed", "1"); } catch (e) {}
+  });
+})();
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("{{ u('sw.js') }}").catch(() => {});
 }
 let deferredInstall = null;
 window.addEventListener("beforeinstallprompt", e => {
   e.preventDefault(); deferredInstall = e;
-  document.querySelectorAll("#install-btn").forEach(b => b.hidden = false);
+  document.querySelectorAll("#install-btn, .install-btn").forEach(b => b.hidden = false);
 });
 document.addEventListener("click", async e => {
-  if (e.target.id === "install-btn" && deferredInstall) {
+  if ((e.target.id === "install-btn" || e.target.classList.contains("install-btn")) && deferredInstall) {
     deferredInstall.prompt(); await deferredInstall.userChoice; deferredInstall = null; e.target.hidden = true;
   }
   if (e.target.dataset && e.target.dataset.save && navigator.serviceWorker && navigator.serviceWorker.controller) {
