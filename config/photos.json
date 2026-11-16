@@ -25,7 +25,8 @@
     "polle-enrico": {},
     "cimoncino-enrico": {},
     "corno-enrico": {},
-    "lagosanto-enrico": {}
+    "lagosanto-enrico": {},
+    "sanpellegrino-enrico": {}
   },
   "locations": {
     "_home": {
@@ -66,7 +67,7 @@
       "estate": "lagosanto"
     },
     "garfagnana": {
-      "inverno": "garfagnana",
+      "inverno": "sanpellegrino-enrico",
       "estate": "garfagnana"
     },
     "cerreto-laghi": {
@@ -95,6 +96,7 @@
     "cimoncino-enrico": "center 12%",
     "corno-enrico": "center 50%",
     "lagosanto-enrico": "center 8%",
-    "cerreto-inverno": "center 78%"
+    "cerreto-inverno": "center 78%",
+    "sanpellegrino-enrico": "center 50%"
   }
 }
