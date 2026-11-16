@@ -19,11 +19,11 @@ LAM_DAYS = 2
 PM = range(11, 21)          # ore del pomeriggio in cui nascono i temporali di calore
 STORM_LABELS = {0: "assenti", 1: "isolati", 2: "possibili", 3: "probabili"}
 VERDICTS = {
-    "ottima": "Giornata ottima",
-    "buona": "Buona",
-    "attenzione": "Con attenzione",
+    "ottima": "Giornata top",
+    "buona": "Si va",
+    "attenzione": "Occhio",
     "mattina": "Solo al mattino",
-    "sconsigliata": "Sconsigliata",
+    "sconsigliata": "Meglio di no",
 }
 
 
@@ -141,21 +141,21 @@ def summer_text(loc_name: str, top: dict, rows: list[dict]) -> list[str]:
     t0 = rows[0]
     first = f"{nice_date(t0['date']).capitalize()} in quota ({top['name']}, {top['elev']} m): {t0['verdict_label'].lower()}"
     if t0["storm"] >= 2 and t0["back_by"]:
-        first += f", temporali {t0['storm_label']} dal primo pomeriggio: meglio rientrare entro le {t0['back_by']}"
+        first += f": temporali {t0['storm_label']} dal primo pomeriggio, parti presto e rientra entro le {t0['back_by']}"
     elif t0["storm"] == 1:
-        first += ", qualche cumulo con rovescio isolato non escluso nel pomeriggio"
+        first += ", con qualche cumulo pomeridiano che potrebbe scappare in un rovescio"
     if t0["gust"] and t0["gust"] >= 50:
-        first += f"; raffiche fino a {t0['gust']} km/h sulle creste"
+        first += f"; sulle creste il vento soffia fino a {t0['gust']} km/h"
     out.append(first + ".")
     good = [r for r in rows[1:] if r["verdict"] == "ottima"]
     bad = [r for r in rows[1:] if r["verdict"] == "sconsigliata"]
     if good:
-        out.append("Giornate migliori nei prossimi giorni: " + ", ".join(nice_date(r["date"]) for r in good[:3]) + ".")
+        out.append("Segnati queste date: " + ", ".join(nice_date(r["date"]) for r in good[:3]) + ", le giornate migliori in arrivo.")
     if bad:
-        out.append("Da evitare: " + ", ".join(nice_date(r["date"]) for r in bad[:3]) + ".")
+        out.append("Lascia perdere " + ", ".join(nice_date(r["date"]) for r in bad[:3]) + ": meglio un rifugio che una cresta.")
     hot = [r for r in rows if r["fl_max"] and r["fl_max"] >= 4000]
     if hot:
-        out.append(f"Caldo in quota: zero termico fino a {hot[0]['fl_max']} m, porta acqua in abbondanza.")
+        out.append(f"Fa caldo anche lassù: zero termico a {hot[0]['fl_max']} m. Borraccia piena e partenza all'alba.")
     return out
 
 
@@ -176,7 +176,9 @@ def overview_mtn(locs: list[dict]) -> str:
         if groups.get(v):
             names = ", ".join(groups[v])
             prep = "ad" if names[:1] in "AaEe" else "a"
-            parts.append(f"{VERDICTS[v].lower()} {prep} {names}")
+            word = {"ottima": "giornata top", "buona": "si va", "mattina": "solo al mattino",
+                    "attenzione": "occhio", "sconsigliata": "meglio restare a valle"}[v]
+            parts.append(f"{word} {prep} {names}")
     if not parts:
         return ""
     s = "Oggi in quota: " + "; ".join(parts) + "."

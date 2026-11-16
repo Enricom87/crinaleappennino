@@ -18,13 +18,13 @@
       <div><span class="big">{{ route.stats.z_max }}</span><small>m quota massima</small></div>
       <div><span class="big">{{ route.difficulty or '–' }}</span><small>difficoltà{% if route.cai %} · CAI {{ route.cai }}{% endif %}</small></div>
     </div>
-    <h2>Profilo</h2>
+    <h2>Quanta salita</h2>
     {{ route.profile|safe }}
     <p class="muted small">Lunghezza e dislivello sono indicativi, calcolati dal tracciato e dal modello del terreno.</p>
   </div>
   <aside>
     <div class="cond">
-      <h2>Condizioni previste</h2>
+      <h2>Cosa trovi lassù</h2>
       <ul>{% for n in route.cond.notes %}<li>{{ n }}</li>{% endfor %}</ul>
       <table class="mini">
         <tr><th></th><th>Neve in quota</th><th>Min in quota</th><th>Raffiche</th></tr>

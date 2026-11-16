@@ -80,8 +80,8 @@ def main() -> None:
             fresh.append(a)
     if fresh:
         names = ", ".join(a["name"].split(" · ")[0] for a in fresh)
-        sent = send(f"Allerta neve: {names}",
-             email_html(site, "Neve in arrivo nelle prossime 72 ore", [f"{a['name']}: {a['title']}" for a in fresh],
+        sent = send(f"❄️ Arriva la neve: {names}" if len(fresh) < 3 else f"❄️ Nevica su tutto il crinale: {names}",
+             email_html(site, "Ci siamo: neve in arrivo entro 72 ore", [f"{a['name']}: {a['title']}" for a in fresh],
                         nl_sponsor), site)
         for a in fresh if sent else []:
             state["alerted"][a["slug"]] = now.isoformat()
@@ -89,8 +89,8 @@ def main() -> None:
     # riepilogo del giovedì, una volta sola, dopo le 7
     week = now.strftime("%G-W%V")
     if now.weekday() == 3 and now.hour >= 7 and state.get("weekly") != week:
-        if send("Neve sull'Appennino: il punto per il weekend",
-                email_html(site, "Il punto del giovedì", [latest.get("overview", "")], nl_sponsor), site):
+        if send("Weekend in Appennino: dove si va?",
+                email_html(site, "Il punto del giovedì: dove andare nel weekend", [latest.get("overview", "")], nl_sponsor), site):
             state["weekly"] = week
 
     STATE.parent.mkdir(parents=True, exist_ok=True)

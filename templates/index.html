@@ -3,9 +3,9 @@
 <section class="hero">
   <div class="wrap">
     <p class="kicker">Aggiornato {{ updated }}</p>
-    <h1>{% if summer %}Che tempo fa in quota, oggi e nei prossimi giorni.{% else %}Quanta neve, e a che quota.{% endif %}</h1>
+    <h1>{% if summer %}Si va in montagna? Ti diciamo dove e fino a che ora.{% else %}Nevica? Quanto? E a che quota? Te lo diciamo prima.{% endif %}</h1>
     <p class="lead">{{ overview }}</p>
-    <p>{% if summer %}<a class="btn" href="{{ u('percorsi/') }}">Scegli un percorso</a> {% endif %}<a class="btn{% if summer %} ghost{% endif %}" href="{{ u('newsletter/') }}">Ricevi l'allerta neve via email</a></p>
+    <p>{% if summer %}<a class="btn" href="{{ u('percorsi/') }}">Scegli un percorso</a> {% endif %}<a class="btn{% if summer %} ghost{% endif %}" href="{{ u('newsletter/') }}">❄️ Avvisami quando nevica</a></p>
   </div>
 </section>
 
@@ -16,7 +16,7 @@
 {% endif %}
 
 <section class="wrap" id="localita">
-  <h2>Le località</h2>
+  <h2>Scegli la tua montagna</h2>
   <div class="cards">
   {% for L in locs %}
     <a class="card lvl-{{ L.text.level }}" href="{{ u(L.slug ~ '/') }}">
@@ -49,7 +49,7 @@
 
 {% if syn %}
 <section class="wrap">
-  <h2>La configurazione dei prossimi giorni</h2>
+  <h2>Dietro le quinte: cosa succede in cielo</h2>
   <p class="muted">Temperatura a circa 1.500 m (850 hPa), direzione del flusso a 3.000 m e posizione della saccatura secondo ECMWF, con GFS a confronto. Sotto i -3 °C a 1.500 m la neve arriva di solito fino alle stazioni.</p>
   <div class="scroll">
   <table class="syn">
