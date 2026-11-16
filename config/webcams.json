@@ -1,101 +1,105 @@
 {
- "_comment": "Solo link alle pagine dei proprietari: incorporare le immagini richiede il loro permesso. {label, url}",
- "abetone": [
-  {
-   "label": "Monte Gomito 1.893 m (SkylineWebcams)",
-   "url": "https://www.skylinewebcams.com/webcam/italia/toscana/pistoia/abetone-monte-gomito.html"
-  },
-  {
-   "label": "Ovovia, Passo dell'Abetone (SkylineWebcams)",
-   "url": "https://www.skylinewebcams.com/webcam/italia/toscana/pistoia/abetone-ovovia.html"
-  },
-  {
-   "label": "Pulicchio (SkylineWebcams)",
-   "url": "https://www.skylinewebcams.com/webcam/italia/toscana/pistoia/abetone-pulicchio.html"
-  },
-  {
-   "label": "Val di Luce (SkylineWebcams)",
-   "url": "https://www.skylinewebcams.com/webcam/italia/toscana/pistoia/val-di-luce-abetone.html"
-  }
- ],
- "cimone": [
-  {
-   "label": "Passo del Lupo verso il Cimone (SkylineWebcams)",
-   "url": "https://www.skylinewebcams.com/webcam/italia/emilia-romagna/modena/monte-cimone.html"
-  },
-  {
-   "label": "Passo del Lupo 1.541 m (snow-online)",
-   "url": "https://www.snow-online.com/webcam/cimone--passo-del-lupo.htm"
-  }
- ],
- "le-polle": [
-  {
-   "label": "Webcam del comprensorio Cimone, Le Polle inclusa (snow-online)",
-   "url": "https://www.snow-online.com/webcams/ski-resort/cimone.html"
-  }
- ],
- "cimoncino": [
-  {
-   "label": "Webcam del comprensorio Cimone (snow-online)",
-   "url": "https://www.snow-online.com/webcams/ski-resort/cimone.html"
-  }
- ],
- "doganaccia": [
-  {
-   "label": "Seggiovia Doganaccia (SkylineWebcams)",
-   "url": "https://www.skylinewebcams.com/webcam/italia/toscana/pistoia/doganaccia-seggiovia.html"
-  },
-  {
-   "label": "Doganaccia, la chiesetta (SkylineWebcams)",
-   "url": "https://www.skylinewebcams.com/webcam/italia/toscana/pistoia/doganaccia-pistoia.html"
-  }
- ],
- "corno-alle-scale": [
-  {
-   "label": "Corno alle Scale (feratel)",
-   "url": "https://www.feratel.com/en/webcams/italy/lizzano-in-belvedere-corno-alle-scale.html"
-  },
-  {
-   "label": "Seggiovia Le Rocce 1.727 m (snow-online)",
-   "url": "https://www.snow-online.com/webcam/corno-alle-scale-ski-resort--le-rocce-chair-lift.htm"
-  },
-  {
-   "label": "Pista La Polla 1.490 m (snow-online)",
-   "url": "https://www.snow-online.com/webcam/corno-alle-scale-ski-resort--la-polla-slope.htm"
-  }
- ],
- "lago-scaffaiolo": [
-  {
-   "label": "Seggiovia Le Rocce, verso il crinale (snow-online)",
-   "url": "https://www.snow-online.com/webcam/corno-alle-scale-ski-resort--le-rocce-chair-lift.htm"
-  }
- ],
- "lago-santo": [
-  {
-   "label": "Webcam Rifugio Vittoria, Lago Santo (abetone.com)",
-   "url": "https://www.abetone.com/en/lago-santo-modenese.asp"
-  }
- ],
- "garfagnana": [
-  {
-   "label": "Webcam Casone di Profecchia (OnTheSnow)",
-   "url": "https://www.onthesnow.co.nz/tuscany/casone-di-profecchia/webcams"
-  }
- ],
- "cerreto-laghi": [
-  {
-   "label": "Cerreto Laghi, piazzale del laghetto (SkylineWebcams)",
-   "url": "https://www.skylinewebcams.com/webcam/italia/emilia-romagna/reggio-emilia/cerreto-laghi.html"
-  },
-  {
-   "label": "Piste da sci 1.352 m (snow-online)",
-   "url": "https://www.snow-online.com/webcam/cerreto-laghi-ski-resort--view-of-the-slopes.htm"
-  }
- ],
- "febbio": [
-  {
-   "label": "Webcam Alpe di Cusna – Febbio (skiresort.info)",
-   "url": "https://www.skiresort.info/ski-resort/febbio-2000-monte-cusna/webcams/"
-  }
- ]
+  "_comment": "Solo link alle pagine dei proprietari: incorporare le immagini richiede il loro permesso. {label, url}",
+  "abetone": [
+    {
+      "label": "Monte Gomito 1.893 m (SkylineWebcams)",
+      "url": "https://www.skylinewebcams.com/webcam/italia/toscana/pistoia/abetone-monte-gomito.html"
+    },
+    {
+      "label": "Ovovia, Passo dell'Abetone (SkylineWebcams)",
+      "url": "https://www.skylinewebcams.com/webcam/italia/toscana/pistoia/abetone-ovovia.html"
+    },
+    {
+      "label": "Pulicchio (SkylineWebcams)",
+      "url": "https://www.skylinewebcams.com/webcam/italia/toscana/pistoia/abetone-pulicchio.html"
+    },
+    {
+      "label": "Val di Luce (SkylineWebcams)",
+      "url": "https://www.skylinewebcams.com/webcam/italia/toscana/pistoia/val-di-luce-abetone.html"
+    },
+    {
+      "label": "Val di Luce 1650 m e Sprella (AbetoneMeteo)",
+      "url": "https://www.abetonemeteo.it/stazione2/"
+    }
+  ],
+  "cimone": [
+    {
+      "label": "Passo del Lupo verso il Cimone (SkylineWebcams)",
+      "url": "https://www.skylinewebcams.com/webcam/italia/emilia-romagna/modena/monte-cimone.html"
+    },
+    {
+      "label": "Passo del Lupo 1.541 m (snow-online)",
+      "url": "https://www.snow-online.com/webcam/cimone--passo-del-lupo.htm"
+    }
+  ],
+  "le-polle": [
+    {
+      "label": "Webcam del comprensorio Cimone, Le Polle inclusa (snow-online)",
+      "url": "https://www.snow-online.com/webcams/ski-resort/cimone.html"
+    }
+  ],
+  "cimoncino": [
+    {
+      "label": "Webcam del comprensorio Cimone (snow-online)",
+      "url": "https://www.snow-online.com/webcams/ski-resort/cimone.html"
+    }
+  ],
+  "doganaccia": [
+    {
+      "label": "Seggiovia Doganaccia (SkylineWebcams)",
+      "url": "https://www.skylinewebcams.com/webcam/italia/toscana/pistoia/doganaccia-seggiovia.html"
+    },
+    {
+      "label": "Doganaccia, la chiesetta (SkylineWebcams)",
+      "url": "https://www.skylinewebcams.com/webcam/italia/toscana/pistoia/doganaccia-pistoia.html"
+    }
+  ],
+  "corno-alle-scale": [
+    {
+      "label": "Corno alle Scale (feratel)",
+      "url": "https://www.feratel.com/en/webcams/italy/lizzano-in-belvedere-corno-alle-scale.html"
+    },
+    {
+      "label": "Seggiovia Le Rocce 1.727 m (snow-online)",
+      "url": "https://www.snow-online.com/webcam/corno-alle-scale-ski-resort--le-rocce-chair-lift.htm"
+    },
+    {
+      "label": "Pista La Polla 1.490 m (snow-online)",
+      "url": "https://www.snow-online.com/webcam/corno-alle-scale-ski-resort--la-polla-slope.htm"
+    }
+  ],
+  "lago-scaffaiolo": [
+    {
+      "label": "Seggiovia Le Rocce, verso il crinale (snow-online)",
+      "url": "https://www.snow-online.com/webcam/corno-alle-scale-ski-resort--le-rocce-chair-lift.htm"
+    }
+  ],
+  "lago-santo": [
+    {
+      "label": "Webcam Rifugio Vittoria, Lago Santo (abetone.com)",
+      "url": "https://www.abetone.com/en/lago-santo-modenese.asp"
+    }
+  ],
+  "garfagnana": [
+    {
+      "label": "Webcam Casone di Profecchia (OnTheSnow)",
+      "url": "https://www.onthesnow.co.nz/tuscany/casone-di-profecchia/webcams"
+    }
+  ],
+  "cerreto-laghi": [
+    {
+      "label": "Cerreto Laghi, piazzale del laghetto (SkylineWebcams)",
+      "url": "https://www.skylinewebcams.com/webcam/italia/emilia-romagna/reggio-emilia/cerreto-laghi.html"
+    },
+    {
+      "label": "Piste da sci 1.352 m (snow-online)",
+      "url": "https://www.snow-online.com/webcam/cerreto-laghi-ski-resort--view-of-the-slopes.htm"
+    }
+  ],
+  "febbio": [
+    {
+      "label": "Webcam Alpe di Cusna – Febbio (skiresort.info)",
+      "url": "https://www.skiresort.info/ski-resort/febbio-2000-monte-cusna/webcams/"
+    }
+  ]
 }

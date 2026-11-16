@@ -36,8 +36,8 @@
 }
 </script>
 <section class="wrap">
-  <h2>Dalle guide locali</h2>
-  {% for src in local_sources %}
+  <h2>Fonti locali</h2>
+  {% for src in local_sources if "_all" in src.links %}
   <p class="small"><a href="{{ src.url }}" rel="noopener" target="_blank"><strong>{{ src.name }}</strong></a> · {{ src.about }}</p>
   <ul class="links">{% for l in src.links["_all"] %}<li><a href="{{ l.url }}" rel="noopener" target="_blank">{{ l.label }}</a></li>{% endfor %}</ul>
   {% endfor %}

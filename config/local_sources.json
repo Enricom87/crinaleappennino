@@ -2,29 +2,74 @@
   "_doc": "Siti e associazioni locali: solo link, nessun tracciato copiato. Aggiungere qui nuove fonti.",
   "sources": [
     {
+      "id": "abetonemeteo",
+      "name": "AbetoneMeteo · Osservatorio Val di Luce",
+      "url": "https://www.abetonemeteo.it/stazione2/",
+      "about": "Stazione Davis al Rifugio Le Terrazze, 1650 m (gestore Firenzemeteo, rete Meteo Project): temperatura, vento, pioggia in tempo reale e webcam.",
+      "links": {
+        "abetone": [
+          {
+            "label": "Dati in tempo reale Val di Luce 1650 m",
+            "url": "https://stazioni.meteoproject.it/dati/valdiluce2pag/"
+          },
+          {
+            "label": "AbetoneMeteo: stazioni e webcam del comprensorio",
+            "url": "https://www.abetonemeteo.it/stazione2/"
+          }
+        ]
+      }
+    },
+    {
       "id": "aovestdelcimone",
       "name": "A Ovest del Cimone",
       "url": "https://www.aovestdelcimone.it/",
       "about": "Associazione (APS) di Pievepelago, Fiumalbo e Riolunato: anelli escursionistici e MTB con descrizione, foto e traccia GPX, anche in app.",
       "links": {
         "cimone": [
-          {"label": "Anello n12: Doccia Cimone – Sasso dell'Alpino – Cristo dell'Alpe (7 km)", "url": "https://www.aovestdelcimone.it/percorsi/41/"},
-          {"label": "Anello n13: Doccia Cimone – Monte Cimone – Muraglioni (9 km)", "url": "https://www.aovestdelcimone.it/percorsi/42/"},
-          {"label": "Anello n14: Fiumalbo – Doccia Cimone – Monte Cimone – cascate (17 km)", "url": "https://www.aovestdelcimone.it/percorsi/43/"},
-          {"label": "Fiumalbo – Doccia Cimone – Monte Cimone, direttissima", "url": "https://www.aovestdelcimone.it/percorsi/38/"}
+          {
+            "label": "Anello n12: Doccia Cimone – Sasso dell'Alpino – Cristo dell'Alpe (7 km)",
+            "url": "https://www.aovestdelcimone.it/percorsi/41/"
+          },
+          {
+            "label": "Anello n13: Doccia Cimone – Monte Cimone – Muraglioni (9 km)",
+            "url": "https://www.aovestdelcimone.it/percorsi/42/"
+          },
+          {
+            "label": "Anello n14: Fiumalbo – Doccia Cimone – Monte Cimone – cascate (17 km)",
+            "url": "https://www.aovestdelcimone.it/percorsi/43/"
+          },
+          {
+            "label": "Fiumalbo – Doccia Cimone – Monte Cimone, direttissima",
+            "url": "https://www.aovestdelcimone.it/percorsi/38/"
+          }
         ],
         "le-polle": [
-          {"label": "Anello n15: Riolunato – La Teggiola – Le Polle – Monte Castello (17 km)", "url": "https://www.aovestdelcimone.it/percorsi/48/"}
+          {
+            "label": "Anello n15: Riolunato – La Teggiola – Le Polle – Monte Castello (17 km)",
+            "url": "https://www.aovestdelcimone.it/percorsi/48/"
+          }
         ],
         "abetone": [
-          {"label": "Anello n10: Fiumalbo – Cascata Fontanelle – Salto dell'Acqua – Muraglioni (9 km)", "url": "https://www.aovestdelcimone.it/percorsi/37/"}
+          {
+            "label": "Anello n10: Fiumalbo – Cascata Fontanelle – Salto dell'Acqua – Muraglioni (9 km)",
+            "url": "https://www.aovestdelcimone.it/percorsi/37/"
+          }
         ],
         "lago-santo": [
-          {"label": "Anello n3: Grande Anello del Monte Nuda da S. Anna Pelago (21 km)", "url": "https://www.aovestdelcimone.it/percorsi/11/"}
+          {
+            "label": "Anello n3: Grande Anello del Monte Nuda da S. Anna Pelago (21 km)",
+            "url": "https://www.aovestdelcimone.it/percorsi/11/"
+          }
         ],
         "_all": [
-          {"label": "G.A.S. – Grande Anello dello Scoltenna (92 km, trekking)", "url": "https://www.aovestdelcimone.it/percorsi/67/"},
-          {"label": "Tutti i percorsi e la mappa", "url": "https://www.aovestdelcimone.it/mappa/"}
+          {
+            "label": "G.A.S. – Grande Anello dello Scoltenna (92 km, trekking)",
+            "url": "https://www.aovestdelcimone.it/percorsi/67/"
+          },
+          {
+            "label": "Tutti i percorsi e la mappa",
+            "url": "https://www.aovestdelcimone.it/mappa/"
+          }
         ]
       }
     }
