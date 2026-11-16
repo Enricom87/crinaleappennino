@@ -20,7 +20,8 @@
     "cimone-neve-4": "Snow in Monte Cimone in 2023.04.jpg"
   },
   "own": {
-    "abetone-enrico": {}
+    "abetone-enrico": {},
+    "polle-enrico": {}
   },
   "locations": {
     "_home": {
@@ -37,7 +38,7 @@
       "estate": "cimone-estate"
     },
     "le-polle": {
-      "inverno": "cimone-neve-1",
+      "inverno": "polle-enrico",
       "estate": "ninfa"
     },
     "cimoncino": {
@@ -85,6 +86,7 @@
     "cimone-lupo": "center 45%",
     "cimone-neve-1": "center 60%",
     "cimone-neve-4": "center 55%",
-    "abetone-enrico": "center 44%"
+    "abetone-enrico": "center 44%",
+    "polle-enrico": "center 30%"
   }
 }
