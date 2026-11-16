@@ -22,7 +22,8 @@
   "own": {
     "abetone-enrico": {},
     "polle-enrico": {},
-    "cimoncino-enrico": {}
+    "cimoncino-enrico": {},
+    "corno-enrico": {}
   },
   "locations": {
     "_home": {
@@ -51,11 +52,11 @@
       "estate": "doganaccia"
     },
     "corno-alle-scale": {
-      "inverno": "corno-inverno",
+      "inverno": "corno-enrico",
       "estate": "corno-estate"
     },
     "lago-scaffaiolo": {
-      "inverno": "corno-inverno",
+      "inverno": "corno-enrico",
       "estate": "scaffaiolo"
     },
     "lago-santo": {
@@ -89,6 +90,7 @@
     "cimone-neve-4": "center 55%",
     "abetone-enrico": "center 44%",
     "polle-enrico": "center 30%",
-    "cimoncino-enrico": "center 12%"
+    "cimoncino-enrico": "center 12%",
+    "corno-enrico": "center 50%"
   }
 }
