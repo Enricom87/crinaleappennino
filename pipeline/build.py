@@ -69,6 +69,7 @@ def main() -> None:
     site = json.loads((ROOT / "config" / "site.json").read_text())
     sponsors = json.loads((ROOT / "config" / "sponsors.json").read_text())
     webcams = json.loads((ROOT / "config" / "webcams.json").read_text())
+    local_sources = json.loads((ROOT / "config" / "local_sources.json").read_text())["sources"]
     glob, lam, ens, syn = load("global"), load("lam"), load("ensemble"), load("synoptic")
 
     now = datetime.now(ZoneInfo("Europe/Rome"))
@@ -97,6 +98,7 @@ def main() -> None:
         L["chart"] = svg_snow_chart(L["pts"])
         L["sponsors"] = sponsors.get(loc["slug"], []) or []
         L["webcams"] = webcams.get(loc["slug"], []) or []
+        L["local"] = [{**src, "entries": src["links"][loc["slug"]]} for src in local_sources if loc["slug"] in src["links"]]
         locs.append(L)
 
     # percorsi
@@ -118,7 +120,7 @@ def main() -> None:
     for L in locs:
         L["routes"] = [r for r in routes if r["location"] == L["slug"]]
 
-    ctx = {"site": site, "locs": locs, "routes": routes, "activity_labels": LABELS, "syn": syn_rows, "overview": overview_text(locs) if locs else "",
+    ctx = {"site": site, "locs": locs, "local_sources": local_sources, "routes": routes, "activity_labels": LABELS, "syn": syn_rows, "overview": overview_text(locs) if locs else "",
            "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),
            "updated_rfc": now.strftime("%a, %d %b %Y %H:%M:%S %z"), "today": today, "sample": bool(int(__import__("os").environ.get("SAMPLE", "0"))), "nice_date": nice_date, "global_sponsors": sponsors.get("_global", [])}
 
