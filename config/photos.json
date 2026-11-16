@@ -19,7 +19,13 @@
     "cimone-neve-1": "Snow in Monte Cimone in 2023.01.jpg",
     "cimone-neve-4": "Snow in Monte Cimone in 2023.04.jpg"
   },
-  "own": {},
+  "own": {
+    "abetone-enrico": {
+      "artist": "Enrico · Crinale",
+      "license": "tutti i diritti riservati",
+      "page": "https://crinaleappennino.it/"
+    }
+  },
   "locations": {
     "_home": {
       "inverno": "gomito-selletta",
@@ -27,7 +33,7 @@
       "pos": "center 40%"
     },
     "abetone": {
-      "inverno": "gomito-selletta",
+      "inverno": "abetone-enrico",
       "estate": "tre-potenze"
     },
     "cimone": {
@@ -82,6 +88,7 @@
     "tre-potenze": "center 45%",
     "cimone-lupo": "center 45%",
     "cimone-neve-1": "center 60%",
-    "cimone-neve-4": "center 55%"
+    "cimone-neve-4": "center 55%",
+    "abetone-enrico": "center 44%"
   }
 }
