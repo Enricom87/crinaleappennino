@@ -90,12 +90,17 @@ def add_elevation(lines: list[list[list[float]]]) -> None:
     pts = [p for ln in lines for p in ln if len(p) < 3]
     for i in range(0, len(pts), 100):
         grp = pts[i:i + 100]
-        r = requests.get(ELEV_URL, params={"latitude": ",".join(f"{p[1]:.5f}" for p in grp),
-                                          "longitude": ",".join(f"{p[0]:.5f}" for p in grp)}, timeout=30)
+        params = {"latitude": ",".join(f"{p[1]:.5f}" for p in grp),
+                  "longitude": ",".join(f"{p[0]:.5f}" for p in grp)}
+        for attempt in range(3):
+            r = requests.get(ELEV_URL, params=params, timeout=30)
+            if r.status_code != 429:
+                break
+            time.sleep(65)  # limite al minuto dell'API gratuita
         r.raise_for_status()
         for p, z in zip(grp, r.json()["elevation"]):
             p.append(round(z))
-        time.sleep(1)
+        time.sleep(3)
 
 
 def thin(line: list[list[float]], step: float = 60.0) -> list[list[float]]:

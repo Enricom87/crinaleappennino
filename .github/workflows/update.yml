@@ -26,14 +26,14 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install requests jinja2
+      - name: Tracciati dei percorsi (solo quelli nuovi)
+        run: python pipeline/routes.py
+        timeout-minutes: 20
+        continue-on-error: true
       - name: Scarica i dati dei modelli
         env:
           OPEN_METEO_API_KEY: ${{ secrets.OPEN_METEO_API_KEY }}
         run: python pipeline/fetch.py
-      - name: Tracciati dei percorsi (solo quelli nuovi)
-        run: python pipeline/routes.py
-        timeout-minutes: 12
-        continue-on-error: true
       - name: Costruisci il sito
         run: cd pipeline && python build.py
       - name: Newsletter e allerta neve
