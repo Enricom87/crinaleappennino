@@ -104,12 +104,10 @@ def route_conditions(route: dict, loc_points: list[dict], raw_glob: dict) -> dic
 
 
 def profile_svg(route: dict) -> str:
-    """Profilo altimetrico del tratto più lungo, SVG statico."""
+    """Profilo altimetrico del percorso principale, SVG statico."""
     from routes import haversine
     lines = route["geojson"]["geometry"]["coordinates"]
-    ln = [p for p in max(lines, key=len) if len(p) > 2]
-    if len(lines) > 1:  # relazioni OSM a più tratti: li accoda in ordine
-        ln = [p for x in lines for p in x if len(p) > 2]
+    ln = [p for p in lines[0] if len(p) > 2]  # percorso principale, già concatenato da routes.chain
     if len(ln) < 2:
         return ""
     d, xs = 0.0, [0.0]

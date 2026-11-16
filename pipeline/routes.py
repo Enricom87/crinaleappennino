@@ -139,11 +139,44 @@ def thin(line: list[list[float]], step: float = 60.0) -> list[list[float]]:
     return out
 
 
+def chain(lines: list[list[list[float]]], tol: float = 80.0) -> list[list[list[float]]]:
+    """Unisce i tratti di una relazione OSM in linee continue, girandoli quando serve.
+    Le vie OSM non hanno un verso coerente: senza questo passaggio il dislivello risulta falsato."""
+    rest = [list(ln) for ln in lines if len(ln) > 1]
+    out = []
+    while rest:
+        cur = rest.pop(max(range(len(rest)), key=lambda i: len(rest[i])))
+        grown = True
+        while grown:
+            grown = False
+            for i, ln in enumerate(rest):
+                if haversine(cur[-1], ln[0]) <= tol:
+                    cur += ln[1:]
+                elif haversine(cur[-1], ln[-1]) <= tol:
+                    cur += ln[::-1][1:]
+                elif haversine(cur[0], ln[-1]) <= tol:
+                    cur = ln[:-1] + cur
+                elif haversine(cur[0], ln[0]) <= tol:
+                    cur = ln[::-1][:-1] + cur
+                else:
+                    continue
+                rest.pop(i)
+                grown = True
+                break
+        out.append(cur)
+    out.sort(key=len, reverse=True)
+    main = out[0]
+    if len(main[0]) > 2 and len(main[-1]) > 2 and haversine(main[0], main[-1]) > 300 and main[0][2] > main[-1][2]:
+        out[0] = main[::-1]  # percorso lineare: parte dal punto più basso
+    return out
+
+
 def stats(lines: list[list[list[float]]]) -> dict:
-    length = sum(haversine(a, b) for ln in lines for a, b in zip(ln, ln[1:]))
+    main = lines[:1]  # percorso principale (le varianti restano solo sulla mappa)
+    length = sum(haversine(a, b) for ln in main for a, b in zip(ln, ln[1:]))
     zs = [p[2] for ln in lines for p in ln if len(p) > 2]
     gain = 0.0
-    for ln in lines:  # dislivello positivo con soglia di 5 m per filtrare il rumore del modello del terreno
+    for ln in main:  # dislivello positivo con soglia di 5 m per filtrare il rumore del modello del terreno
         ref = None
         for p in ln:
             if len(p) < 3:
@@ -156,7 +189,7 @@ def stats(lines: list[list[list[float]]]) -> dict:
             elif ref - p[2] >= 5:
                 ref = p[2]
     allp = [p for ln in lines for p in ln]
-    longest = max(lines, key=len)
+    longest = lines[0]
     return {"km": round(length / 1000, 1), "z_min": min(zs) if zs else None, "z_max": max(zs) if zs else None,
             "gain": round(gain / 10) * 10, "start": longest[0][:2],
             "bbox": [min(p[0] for p in allp), min(p[1] for p in allp), max(p[0] for p in allp), max(p[1] for p in allp)]}
@@ -193,7 +226,8 @@ def load_routes(cfg: dict) -> list[dict]:
         if not path.exists():
             continue
         gj = json.loads(path.read_text())
-        lines = gj["geometry"]["coordinates"]
+        lines = chain(gj["geometry"]["coordinates"])
+        gj["geometry"]["coordinates"] = lines
         out.append({**r, "geojson": gj, "stats": stats(lines), "credit": gj["properties"].get("credit", "")})
     return out
 
