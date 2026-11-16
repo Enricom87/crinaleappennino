@@ -5,7 +5,7 @@
     <svg class="dc-icon" viewBox="0 0 64 64" role="img" aria-label="{{ c.phrase }}"><use href="#ic-{{ c.icon }}"/></svg>
     <span class="dc-temp"><strong>{{ c.tmax|n0 }}°</strong> <span class="muted">{{ c.tmin|n0 }}°</span></span>
     <span class="dc-phrase">{{ c.phrase }}</span>
-    {% if c.back_by %}<span class="dc-tag warn">Rientro entro le {{ c.back_by }}</span>{% elif c.windy %}<span class="dc-tag">💨 {{ c.gust }} km/h</span>{% endif %}
+    {% if c.back_by %}<span class="dc-tag warn">{{ t("Rientro entro le {h}", h=c.back_by) }}</span>{% elif c.windy %}<span class="dc-tag">💨 {{ c.gust }} km/h</span>{% endif %}
   </div>
   {% endfor %}
 </div>

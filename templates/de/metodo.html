@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}So arbeiten wir · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>So arbeiten wir</h1>
+<p class="lead">Keine Vorhersagen „aus dem Bauch": Jeden Morgen vergleichen wir die feinsten numerischen Modelle für den Apennin und berechnen den Schnee Höhe für Höhe.</p></div></section>
+<section class="wrap prose">
+<h2>Die Modelle</h2>
+<ul>
+<li><strong>Heute und morgen</strong>: hochauflösende Regionalmodelle (1-2 km), die den Kamm wirklich „sehen": ICON-2I von ItaliaMeteo-ARPAE (die nationale Referenz, doppelt gewichtet), ICON-CH2 von MeteoSchweiz, ICON-D2 des Deutschen Wetterdienstes und AROME von Météo-France.</li>
+<li><strong>Ab dem dritten Tag</strong>: die globalen Modelle ECMWF, GFS und ICON mit ihrer Spanne.</li>
+<li><strong>Wahrscheinlichkeiten</strong>: die 51 Szenarien des ECMWF-Ensembles. „30 % für mindestens 10 cm" heißt, dass etwa 15 von 51 Szenarien mindestens 10 cm bringen.</li>
+<li><strong>Wetterlage</strong>: Temperatur in 1.500 m, Strömungsrichtung in 3.000 m und Lage des Troges – um zu erkennen, ob eine Front Schnee oder Regen bringt.</li>
+</ul>
+<h2>So schätzen wir den Schnee</h2>
+<p>Globale Modelle „glätten" die Berge und unterschätzen den Schnee in der Höhe. Deshalb berechnen wir den Schnee aus Niederschlag und Temperatur, umgerechnet auf die echte Höhe jedes Punktes: Unter 0,5 °C zählt der ganze Niederschlag als Schnee, zwischen 0,5 und 1,5 °C die Hälfte, mit dem groben Verhältnis 1 cm Schnee pro 1 mm Wasser. Außerdem zählt Schnee nur, wenn die Nullgradgrenze höchstens 300 m über dem Punkt liegt (zur Hälfte zwischen 300 und 500 m) – so zählen wir keinen Gipfelschnee, wenn es darüber noch warm ist. Sehr trockener Schnee (große Kälte) kann mehr ergeben, nasser Schnee weniger.</p>
+<h2>In der Höhe ohne Schnee: Gewitter, Hitze und Wind</h2>
+<p>Für jedes Gebiet nehmen wir den höchsten Punkt. Für heute und morgen vergleichen wir die Regionalmodelle (ICON-2I, ICON-D2, ICON-CH2, AROME), für die drei Tage danach die globalen. Das Gewitterrisiko ergibt sich aus der verfügbaren Konvektionsenergie (CAPE) und dem vorhergesagten Regen zwischen 11 und 20 Uhr: „wahrscheinlich", wenn mindestens die Hälfte der Modelle CAPE über 800 J/kg mit mindestens 1 mm am Nachmittag sieht, „möglich" ab 300 J/kg und einem halben Millimeter. Die Startzeit ist der Median der Modelle; die empfohlene Rückkehr liegt eine Stunde früher. Das Tagesurteil berücksichtigt auch Böen (Vorsicht ab 50 km/h, lieber nicht ab 70), Gesamtregen und Bewölkung. Sommergewitter sind lokal: Die Modelle erfassen die Tendenz, nicht die einzelne Gewitterwolke über deinem Kopf.</p>
+<h2>Technische Beschneiung</h2>
+<p>Wir zählen die Nachtstunden (18-8 Uhr) mit einer Feuchttemperatur unter -2 °C, der Schwelle, unter der Schneekanonen gut arbeiten. Die Feuchttemperatur berücksichtigt die Luftfeuchtigkeit: Bei trockener Luft kann man schon bei 0 °C beschneien, bei feuchter Luft braucht es mehr Kälte.</p>
+<h2>Grenzen</h2>
+<p>Es sind automatische Richtwerte. Sie ersetzen weder die offiziellen Berichte von Zivilschutz und Meteomont noch das eigene Urteil vor Ort. Entscheide eine Tour ins verschneite Gelände nicht allein auf ihrer Grundlage.</p>
+<h2>Quellen und Lizenzen</h2>
+<p>Die Fotos stammen von <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> unter freien Lizenzen (Autor und Lizenz stehen auf jedem Foto, mit Link zur Originalseite) oder sind eigene Aufnahmen.</p>
+<p>Modelldaten: ItaliaMeteo-ARPAE, MeteoSchweiz, DWD, Météo-France, ECMWF, NOAA, bereitgestellt über <a href="https://open-meteo.com/">Open-Meteo</a> unter der Lizenz <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Geländehöhen: EU-DEM 25 m (Copernicus) über <a href="https://www.opentopodata.org/">OpenTopoData</a> und Copernicus DEM über Open-Meteo.</p>
+</section>
+{% endblock %}

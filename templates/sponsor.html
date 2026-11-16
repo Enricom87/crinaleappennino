@@ -1,27 +1,27 @@
 {% extends "base.html" %}
-{% block title %}Diventa sponsor · {{ site.name }}{% endblock %}
+{% block title %}{{ t("Diventa sponsor") }} · {{ site.name }}{% endblock %}
 {% block main %}
-<section class="hero small"><div class="wrap"><h1>Fatti trovare da chi sta per salire in montagna</h1>
-<p class="lead">Chi apre {{ site.name }} sta decidendo se e dove salire: a sciare, in ciaspole, a camminare o in bici. È il momento giusto per ricordargli il tuo hotel, rifugio, noleggio o scuola.</p></div></section>
+<section class="hero small"><div class="wrap"><h1>{{ t("Fatti trovare da chi sta per salire in montagna") }}</h1>
+<p class="lead">{{ t("Chi apre {name} sta decidendo se e dove salire: a sciare, in ciaspole, a camminare o in bici. È il momento giusto per ricordargli il tuo hotel, rifugio, noleggio o scuola.", name=site.name) }}</p></div></section>
 <section class="wrap">
 {% for o in offers %}
 <div class="plan-row">
-  <h2>{{ o.name }} <span class="price">{% if o.founder %}<s class="muted">{{ o.full }} €</s> {% endif %}{{ o.price_now }} €<small> / 12 mesi</small></span></h2>
-  <p>{{ o.desc }} {% if o.max > 1 %}Massimo {{ o.max }} sponsor{% if o.scope == 'location' %} per località{% endif %}.{% else %}Un solo sponsor.{% endif %}</p>
-  <ul class="buy">{% for r in o.rows %}<li><span>{{ r.label if o.scope == 'location' else 'Spazio unico' }}</span>
-    {% if r.left <= 0 %}<span class="muted small">esaurito</span>
-    {% elif r.url %}<a class="btn small" href="{{ r.url }}" rel="noopener">Acquista</a> <span class="muted small">{{ r.left }} {{ 'posto' if r.left == 1 else 'posti' }}</span>
-    {% else %}<a class="btn small ghost" href="mailto:{{ site.contact_email }}?subject={{ ('Sponsor ' ~ o.name ~ ' ' ~ r.label)|urlencode }}">Prenota</a>{% endif %}</li>{% endfor %}</ul>
+  <h2>{{ o.name }} <span class="price">{% if o.founder %}<s class="muted">{{ o.full }} €</s> {% endif %}{{ o.price_now }} €<small> / {{ t("12 mesi") }}</small></span></h2>
+  <p>{{ o.desc }} {% if o.max > 1 %}{{ t("Massimo {n} sponsor per località." if o.scope == 'location' else "Massimo {n} sponsor.", n=o.max) }}{% else %}{{ t("Un solo sponsor.") }}{% endif %}</p>
+  <ul class="buy">{% for r in o.rows %}<li><span>{{ r.label if o.scope == 'location' else t('Spazio unico') }}</span>
+    {% if r.left <= 0 %}<span class="muted small">{{ t("esaurito") }}</span>
+    {% elif r.url %}<a class="btn small" href="{{ r.url }}" rel="noopener">{{ t("Acquista") }}</a> <span class="muted small">{{ r.left }} {{ t('posto' if r.left == 1 else 'posti') }}</span>
+    {% else %}<a class="btn small ghost" href="mailto:{{ site.contact_email }}?subject={{ ('Sponsor ' ~ o.name ~ ' ' ~ r.label)|urlencode }}">{{ t("Prenota") }}</a>{% endif %}</li>{% endfor %}</ul>
 </div>
 {% endfor %}
-{% if offers and offers[0].founder %}<p class="note"><strong>Sponsor fondatori:</strong> prezzi scontati del 40% fino al 15 dicembre.</p>{% endif %}
-<p class="muted small">Pagamento sicuro con carta tramite Stripe, ricevuta e fattura automatiche. Dopo il pagamento ti chiediamo nome dell'attività, link e una frase: lo spazio va online da solo entro poche ore e resta per 12 mesi.</p>
-<h2>Cosa ricevi</h2>
+{% if offers and offers[0].founder %}<p class="note">{{ t("<strong>Sponsor fondatori:</strong> prezzi scontati del 40% fino al 15 dicembre.")|safe }}</p>{% endif %}
+<p class="muted small">{{ t("Pagamento sicuro con carta tramite Stripe, ricevuta e fattura automatiche. Dopo il pagamento ti chiediamo nome dell'attività, link e una frase: lo spazio va online da solo entro poche ore e resta per 12 mesi.") }}</p>
+<h2>{{ t("Cosa ricevi") }}</h2>
 <ul>
-<li>Link diretto al tuo sito o alla tua pagina di prenotazione.</li>
-<li>Visibilità tutto l'anno: neve d'inverno, sentieri, MTB e meteo in quota d'estate.</li>
-<li>Nessun rinnovo automatico.</li>
+<li>{{ t("Link diretto al tuo sito o alla tua pagina di prenotazione.") }}</li>
+<li>{{ t("Visibilità tutto l'anno: neve d'inverno, sentieri, MTB e meteo in quota d'estate.") }}</li>
+<li>{{ t("Nessun rinnovo automatico.") }}</li>
 </ul>
-<p>Domande? <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></p>
+<p>{{ t("Domande?") }} <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></p>
 </section>
 {% endblock %}

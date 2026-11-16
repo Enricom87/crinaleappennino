@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>{{ site.base_url }}/</loc><changefreq>daily</changefreq></url>
-{% for L in locs %}<url><loc>{{ site.base_url }}/{{ L.slug }}/</loc><changefreq>daily</changefreq></url>
-{% endfor %}<url><loc>{{ site.base_url }}/percorsi/</loc><changefreq>daily</changefreq></url>
-{% for r in routes %}<url><loc>{{ site.base_url }}/percorsi/{{ r.slug }}/</loc><changefreq>daily</changefreq></url>
-{% endfor %}<url><loc>{{ site.base_url }}/metodo/</loc></url>
-<url><loc>{{ site.base_url }}/sponsor/</loc></url>
-<url><loc>{{ site.base_url }}/newsletter/</loc></url>
-</urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{% for p in pages %}{% for pre in prefixes %}<url><loc>{{ site.base_url }}/{{ pre }}{{ p }}</loc>{% for pre2 in prefixes %}<xhtml:link rel="alternate" hreflang="{{ (pre2[:-1] or 'it')|replace('zh', 'zh-Hans') }}" href="{{ site.base_url }}/{{ pre2 }}{{ p }}"/>{% endfor %}<changefreq>daily</changefreq></url>
+{% endfor %}{% endfor %}</urlset>

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}工作原理 · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>工作原理</h1>
+<p class="lead">我们不凭感觉预报：每天早上比较亚平宁山脉可用的最精细数值模式，逐个海拔计算降雪。</p></div></section>
+<section class="wrap prose">
+<h2>模式</h2>
+<ul>
+<li><strong>今天和明天</strong>：高分辨率区域模式（1-2 公里），能真正"看见"山脊：ItaliaMeteo-ARPAE 的 ICON-2I（意大利国家参考模式，双倍权重）、瑞士气象局 ICON-CH2、德国气象局 ICON-D2 和法国气象局 AROME。</li>
+<li><strong>第三天起</strong>：全球模式 ECMWF、GFS 和 ICON，以及它们之间的差异范围。</li>
+<li><strong>概率</strong>：ECMWF 集合预报的 51 个情景。"至少 10 厘米的概率为 30%"表示 51 个情景中约有 15 个给出至少 10 厘米。</li>
+<li><strong>天气形势</strong>：1500 米气温、3000 米气流方向和低压槽位置，用来判断一次天气过程带来的是雪还是雨。</li>
+</ul>
+<h2>我们如何估算降雪</h2>
+<p>全球模式会把山"抹平"，从而低估高处降雪。因此我们根据降水量和换算到每个点真实海拔的气温来计算降雪：低于 0.5 °C 时全部降水计为雪，0.5 至 1.5 °C 之间计一半，按约 1 毫米水对应 1 厘米雪的比例换算。此外，只有当零度层在该点上方 300 米以内时才计入降雪（300 至 500 米之间计一半），这样当高空仍然偏暖时就不会误算山顶降雪。非常干燥的雪（严寒）积雪会更多，湿雪则更少。</p>
+<h2>无雪季节的山上：雷暴、炎热和大风</h2>
+<p>每个地区我们取最高点。今明两天比较区域模式（ICON-2I、ICON-D2、ICON-CH2、AROME），之后三天使用全球模式。雷暴风险来自对流有效位能（CAPE）和 11 点至 20 点的预报降雨："很可能"表示至少一半模式预报 CAPE 超过 800 J/kg 且午后降雨至少 1 毫米；"可能"表示 CAPE 超过 300 J/kg 且降雨达半毫米。开始时间取各模式的中位数，建议下山时间再提前一小时。当天评价还考虑阵风（50 公里/小时起需注意，70 起最好别去）、总降雨量和云量。夏季雷暴是局地性的：模式只能把握趋势，无法预报你头顶的那一朵积雨云。</p>
+<h2>人工造雪</h2>
+<p>我们统计夜间（18 点至 8 点）湿球温度低于 -2 °C 的小时数，这是造雪机高效工作的门槛。湿球温度考虑了湿度：空气干燥时 0 °C 也能造雪，空气潮湿时则需要更冷。</p>
+<h2>局限</h2>
+<p>这些是自动生成的参考预报，不能替代民防部门和 Meteomont 的官方公报，也不能替代你在现场的判断。不要仅凭它们决定是否进入积雪地形。</p>
+<h2>来源与许可</h2>
+<p>照片来自 <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> 的自由许可图片（每张照片都标注作者和许可，并链接到原始页面），或为我们自己拍摄。</p>
+<p>模式数据：ItaliaMeteo-ARPAE、瑞士气象局、德国气象局、法国气象局、ECMWF、NOAA，经 <a href="https://open-meteo.com/">Open-Meteo</a> 以 <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> 许可发布。地形高程：EU-DEM 25 米（哥白尼计划），经 <a href="https://www.opentopodata.org/">OpenTopoData</a>；以及经 Open-Meteo 的 Copernicus DEM。</p>
+</section>
+{% endblock %}

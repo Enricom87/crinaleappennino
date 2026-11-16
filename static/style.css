@@ -24,7 +24,7 @@ nav{display:flex;gap:18px;align-items:center;font-size:15px}
 nav a{color:#d6e4f0;text-decoration:none}
 nav a:hover{color:#fff}
 nav a.cta{background:var(--snow3);color:var(--ink);padding:7px 12px;border-radius:999px;font-weight:600}
-@media(max-width:720px){nav a:not(.cta){display:none}}
+@media(max-width:720px){nav>a:not(.cta){display:none}}
 
 .hero{background:linear-gradient(160deg,#0f2236 0%,#1d4f7a 70%,#4f8fc0 100%);color:#fff;padding:48px 0 44px}
 .hero.small{padding:32px 0 28px}
@@ -171,3 +171,11 @@ details.tech>summary{cursor:pointer;font-weight:600;padding:.6rem 0}
 .photo-credit a{color:inherit}
 .card.has-photo{padding-top:0;overflow:hidden}
 .card-photo{display:block;height:130px;margin:0 -18px 12px;background-size:cover;background-position:center}
+/* selettore lingua */
+.langs{position:relative}
+.langs summary{list-style:none;cursor:pointer;color:#d6e4f0;font-size:14px;padding:4px 6px;border:1px solid rgba(255,255,255,.25);border-radius:8px}
+.langs summary::-webkit-details-marker{display:none}
+.langs[open] summary{color:#fff}
+.langs div{position:absolute;right:0;top:calc(100% + 8px);background:#fff;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:6px;min-width:140px;z-index:20}
+.langs div a{display:block!important;color:var(--ink);padding:7px 10px;border-radius:6px}
+.langs div a:hover,.langs div a[aria-current]{background:#eef4f9;color:var(--ink)}

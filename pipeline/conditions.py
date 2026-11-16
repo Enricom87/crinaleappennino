@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta
 
-from text import nice_date
+from i18n import T, nice_date
 
 LABELS = {"escursionismo": "Escursionismo", "ciaspole": "Ciaspole", "scialpinismo": "Scialpinismo",
           "trail-running": "Trail running", "mtb-gravel": "MTB e gravel"}
@@ -71,34 +71,34 @@ def route_conditions(route: dict, loc_points: list[dict], raw_glob: dict) -> dic
 
     if any(a in acts for a in ("ciaspole", "scialpinismo")):
         if snow3 >= 10:
-            notes.append(f"Neve fresca prevista in quota nei prossimi 3 giorni: circa {snow3:.0f} cm intorno ai {zq} m.")
+            notes.append(T("Neve fresca prevista in quota nei prossimi 3 giorni: circa {n} cm intorno ai {zq} m.", n=f"{snow3:.0f}", zq=zq))
         elif snow3 >= 1:
-            notes.append(f"Poca neve fresca prevista in quota (circa {snow3:.0f} cm in 3 giorni).")
+            notes.append(T("Poca neve fresca prevista in quota (circa {n} cm in 3 giorni).", n=f"{snow3:.0f}"))
         else:
-            notes.append("Nessuna nevicata prevista nei prossimi 3 giorni.")
-        notes.append("Il sito non misura la neve al suolo: controlla le webcam della località e, per lo scialpinismo, "
-                     "il bollettino valanghe Meteomont prima di partire.")
+            notes.append(T("Nessuna nevicata prevista nei prossimi 3 giorni."))
+        notes.append(T("Il sito non misura la neve al suolo: controlla le webcam della località e, per lo scialpinismo, "
+                     "il bollettino valanghe Meteomont prima di partire."))
     if any(a in acts for a in ("escursionismo", "trail-running")):
         if icy and ((past or 0) >= 2 or any(d["precip"] >= 1 for d in days[:3])):
-            notes.append(f"Possibile ghiaccio sui tratti alti (intorno ai {zq} m): minime sotto zero dopo precipitazioni "
-                         f"({', '.join(nice_date(d['date'], True) for d in icy[:3])}).")
+            notes.append(T("Possibile ghiaccio sui tratti alti (intorno ai {zq} m): minime sotto zero dopo precipitazioni "
+                         "({days}).", zq=zq, days=', '.join(nice_date(d['date'], True) for d in icy[:3])))
         if snow3 >= 3 and "ciaspole" not in acts:
-            notes.append(f"Neve prevista in quota ({snow3:.0f} cm in 3 giorni): sul tratto alto possono servire ciaspole o ramponcini.")
+            notes.append(T("Neve prevista in quota ({n} cm in 3 giorni): sul tratto alto possono servire ciaspole o ramponcini.", n=f"{snow3:.0f}"))
     if "mtb-gravel" in acts:
         if past is not None:
             if past >= 15:
-                notes.append(f"Fondo probabilmente fangoso: {past:.0f} mm di pioggia nelle ultime 48 ore.")
+                notes.append(T("Fondo probabilmente fangoso: {n} mm di pioggia nelle ultime 48 ore.", n=f"{past:.0f}"))
             elif past >= 5:
-                notes.append(f"Possibili tratti fangosi: {past:.0f} mm di pioggia nelle ultime 48 ore.")
+                notes.append(T("Possibili tratti fangosi: {n} mm di pioggia nelle ultime 48 ore.", n=f"{past:.0f}"))
             else:
-                notes.append("Fondo verosimilmente asciutto: poca o nessuna pioggia nelle ultime 48 ore.")
+                notes.append(T("Fondo verosimilmente asciutto: poca o nessuna pioggia nelle ultime 48 ore."))
         if snow3 >= 1:
-            notes.append("Neve prevista sui tratti alti: verifica la percorribilità.")
+            notes.append(T("Neve prevista sui tratti alti: verifica la percorribilità."))
     if windy:
         d = max(windy, key=lambda x: x["gust_top"])
-        notes.append(f"Vento forte in quota: raffiche fino a {d['gust_top']} km/h {nice_date(d['date'])}.")
+        notes.append(T("Vento forte in quota: raffiche fino a {g} km/h {d}.", g=d['gust_top'], d=nice_date(d['date'])))
     if not notes:
-        notes.append("Nessuna criticità meteo evidente nei prossimi giorni.")
+        notes.append(T("Nessuna criticità meteo evidente nei prossimi giorni."))
     return {"top_point": top["name"], "top_elev": top["elev"], "z_used": zq, "low_point": low["name"], "days": days,
             "past48": past, "notes": notes}
 
@@ -128,6 +128,6 @@ def profile_svg(route: dict) -> str:
     km = xs[-1] / 1000
     ticks = "".join(f'<text x="{X(k * 1000):.1f}" y="{H - 6}" class="ax" text-anchor="middle">{k} km</text>'
                     for k in range(0, int(km) + 1, max(1, int(km // 6) or 1)))
-    return (f'<svg viewBox="0 0 {W} {H}" class="chart" role="img" aria-label="Profilo altimetrico">{grid}'
+    return (f'<svg viewBox="0 0 {W} {H}" class="chart" role="img" aria-label="{T("Profilo altimetrico")}">{grid}'
             f'<polygon points="{area}" fill="#9cc4e4" opacity=".55"/><polyline points="{path}" fill="none" '
             f'stroke="#1d4f7a" stroke-width="2"/>{ticks}</svg>')

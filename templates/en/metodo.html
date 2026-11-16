@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}How it works · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>How it works</h1>
+<p class="lead">No "gut feeling" forecasts: every morning we compare the finest numerical models available for the Apennines and work out the snow altitude by altitude.</p></div></section>
+<section class="wrap prose">
+<h2>The models</h2>
+<ul>
+<li><strong>Today and tomorrow</strong>: high-resolution limited-area models (1-2 km) that actually "see" the ridge: ItaliaMeteo-ARPAE's ICON-2I (the Italian national reference, weighted double), MeteoSwiss ICON-CH2, the German weather service's ICON-D2 and Météo-France AROME.</li>
+<li><strong>From day three</strong>: the global models ECMWF, GFS and ICON, with their spread.</li>
+<li><strong>Probabilities</strong>: the 51 scenarios of the ECMWF ensemble. "30% chance of at least 10 cm" means about 15 of the 51 scenarios bring at least 10 cm.</li>
+<li><strong>Weather pattern</strong>: temperature at 1,500 m, flow direction at 3,000 m and position of the trough, to tell whether a front will bring snow or rain.</li>
+</ul>
+<h2>How we estimate snow</h2>
+<p>Global models "smooth out" mountains and underestimate snow up high. That's why we calculate snow from precipitation and from temperature recalculated at the real altitude of each point: below 0.5 °C all precipitation counts as snow, between 0.5 and 1.5 °C half of it does, using a rough ratio of 1 cm of snow per 1 mm of water. On top of that, snow only counts when the freezing level is within 300 m above the point (half between 300 and 500 m), so we don't count snow at the summit when it's still warm above. Very dry snow (intense cold) can pile up more, wet snow less.</p>
+<h2>Up high without snow: storms, heat and wind</h2>
+<p>For each resort we use the highest point. For today and tomorrow we compare the limited-area models (ICON-2I, ICON-D2, ICON-CH2, AROME), for the following three days the global ones. Thunderstorm risk comes from the energy available for convection (CAPE) and the rain forecast between 11:00 and 20:00: "likely" when at least half of the models see CAPE above 800 J/kg with at least 1 mm in the afternoon, "possible" above 300 J/kg and half a millimetre. The start time is the median across models; the recommended return time is one hour earlier. The day's verdict also takes into account gusts (take care from 50 km/h, better not from 70), total rain and cloud cover. Summer storms are local: models catch the trend, not the single cumulonimbus over your head.</p>
+<h2>Snowmaking</h2>
+<p>We count the night hours (18:00-08:00) with a wet-bulb temperature below -2 °C, the threshold below which snow guns work well. Wet-bulb temperature takes humidity into account: with dry air you can make snow even at 0 °C, with humid air you need it colder.</p>
+<h2>Limits</h2>
+<p>These are automatic, indicative forecasts. They do not replace the official bulletins from Civil Protection and Meteomont, nor your judgement on the ground. Don't rely on them alone to decide on a trip into snowy terrain.</p>
+<h2>Sources and licences</h2>
+<p>Resort photos come from <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> under free licences (author and licence are shown on each photo, linking to the original page) or are our own.</p>
+<p>Model data: ItaliaMeteo-ARPAE, MeteoSwiss, DWD, Météo-France, ECMWF, NOAA, distributed via <a href="https://open-meteo.com/">Open-Meteo</a> under a <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> licence. Terrain elevation: EU-DEM 25 m (Copernicus) via <a href="https://www.opentopodata.org/">OpenTopoData</a> and Copernicus DEM via Open-Meteo.</p>
+</section>
+{% endblock %}

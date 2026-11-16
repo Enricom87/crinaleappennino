@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}隐私政策 · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>隐私政策</h1></div></section>
+<section class="wrap prose">
+<p class="muted small">本译文仅供参考，具有法律效力的是<a href="{{ alternates[0].href }}">意大利语版本</a>。</p>
+<p><strong>数据控制者</strong>：[NOME E INDIRIZZO DEL TITOLARE DA COMPLETARE]，联系方式 <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a>。</p>
+<h2>浏览</h2>
+<p>本站不使用用户画像 Cookie，也不使用追踪访客的广告。我们使用 Cloudflare Web Analytics 统计访问量，该服务不使用 Cookie，也不收集可识别个人身份的数据。本站托管于 GitHub Pages，其出于安全原因会在技术日志中记录 IP 地址。</p>
+<h2>路线地图</h2>
+<p>路线地图从 OpenTopoMap 加载地图图块，并从 unpkg.com 加载 Leaflet 库：这些服务会接收访客的 IP 地址以传送文件，不使用用户画像 Cookie。</p>
+<h2>邮件通讯</h2>
+<p>如果你订阅降雪提醒，我们仅在你同意的前提下使用你的电子邮箱向你发送通讯。邮件通过 Brevo（Sendinblue SAS，法国，欧盟）发送。你可随时通过每封邮件中的链接退订；退订后你的数据将被删除。</p>
+<h2>赞助链接</h2>
+<p>赞助商链接均有标注，指向第三方网站，适用其各自的隐私政策。</p>
+<h2>你的权利</h2>
+<p>你可以写信至上述地址，要求访问、更正或删除你的数据，也可以向意大利数据保护机构（Garante per la protezione dei dati personali）投诉。</p>
+</section>
+{% endblock %}

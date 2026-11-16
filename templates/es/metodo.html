@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Cómo trabajamos · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>Cómo trabajamos</h1>
+<p class="lead">Nada de pronósticos «a ojo»: cada mañana comparamos los modelos numéricos más finos disponibles para los Apeninos y calculamos la nieve cota a cota.</p></div></section>
+<section class="wrap prose">
+<h2>Los modelos</h2>
+<ul>
+<li><strong>Hoy y mañana</strong>: modelos de área limitada de alta resolución (1-2 km), que «ven» la cresta: ICON-2I de ItaliaMeteo-ARPAE (la referencia nacional, con peso doble), ICON-CH2 de MeteoSuiza, ICON-D2 del servicio meteorológico alemán y AROME de Météo-France.</li>
+<li><strong>Desde el tercer día</strong>: los modelos globales ECMWF, GFS e ICON, con su horquilla.</li>
+<li><strong>Probabilidades</strong>: los 51 escenarios del conjunto ECMWF. «30 % de al menos 10 cm» significa que unos 15 escenarios de 51 dan al menos 10 cm.</li>
+<li><strong>Configuración</strong>: temperatura a 1.500 m, dirección del flujo a 3.000 m y posición de la vaguada, para saber si una perturbación trae nieve o lluvia.</li>
+</ul>
+<h2>Cómo estimamos la nieve</h2>
+<p>Los modelos globales «suavizan» las montañas y subestiman la nieve en altura. Por eso calculamos la nieve a partir de la precipitación y de la temperatura recalculada a la altitud real de cada punto: por debajo de 0,5 °C toda la precipitación cuenta como nieve, entre 0,5 y 1,5 °C la mitad, con la relación orientativa de 1 cm de nieve por 1 mm de agua. Además, la nieve solo cuenta cuando la isoterma de 0 °C está como mucho 300 m por encima del punto (a medias entre 300 y 500 m): así no contamos nieve en la cima cuando arriba todavía hace calor. La nieve muy seca (frío intenso) puede rendir más; la húmeda, menos.</p>
+<h2>En altura sin nieve: tormentas, calor y viento</h2>
+<p>Para cada estación usamos el punto más alto. Para hoy y mañana comparamos los modelos de área limitada (ICON-2I, ICON-D2, ICON-CH2, AROME); para los tres días siguientes, los globales. El riesgo de tormentas sale de la energía disponible para la convección (CAPE) y de la lluvia prevista entre las 11 y las 20: «probables» cuando al menos la mitad de los modelos ve CAPE por encima de 800 J/kg con al menos 1 mm por la tarde, «posibles» por encima de 300 J/kg y medio milímetro. La hora de inicio es la mediana de los modelos; la vuelta recomendada es una hora antes. El veredicto del día también tiene en cuenta las rachas (ojo desde 50 km/h, mejor no desde 70), la lluvia total y la nubosidad. Las tormentas de verano son locales: los modelos captan la tendencia, no el cumulonimbo concreto sobre tu cabeza.</p>
+<h2>Nieve artificial</h2>
+<p>Contamos las horas nocturnas (18-8) con temperatura de bulbo húmedo por debajo de -2 °C, el umbral bajo el cual los cañones funcionan bien. El bulbo húmedo tiene en cuenta la humedad: con aire seco se puede fabricar nieve incluso a 0 °C; con aire húmedo hace falta más frío.</p>
+<h2>Límites</h2>
+<p>Son pronósticos automáticos y orientativos. No sustituyen los boletines oficiales de Protección Civil y Meteomont, ni tu criterio sobre el terreno. No los uses solos para decidir una salida por terreno nevado.</p>
+<h2>Fuentes y licencias</h2>
+<p>Las fotos proceden de <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> con licencias libres (autor y licencia figuran en cada foto, con enlace a la página original) o son nuestras.</p>
+<p>Datos de los modelos: ItaliaMeteo-ARPAE, MeteoSuiza, DWD, Météo-France, ECMWF, NOAA, distribuidos mediante <a href="https://open-meteo.com/">Open-Meteo</a> con licencia <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Altitud del terreno: EU-DEM 25 m (Copernicus) mediante <a href="https://www.opentopodata.org/">OpenTopoData</a> y Copernicus DEM mediante Open-Meteo.</p>
+</section>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Confidentialité · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>Confidentialité</h1></div></section>
+<section class="wrap prose">
+<p class="muted small">Traduction fournie à titre informatif : seule la <a href="{{ alternates[0].href }}">version italienne</a> fait foi.</p>
+<p><strong>Responsable du traitement</strong> : [NOME E INDIRIZZO DEL TITOLARE DA COMPLETARE], contact <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a>.</p>
+<h2>Navigation</h2>
+<p>Le site n'utilise ni cookies de profilage ni publicité qui suit les visiteurs. Pour compter les visites, nous utilisons Cloudflare Web Analytics, qui n'utilise pas de cookies et ne collecte aucune donnée personnelle identifiante. Le site est hébergé sur GitHub Pages, qui enregistre les adresses IP dans ses journaux techniques pour des raisons de sécurité.</p>
+<h2>Cartes des itinéraires</h2>
+<p>Les cartes des itinéraires chargent les tuiles d'OpenTopoMap et la bibliothèque Leaflet depuis unpkg.com : ces services reçoivent l'adresse IP du visiteur pour livrer les fichiers. Ils n'utilisent pas de cookies de profilage.</p>
+<h2>Newsletter</h2>
+<p>Si tu t'inscris à l'alerte neige, nous traitons ton adresse e-mail uniquement pour t'envoyer nos messages, sur la base de ton consentement. L'envoi se fait via Brevo (Sendinblue SAS, France, UE). Tu peux te désinscrire à tout moment grâce au lien présent dans chaque e-mail ; tes données sont supprimées lors de la désinscription.</p>
+<h2>Liens sponsorisés</h2>
+<p>Les liens des sponsors sont signalés et mènent à des sites tiers, avec leurs propres politiques de confidentialité.</p>
+<h2>Tes droits</h2>
+<p>Tu peux demander l'accès, la rectification ou l'effacement de tes données en écrivant à l'adresse ci-dessus, et introduire une réclamation auprès de l'autorité italienne de protection des données (Garante per la protezione dei dati personali).</p>
+</section>
+{% endblock %}

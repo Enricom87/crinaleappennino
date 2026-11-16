@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-{% block title %}Percorsi sull'Appennino tosco-emiliano · {{ site.name }}{% endblock %}
-{% block desc %}Escursioni, ciaspole, scialpinismo, trail running e MTB tra Cerreto, Cusna, Abetone, Cimone e Corno alle Scale, con le condizioni meteo previste alla quota del percorso.{% endblock %}
+{% block title %}{{ t("Percorsi sull'Appennino tosco-emiliano") }} · {{ site.name }}{% endblock %}
+{% block desc %}{{ t("Escursioni, ciaspole, scialpinismo, trail running e MTB tra Cerreto, Cusna, Abetone, Cimone e Corno alle Scale, con le condizioni meteo previste alla quota del percorso.") }}{% endblock %}
 {% block main %}
 <section class="hero small"><div class="wrap">
-  <p class="kicker">Aggiornato {{ updated }}</p>
-  <h1>Dove andiamo questo weekend?</h1>
-  <p class="lead">{{ routes|length }} giri scelti tra crinale, laghi e vette, a piedi, di corsa, in bici o con le ciaspole. Per ognuno ti diciamo cosa trovi lassù: neve, ghiaccio, vento, fango, temporali.</p>
+  <p class="kicker">{{ t("Aggiornato {d}", d=updated) }}</p>
+  <h1>{{ t("Dove andiamo questo weekend?") }}</h1>
+  <p class="lead">{{ t("{n} giri scelti tra crinale, laghi e vette, a piedi, di corsa, in bici o con le ciaspole. Per ognuno ti diciamo cosa trovi lassù: neve, ghiaccio, vento, fango, temporali.", n=routes|length) }}</p>
 </div></section>
 <section class="wrap">
-  <div class="filters" role="group" aria-label="Filtra per attività">
-    <button class="chip on" data-f="">Tutti</button>
+  <div class="filters" role="group" aria-label="{{ t('Filtra per attività') }}">
+    <button class="chip on" data-f="">{{ t("Tutti") }}</button>
     {% for k, v in activity_labels.items() %}<button class="chip" data-f="{{ k }}">{{ v }}</button>{% endfor %}
   </div>
   <div class="cards">
@@ -17,13 +17,13 @@
     <a class="card route" href="{{ u('percorsi/' ~ r.slug ~ '/') }}" data-a="{{ r.activities|join(' ') }}">
       <div class="card-head"><h3>{{ r.name }}</h3>{% if r.cai %}<span class="area">CAI {{ r.cai }}</span>{% endif %}</div>
       <p class="tags">{% for l in r.labels %}<span class="tag t-nd">{{ l }}</span> {% endfor %}</p>
-      <p class="facts">{{ r.stats.km }} km · +{{ r.stats.gain }} m · fino a {{ r.stats.z_max }} m{% if r.difficulty %} · {{ r.difficulty }}{% endif %}</p>
+      <p class="facts">{{ r.stats.km }} km · +{{ r.stats.gain }} m · {{ t("fino a {z} m", z=r.stats.z_max) }}{% if r.difficulty %} · {{ r.difficulty }}{% endif %}</p>
       <p class="card-title small">{{ r.cond.notes[0] }}</p>
       <p class="muted small">{{ r.loc_name }}</p>
     </a>
   {% endfor %}
   </div>
-  <p class="muted small">Tracciati da OpenStreetMap (© OpenStreetMap contributors, ODbL) e tracce di Enrico. Difficoltà secondo la scala CAI: T turistico, E escursionistico, EE per escursionisti esperti.</p>
+  <p class="muted small">{{ t("Tracciati da OpenStreetMap (© OpenStreetMap contributors, ODbL) e tracce di Enrico. Difficoltà secondo la scala CAI: T turistico, E escursionistico, EE per escursionisti esperti.") }}</p>
 </section>
 <script>
 {
@@ -36,11 +36,11 @@
 }
 </script>
 <section class="wrap">
-  <h2>Fonti locali</h2>
+  <h2>{{ t("Fonti locali") }}</h2>
   {% for src in local_sources if "_all" in src.links %}
   <p class="small"><a href="{{ src.url }}" rel="noopener" target="_blank"><strong>{{ src.name }}</strong></a> · {{ src.about }}</p>
   <ul class="links">{% for l in src.links["_all"] %}<li><a href="{{ l.url }}" rel="noopener" target="_blank">{{ l.label }}</a></li>{% endfor %}</ul>
   {% endfor %}
-  <p class="muted small">Segnalaci altre associazioni o pro loco con sentieri curati: <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a>.</p>
+  <p class="muted small">{{ t("Segnalaci altre associazioni o pro loco con sentieri curati:") }} <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a>.</p>
 </section>
 {% endblock %}

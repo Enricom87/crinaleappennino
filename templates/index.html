@@ -2,12 +2,12 @@
 {% block main %}
 <section class="hero{% if home_photo %} has-photo{% endif %}"{% if home_photo %} style="background-image:linear-gradient(180deg,rgba(9,22,36,.35),rgba(9,22,36,.72)),url('{{ u('static/photos/' ~ home_photo.key ~ '.jpg') }}');background-position:{{ home_photo.pos }}"{% endif %}>
   <div class="wrap">
-    <p class="kicker">Aggiornato {{ updated }}</p>
-    <h1>{% if summer %}Si va in montagna? Ti diciamo dove e fino a che ora.{% else %}Nevica? Quanto? E a che quota? Te lo diciamo prima.{% endif %}</h1>
+    <p class="kicker">{{ t("Aggiornato {d}", d=updated) }}</p>
+    <h1>{% if summer %}{{ t("Si va in montagna? Ti diciamo dove e fino a che ora.") }}{% else %}{{ t("Nevica? Quanto? E a che quota? Te lo diciamo prima.") }}{% endif %}</h1>
     <p class="lead">{{ overview }}</p>
-    <p>{% if summer %}<a class="btn" href="{{ u('percorsi/') }}">Scegli un percorso</a> {% endif %}<a class="btn{% if summer %} ghost{% endif %}" href="{{ u('newsletter/') }}">❄️ Avvisami quando nevica</a></p>
+    <p>{% if summer %}<a class="btn" href="{{ u('percorsi/') }}">{{ t("Scegli un percorso") }}</a> {% endif %}<a class="btn{% if summer %} ghost{% endif %}" href="{{ u('newsletter/') }}">❄️ {{ t("Avvisami quando nevica") }}</a></p>
   </div>
-  {% if home_photo and home_photo.credit %}<span class="photo-credit">Foto: {{ home_photo.credit.artist }} · <a href="{{ home_photo.credit.page }}" rel="noopener">{{ home_photo.credit.license }}</a></span>{% endif %}
+  {% if home_photo and home_photo.credit %}<span class="photo-credit">{{ t("Foto") }}: {{ home_photo.credit.artist }} · <a href="{{ home_photo.credit.page }}" rel="noopener">{{ home_photo.credit.license }}</a></span>{% endif %}
 </section>
 
 {% if global_sponsors %}
@@ -17,7 +17,7 @@
 {% endif %}
 
 <section class="wrap" id="localita">
-  <h2>Scegli la tua montagna</h2>
+  <h2>{{ t("Scegli la tua montagna") }}</h2>
   <div class="cards">
   {% for L in locs %}
     <a class="card lvl-{{ L.text.level }}{% if L.photo %} has-photo{% endif %}" href="{{ u(L.slug ~ '/') }}">
@@ -25,7 +25,7 @@
       <div class="card-head"><h3>{{ L.name }}</h3><span class="area">{{ L.area }}</span></div>
       {% set m0 = L.mtn[0] if L.mtn else none %}
       {% if summer and m0 %}
-      <p class="card-title"><span class="pill v-{{ m0.verdict }}">{{ m0.verdict_label }}</span> oggi in quota{% if m0.back_by %} · rientro entro le {{ m0.back_by }}{% endif %}</p>
+      <p class="card-title"><span class="pill v-{{ m0.verdict }}">{{ t(m0.verdict_label) }}</span> {{ t("oggi in quota") }}{% if m0.back_by %} · {{ t("rientro entro le {h}", h=m0.back_by) }}{% endif %}</p>
       {% if L.cards_top %}<div class="mini-icons">{% for c in L.cards_top[:4] %}<span title="{{ c.phrase }}"><svg viewBox="0 0 64 64"><use href="#ic-{{ c.icon }}"/></svg>{{ c.short }}<strong>{{ c.tmax|n0 }}°</strong></span>{% endfor %}</div>{% endif %}
       {% else %}
       <p class="card-title">{{ L.text.title }}</p>
@@ -38,16 +38,16 @@
 
 {% if syn %}
 <section class="wrap">
-  <h2>Dietro le quinte: cosa succede in cielo</h2>
-  <p class="muted">Temperatura a circa 1.500 m (850 hPa), direzione del flusso a 3.000 m e posizione della saccatura secondo ECMWF, con GFS a confronto. Sotto i -3 °C a 1.500 m la neve arriva di solito fino alle stazioni.</p>
+  <h2>{{ t("Dietro le quinte: cosa succede in cielo") }}</h2>
+  <p class="muted">{{ t("Temperatura a circa 1.500 m (850 hPa), direzione del flusso a 3.000 m e posizione della saccatura secondo ECMWF, con GFS a confronto. Sotto i -3 °C a 1.500 m la neve arriva di solito fino alle stazioni.") }}</p>
   <div class="scroll">
   <table class="syn">
-    <tr><th>Giorno</th><th>Configurazione</th><th>T 1.500 m<br><small>ECMWF / GFS</small></th><th>Flusso</th><th>Per la neve</th></tr>
+    <tr><th>{{ t("Giorno") }}</th><th>{{ t("Configurazione") }}</th><th>T 1.500 m<br><small>ECMWF / GFS</small></th><th>{{ t("Flusso") }}</th><th>{{ t("Per la neve") }}</th></tr>
     {% for r in syn[:10] %}
-    <tr><td>{{ nice_date(r.date, True) }}</td><td>{{ r.name }}</td>
+    <tr><td>{{ nice_date(r.date, True) }}</td><td>{{ t(r.name) }}</td>
       <td class="num">{% if r.ec %}{{ r.ec.t850|n0(True) }}{% endif %} / {% if r.gfs %}{{ r.gfs.t850|n0(True) }}{% endif %} °C</td>
-      <td>{% if r.ec %}{{ r.ec.flow }}{% endif %}</td>
-      <td><span class="tag t-{{ r.ec.thermal if r.ec else 'nd' }}">{{ r.ec.thermal if r.ec else 'n.d.' }}</span></td></tr>
+      <td>{% if r.ec %}{{ t(r.ec.flow) }}{% endif %}</td>
+      <td><span class="tag t-{{ r.ec.thermal if r.ec else 'nd' }}">{{ t(r.ec.thermal if r.ec else 'n.d.') }}</span></td></tr>
     {% endfor %}
   </table>
   </div>
@@ -56,9 +56,9 @@
 
 <section class="wrap promo">
   <div>
-    <h2>Lavori in montagna?</h2>
-    <p>Noleggi, scuole sci, rifugi e hotel: raggiungi chi controlla la neve prima di partire. Spazi sponsor per località, a partire da pochi euro al giorno.</p>
+    <h2>{{ t("Lavori in montagna?") }}</h2>
+    <p>{{ t("Noleggi, scuole sci, rifugi e hotel: raggiungi chi controlla la neve prima di partire. Spazi sponsor per località, a partire da pochi euro al giorno.") }}</p>
   </div>
-  <a class="btn" href="{{ u('sponsor/') }}">Scopri gli spazi</a>
+  <a class="btn" href="{{ u('sponsor/') }}">{{ t("Scopri gli spazi") }}</a>
 </section>
 {% endblock %}

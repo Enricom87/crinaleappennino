@@ -1,13 +1,16 @@
 <!doctype html>
-<html lang="it">
+<html lang="{{ html_lang }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}{{ site.name }} · {{ site.tagline }}{% endblock %}</title>
-<meta name="description" content="{% block desc %}Previsioni neve quota per quota per Abetone, Cimone, Doganaccia, Corno alle Scale, Garfagnana, Cerreto Laghi, Febbio e il crinale tosco-emiliano, aggiornate ogni mattina dai modelli meteo ad alta risoluzione.{% endblock %}">
+<meta name="description" content="{% block desc %}{{ t("Previsioni neve quota per quota per Abetone, Cimone, Doganaccia, Corno alle Scale, Garfagnana, Cerreto Laghi, Febbio e il crinale tosco-emiliano, aggiornate ogni mattina dai modelli meteo ad alta risoluzione.") }}{% endblock %}">
 <link rel="stylesheet" href="{{ u('static/style.css') }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ u('feed.xml') }}">
 <link rel="icon" href="{{ u('static/favicon.svg') }}" type="image/svg+xml">
+{% for a in alternates %}<link rel="alternate" hreflang="{{ a.hreflang }}" href="{{ a.abs }}">
+{% endfor %}<link rel="alternate" hreflang="x-default" href="{{ alternates[0].abs }}">
+<link rel="canonical" href="{% for a in alternates if a.lang == lang %}{{ a.abs }}{% endfor %}">
 <link rel="manifest" href="{{ u('manifest.webmanifest') }}">
 <meta name="theme-color" content="#0f2236">
 <link rel="apple-touch-icon" href="{{ u('static/apple-touch-icon.png') }}">
@@ -22,12 +25,13 @@
   <div class="wrap bar">
     <a class="brand" href="{{ u('') }}"><svg viewBox="0 0 40 24" aria-hidden="true"><path d="M2 22 L14 6 L20 13 L26 4 L38 22 Z" fill="currentColor"/><path d="M11 10 L14 6 L17 10 L15.5 9 L14 10.5 L12.5 9 Z M23 8 L26 4 L29 8 L27.5 7 L26 8.5 L24.5 7 Z" fill="#fff"/></svg>{{ site.name }}</a>
     <nav>
-      <a href="{{ u('#localita') }}">Località</a>
-      <a href="{{ u('percorsi/') }}">Percorsi</a>
-      <a href="{{ u('newsletter/') }}">Allerta neve</a>
-      <a href="{{ u('metodo/') }}">Come lavoriamo</a>
+      <a href="{{ u('#localita') }}">{{ t("Località") }}</a>
+      <a href="{{ u('percorsi/') }}">{{ t("Percorsi") }}</a>
+      <a href="{{ u('newsletter/') }}">{{ t("Allerta neve") }}</a>
+      <a href="{{ u('metodo/') }}">{{ t("Come lavoriamo") }}</a>
       <a href="{{ u('app/') }}">App</a>
-      <a href="{{ u('sponsor/') }}" class="cta">Diventa sponsor</a>
+      <a href="{{ u('sponsor/') }}" class="cta">{{ t("Diventa sponsor") }}</a>
+      <details class="langs"><summary aria-label="{{ t('Lingua') }}">🌐 {{ lang|upper }}</summary><div>{% for a in alternates %}<a href="{{ a.href }}" hreflang="{{ a.hreflang }}" lang="{{ a.hreflang }}"{% if a.lang == lang %} aria-current="true"{% endif %}>{{ a.name }}</a>{% endfor %}</div></details>
     </nav>
   </div>
 </header>
@@ -35,25 +39,25 @@
   <div class="wrap appbar-in">
     <img src="{{ u('static/icon-192.png') }}" alt="" width="40" height="40">
     <div class="appbar-txt">
-      <strong>📲 Scarica l'app di {{ site.name }}</strong>
-      <span class="ab-android">Android: tocca <b>Installa</b> qui accanto, oppure il menu ⋮ di Chrome → <b>Installa app</b>.</span>
-      <span class="ab-ios">iPhone: apri il sito con Safari, tocca <b>Condividi</b> <span aria-hidden="true">⬆️</span> e poi <b>Aggiungi alla schermata Home</b>.</span>
-      <span class="ab-other">Dal telefono: Android con Chrome → <b>Installa app</b>; iPhone con Safari → Condividi → <b>Aggiungi alla schermata Home</b>.</span>
+      <strong>📲 {{ t("Scarica l'app di {name}", name=site.name) }}</strong>
+      <span class="ab-android">{{ t("Android: tocca <b>Installa</b> qui accanto, oppure il menu ⋮ di Chrome → <b>Installa app</b>.")|safe }}</span>
+      <span class="ab-ios">{{ t("iPhone: apri il sito con Safari, tocca <b>Condividi</b> ⬆️ e poi <b>Aggiungi alla schermata Home</b>.")|safe }}</span>
+      <span class="ab-other">{{ t("Dal telefono: Android con Chrome → <b>Installa app</b>; iPhone con Safari → Condividi → <b>Aggiungi alla schermata Home</b>.")|safe }}</span>
     </div>
-    <button class="btn small" id="install-btn" hidden>Installa</button>
-    <a class="btn small ghost" href="{{ u('app/') }}">Come fare</a>
-    <button class="ab-close" id="appbar-close" aria-label="Chiudi">×</button>
+    <button class="btn small" id="install-btn" hidden>{{ t("Installa") }}</button>
+    <a class="btn small ghost" href="{{ u('app/') }}">{{ t("Come fare") }}</a>
+    <button class="ab-close" id="appbar-close" aria-label="{{ t('Chiudi') }}">×</button>
   </div>
 </div>
-{% if sample %}<div class="sample">Anteprima grafica con dati di prova: i numeri non sono una previsione reale.</div>{% endif %}
+{% if sample %}<div class="sample">{{ t("Anteprima grafica con dati di prova: i numeri non sono una previsione reale.") }}</div>{% endif %}
 <main>
 {% block main %}{% endblock %}
 </main>
 <footer class="foot">
   <div class="wrap">
-    <p><strong>{{ site.name }}</strong> · {{ site.tagline }}. Aggiornato il {{ updated }}.</p>
-    <p class="small">Previsioni elaborate automaticamente da modelli numerici open data (ItaliaMeteo-ARPAE ICON-2I, MeteoSvizzera ICON-CH, DWD ICON, Météo-France AROME, ECMWF, NOAA GFS) tramite <a href="https://open-meteo.com/">Open-Meteo</a>, licenza CC BY 4.0. Sono stime indicative e non sostituiscono i bollettini ufficiali: per allerte e sicurezza consulta sempre la <a href="https://www.cfr.toscana.it/">Protezione Civile Toscana</a>, l'<a href="https://allertameteo.regione.emilia-romagna.it/">Allerta Meteo Emilia-Romagna</a> e il bollettino valanghe <a href="https://meteomont.carabinieri.it/">Meteomont</a>.</p>
-    <p class="small"><a href="{{ u('privacy/') }}">Privacy</a> · <a href="{{ u('metodo/') }}">Metodo e fonti</a> · <a href="{{ u('feed.xml') }}">RSS</a> · <a href="{{ u('api/v1/forecast.json') }}">Dati JSON</a> · <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></p>
+    <p><strong>{{ site.name }}</strong> · {{ site.tagline }}. {{ t("Aggiornato il {d}.", d=updated) }}</p>
+    <p class="small">{{ t('Previsioni elaborate automaticamente da modelli numerici open data (ItaliaMeteo-ARPAE ICON-2I, MeteoSvizzera ICON-CH, DWD ICON, Météo-France AROME, ECMWF, NOAA GFS) tramite <a href="https://open-meteo.com/">Open-Meteo</a>, licenza CC BY 4.0. Sono stime indicative e non sostituiscono i bollettini ufficiali: per allerte e sicurezza consulta sempre la <a href="https://www.cfr.toscana.it/">Protezione Civile Toscana</a>, l\'<a href="https://allertameteo.regione.emilia-romagna.it/">Allerta Meteo Emilia-Romagna</a> e il bollettino valanghe <a href="https://meteomont.carabinieri.it/">Meteomont</a>.')|safe }}</p>
+    <p class="small"><a href="{{ u('privacy/') }}">Privacy</a> · <a href="{{ u('metodo/') }}">{{ t("Metodo e fonti") }}</a> · <a href="{{ u('feed.xml') }}">RSS</a> · <a href="{{ u('api/v1/forecast.json') }}">{{ t("Dati JSON") }}</a> · <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></p>
   </div>
 </footer>
 <script>
@@ -88,7 +92,7 @@ document.addEventListener("click", async e => {
   if (e.target.dataset && e.target.dataset.save && navigator.serviceWorker && navigator.serviceWorker.controller) {
     const urls = JSON.parse(e.target.dataset.save).map(p => new URL(p, location.href).href);
     navigator.serviceWorker.controller.postMessage({ type: "save", urls });
-    e.target.textContent = "Salvato sul telefono ✓"; e.target.disabled = true;
+    e.target.textContent = {{ t("Salvato sul telefono ✓")|tojson }}; e.target.disabled = true;
   }
 });
 </script>

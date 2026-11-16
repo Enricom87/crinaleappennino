@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Privacy · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>Privacy</h1></div></section>
+<section class="wrap prose">
+<p class="muted small">Translation for convenience: the <a href="{{ alternates[0].href }}">Italian version</a> is the legally binding one.</p>
+<p><strong>Data controller</strong>: [NOME E INDIRIZZO DEL TITOLARE DA COMPLETARE], contact <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a>.</p>
+<h2>Browsing</h2>
+<p>The site uses no profiling cookies or tracking advertising. To count visits we use Cloudflare Web Analytics, which uses no cookies and collects no personally identifying data. The site is hosted on GitHub Pages, which records IP addresses in its technical logs for security purposes.</p>
+<h2>Route maps</h2>
+<p>Route maps load map tiles from OpenTopoMap and the Leaflet library from unpkg.com: these services receive the visitor's IP address in order to deliver the files. They use no profiling cookies.</p>
+<h2>Newsletter</h2>
+<p>If you sign up for snow alerts, we process your email address only to send you our messages, on the basis of your consent. Emails are sent via Brevo (Sendinblue SAS, France, EU). You can unsubscribe at any time from the link in every email; your data is deleted when you unsubscribe.</p>
+<h2>Sponsored links</h2>
+<p>Sponsor links are marked as such and lead to third-party websites with their own privacy policies.</p>
+<h2>Your rights</h2>
+<p>You can ask for access to, correction or deletion of your data by writing to the address above, and you can lodge a complaint with the Italian Data Protection Authority (Garante per la protezione dei dati personali).</p>
+</section>
+{% endblock %}

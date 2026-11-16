@@ -134,33 +134,39 @@ def mountain_days(glob: dict, lam: dict | None, today: str) -> list[dict]:
 
 def summer_text(loc_name: str, top: dict, rows: list[dict]) -> list[str]:
     """Due o tre frasi per la scheda della località, dal punto più alto."""
-    from text import nice_date
+    from i18n import T, cap, nice_date
     if not rows:
         return []
     out = []
     t0 = rows[0]
-    first = f"{nice_date(t0['date']).capitalize()} in quota ({top['name']}, {top['elev']} m): {t0['verdict_label'].lower()}"
+    first = T("{d} in quota ({name}, {z} m): {verdict}", d=cap(nice_date(t0["date"])), name=top["name"],
+              z=top["elev"], verdict=T(t0["verdict_label"]).lower())
     if t0["storm"] >= 2 and t0["back_by"]:
-        first += f": temporali {t0['storm_label']} dal primo pomeriggio, parti presto e rientra entro le {t0['back_by']}"
+        first += T(": temporali {lvl} dal primo pomeriggio, parti presto e rientra entro le {h}",
+                   lvl=T(t0["storm_label"]), h=t0["back_by"])
     elif t0["storm"] == 1:
-        first += ", con qualche cumulo pomeridiano che potrebbe scappare in un rovescio"
+        first += T(", con qualche cumulo pomeridiano che potrebbe scappare in un rovescio")
     if t0["gust"] and t0["gust"] >= 50:
-        first += f"; sulle creste il vento soffia fino a {t0['gust']} km/h"
-    out.append(first + ".")
+        first += T("; sulle creste il vento soffia fino a {g} km/h", g=t0["gust"])
+    out.append(first + T("."))
     good = [r for r in rows[1:] if r["verdict"] == "ottima"]
     bad = [r for r in rows[1:] if r["verdict"] == "sconsigliata"]
     if good:
-        out.append("Segnati queste date: " + ", ".join(nice_date(r["date"]) for r in good[:3]) + ", le giornate migliori in arrivo.")
+        out.append(T("Segnati queste date: {dates}, le giornate migliori in arrivo.",
+                     dates=", ".join(nice_date(r["date"]) for r in good[:3])))
     if bad:
-        out.append("Lascia perdere " + ", ".join(nice_date(r["date"]) for r in bad[:3]) + ": meglio un rifugio che una cresta.")
+        out.append(T("Lascia perdere {dates}: meglio un rifugio che una cresta.",
+                     dates=", ".join(nice_date(r["date"]) for r in bad[:3])))
     hot = [r for r in rows if r["fl_max"] and r["fl_max"] >= 4000]
     if hot:
-        out.append(f"Fa caldo anche lassù: zero termico a {hot[0]['fl_max']} m. Borraccia piena e partenza all'alba.")
+        out.append(T("Fa caldo anche lassù: zero termico a {z} m. Borraccia piena e partenza all'alba.", z=hot[0]["fl_max"]))
     return out
 
 
 def overview_mtn(locs: list[dict]) -> str:
     """Frase per la home nella stagione senza neve: come va oggi in quota, località per località."""
+    from i18n import T, cap
+    import i18n
     groups: dict[str, list[str]] = {}
     back = []
     for L in locs:
@@ -175,13 +181,16 @@ def overview_mtn(locs: list[dict]) -> str:
     for v in ("ottima", "buona", "mattina", "attenzione", "sconsigliata"):
         if groups.get(v):
             names = ", ".join(groups[v])
-            prep = "ad" if names[:1] in "AaEe" else "a"
             word = {"ottima": "giornata top", "buona": "si va", "mattina": "solo al mattino",
                     "attenzione": "occhio", "sconsigliata": "meglio restare a valle"}[v]
-            parts.append(f"{word} {prep} {names}")
+            if i18n.LANG == "it":
+                prep = "ad" if names[:1] in "AaEe" else "a"
+                parts.append(f"{word} {prep} {names}")
+            else:
+                parts.append(T("{word}: {names}", word=T(word), names=names))
     if not parts:
         return ""
-    s = "Oggi in quota: " + "; ".join(parts) + "."
+    s = T("Oggi in quota: {parts}.", parts="; ".join(parts))
     if back:
-        s += f" Dove sono attesi temporali, rientro consigliato entro le {min(back)}."
-    return s[0].upper() + s[1:]
+        s += T(" Dove sono attesi temporali, rientro consigliato entro le {h}.", h=min(back))
+    return cap(s)

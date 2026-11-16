@@ -12,6 +12,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from compute import blend_point, ensemble_probs, name_configuration, synoptic_days
 from cards import cards
 from summer import mountain_days, overview_mtn, summer_text
+from i18n import T
 from text import location_text, nice_date, overview_text
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,8 +42,10 @@ def svg_snow_chart(points: list[dict], days: int = 10) -> str:
     vmax = (int(vmax / 5) + 1) * 5
     gw = (W - pad_l - 6) / max(1, len(dates))
     bw = min(16, (gw - 6) / len(points))
+    fb = T("forbice")
     y = lambda v: H - pad_b - (H - pad_b - pad_t) * v / vmax
-    parts = [f'<svg viewBox="0 0 {W} {H}" class="chart" role="img" aria-label="Neve stimata per giorno">']
+    aria = T("Neve stimata per giorno")
+    parts = [f'<svg viewBox="0 0 {W} {H}" class="chart" role="img" aria-label="{aria}">']
     for k in range(0, vmax + 1, max(5, vmax // 4 // 5 * 5 or 5)):
         parts.append(f'<line x1="{pad_l}" x2="{W-4}" y1="{y(k):.1f}" y2="{y(k):.1f}" class="grid"/>'
                      f'<text x="{pad_l-6}" y="{y(k)+4:.1f}" class="ax" text-anchor="end">{k}</text>')
@@ -59,7 +62,7 @@ def svg_snow_chart(points: list[dict], days: int = 10) -> str:
             h = H - pad_b - y(r["snow"])
             parts.append(f'<rect x="{x+1:.1f}" y="{y(r["snow"]):.1f}" width="{bw-2:.1f}" height="{max(h,0):.1f}" '
                          f'fill="{cols[j % 3]}" rx="2"><title>{p["name"]} {nice_date(d, True)}: '
-                         f'{r["snow"]:.0f} cm (forbice {r["snow_min"]:.0f}-{r["snow_max"]:.0f})</title></rect>')
+                         f'{r["snow"]:.0f} cm ({fb} {r["snow_min"]:.0f}-{r["snow_max"]:.0f})</title></rect>')
         parts.append(f'<text x="{pad_l + i*gw + gw/2:.1f}" y="{H-14}" class="ax" text-anchor="middle">'
                      f'{nice_date(d, True)}</text>')
     parts.append('</svg>')
@@ -92,52 +95,21 @@ def main() -> None:
     for r in syn_rows:
         r["name"] = name_configuration(r)
 
-    locs = []
-    for loc in cfg["locations"]:
-        if not all(p in pts for p in loc["points"]):
-            continue
-        L = dict(loc)
-        L["text"] = location_text(loc, pts, syn_rows)
-        L["pts"] = [pts[p] for p in loc["points"]]
-        L["road"] = [pts[p] for p in loc.get("road_points", []) if p in pts]
-        L["chart"] = svg_snow_chart(L["pts"])
-        top = max(L["pts"], key=lambda p: p["elev"])
-        L["mtn_top"] = top
-        L["mtn"] = mountain_days(glob[top["id"]], lam.get(top["id"]), today)
-        L["mtn_text"] = summer_text(L["name"], top, L["mtn"])
-        low = min(L["pts"], key=lambda p: p["elev"])
-        L["low_pt"] = low
-        L["cards_top"] = cards(top["days"], L["mtn"], today)
-        L["cards_base"] = cards(low["days"], mountain_days(glob[low["id"]], lam.get(low["id"]), today), today) \
-            if low["id"] != top["id"] else []
-        L["sponsors"] = sponsors.get(loc["slug"], []) or []
-        L["webcams"] = webcams.get(loc["slug"], []) or []
-        L["local"] = [{**src, "entries": src["links"][loc["slug"]]} for src in local_sources if loc["slug"] in src["links"]]
-        locs.append(L)
-
-    # percorsi
+    import copy
+    import i18n
+    from i18n import HTML_LANG, LANGS, NAMES, T, set_lang
     from conditions import LABELS, profile_svg, route_conditions
     from routes import load_routes, to_gpx
+
+    # dati indipendenti dalla lingua
+    base_locs = [loc for loc in cfg["locations"] if all(p in pts for p in loc["points"])]
+    mtn = {}
+    for loc in base_locs:
+        for pid in loc["points"]:
+            if pid not in mtn:
+                mtn[pid] = mountain_days(glob[pid], lam.get(pid), today)
     routes_cfg = json.loads((ROOT / "config" / "routes.json").read_text())
-    loc_by_slug = {L["slug"]: L for L in locs}
-    routes = []
-    for r in load_routes(routes_cfg):
-        L = loc_by_slug.get(r["location"])
-        if not L:
-            continue
-        r["loc_name"] = L["name"]
-        r["cond"] = route_conditions(r, L["pts"] + L["road"], glob)
-        r["profile"] = profile_svg(r)
-        r["labels"] = [LABELS.get(a, a) for a in r["activities"]]
-        r["geojson_str"] = json.dumps(r["geojson"]["geometry"])
-        m0 = (L["mtn"] or [None])[0]
-        if m0 and m0["storm"] >= 2 and set(r["activities"]) & {"escursionismo", "trail-running", "mtb-gravel"}:
-            when = f": meglio rientrare entro le {m0['back_by']}" if m0["back_by"] else ""
-            r["cond"]["notes"].insert(0, f"Oggi temporali {m0['storm_label']} nel pomeriggio in quota{when}. "
-                                         "Lontano da creste e vette esposte al primo tuono.")
-        routes.append(r)
-    for L in locs:
-        L["routes"] = [r for r in routes if r["location"] == L["slug"]]
+    base_routes = load_routes(routes_cfg)
 
     pcfg = json.loads((ROOT / "config" / "photos.json").read_text())
     pcred = {**json.loads((ROOT / "data" / "photos" / "credits.json").read_text())} \
@@ -150,12 +122,54 @@ def main() -> None:
         has = key and ((ROOT / "data" / "photos" / f"{key}.jpg").exists() or (ROOT / "static" / "photos" / f"{key}.jpg").exists())
         return {"key": key, "credit": pcred.get(key, {}), "pos": pcfg["locations"].get(slug, {}).get("pos") or pcfg.get("positions", {}).get(key, "center 60%")} if has else None
 
-    for L in locs:
-        L["photo"] = photo_for(L["slug"])
-    ctx = {"site": site, "locs": locs, "home_photo": photo_for("_home"), "local_sources": local_sources, "routes": routes, "activity_labels": LABELS, "syn": syn_rows, "summer": IS_SUMMER,
-           "overview": ((overview_mtn(locs) if IS_SUMMER else overview_text(locs)) if locs else ""),
-           "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),
-           "updated_rfc": now.strftime("%a, %d %b %Y %H:%M:%S %z"), "today": today, "sample": bool(int(__import__("os").environ.get("SAMPLE", "0"))), "nice_date": nice_date, "global_sponsors": sponsors.get("_global", []), "offers": offers()}
+    def build_lang():
+        """Località e percorsi con i testi nella lingua corrente."""
+        locs = []
+        for loc in base_locs:
+            L = dict(loc)
+            L["intro"], L["area"] = T(loc.get("intro", "")), T(loc["area"])
+            L["text"] = location_text(loc, pts, syn_rows)
+            L["pts"] = [pts[p] for p in loc["points"]]
+            L["road"] = [pts[p] for p in loc.get("road_points", []) if p in pts]
+            L["chart"] = svg_snow_chart(L["pts"])
+            top = max(L["pts"], key=lambda p: p["elev"])
+            L["mtn_top"] = top
+            L["mtn"] = mtn[top["id"]]
+            L["mtn_text"] = summer_text(L["name"], top, L["mtn"])
+            low = min(L["pts"], key=lambda p: p["elev"])
+            L["low_pt"] = low
+            L["cards_top"] = cards(top["days"], L["mtn"], today)
+            L["cards_base"] = cards(low["days"], mtn[low["id"]], today) if low["id"] != top["id"] else []
+            L["sponsors"] = sponsors.get(loc["slug"], []) or []
+            L["webcams"] = [{**w, "label": T(w["label"])} for w in (webcams.get(loc["slug"], []) or [])]
+            L["local"] = [{**src, "about": T(src["about"]),
+                           "entries": [{**l, "label": T(l["label"])} for l in src["links"][loc["slug"]]]}
+                          for src in local_sources if loc["slug"] in src["links"]]
+            L["photo"] = photo_for(loc["slug"])
+            locs.append(L)
+        loc_by_slug = {L["slug"]: L for L in locs}
+        routes = []
+        for r0 in base_routes:
+            L = loc_by_slug.get(r0["location"])
+            if not L:
+                continue
+            r = dict(r0)
+            r["name"], r["summary"] = T(r0["name"]), T(r0.get("summary", ""))
+            r["loc_name"] = L["name"]
+            r["cond"] = route_conditions(r, L["pts"] + L["road"], glob)
+            r["profile"] = profile_svg(r)
+            r["labels"] = [T(LABELS.get(a, a)) for a in r["activities"]]
+            r["geojson_str"] = json.dumps(r["geojson"]["geometry"])
+            m0 = (L["mtn"] or [None])[0]
+            if m0 and m0["storm"] >= 2 and set(r["activities"]) & {"escursionismo", "trail-running", "mtb-gravel"}:
+                when = T(": meglio rientrare entro le {h}", h=m0["back_by"]) if m0["back_by"] else ""
+                r["cond"]["notes"].insert(0, T("Oggi temporali {lvl} nel pomeriggio in quota{when}. "
+                                               "Lontano da creste e vette esposte al primo tuono.",
+                                               lvl=T(m0["storm_label"]), when=when))
+            routes.append(r)
+        for L in locs:
+            L["routes"] = [r for r in routes if r["location"] == L["slug"]]
+        return locs, routes
 
     if OUT.exists():
         shutil.rmtree(OUT)
@@ -174,36 +188,72 @@ def main() -> None:
             shutil.copy(f, OUT / "static" / "photos" / f"{f.stem}-640.jpg")
 
     env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=select_autoescape(["html", "xml"]))
-    env.globals.update(nice_date=nice_date)
+    env.globals.update(nice_date=nice_date, t=T)
     env.filters["n0"] = fmt_int
-
     explicit_index = bool(int(__import__("os").environ.get("EXPLICIT_INDEX", "0")))
+    SHARED = ("static/", "api/", "manifest.webmanifest", "sw.js", "feed.xml")
+    prefix = lambda l: "" if l == "it" else f"{l}/"
+    all_pages = []  # percorsi di pagina (senza lingua), per la sitemap
 
-    def render(tpl: str, path: str, **extra):
-        dst = OUT / path
-        dst.parent.mkdir(parents=True, exist_ok=True)
-        root = "../" * path.count("/") or "./"
+    it_ctx = None
+    for lang in LANGS:
+        set_lang(lang)
+        locs, routes = build_lang()
+        offers_l = [{**o, "name": T(o["name"]), "desc": T(o["desc"])} for o in offers()]
+        ctx = {"site": {**site, "tagline": T(site["tagline"])}, "locs": locs, "home_photo": photo_for("_home"),
+               "local_sources": [{**s, "about": T(s["about"]), "links": {k: [{**l, "label": T(l["label"])} for l in v]
+                                                                       for k, v in s["links"].items()}}
+                                 for s in local_sources],
+               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows,
+               "summer": IS_SUMMER,
+               "overview": ((overview_mtn(locs) if IS_SUMMER else overview_text(locs)) if locs else ""),
+               "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),
+               "updated_rfc": now.strftime("%a, %d %b %Y %H:%M:%S %z"), "today": today,
+               "sample": bool(int(__import__("os").environ.get("SAMPLE", "0"))),
+               "global_sponsors": sponsors.get("_global", []), "offers": offers_l,
+               "lang": lang, "html_lang": HTML_LANG[lang], "lang_names": NAMES, "langs": LANGS}
+        if lang == "it":
+            it_ctx = ctx
 
-        def u(p: str = "") -> str:
-            if p.startswith("#"):
-                return root + ("index.html" if explicit_index else "") + p
-            if explicit_index and (p == "" or p.endswith("/")):
-                p += "index.html"
-            return root + p
+        def render(tpl: str, page: str, **extra):
+            """page: percorso della pagina senza lingua, es. 'abetone/' o '' per la home."""
+            path = prefix(lang) + page + "index.html"
+            dst = OUT / path
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            root = "../" * path.count("/")
 
-        dst.write_text(env.get_template(tpl).render(**ctx, **extra, u=u))
+            def link(p: str, l: str) -> str:
+                if p.startswith("#"):
+                    return root + prefix(l) + ("index.html" if explicit_index else "") + p
+                if explicit_index and (p == "" or p.endswith("/")):
+                    p += "index.html"
+                return root + (p if p.startswith(SHARED) else prefix(l) + p) or "./"
 
-    render("index.html", "index.html")
-    for L in locs:
-        render("location.html", f"{L['slug']}/index.html", loc=L)
-    for page in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline"):
-        render(f"{page}.html", f"{page}/index.html")
-    render("percorsi.html", "percorsi/index.html")
-    for r in routes:
-        render("percorso.html", f"percorsi/{r['slug']}/index.html", route=r)
-        (OUT / "percorsi" / r["slug"] / f"{r['slug']}.gpx").write_text(to_gpx(r))
-    render("feed.xml", "feed.xml")
-    render("sitemap.xml", "sitemap.xml")
+            alt = [{"lang": l, "name": NAMES[l], "hreflang": HTML_LANG[l], "href": link(page, l),
+                    "abs": f"{site['base_url']}/{prefix(l)}{page}"} for l in LANGS]
+            name = f"{lang}/{tpl}" if lang != "it" and (ROOT / "templates" / lang / tpl).exists() else tpl
+            dst.write_text(env.get_template(name).render(**ctx, **extra, u=lambda p="": link(p, lang),
+                                                        alternates=alt, page=page))
+            if lang == "it":
+                all_pages.append(page)
+
+        render("index.html", "")
+        for L in locs:
+            render("location.html", f"{L['slug']}/", loc=L)
+        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline"):
+            render(f"{pg}.html", f"{pg}/")
+        render("percorsi.html", "percorsi/")
+        for r in routes:
+            render("percorso.html", f"percorsi/{r['slug']}/", route=r)
+            (OUT / prefix(lang) / "percorsi" / r["slug"] / f"{r['slug']}.gpx").write_text(to_gpx(r))
+
+    set_lang("it")
+    ctx = it_ctx
+    locs, routes = ctx["locs"], ctx["routes"]
+    ctx_x = {**ctx, "u": lambda p="": p}
+    (OUT / "feed.xml").write_text(env.get_template("feed.xml").render(**ctx_x))
+    (OUT / "sitemap.xml").write_text(env.get_template("sitemap.xml").render(
+        **ctx_x, pages=[p for p in all_pages if p != "offline/"], prefixes=[prefix(l) for l in LANGS]))
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {site['base_url']}/sitemap.xml\n")
     # app installabile (PWA): manifest e service worker alla radice del sito
     (OUT / "manifest.webmanifest").write_text(json.dumps({
@@ -215,7 +265,7 @@ def main() -> None:
                   {"src": "static/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}],
         "shortcuts": [{"name": "Percorsi", "url": "percorsi/"}, {"name": "Allerta neve", "url": "newsletter/"}],
     }, ensure_ascii=False, indent=1))
-    (OUT / "sw.js").write_text(env.get_template("sw.js").render(**ctx))
+    (OUT / "sw.js").write_text(env.get_template("sw.js").render(**ctx_x))
     (OUT / "CNAME").write_text(site["base_url"].split("//")[1] + "\n")
 
     # API per la futura app
@@ -240,7 +290,11 @@ def main() -> None:
                          "snow3_top": L["text"]["snow3_top"]} for L in locs if L["text"]["level"] == "alert"],
              "overview": ctx["overview"]}
     (ROOT / "data" / "latest.json").write_text(json.dumps(state, ensure_ascii=False, indent=1))
-    print(f"sito generato: {len(locs)} località, {len(pts)} punti")
+    (ROOT / "data" / "i18n_missing.json").unlink(missing_ok=True)
+    if i18n.MISSING:
+        (ROOT / "data" / "i18n_missing.json").write_text(json.dumps(sorted(i18n.MISSING), ensure_ascii=False, indent=0))
+        print(f"traduzioni mancanti: {len(i18n.MISSING)}")
+    print(f"sito generato: {len(locs)} località, {len(pts)} punti, {len(LANGS)} lingue")
 
 
 if __name__ == "__main__":

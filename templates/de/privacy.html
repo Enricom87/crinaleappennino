@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Datenschutz · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>Datenschutz</h1></div></section>
+<section class="wrap prose">
+<p class="muted small">Übersetzung zur Information: Rechtsverbindlich ist die <a href="{{ alternates[0].href }}">italienische Fassung</a>.</p>
+<p><strong>Verantwortlicher</strong>: [NOME E INDIRIZZO DEL TITOLARE DA COMPLETARE], Kontakt <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a>.</p>
+<h2>Besuch der Website</h2>
+<p>Die Website verwendet keine Profiling-Cookies und keine Werbung, die Besucher verfolgt. Zur Besucherzählung nutzen wir Cloudflare Web Analytics, das ohne Cookies arbeitet und keine personenbezogenen Identifikationsdaten erhebt. Die Website wird auf GitHub Pages gehostet, das aus Sicherheitsgründen IP-Adressen in technischen Protokollen speichert.</p>
+<h2>Tourenkarten</h2>
+<p>Die Tourenkarten laden Kartenkacheln von OpenTopoMap und die Bibliothek Leaflet von unpkg.com: Diese Dienste erhalten die IP-Adresse des Besuchers, um die Dateien auszuliefern. Sie verwenden keine Profiling-Cookies.</p>
+<h2>Newsletter</h2>
+<p>Wenn du dich für den Schneealarm anmeldest, verarbeiten wir deine E-Mail-Adresse nur, um dir unsere Nachrichten zu senden, auf Grundlage deiner Einwilligung. Der Versand erfolgt über Brevo (Sendinblue SAS, Frankreich, EU). Du kannst dich jederzeit über den Link in jeder E-Mail abmelden; deine Daten werden bei der Abmeldung gelöscht.</p>
+<h2>Gesponserte Links</h2>
+<p>Sponsorenlinks sind gekennzeichnet und führen zu Websites Dritter mit eigenen Datenschutzhinweisen.</p>
+<h2>Deine Rechte</h2>
+<p>Du kannst Auskunft, Berichtigung oder Löschung deiner Daten verlangen, indem du an die obige Adresse schreibst, und Beschwerde bei der italienischen Datenschutzbehörde (Garante per la protezione dei dati personali) einlegen.</p>
+</section>
+{% endblock %}

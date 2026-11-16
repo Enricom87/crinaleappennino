@@ -1,20 +1,20 @@
 {% extends "base.html" %}
-{% block title %}Allerta neve via email · {{ site.name }}{% endblock %}
+{% block title %}{{ t("Allerta neve via email") }} · {{ site.name }}{% endblock %}
 {% block main %}
-<section class="hero small"><div class="wrap"><h1>Non perderti la prossima nevicata</h1>
-<p class="lead">Un'email quando i modelli vedono almeno {{ site.newsletter.alert_threshold_cm_72h }} cm in arrivo entro 72 ore su una delle nostre località, più un riepilogo ogni giovedì per pianificare il weekend. Gratis, ti cancelli con un clic.</p></div></section>
+<section class="hero small"><div class="wrap"><h1>{{ t("Non perderti la prossima nevicata") }}</h1>
+<p class="lead">{{ t("Un'email quando i modelli vedono almeno {n} cm in arrivo entro 72 ore su una delle nostre località, più un riepilogo ogni giovedì per pianificare il weekend. Gratis, ti cancelli con un clic.", n=site.newsletter.alert_threshold_cm_72h) }}</p>{% if lang != 'it' %}<p class="lead"><small>{{ t("Le email sono in italiano.") }}</small></p>{% endif %}</div></section>
 <section class="wrap narrow">
 {% if site.newsletter.form_action %}
 <form class="nl" method="post" action="{{ site.newsletter.form_action }}">
   <label>Email<input type="email" name="EMAIL" required autocomplete="email"></label>
-  <label class="check"><input type="checkbox" name="OPT_IN" value="1" required> Acconsento a ricevere le email di {{ site.name }} secondo la <a href="{{ u('privacy/') }}">privacy policy</a>.</label>
+  <label class="check"><input type="checkbox" name="OPT_IN" value="1" required> {{ t('Acconsento a ricevere le email di {name} secondo la <a href="{url}">privacy policy</a>.', name=site.name, url=u('privacy/'))|safe }}</label>
   <input type="text" name="email_address_check" value="" class="hp" tabindex="-1" autocomplete="off">
   <input type="hidden" name="locale" value="it">
   <input type="hidden" name="html_type" value="simple">
-  <button class="btn" type="submit">Iscrivimi</button>
+  <button class="btn" type="submit">{{ t("Iscrivimi") }}</button>
 </form>
 {% else %}
-<p>Iscrizioni in apertura a breve. Nel frattempo scrivici a <a href="mailto:{{ site.contact_email }}?subject=Allerta%20neve">{{ site.contact_email }}</a> e ti aggiungiamo noi.</p>
+<p>{{ t("Iscrizioni in apertura a breve. Nel frattempo scrivici a") }} <a href="mailto:{{ site.contact_email }}?subject=Allerta%20neve">{{ site.contact_email }}</a> {{ t("e ti aggiungiamo noi.") }}</p>
 {% endif %}
 </section>
 {% endblock %}

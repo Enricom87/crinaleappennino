@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Notre méthode · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>Notre méthode</h1>
+<p class="lead">Pas de prévisions « au feeling » : chaque matin, on compare les modèles numériques les plus fins disponibles pour l'Apennin et on calcule la neige altitude par altitude.</p></div></section>
+<section class="wrap prose">
+<h2>Les modèles</h2>
+<ul>
+<li><strong>Aujourd'hui et demain</strong> : des modèles régionaux à haute résolution (1-2 km) qui « voient » vraiment la crête : ICON-2I d'ItaliaMeteo-ARPAE (la référence nationale, avec un poids double), ICON-CH2 de MétéoSuisse, ICON-D2 du service météo allemand et AROME de Météo-France.</li>
+<li><strong>À partir du troisième jour</strong> : les modèles globaux ECMWF, GFS et ICON, avec leur écart.</li>
+<li><strong>Probabilités</strong> : les 51 scénarios de l'ensemble ECMWF. « 30 % d'au moins 10 cm » signifie qu'environ 15 scénarios sur 51 donnent au moins 10 cm.</li>
+<li><strong>Configuration</strong> : température à 1 500 m, direction du flux à 3 000 m et position du thalweg, pour savoir si une perturbation apporte de la neige ou de la pluie.</li>
+</ul>
+<h2>Comment on estime la neige</h2>
+<p>Les modèles globaux « lissent » les montagnes et sous-estiment la neige en altitude. C'est pourquoi on calcule la neige à partir des précipitations et de la température recalculée à l'altitude réelle de chaque point : sous 0,5 °C toutes les précipitations comptent comme neige, entre 0,5 et 1,5 °C la moitié, avec un rapport indicatif de 1 cm de neige pour 1 mm d'eau. En plus, la neige ne compte que si l'isotherme 0 °C se trouve au maximum 300 m au-dessus du point (à moitié entre 300 et 500 m) : on ne compte donc pas de neige au sommet quand il fait encore doux au-dessus. Une neige très sèche (grand froid) peut donner davantage, une neige mouillée moins.</p>
+<h2>En altitude sans neige : orages, chaleur et vent</h2>
+<p>Pour chaque station, on prend le point le plus haut. Pour aujourd'hui et demain, on compare les modèles régionaux (ICON-2I, ICON-D2, ICON-CH2, AROME), pour les trois jours suivants les globaux. Le risque d'orage vient de l'énergie disponible pour la convection (CAPE) et de la pluie prévue entre 11 h et 20 h : « probables » quand au moins la moitié des modèles voient une CAPE supérieure à 800 J/kg avec au moins 1 mm l'après-midi, « possibles » au-dessus de 300 J/kg et un demi-millimètre. L'heure de début est la médiane des modèles ; le retour conseillé est une heure avant. Le verdict du jour tient aussi compte des rafales (attention dès 50 km/h, mieux vaut pas dès 70), de la pluie totale et de la nébulosité. Les orages d'été sont locaux : les modèles en saisissent la tendance, pas le cumulonimbus précis au-dessus de ta tête.</p>
+<h2>Neige de culture</h2>
+<p>On compte les heures de nuit (18 h-8 h) avec une température humide inférieure à -2 °C, le seuil en dessous duquel les canons fonctionnent bien. La température humide tient compte de l'humidité : avec un air sec on peut produire de la neige même à 0 °C, avec un air humide il faut plus froid.</p>
+<h2>Limites</h2>
+<p>Ce sont des prévisions automatiques et indicatives. Elles ne remplacent ni les bulletins officiels de la Protection civile et de Meteomont, ni ton jugement sur le terrain. Ne t'en sers pas seules pour décider d'une sortie en terrain enneigé.</p>
+<h2>Sources et licences</h2>
+<p>Les photos viennent de <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> sous licence libre (auteur et licence indiqués sur chaque photo, avec un lien vers la page d'origine) ou sont les nôtres.</p>
+<p>Données des modèles : ItaliaMeteo-ARPAE, MétéoSuisse, DWD, Météo-France, ECMWF, NOAA, diffusées via <a href="https://open-meteo.com/">Open-Meteo</a> sous licence <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Altitude du terrain : EU-DEM 25 m (Copernicus) via <a href="https://www.opentopodata.org/">OpenTopoData</a> et Copernicus DEM via Open-Meteo.</p>
+</section>
+{% endblock %}

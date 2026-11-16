@@ -1,50 +1,50 @@
 {% extends "base.html" %}
-{% block title %}{{ route.name }} · percorso e condizioni · {{ site.name }}{% endblock %}
-{% block desc %}{{ route.summary }} {{ route.stats.km }} km, +{{ route.stats.gain }} m, fino a {{ route.stats.z_max }} m. Condizioni meteo previste e traccia GPX.{% endblock %}
+{% block title %}{{ route.name }} · {{ t("percorso e condizioni") }} · {{ site.name }}{% endblock %}
+{% block desc %}{{ route.summary }} {{ route.stats.km }} km, +{{ route.stats.gain }} m, {{ t("fino a {z} m", z=route.stats.z_max) }}. {{ t("Condizioni meteo previste e traccia GPX.") }}{% endblock %}
 {% block main %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 <section class="hero small"><div class="wrap">
-  <p class="kicker"><a href="{{ u('percorsi/') }}">Percorsi</a> · {{ route.loc_name }}</p>
+  <p class="kicker"><a href="{{ u('percorsi/') }}">{{ t("Percorsi") }}</a> · {{ route.loc_name }}</p>
   <h1>{{ route.name }}</h1>
   <p class="lead">{{ route.summary }}</p>
 </div></section>
 
 <section class="wrap twocol">
   <div>
-    <div id="map" class="map" aria-label="Mappa del percorso"></div>
+    <div id="map" class="map" aria-label="{{ t('Mappa del percorso') }}"></div>
     <div class="probs facts4">
       <div><span class="big">{{ route.stats.km }}</span><small>km</small></div>
-      <div><span class="big">+{{ route.stats.gain }}</span><small>m di dislivello</small></div>
-      <div><span class="big">{{ route.stats.z_max }}</span><small>m quota massima</small></div>
-      <div><span class="big">{{ route.difficulty or '–' }}</span><small>difficoltà{% if route.cai %} · CAI {{ route.cai }}{% endif %}</small></div>
+      <div><span class="big">+{{ route.stats.gain }}</span><small>{{ t("m di dislivello") }}</small></div>
+      <div><span class="big">{{ route.stats.z_max }}</span><small>{{ t("m quota massima") }}</small></div>
+      <div><span class="big">{{ route.difficulty or '–' }}</span><small>{{ t("difficoltà") }}{% if route.cai %} · CAI {{ route.cai }}{% endif %}</small></div>
     </div>
-    <h2>Quanta salita</h2>
+    <h2>{{ t("Quanta salita") }}</h2>
     {{ route.profile|safe }}
-    <p class="muted small">Lunghezza e dislivello sono indicativi, calcolati dal tracciato e dal modello del terreno.</p>
+    <p class="muted small">{{ t("Lunghezza e dislivello sono indicativi, calcolati dal tracciato e dal modello del terreno.") }}</p>
   </div>
   <aside>
     <div class="cond">
-      <h2>Cosa trovi lassù</h2>
+      <h2>{{ t("Cosa trovi lassù") }}</h2>
       <ul>{% for n in route.cond.notes %}<li>{{ n }}</li>{% endfor %}</ul>
       <table class="mini">
-        <tr><th></th><th>Neve in quota</th><th>Min in quota</th><th>Raffiche</th></tr>
+        <tr><th></th><th>{{ t("Neve in quota") }}</th><th>{{ t("Min in quota") }}</th><th>{{ t("Raffiche") }}</th></tr>
         {% for d in route.cond.days %}
         <tr><td>{{ nice_date(d.date, True) }}</td><td class="num">{{ '%.0f'|format(d.snow_top) }} cm</td>
             <td class="num">{{ d.tmin_top|n0 }}°</td><td class="num">{% if d.gust_top %}{{ d.gust_top }} km/h{% else %}–{% endif %}</td></tr>
         {% endfor %}
       </table>
-      <p class="muted small">Valori stimati alla quota massima del percorso ({{ route.cond.z_used }} m) dai punti meteo della località; raffiche riferite a {{ route.cond.top_point }}.{% if route.cond.past48 is not none %} Precipitazioni ultime 48 ore: {{ route.cond.past48|n0 }} mm.{% endif %}</p>
+      <p class="muted small">{{ t("Valori stimati alla quota massima del percorso ({z} m) dai punti meteo della località; raffiche riferite a {p}.", z=route.cond.z_used, p=route.cond.top_point) }}{% if route.cond.past48 is not none %} {{ t("Precipitazioni ultime 48 ore: {n} mm.", n=route.cond.past48|n0) }}{% endif %}</p>
       {% if 'scialpinismo' in route.activities or 'ciaspole' in route.activities %}
-      <p class="warn">Per neve e valanghe consulta sempre il bollettino <a href="https://meteomont.carabinieri.it/" rel="noopener">Meteomont</a>. Queste previsioni non valutano il pericolo valanghe.</p>
+      <p class="warn">{{ t('Per neve e valanghe consulta sempre il bollettino <a href="https://meteomont.carabinieri.it/" rel="noopener">Meteomont</a>. Queste previsioni non valutano il pericolo valanghe.')|safe }}</p>
       {% endif %}
     </div>
-    <p><a class="btn" href="{{ route.slug }}.gpx" download>Scarica la traccia GPX</a>
-       <button class="btn ghost" data-save='["./", "{{ route.slug }}.gpx"]'>Salva per l'uso offline</button></p>
-    <h3>Altre fonti</h3>
+    <p><a class="btn" href="{{ route.slug }}.gpx" download>{{ t("Scarica la traccia GPX") }}</a>
+       <button class="btn ghost" data-save='["./", "{{ route.slug }}.gpx"]'>{{ t("Salva per l'uso offline") }}</button></p>
+    <h3>{{ t("Altre fonti") }}</h3>
     <ul class="links">
-      {% if route.source.osm %}<li><a href="https://www.openstreetmap.org/relation/{{ route.source.osm }}" rel="noopener">Il percorso su OpenStreetMap</a></li>
-      <li><a href="https://hiking.waymarkedtrails.org/#route?id={{ route.source.osm }}" rel="noopener">Waymarked Trails (segnaletica)</a></li>{% endif %}
-      <li><a href="{{ u(route.location ~ '/') }}">Previsioni neve: {{ route.loc_name }}</a></li>
+      {% if route.source.osm %}<li><a href="https://www.openstreetmap.org/relation/{{ route.source.osm }}" rel="noopener">{{ t("Il percorso su OpenStreetMap") }}</a></li>
+      <li><a href="https://hiking.waymarkedtrails.org/#route?id={{ route.source.osm }}" rel="noopener">{{ t("Waymarked Trails (segnaletica)") }}</a></li>{% endif %}
+      <li><a href="{{ u(route.location ~ '/') }}">{{ t("Previsioni neve: {name}", name=route.loc_name) }}</a></li>
     </ul>
     <p class="muted small">{{ route.credit }}</p>
   </aside>
@@ -56,12 +56,12 @@
   try {
     const map = L.map('map', {scrollWheelZoom: false});
     L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {maxZoom: 17,
-      attribution: 'Mappa © <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA), dati © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+      attribution: {{ t('Mappa © <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA), dati © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>')|tojson }}}).addTo(map);
     const layer = L.geoJSON(geo, {style: {color: '#c0392b', weight: 4}}).addTo(map);
     map.fitBounds(layer.getBounds(), {padding: [20, 20]});
     const s = geo.coordinates.reduce((a, b) => b.length > a.length ? b : a)[0];
-    L.circleMarker([s[1], s[0]], {radius: 7, color: '#0f2236', fillColor: '#fff', fillOpacity: 1}).addTo(map).bindTooltip('Partenza');
-  } catch (e) { document.getElementById('map').textContent = 'Mappa non disponibile.'; }
+    L.circleMarker([s[1], s[0]], {radius: 7, color: '#0f2236', fillColor: '#fff', fillOpacity: 1}).addTo(map).bindTooltip({{ t('Partenza')|tojson }});
+  } catch (e) { document.getElementById('map').textContent = {{ t('Mappa non disponibile.')|tojson }}; }
 }
 </script>
 {% endblock %}

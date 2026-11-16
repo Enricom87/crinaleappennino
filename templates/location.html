@@ -1,46 +1,46 @@
 {% extends "base.html" %}
-{% block title %}{{ 'Meteo in quota' if summer else 'Neve' }} {{ loc.name }} · previsioni quota per quota · {{ site.name }}{% endblock %}
-{% block desc %}Previsioni neve per {{ loc.name }}: centimetri attesi a {% for p in loc.pts %}{{ p.elev }} m{% if not loop.last %}, {% endif %}{% endfor %}, probabilità, innevamento artificiale e vento. Aggiornate ogni mattina.{% endblock %}
+{% block title %}{{ t('Meteo in quota' if summer else 'Neve') }} {{ loc.name }} · {{ t('previsioni quota per quota') }} · {{ site.name }}{% endblock %}
+{% block desc %}{{ t('Previsioni neve per {name}: centimetri attesi a {z}, probabilità, innevamento artificiale e vento. Aggiornate ogni mattina.', name=loc.name, z=loc.pts|map(attribute='elev')|join(' m, ') ~ ' m') }}{% endblock %}
 {% block main %}
 <section class="hero small lvl-{{ loc.text.level }}{% if loc.photo %} has-photo{% endif %}"{% if loc.photo %} style="background-image:linear-gradient(180deg,rgba(9,22,36,.35),rgba(9,22,36,.72)),url('{{ u('static/photos/' ~ loc.photo.key ~ '.jpg') }}');background-position:{{ loc.photo.pos }}"{% endif %}>
   <div class="wrap">
-    <p class="kicker"><a href="{{ u('') }}">Località</a> · {{ loc.area }} · aggiornato {{ updated }}</p>
+    <p class="kicker"><a href="{{ u('') }}">{{ t("Località") }}</a> · {{ loc.area }} · {{ t("aggiornato {d}", d=updated) }}</p>
     <h1>{{ loc.name }}</h1>
     <p class="lead">{{ loc.text.title }}</p>
   </div>
-  {% if loc.photo and loc.photo.credit %}<span class="photo-credit">Foto: {{ loc.photo.credit.artist }} · <a href="{{ loc.photo.credit.page }}" rel="noopener">{{ loc.photo.credit.license }}</a></span>{% endif %}
+  {% if loc.photo and loc.photo.credit %}<span class="photo-credit">{{ t("Foto") }}: {{ loc.photo.credit.artist }} · <a href="{{ loc.photo.credit.page }}" rel="noopener">{{ loc.photo.credit.license }}</a></span>{% endif %}
 </section>
 
 {% if summer and loc.mtn %}{% include "_mtn.html" %}{% endif %}
 
 <section class="wrap">
-  <h2>Le prossime giornate</h2>
-  <div class="alt-row"><h3>⛰️ In vetta</h3><span class="muted">{{ loc.mtn_top.name }} · {{ loc.mtn_top.elev }} m</span></div>
+  <h2>{{ t("Le prossime giornate") }}</h2>
+  <div class="alt-row"><h3>⛰️ {{ t("In vetta") }}</h3><span class="muted">{{ loc.mtn_top.name }} · {{ loc.mtn_top.elev }} m</span></div>
   {% with cards = loc.cards_top %}{% include "_cards.html" %}{% endwith %}
   {% if loc.cards_base %}
-  <div class="alt-row"><h3>🏡 In paese</h3><span class="muted">{{ loc.low_pt.name }} · {{ loc.low_pt.elev }} m</span></div>
+  <div class="alt-row"><h3>🏡 {{ t("In paese") }}</h3><span class="muted">{{ loc.low_pt.name }} · {{ loc.low_pt.elev }} m</span></div>
   {% with cards = loc.cards_base %}{% include "_cards.html" %}{% endwith %}
   {% endif %}
 </section>
 
 <section class="wrap twocol">
   <div>
-    <h2>Come la vediamo noi</h2>
+    <h2>{{ t("Come la vediamo noi") }}</h2>
     {% for p in loc.text.paragraphs %}<p>{{ p }}</p>{% endfor %}
     <p class="muted small">{{ loc.intro }}</p>
   </div>
   <aside class="sponsor-box">
     {% if loc.sponsors %}
-      <p class="label">Con il supporto di</p>
+      <p class="label">{{ t("Con il supporto di") }}</p>
       {% for s in loc.sponsors %}
       <a class="sp-card" href="{{ s.url }}" rel="sponsored noopener">
         {% if s.logo %}<img src="{{ s.logo }}" alt="{{ s.name }}">{% endif %}
         <strong>{{ s.name }}</strong><span>{{ s.tagline }}</span></a>
       {% endfor %}
     {% else %}
-      <p class="label">Spazio sponsor</p>
-      <p>La tua attività a {{ loc.name.split(' · ')[0] }} qui, davanti a chi sta decidendo se salire.</p>
-      <a class="btn small" href="{{ u('sponsor/') }}">Prenota questo spazio</a>
+      <p class="label">{{ t("Spazio sponsor") }}</p>
+      <p>{{ t("La tua attività a {name} qui, davanti a chi sta decidendo se salire.", name=loc.name.split(' · ')[0]) }}</p>
+      <a class="btn small" href="{{ u('sponsor/') }}">{{ t("Prenota questo spazio") }}</a>
     {% endif %}
   </aside>
 </section>
@@ -48,10 +48,10 @@
 {% if not summer and loc.mtn %}{% include "_mtn.html" %}{% endif %}
 
 <section class="wrap"><details class="tech">
-<summary>🔬 Per i più tecnici: grafico della neve, modelli e probabilità</summary>
+<summary>🔬 {{ t("Per i più tecnici: grafico della neve, modelli e probabilità") }}</summary>
 <div>
-  <h2>Quanta neve, giorno per giorno <small class="muted">(cm, prossimi 10 giorni)</small></h2>
-  <div class="legend">{% for p in loc.pts %}<span class="lg lg{{ loop.index0 }}"></span>{{ p.name }} {{ p.elev }} m &nbsp; {% endfor %}<span class="lg-range"></span>forbice tra modelli</div>
+  <h2>{{ t("Quanta neve, giorno per giorno") }} <small class="muted">({{ t("cm, prossimi 10 giorni") }})</small></h2>
+  <div class="legend">{% for p in loc.pts %}<span class="lg lg{{ loop.index0 }}"></span>{{ p.name }} {{ p.elev }} m &nbsp; {% endfor %}<span class="lg-range"></span>{{ t("forbice tra modelli") }}</div>
   {{ loc.chart|safe }}
 </div>
 
@@ -60,15 +60,15 @@
   <h3>{{ p.name }} · {{ p.elev }} m</h3>
   {% if p.probs.d7 %}
   <div class="probs">
-    <div><span class="big">{{ p.probs.h72.p1 }}%</span><small>almeno 1 cm<br>in 72 ore</small></div>
-    <div><span class="big">{{ p.probs.d7.p10 }}%</span><small>almeno 10 cm<br>in 7 giorni</small></div>
-    <div><span class="big">{{ p.probs.all.p20 }}%</span><small>almeno 20 cm<br>in 15 giorni</small></div>
-    <div><span class="big">{{ '%.0f'|format(p.probs.all.q50) }}<small> cm</small></span><small>accumulo mediano<br>15 giorni</small></div>
+    <div><span class="big">{{ p.probs.h72.p1 }}%</span><small>{{ t("almeno 1 cm<br>in 72 ore")|safe }}</small></div>
+    <div><span class="big">{{ p.probs.d7.p10 }}%</span><small>{{ t("almeno 10 cm<br>in 7 giorni")|safe }}</small></div>
+    <div><span class="big">{{ p.probs.all.p20 }}%</span><small>{{ t("almeno 20 cm<br>in 15 giorni")|safe }}</small></div>
+    <div><span class="big">{{ '%.0f'|format(p.probs.all.q50) }}<small> cm</small></span><small>{{ t("accumulo mediano<br>15 giorni")|safe }}</small></div>
   </div>
   {% endif %}
   <div class="scroll">
   <table class="days">
-    <tr><th>Giorno</th><th>Neve</th><th>Forbice</th><th>Pioggia+neve</th><th>Min / Max</th><th>Zero termico</th><th>Raffiche</th><th>Cannoni<br><small>ore notte</small></th><th>Fonte</th></tr>
+    <tr><th>{{ t("Giorno") }}</th><th>{{ t("Neve") }}</th><th>{{ t("Forbice") }}</th><th>{{ t("Pioggia+neve") }}</th><th>Min / Max</th><th>{{ t("Zero termico") }}</th><th>{{ t("Raffiche") }}</th><th>{{ t("Cannoni") }}<br><small>{{ t("ore notte") }}</small></th><th>{{ t("Fonte") }}</th></tr>
     {% for r in p.days[:15] %}
     <tr class="{% if r.snow >= 5 %}snowy{% elif r.snow >= 1 %}flakes{% endif %}">
       <td>{{ nice_date(r.date, True) }}</td>
@@ -79,7 +79,7 @@
       <td class="num">{% if r.fl_min %}{{ r.fl_min }} m{% else %}–{% endif %}</td>
       <td class="num">{% if r.gust %}{{ r.gust }} km/h{% else %}–{% endif %}</td>
       <td class="num">{% if r.tw2 %}{{ r.tw2 }} h{% else %}–{% endif %}</td>
-      <td class="muted small">{{ r.source }}</td>
+      <td class="muted small">{{ t(r.source) }}</td>
     </tr>
     {% endfor %}
   </table>
@@ -90,26 +90,26 @@
 
 {% if loc.road %}
 <section class="wrap">
-  <h2>Si sale in auto senza sorprese?</h2>
+  <h2>{{ t("Si sale in auto senza sorprese?") }}</h2>
   {% set risky = [] %}
   {% for p in loc.road %}{% for r in p.days[:5] %}{% if (r.snow >= 1) or (r.tmin <= 0 and r.precip >= 1) %}{% set _ = risky.append((p.name, r)) %}{% endif %}{% endfor %}{% endfor %}
   {% if risky %}
-  <ul>{% for name, r in risky %}<li>{{ nice_date(r.date) }} · {{ name }}: {% if r.snow >= 1 %}neve stimata {{ '%.0f'|format(r.snow) }} cm{% else %}possibile ghiaccio (minima {{ r.tmin|n0 }} °C dopo precipitazioni){% endif %}. Catene a bordo o gomme invernali.</li>{% endfor %}</ul>
-  {% else %}<p>Strada tranquilla: nei prossimi 5 giorni i modelli non vedono neve né ghiaccio. Le catene possono restare nel bagagliaio.</p>{% endif %}
-  <p class="muted small">Per lo stato reale delle strade consulta ANAS e le Province.</p>
+  <ul>{% for name, r in risky %}<li>{{ nice_date(r.date) }} · {{ name }}: {% if r.snow >= 1 %}{{ t("neve stimata {n} cm", n='%.0f'|format(r.snow)) }}{% else %}{{ t("possibile ghiaccio (minima {n} °C dopo precipitazioni)", n=r.tmin|n0) }}{% endif %}. {{ t("Catene a bordo o gomme invernali.") }}</li>{% endfor %}</ul>
+  {% else %}<p>{{ t("Strada tranquilla: nei prossimi 5 giorni i modelli non vedono neve né ghiaccio. Le catene possono restare nel bagagliaio.") }}</p>{% endif %}
+  <p class="muted small">{{ t("Per lo stato reale delle strade consulta ANAS e le Province.") }}</p>
 </section>
 {% endif %}
 
 {% if loc.routes %}
 <section class="wrap">
-  <h2>Dove andare da qui</h2>
+  <h2>{{ t("Dove andare da qui") }}</h2>
   <ul class="links">{% for r in loc.routes %}<li><a href="{{ u('percorsi/' ~ r.slug ~ '/') }}">{{ r.name }}</a> <span class="muted small">· {{ r.labels|join(', ') }} · {{ r.stats.km }} km, +{{ r.stats.gain }} m</span><br><span class="small">{{ r.cond.notes[0] }}</span></li>{% endfor %}</ul>
 </section>
 {% endif %}
 
 {% if loc.local %}
 <section class="wrap">
-  <h2>Fonti locali</h2>
+  <h2>{{ t("Fonti locali") }}</h2>
   {% for src in loc.local %}
   <p class="small"><a href="{{ src.url }}" rel="noopener" target="_blank"><strong>{{ src.name }}</strong></a> · {{ src.about }}</p>
   <ul class="links">{% for l in src.entries %}<li><a href="{{ l.url }}" rel="noopener" target="_blank">{{ l.label }}</a></li>{% endfor %}</ul>
@@ -118,15 +118,15 @@
 {% endif %}
 
 <section class="wrap">
-  <h2>Guarda com'è adesso</h2>
+  <h2>{{ t("Guarda com'è adesso") }}</h2>
   {% if loc.webcams %}
   <ul class="links">{% for w in loc.webcams %}<li><a href="{{ w.url }}" rel="noopener" target="_blank">{{ w.label }}</a></li>{% endfor %}</ul>
-  {% else %}<p class="muted">Webcam in arrivo.</p>{% endif %}
+  {% else %}<p class="muted">{{ t("Webcam in arrivo.") }}</p>{% endif %}
 </section>
 
 <section class="wrap promo">
-  <div><h2>Avvisami quando nevica a {{ loc.name.split(' · ')[0] }}</h2>
-  <p>Ti scriviamo solo quando conta: quando arrivano almeno 5 cm entro 72 ore, più il punto del giovedì per il weekend. Niente spam, promesso.</p></div>
-  <a class="btn" href="{{ u('newsletter/') }}">Iscriviti gratis</a>
+  <div><h2>{{ t("Avvisami quando nevica a {name}", name=loc.name.split(' · ')[0]) }}</h2>
+  <p>{{ t("Ti scriviamo solo quando conta: quando arrivano almeno 5 cm entro 72 ore, più il punto del giovedì per il weekend. Niente spam, promesso.") }}</p></div>
+  <a class="btn" href="{{ u('newsletter/') }}">{{ t("Iscriviti gratis") }}</a>
 </section>
 {% endblock %}
