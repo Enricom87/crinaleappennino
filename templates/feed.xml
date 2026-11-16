@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>{{ site.name }} · previsioni neve</title>
+<link>{{ site.base_url }}/</link>
+<description>{{ site.tagline }}</description>
+<language>it</language>
+<lastBuildDate>{{ updated_rfc }}</lastBuildDate>
+<item>
+  <title>Bollettino neve del {{ nice_date(today) }}</title>
+  <link>{{ site.base_url }}/?d={{ today }}</link>
+  <guid isPermaLink="false">{{ today }}</guid>
+  <description>{{ overview }}{% for L in locs %} — {{ L.name }}: {{ L.text.title }}.{% endfor %}</description>
+</item>
+</channel>
+</rss>

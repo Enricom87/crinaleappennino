@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block main %}
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Aggiornato {{ updated }}</p>
+    <h1>Quanta neve, e a che quota.</h1>
+    <p class="lead">{{ overview }}</p>
+    <p><a class="btn" href="{{ u('newsletter/') }}">Ricevi l'allerta neve via email</a></p>
+  </div>
+</section>
+
+{% if global_sponsors %}
+<section class="wrap sponsors-strip">
+  {% for s in global_sponsors %}<a href="{{ s.url }}" rel="sponsored noopener" class="sp">{% if s.logo %}<img src="{{ s.logo }}" alt="{{ s.name }}">{% endif %}<span>{{ s.name }}</span></a>{% endfor %}
+</section>
+{% endif %}
+
+<section class="wrap" id="localita">
+  <h2>Le località</h2>
+  <div class="cards">
+  {% for L in locs %}
+    <a class="card lvl-{{ L.text.level }}" href="{{ u(L.slug ~ '/') }}">
+      <div class="card-head"><h3>{{ L.name }}</h3><span class="area">{{ L.area }}</span></div>
+      <p class="card-title">{{ L.text.title }}</p>
+      <table class="mini">
+        <tr><th></th><th>3 gg</th><th>4-10 gg</th><th>≥10 cm<br><small>7 gg</small></th></tr>
+        {% for p in L.pts %}
+        {% set s3 = p.days[:3]|sum(attribute='snow') %}
+        {% set s10 = p.days[3:10]|sum(attribute='snow') %}
+        <tr><td>{{ p.name }} <small>{{ p.elev }} m</small></td>
+            <td class="num">{{ '%.0f'|format(s3) }} cm</td>
+            <td class="num">{{ '%.0f'|format(s10) }} cm</td>
+            <td class="num">{% if p.probs.d7 %}{{ p.probs.d7.p10 }}%{% else %}–{% endif %}</td></tr>
+        {% endfor %}
+      </table>
+    </a>
+  {% endfor %}
+  </div>
+</section>
+
+{% if syn %}
+<section class="wrap">
+  <h2>La configurazione dei prossimi giorni</h2>
+  <p class="muted">Temperatura a circa 1.500 m (850 hPa), direzione del flusso a 3.000 m e posizione della saccatura secondo ECMWF, con GFS a confronto. Sotto i -3 °C a 1.500 m la neve arriva di solito fino alle stazioni.</p>
+  <div class="scroll">
+  <table class="syn">
+    <tr><th>Giorno</th><th>Configurazione</th><th>T 1.500 m<br><small>ECMWF / GFS</small></th><th>Flusso</th><th>Per la neve</th></tr>
+    {% for r in syn[:10] %}
+    <tr><td>{{ nice_date(r.date, True) }}</td><td>{{ r.name }}</td>
+      <td class="num">{% if r.ec %}{{ r.ec.t850|n0(True) }}{% endif %} / {% if r.gfs %}{{ r.gfs.t850|n0(True) }}{% endif %} °C</td>
+      <td>{% if r.ec %}{{ r.ec.flow }}{% endif %}</td>
+      <td><span class="tag t-{{ r.ec.thermal if r.ec else 'nd' }}">{{ r.ec.thermal if r.ec else 'n.d.' }}</span></td></tr>
+    {% endfor %}
+  </table>
+  </div>
+</section>
+{% endif %}
+
+<section class="wrap promo">
+  <div>
+    <h2>Lavori in montagna?</h2>
+    <p>Noleggi, scuole sci, rifugi e hotel: raggiungi chi controlla la neve prima di partire. Spazi sponsor per località, a partire da pochi euro al giorno.</p>
+  </div>
+  <a class="btn" href="{{ u('sponsor/') }}">Scopri gli spazi</a>
+</section>
+{% endblock %}

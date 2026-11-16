@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Allerta neve via email · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>Allerta neve</h1>
+<p class="lead">Un'email quando i modelli vedono almeno {{ site.newsletter.alert_threshold_cm_72h }} cm in arrivo entro 72 ore su una delle nostre località, più un riepilogo ogni giovedì per pianificare il weekend. Gratis, ti cancelli con un clic.</p></div></section>
+<section class="wrap narrow">
+{% if site.newsletter.form_action %}
+<form class="nl" method="post" action="{{ site.newsletter.form_action }}">
+  <label>Email<input type="email" name="EMAIL" required autocomplete="email"></label>
+  <label class="check"><input type="checkbox" name="OPT_IN" value="1" required> Acconsento a ricevere le email di {{ site.name }} secondo la <a href="{{ u('privacy/') }}">privacy policy</a>.</label>
+  <input type="text" name="email_address_check" value="" class="hp" tabindex="-1" autocomplete="off">
+  <input type="hidden" name="locale" value="it">
+  <button class="btn" type="submit">Iscrivimi</button>
+</form>
+{% else %}
+<p>Iscrizioni in apertura a breve. Nel frattempo scrivici a <a href="mailto:{{ site.contact_email }}?subject=Allerta%20neve">{{ site.contact_email }}</a> e ti aggiungiamo noi.</p>
+{% endif %}
+</section>
+{% endblock %}

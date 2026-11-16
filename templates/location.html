@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Neve {{ loc.name }} · previsioni quota per quota · {{ site.name }}{% endblock %}
+{% block desc %}Previsioni neve per {{ loc.name }}: centimetri attesi a {% for p in loc.pts %}{{ p.elev }} m{% if not loop.last %}, {% endif %}{% endfor %}, probabilità, innevamento artificiale e vento. Aggiornate ogni mattina.{% endblock %}
+{% block main %}
+<section class="hero small lvl-{{ loc.text.level }}">
+  <div class="wrap">
+    <p class="kicker"><a href="{{ u('') }}">Località</a> · {{ loc.area }} · aggiornato {{ updated }}</p>
+    <h1>{{ loc.name }}</h1>
+    <p class="lead">{{ loc.text.title }}</p>
+  </div>
+</section>
+
+<section class="wrap twocol">
+  <div>
+    <h2>Il bollettino</h2>
+    {% for p in loc.text.paragraphs %}<p>{{ p }}</p>{% endfor %}
+    <p class="muted small">{{ loc.intro }}</p>
+  </div>
+  <aside class="sponsor-box">
+    {% if loc.sponsors %}
+      <p class="label">Con il supporto di</p>
+      {% for s in loc.sponsors %}
+      <a class="sp-card" href="{{ s.url }}" rel="sponsored noopener">
+        {% if s.logo %}<img src="{{ s.logo }}" alt="{{ s.name }}">{% endif %}
+        <strong>{{ s.name }}</strong><span>{{ s.tagline }}</span></a>
+      {% endfor %}
+    {% else %}
+      <p class="label">Spazio sponsor</p>
+      <p>La tua attività a {{ loc.name.split(' · ')[0] }} qui, davanti a chi sta decidendo se salire.</p>
+      <a class="btn small" href="{{ u('sponsor/') }}">Prenota questo spazio</a>
+    {% endif %}
+  </aside>
+</section>
+
+<section class="wrap">
+  <h2>Neve stimata nei prossimi 10 giorni <small class="muted">(cm)</small></h2>
+  <div class="legend">{% for p in loc.pts %}<span class="lg lg{{ loop.index0 }}"></span>{{ p.name }} {{ p.elev }} m &nbsp; {% endfor %}<span class="lg-range"></span>forbice tra modelli</div>
+  {{ loc.chart|safe }}
+</section>
+
+{% for p in loc.pts %}
+<section class="wrap">
+  <h3>{{ p.name }} · {{ p.elev }} m</h3>
+  {% if p.probs.d7 %}
+  <div class="probs">
+    <div><span class="big">{{ p.probs.h72.p1 }}%</span><small>almeno 1 cm<br>in 72 ore</small></div>
+    <div><span class="big">{{ p.probs.d7.p10 }}%</span><small>almeno 10 cm<br>in 7 giorni</small></div>
+    <div><span class="big">{{ p.probs.all.p20 }}%</span><small>almeno 20 cm<br>in 15 giorni</small></div>
+    <div><span class="big">{{ '%.0f'|format(p.probs.all.q50) }}<small> cm</small></span><small>accumulo mediano<br>15 giorni</small></div>
+  </div>
+  {% endif %}
+  <div class="scroll">
+  <table class="days">
+    <tr><th>Giorno</th><th>Neve</th><th>Forbice</th><th>Pioggia+neve</th><th>Min / Max</th><th>Zero termico</th><th>Raffiche</th><th>Cannoni<br><small>ore notte</small></th><th>Fonte</th></tr>
+    {% for r in p.days[:15] %}
+    <tr class="{% if r.snow >= 5 %}snowy{% elif r.snow >= 1 %}flakes{% endif %}">
+      <td>{{ nice_date(r.date, True) }}</td>
+      <td class="num"><strong>{{ '%.0f'|format(r.snow) }} cm</strong></td>
+      <td class="num muted">{{ '%.0f'|format(r.snow_min) }}–{{ '%.0f'|format(r.snow_max) }}</td>
+      <td class="num">{{ '%.0f'|format(r.precip) }} mm</td>
+      <td class="num">{{ r.tmin|n0 }}° / {{ r.tmax|n0 }}°</td>
+      <td class="num">{% if r.fl_min %}{{ r.fl_min }} m{% else %}–{% endif %}</td>
+      <td class="num">{% if r.gust %}{{ r.gust }} km/h{% else %}–{% endif %}</td>
+      <td class="num">{% if r.tw2 %}{{ r.tw2 }} h{% else %}–{% endif %}</td>
+      <td class="muted small">{{ r.source }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+</section>
+{% endfor %}
+
+{% if loc.road %}
+<section class="wrap">
+  <h2>Strada</h2>
+  {% set risky = [] %}
+  {% for p in loc.road %}{% for r in p.days[:5] %}{% if (r.snow >= 1) or (r.tmin <= 0 and r.precip >= 1) %}{% set _ = risky.append((p.name, r)) %}{% endif %}{% endfor %}{% endfor %}
+  {% if risky %}
+  <ul>{% for name, r in risky %}<li>{{ nice_date(r.date) }} · {{ name }}: {% if r.snow >= 1 %}neve stimata {{ '%.0f'|format(r.snow) }} cm{% else %}possibile ghiaccio (minima {{ r.tmin|n0 }} °C dopo precipitazioni){% endif %}. Catene a bordo o gomme invernali.</li>{% endfor %}</ul>
+  {% else %}<p>Nessun rischio particolare di neve o ghiaccio sulla strada nei prossimi 5 giorni secondo i modelli.</p>{% endif %}
+  <p class="muted small">Per lo stato reale delle strade consulta ANAS e le Province.</p>
+</section>
+{% endif %}
+
+<section class="wrap">
+  <h2>Webcam</h2>
+  {% if loc.webcams %}
+  <ul class="links">{% for w in loc.webcams %}<li><a href="{{ w.url }}" rel="noopener" target="_blank">{{ w.label }}</a></li>{% endfor %}</ul>
+  {% else %}<p class="muted">Webcam in arrivo.</p>{% endif %}
+</section>
+
+<section class="wrap promo">
+  <div><h2>Avvisami quando nevica a {{ loc.name.split(' · ')[0] }}</h2>
+  <p>Un'email solo quando i modelli vedono almeno 5 cm in arrivo entro 72 ore, più un riepilogo il giovedì.</p></div>
+  <a class="btn" href="{{ u('newsletter/') }}">Iscriviti gratis</a>
+</section>
+{% endblock %}

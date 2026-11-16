@@ -1,0 +1,341 @@
+{
+ "points": {
+  "abetone-passo": {
+   "name": "Passo dell'Abetone",
+   "lat": 44.145,
+   "lon": 10.663,
+   "elev": 1388
+  },
+  "val-di-luce": {
+   "name": "Val di Luce",
+   "lat": 44.1314,
+   "lon": 10.6306,
+   "elev": 1540
+  },
+  "monte-gomito": {
+   "name": "Monte Gomito",
+   "lat": 44.1311,
+   "lon": 10.6399,
+   "elev": 1892
+  },
+  "fiumalbo": {
+   "name": "Fiumalbo (SS12)",
+   "lat": 44.178,
+   "lon": 10.648,
+   "elev": 935
+  },
+  "passo-del-lupo": {
+   "name": "Passo del Lupo",
+   "lat": 44.2148,
+   "lon": 10.7189,
+   "elev": 1550
+  },
+  "lago-ninfa": {
+   "name": "Lago della Ninfa",
+   "lat": 44.211,
+   "lon": 10.7249,
+   "elev": 1500
+  },
+  "monte-cimone": {
+   "name": "Monte Cimone",
+   "lat": 44.1938,
+   "lon": 10.6989,
+   "elev": 2165
+  },
+  "le-polle": {
+   "name": "Le Polle",
+   "lat": 44.2171,
+   "lon": 10.6913,
+   "elev": 1300
+  },
+  "cimoncino": {
+   "name": "Cimoncino",
+   "lat": 44.1983,
+   "lon": 10.7312,
+   "elev": 1400
+  },
+  "doganaccia": {
+   "name": "Doganaccia",
+   "lat": 44.122,
+   "lon": 10.7758,
+   "elev": 1540
+  },
+  "croce-arcana": {
+   "name": "Croce Arcana",
+   "lat": 44.1303,
+   "lon": 10.7831,
+   "elev": 1675
+  },
+  "cavone": {
+   "name": "Cavone",
+   "lat": 44.1327,
+   "lon": 10.8183,
+   "elev": 1430
+  },
+  "corno-alle-scale": {
+   "name": "Corno alle Scale",
+   "lat": 44.1195,
+   "lon": 10.8302,
+   "elev": 1945
+  },
+  "lago-scaffaiolo": {
+   "name": "Lago Scaffaiolo",
+   "lat": 44.1186,
+   "lon": 10.8077,
+   "elev": 1775
+  },
+  "lago-santo": {
+   "name": "Lago Santo modenese",
+   "lat": 44.1372,
+   "lon": 10.5843,
+   "elev": 1501
+  },
+  "monte-giovo": {
+   "name": "Monte Giovo",
+   "lat": 44.1309,
+   "lon": 10.5779,
+   "elev": 1991
+  },
+  "casone-profecchia": {
+   "name": "Casone di Profecchia",
+   "lat": 44.2125,
+   "lon": 10.4453,
+   "elev": 1314
+  },
+  "passo-radici": {
+   "name": "Passo delle Radici",
+   "lat": 44.2095,
+   "lon": 10.4884,
+   "elev": 1529
+  },
+  "monte-prado": {
+   "name": "Monte Prado",
+   "lat": 44.2493,
+   "lon": 10.4075,
+   "elev": 2054
+  },
+  "passo-pradarena": {
+   "name": "Passo di Pradarena",
+   "lat": 44.2858,
+   "lon": 10.3004,
+   "elev": 1575
+  },
+  "cerreto-laghi": {
+   "name": "Cerreto Laghi",
+   "lat": 44.2979,
+   "lon": 10.2439,
+   "elev": 1340
+  },
+  "monte-la-nuda": {
+   "name": "Monte La Nuda",
+   "lat": 44.2814,
+   "lon": 10.2374,
+   "elev": 1894
+  },
+  "febbio": {
+   "name": "Febbio",
+   "lat": 44.2972,
+   "lon": 10.4279,
+   "elev": 1150
+  },
+  "monte-cusna": {
+   "name": "Monte Cusna",
+   "lat": 44.2878,
+   "lon": 10.3916,
+   "elev": 2121
+  }
+ },
+ "locations": [
+  {
+   "slug": "abetone",
+   "name": "Abetone",
+   "area": "Toscana · PT",
+   "points": [
+    "abetone-passo",
+    "val-di-luce",
+    "monte-gomito"
+   ],
+   "road_points": [
+    "fiumalbo",
+    "abetone-passo"
+   ],
+   "snowmaking_points": [
+    "abetone-passo",
+    "val-di-luce"
+   ],
+   "intro": "Il comprensorio più grande dell'Appennino: Passo, Val di Luce e le creste del Gomito e della Selletta."
+  },
+  {
+   "slug": "cimone",
+   "name": "Cimone · Sestola e Passo del Lupo",
+   "area": "Emilia-Romagna · MO",
+   "points": [
+    "lago-ninfa",
+    "passo-del-lupo",
+    "monte-cimone"
+   ],
+   "road_points": [
+    "lago-ninfa"
+   ],
+   "snowmaking_points": [
+    "passo-del-lupo",
+    "lago-ninfa"
+   ],
+   "intro": "Il versante di Sestola del comprensorio del Cimone, dal Lago della Ninfa al Passo del Lupo fino alla vetta più alta dell'Appennino settentrionale."
+  },
+  {
+   "slug": "le-polle",
+   "name": "Le Polle · Riolunato",
+   "area": "Emilia-Romagna · MO",
+   "points": [
+    "le-polle",
+    "monte-cimone"
+   ],
+   "road_points": [
+    "le-polle"
+   ],
+   "snowmaking_points": [
+    "le-polle"
+   ],
+   "intro": "Il versante di Riolunato del comprensorio del Cimone, esposto a nord."
+  },
+  {
+   "slug": "cimoncino",
+   "name": "Cimoncino · Fanano",
+   "area": "Emilia-Romagna · MO",
+   "points": [
+    "cimoncino",
+    "monte-cimone"
+   ],
+   "road_points": [
+    "cimoncino"
+   ],
+   "snowmaking_points": [
+    "cimoncino"
+   ],
+   "intro": "Il versante di Fanano del comprensorio del Cimone."
+  },
+  {
+   "slug": "doganaccia",
+   "name": "Doganaccia",
+   "area": "Toscana · PT",
+   "points": [
+    "doganaccia",
+    "croce-arcana"
+   ],
+   "road_points": [
+    "doganaccia"
+   ],
+   "snowmaking_points": [
+    "doganaccia"
+   ],
+   "intro": "Sopra Cutigliano, dalla stazione della Doganaccia fino a Croce Arcana."
+  },
+  {
+   "slug": "corno-alle-scale",
+   "name": "Corno alle Scale",
+   "area": "Emilia-Romagna · BO",
+   "points": [
+    "cavone",
+    "corno-alle-scale"
+   ],
+   "road_points": [
+    "cavone"
+   ],
+   "snowmaking_points": [
+    "cavone"
+   ],
+   "intro": "Il comprensorio bolognese, dal Cavone alla vetta del Corno."
+  },
+  {
+   "slug": "lago-scaffaiolo",
+   "name": "Lago Scaffaiolo",
+   "area": "Crinale tosco-emiliano",
+   "points": [
+    "lago-scaffaiolo"
+   ],
+   "road_points": [],
+   "snowmaking_points": [],
+   "intro": "Il lago di crinale tra Corno alle Scale e Doganaccia: meta di scialpinismo e ciaspole. Qui conta soprattutto il vento."
+  },
+  {
+   "slug": "lago-santo",
+   "name": "Lago Santo · Monte Giovo",
+   "area": "Emilia-Romagna · MO",
+   "points": [
+    "lago-santo",
+    "monte-giovo"
+   ],
+   "road_points": [
+    "lago-santo"
+   ],
+   "snowmaking_points": [],
+   "intro": "Il lago glaciale sopra Pievepelago e la cresta del Giovo: ciaspole, scialpinismo e rifugi. Qui contano neve in quota e vento."
+  },
+  {
+   "slug": "garfagnana",
+   "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
+   "area": "Toscana · LU",
+   "points": [
+    "casone-profecchia",
+    "passo-radici",
+    "monte-prado"
+   ],
+   "road_points": [
+    "casone-profecchia",
+    "passo-radici",
+    "passo-pradarena"
+   ],
+   "snowmaking_points": [
+    "casone-profecchia"
+   ],
+   "intro": "Il versante lucchese del crinale: le piste del Casone di Profecchia, il Passo delle Radici verso il Modenese e il Monte Prado, la vetta più alta della Toscana."
+  },
+  {
+   "slug": "cerreto-laghi",
+   "name": "Cerreto Laghi",
+   "area": "Emilia-Romagna · RE",
+   "points": [
+    "cerreto-laghi",
+    "monte-la-nuda"
+   ],
+   "road_points": [
+    "cerreto-laghi"
+   ],
+   "snowmaking_points": [
+    "cerreto-laghi"
+   ],
+   "intro": "La stazione del crinale reggiano al confine con la Lunigiana, fino alle piste del Monte La Nuda."
+  },
+  {
+   "slug": "febbio",
+   "name": "Febbio · Monte Cusna",
+   "area": "Emilia-Romagna · RE",
+   "points": [
+    "febbio",
+    "monte-cusna"
+   ],
+   "road_points": [
+    "febbio"
+   ],
+   "snowmaking_points": [
+    "febbio"
+   ],
+   "intro": "Le piste di Febbio sotto il Monte Cusna, la cima più alta dell'Appennino reggiano."
+  }
+ ],
+ "synoptic": {
+  "center": {
+   "lat": 44.16,
+   "lon": 10.72
+  },
+  "west": {
+   "lat": 43.0,
+   "lon": 3.0
+  },
+  "east": {
+   "lat": 43.5,
+   "lon": 15.0
+  }
+ }
+}

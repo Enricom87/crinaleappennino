@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Come lavoriamo · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>Come lavoriamo</h1>
+<p class="lead">Niente previsioni "a sensazione": ogni mattina confrontiamo i modelli numerici più fini disponibili per l'Appennino e calcoliamo la neve quota per quota.</p></div></section>
+<section class="wrap prose">
+<h2>I modelli</h2>
+<ul>
+<li><strong>Oggi e domani</strong>: modelli ad area limitata ad alta risoluzione (1-2 km), che "vedono" il crinale: ICON-2I di ItaliaMeteo-ARPAE (il riferimento nazionale, con peso doppio), ICON-CH2 di MeteoSvizzera, ICON-D2 del servizio meteo tedesco e AROME di Météo-France.</li>
+<li><strong>Dal terzo giorno</strong>: modelli globali ECMWF, GFS e ICON, con la loro forbice.</li>
+<li><strong>Probabilità</strong>: i 51 scenari dell'ensemble ECMWF. "30% di almeno 10 cm" significa che circa 15 scenari su 51 portano almeno 10 cm.</li>
+<li><strong>Configurazione</strong>: temperatura a 1.500 m, direzione del flusso a 3.000 m e posizione della saccatura, per capire se una perturbazione porta neve o pioggia.</li>
+</ul>
+<h2>Come stimiamo la neve</h2>
+<p>I modelli globali "smussano" le montagne e sottostimano la neve in quota. Per questo calcoliamo la neve da precipitazione e temperatura ricalcolata alla quota reale di ogni punto: sotto 0,5 °C la precipitazione conta tutta come neve, tra 0,5 e 1,5 °C per metà, con il rapporto indicativo di 1 cm di neve per 1 mm d'acqua. Neve molto asciutta (freddo intenso) può rendere di più, neve bagnata di meno.</p>
+<h2>Innevamento artificiale</h2>
+<p>Contiamo le ore notturne (18-8) con temperatura di bulbo umido sotto i -2 °C, la soglia sotto cui i cannoni lavorano bene. Il bulbo umido tiene conto dell'umidità: con aria secca si può innevare anche a 0 °C, con aria umida serve più freddo.</p>
+<h2>Limiti</h2>
+<p>Sono previsioni automatiche e indicative. Non sostituiscono i bollettini ufficiali di Protezione Civile e Meteomont, né il giudizio sul campo. Non usarle da sole per decidere un'uscita in ambiente innevato.</p>
+<h2>Fonti e licenze</h2>
+<p>Dati dei modelli: ItaliaMeteo-ARPAE, MeteoSvizzera, DWD, Météo-France, ECMWF, NOAA, distribuiti tramite <a href="https://open-meteo.com/">Open-Meteo</a> con licenza <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Quote del terreno: Copernicus DEM.</p>
+</section>
+{% endblock %}

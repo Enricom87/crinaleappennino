@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Diventa sponsor · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>Fatti trovare da chi sta per salire in montagna</h1>
+<p class="lead">Chi apre {{ site.name }} sta decidendo se e dove andare a sciare. È il momento giusto per ricordargli il tuo noleggio, la tua scuola, il tuo rifugio o il tuo hotel.</p></div></section>
+<section class="wrap">
+<div class="plans">
+  <div class="plan">
+    <h3>Località</h3><p class="price">240 €<small> / stagione</small></p>
+    <p>Dicembre–marzo. Il tuo marchio nella scheda della località scelta, con link e due righe di presentazione. Massimo 3 sponsor per località.</p>
+  </div>
+  <div class="plan featured">
+    <h3>Allerta neve</h3><p class="price">180 €<small> / stagione</small></p>
+    <p>Il tuo spazio in ogni email di allerta neve e nel riepilogo del giovedì: arriva proprio quando nevica. Un solo sponsor per categoria.</p>
+  </div>
+  <div class="plan">
+    <h3>Tutto il crinale</h3><p class="price">480 €<small> / stagione</small></p>
+    <p>Home page, tutte le località e la newsletter. Ideale per chi lavora su più comprensori.</p>
+  </div>
+</div>
+<p class="note"><strong>Prima stagione, sponsor fondatori:</strong> 40% di sconto per chi aderisce entro il 15 dicembre, con prezzo bloccato anche per la stagione successiva.</p>
+<h2>Cosa ricevi</h2>
+<ul>
+<li>Link diretto al tuo sito o alla tua pagina di prenotazione.</li>
+<li>Un report mensile con le visite della pagina e le aperture delle email, misurati senza cookie di profilazione.</li>
+<li>Nessun vincolo oltre la stagione.</li>
+</ul>
+<p><a class="btn" href="mailto:{{ site.contact_email }}?subject=Sponsor%20{{ site.name }}">Scrivici per prenotare</a></p>
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+{
+ "name": "Crinale",
+ "tagline": "Previsioni neve sull'Appennino tosco-emiliano, quota per quota",
+ "base_url": "https://crinaleappennino.it",
+ "contact_email": "info@crinaleappennino.it",
+ "timezone": "Europe/Rome",
+ "newsletter": {
+  "provider": "brevo",
+  "form_action": "",
+  "alert_threshold_cm_72h": 5
+ },
+ "analytics": {
+  "cloudflare_token": ""
+ }
+}

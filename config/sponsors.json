@@ -1,0 +1,16 @@
+{
+ "_comment": "Per ogni località una lista di sponsor: {name, tagline, url, logo}. Lista vuota = spazio libero in vendita. _global = sponsor della home.",
+ "_global": [],
+ "abetone": [],
+ "cimone": [],
+ "le-polle": [],
+ "cimoncino": [],
+ "doganaccia": [],
+ "corno-alle-scale": [],
+ "lago-scaffaiolo": [],
+ "lago-santo": [],
+ "garfagnana": [],
+ "cerreto-laghi": [],
+ "febbio": [],
+ "_newsletter": []
+}
