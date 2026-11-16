@@ -99,7 +99,26 @@ def main() -> None:
         L["webcams"] = webcams.get(loc["slug"], []) or []
         locs.append(L)
 
-    ctx = {"site": site, "locs": locs, "syn": syn_rows, "overview": overview_text(locs) if locs else "",
+    # percorsi
+    from conditions import LABELS, profile_svg, route_conditions
+    from routes import load_routes, to_gpx
+    routes_cfg = json.loads((ROOT / "config" / "routes.json").read_text())
+    loc_by_slug = {L["slug"]: L for L in locs}
+    routes = []
+    for r in load_routes(routes_cfg):
+        L = loc_by_slug.get(r["location"])
+        if not L:
+            continue
+        r["loc_name"] = L["name"]
+        r["cond"] = route_conditions(r, L["pts"] + L["road"], glob)
+        r["profile"] = profile_svg(r)
+        r["labels"] = [LABELS.get(a, a) for a in r["activities"]]
+        r["geojson_str"] = json.dumps(r["geojson"]["geometry"])
+        routes.append(r)
+    for L in locs:
+        L["routes"] = [r for r in routes if r["location"] == L["slug"]]
+
+    ctx = {"site": site, "locs": locs, "routes": routes, "activity_labels": LABELS, "syn": syn_rows, "overview": overview_text(locs) if locs else "",
            "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),
            "updated_rfc": now.strftime("%a, %d %b %Y %H:%M:%S %z"), "today": today, "sample": bool(int(__import__("os").environ.get("SAMPLE", "0"))), "nice_date": nice_date, "global_sponsors": sponsors.get("_global", [])}
 
@@ -133,6 +152,10 @@ def main() -> None:
         render("location.html", f"{L['slug']}/index.html", loc=L)
     for page in ("metodo", "sponsor", "newsletter", "privacy"):
         render(f"{page}.html", f"{page}/index.html")
+    render("percorsi.html", "percorsi/index.html")
+    for r in routes:
+        render("percorso.html", f"percorsi/{r['slug']}/index.html", route=r)
+        (OUT / "percorsi" / r["slug"] / f"{r['slug']}.gpx").write_text(to_gpx(r))
     render("feed.xml", "feed.xml")
     render("sitemap.xml", "sitemap.xml")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {site['base_url']}/sitemap.xml\n")
@@ -145,6 +168,11 @@ def main() -> None:
                                      for p in L["pts"]]} for L in locs],
            "synoptic": syn_rows}
     (OUT / "api" / "v1" / "forecast.json").write_text(json.dumps(api, ensure_ascii=False))
+    (OUT / "api" / "v1" / "routes.json").write_text(json.dumps(
+        {"generated": ctx["updated_iso"], "routes": [
+            {k: r[k] for k in ("slug", "name", "location", "activities", "summary", "stats", "cond", "credit")}
+            | {"cai": r.get("cai"), "difficulty": r.get("difficulty"), "geometry": r["geojson"]["geometry"]}
+            for r in routes]}, ensure_ascii=False))
     for L in api["locations"]:
         (OUT / "api" / "v1" / f"{L['slug']}.json").write_text(json.dumps(L, ensure_ascii=False))
 

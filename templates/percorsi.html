@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Percorsi sull'Appennino tosco-emiliano · {{ site.name }}{% endblock %}
+{% block desc %}Escursioni, ciaspole, scialpinismo, trail running e MTB tra Cerreto, Cusna, Abetone, Cimone e Corno alle Scale, con le condizioni meteo previste alla quota del percorso.{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap">
+  <p class="kicker">Aggiornato {{ updated }}</p>
+  <h1>Percorsi</h1>
+  <p class="lead">{{ routes|length }} itinerari scelti, con le condizioni previste alla loro quota: neve, ghiaccio, vento e fango.</p>
+</div></section>
+<section class="wrap">
+  <div class="filters" role="group" aria-label="Filtra per attività">
+    <button class="chip on" data-f="">Tutti</button>
+    {% for k, v in activity_labels.items() %}<button class="chip" data-f="{{ k }}">{{ v }}</button>{% endfor %}
+  </div>
+  <div class="cards">
+  {% for r in routes %}
+    <a class="card route" href="{{ u('percorsi/' ~ r.slug ~ '/') }}" data-a="{{ r.activities|join(' ') }}">
+      <div class="card-head"><h3>{{ r.name }}</h3>{% if r.cai %}<span class="area">CAI {{ r.cai }}</span>{% endif %}</div>
+      <p class="tags">{% for l in r.labels %}<span class="tag t-nd">{{ l }}</span> {% endfor %}</p>
+      <p class="facts">{{ r.stats.km }} km · +{{ r.stats.gain }} m · fino a {{ r.stats.z_max }} m{% if r.difficulty %} · {{ r.difficulty }}{% endif %}</p>
+      <p class="card-title small">{{ r.cond.notes[0] }}</p>
+      <p class="muted small">{{ r.loc_name }}</p>
+    </a>
+  {% endfor %}
+  </div>
+  <p class="muted small">Tracciati da OpenStreetMap (© OpenStreetMap contributors, ODbL) e tracce di Enrico. Difficoltà secondo la scala CAI: T turistico, E escursionistico, EE per escursionisti esperti.</p>
+</section>
+<script>
+{
+  const chips = document.querySelectorAll('.chip'), cards = document.querySelectorAll('.route');
+  chips.forEach(c => c.addEventListener('click', () => {
+    chips.forEach(x => x.classList.toggle('on', x === c));
+    const f = c.dataset.f;
+    cards.forEach(k => { k.style.display = !f || k.dataset.a.split(' ').includes(f) ? '' : 'none'; });
+  }));
+}
+</script>
+{% endblock %}

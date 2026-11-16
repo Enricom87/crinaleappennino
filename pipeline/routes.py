@@ -1,0 +1,146 @@
+"""Tracciati dei percorsi: geometria (OpenStreetMap o file), quote, statistiche.
+
+Scarica solo le geometrie che mancano in data/routes/ e le salva, così i percorsi
+non vengono riscaricati a ogni aggiornamento. Dati OSM © OpenStreetMap contributors (ODbL).
+"""
+from __future__ import annotations
+
+import json
+import math
+import time
+from pathlib import Path
+
+import requests
+
+ROOT = Path(__file__).resolve().parents[1]
+DIR = ROOT / "data" / "routes"
+OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]
+ELEV_URL = "https://api.open-meteo.com/v1/elevation"
+UA = {"User-Agent": "crinaleappennino.it (previsioni neve e percorsi)"}
+
+
+def haversine(a, b) -> float:
+    (lo1, la1), (lo2, la2) = a[:2], b[:2]
+    r = 6371000
+    p1, p2 = math.radians(la1), math.radians(la2)
+    dp, dl = p2 - p1, math.radians(lo2 - lo1)
+    h = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
+    return 2 * r * math.asin(math.sqrt(h))
+
+
+def fetch_osm(rel_id: int) -> list[list[list[float]]]:
+    q = f"[out:json][timeout:90];relation({rel_id});out geom;"
+    for url in OVERPASS * 2:
+        try:
+            r = requests.post(url, data={"data": q}, headers=UA, timeout=120)
+            if r.ok:
+                lines = []
+                for el in r.json().get("elements", []):
+                    for m in el.get("members", []):
+                        if m.get("type") == "way" and m.get("geometry"):
+                            lines.append([[g["lon"], g["lat"]] for g in m["geometry"]])
+                return lines
+        except requests.RequestException:
+            pass
+        time.sleep(10)
+    raise RuntimeError(f"relazione {rel_id} non scaricata")
+
+
+def add_elevation(lines: list[list[list[float]]]) -> None:
+    """Quote dal modello del terreno (Copernicus DEM via Open-Meteo), a gruppi di 100 punti."""
+    pts = [p for ln in lines for p in ln if len(p) < 3]
+    for i in range(0, len(pts), 100):
+        grp = pts[i:i + 100]
+        r = requests.get(ELEV_URL, params={"latitude": ",".join(f"{p[1]:.5f}" for p in grp),
+                                          "longitude": ",".join(f"{p[0]:.5f}" for p in grp)}, timeout=60)
+        r.raise_for_status()
+        for p, z in zip(grp, r.json()["elevation"]):
+            p.append(round(z))
+        time.sleep(1)
+
+
+def thin(line: list[list[float]], step: float = 60.0) -> list[list[float]]:
+    out, acc = [line[0]], 0.0
+    for a, b in zip(line, line[1:]):
+        acc += haversine(a, b)
+        if acc >= step:
+            out.append(b)
+            acc = 0.0
+    if out[-1] is not line[-1]:
+        out.append(line[-1])
+    return out
+
+
+def stats(lines: list[list[list[float]]]) -> dict:
+    length = sum(haversine(a, b) for ln in lines for a, b in zip(ln, ln[1:]))
+    zs = [p[2] for ln in lines for p in ln if len(p) > 2]
+    gain = 0.0
+    for ln in lines:  # dislivello positivo con soglia di 5 m per filtrare il rumore del modello del terreno
+        ref = None
+        for p in ln:
+            if len(p) < 3:
+                continue
+            if ref is None:
+                ref = p[2]
+            elif p[2] - ref >= 5:
+                gain += p[2] - ref
+                ref = p[2]
+            elif ref - p[2] >= 5:
+                ref = p[2]
+    allp = [p for ln in lines for p in ln]
+    longest = max(lines, key=len)
+    return {"km": round(length / 1000, 1), "z_min": min(zs) if zs else None, "z_max": max(zs) if zs else None,
+            "gain": round(gain / 10) * 10, "start": longest[0][:2],
+            "bbox": [min(p[0] for p in allp), min(p[1] for p in allp), max(p[0] for p in allp), max(p[1] for p in allp)]}
+
+
+def ensure_geometries(cfg: dict) -> None:
+    DIR.mkdir(parents=True, exist_ok=True)
+    for r in cfg["routes"]:
+        path = DIR / f"{r['slug']}.geojson"
+        if path.exists():
+            continue
+        if "osm" not in r["source"]:
+            print(f"manca il file per {r['slug']}")
+            continue
+        try:
+            lines = [thin(ln) for ln in fetch_osm(r["source"]["osm"]) if len(ln) > 1]
+            add_elevation(lines)
+        except Exception as e:  # un percorso che fallisce non blocca gli altri
+            print(f"saltato {r['slug']}: {e}")
+            continue
+        gj = {"type": "Feature", "properties": {"source": "osm", "osm_relation": r["source"]["osm"],
+                                                "credit": "© OpenStreetMap contributors (ODbL)"},
+              "geometry": {"type": "MultiLineString", "coordinates": lines}}
+        path.write_text(json.dumps(gj))
+        print(f"scaricato {r['slug']}: {sum(len(x) for x in lines)} punti")
+        time.sleep(3)
+
+
+def load_routes(cfg: dict) -> list[dict]:
+    out = []
+    for r in cfg["routes"]:
+        path = DIR / f"{r['slug']}.geojson"
+        if not path.exists():
+            continue
+        gj = json.loads(path.read_text())
+        lines = gj["geometry"]["coordinates"]
+        out.append({**r, "geojson": gj, "stats": stats(lines), "credit": gj["properties"].get("credit", "")})
+    return out
+
+
+def to_gpx(route: dict) -> str:
+    segs = []
+    for ln in route["geojson"]["geometry"]["coordinates"]:
+        pts = "".join(f'<trkpt lat="{p[1]}" lon="{p[0]}">' + (f"<ele>{p[2]}</ele>" if len(p) > 2 else "") + "</trkpt>"
+                      for p in ln)
+        segs.append(f"<trkseg>{pts}</trkseg>")
+    name = route["name"].replace("&", "e").replace("<", "").replace(">", "")
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="crinaleappennino.it" '
+            'xmlns="http://www.topografix.com/GPX/1/1">'
+            f"<metadata><name>{name}</name><desc>{route['credit']}</desc></metadata>"
+            f"<trk><name>{name}</name>{''.join(segs)}</trk></gpx>")
+
+
+if __name__ == "__main__":
+    ensure_geometries(json.loads((ROOT / "config" / "routes.json").read_text()))

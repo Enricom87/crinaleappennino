@@ -1,0 +1,349 @@
+{
+ "_comment": "Percorsi pubblicati. source: osm (relation id, dati © OpenStreetMap contributors, ODbL) oppure file (data/routes/<slug>.geojson). activities: escursionismo, ciaspole, scialpinismo, trail-running, mtb-gravel.",
+ "routes": [
+  {
+   "slug": "lago-nero-dal-sestaione",
+   "name": "Al Lago Nero dal Sestaione",
+   "location": "abetone",
+   "activities": [
+    "escursionismo",
+    "ciaspole"
+   ],
+   "source": {
+    "osm": 2629681
+   },
+   "cai": "504",
+   "difficulty": "E",
+   "summary": "Dal parcheggio del Sestaione al Lago Nero, lago glaciale sotto il crinale tra Abetone e Cutigliano."
+  },
+  {
+   "slug": "monte-gomito-da-faidello",
+   "name": "Monte Gomito da Faidello",
+   "location": "abetone",
+   "activities": [
+    "escursionismo",
+    "scialpinismo"
+   ],
+   "source": {
+    "osm": 5554058
+   },
+   "cai": "503",
+   "difficulty": "E",
+   "summary": "Da Faidello alla cima del Gomito, sopra le piste della Val di Luce."
+  },
+  {
+   "slug": "ciaspole-val-di-luce-gomito",
+   "name": "Anello con le ciaspole dalla Val di Luce",
+   "location": "abetone",
+   "activities": [
+    "ciaspole"
+   ],
+   "source": {
+    "file": "ciaspole-val-di-luce-gomito"
+   },
+   "difficulty": "E",
+   "summary": "Anello dalla base della Val di Luce verso le pendici del Gomito e ritorno, percorso da Enrico con le ciaspole a gennaio."
+  },
+  {
+   "slug": "abetone-lago-santo-sentiero-italia",
+   "name": "Dall'Abetone al Lago Santo (Sentiero Italia)",
+   "location": "lago-santo",
+   "activities": [
+    "escursionismo",
+    "trail-running"
+   ],
+   "source": {
+    "osm": 7554973
+   },
+   "cai": "SI",
+   "difficulty": "E",
+   "summary": "Tappa del Sentiero Italia dal Passo dell'Abetone (Boscolungo) al Lago Santo modenese, lungo il crinale."
+  },
+  {
+   "slug": "monte-giovo-dal-lago-santo",
+   "name": "Monte Giovo dal Lago Santo",
+   "location": "lago-santo",
+   "activities": [
+    "escursionismo",
+    "scialpinismo"
+   ],
+   "source": {
+    "osm": 2698301
+   },
+   "cai": "525",
+   "difficulty": "EE",
+   "summary": "Dal Lago Santo alla cima del Giovo per il sentiero 525: ripido e da esperti, d'inverno solo con attrezzatura e condizioni sicure."
+  },
+  {
+   "slug": "lago-santo-crinale-519",
+   "name": "Dal Lago Santo al crinale (sentiero 519)",
+   "location": "lago-santo",
+   "activities": [
+    "escursionismo",
+    "ciaspole"
+   ],
+   "source": {
+    "osm": 2699887
+   },
+   "cai": "519",
+   "difficulty": "E",
+   "summary": "Dal Lago Santo modenese al sentiero 00 di crinale."
+  },
+  {
+   "slug": "cimone-da-casa-manzi",
+   "name": "Monte Cimone da Casa Manzi",
+   "location": "cimone",
+   "activities": [
+    "escursionismo",
+    "trail-running"
+   ],
+   "source": {
+    "osm": 2759218
+   },
+   "cai": "485",
+   "difficulty": "E",
+   "summary": "Salita alla vetta più alta dell'Appennino settentrionale dal versante di Sestola."
+  },
+  {
+   "slug": "sestola-rifugio-ninfa",
+   "name": "Da Sestola al Lago della Ninfa",
+   "location": "cimone",
+   "activities": [
+    "escursionismo",
+    "trail-running",
+    "ciaspole"
+   ],
+   "source": {
+    "osm": 4005719
+   },
+   "difficulty": "E",
+   "summary": "Percorso comunale da Sestola al rifugio del Lago della Ninfa."
+  },
+  {
+   "slug": "le-polle-lago-ninfa",
+   "name": "Dalle Polle al Lago della Ninfa",
+   "location": "le-polle",
+   "activities": [
+    "escursionismo",
+    "ciaspole"
+   ],
+   "source": {
+    "osm": 3997179
+   },
+   "cai": "475",
+   "difficulty": "E",
+   "summary": "Dal rifugio Le Polle al Lago della Ninfa attraverso il comprensorio del Cimone."
+  },
+  {
+   "slug": "libro-aperto-dai-taburri",
+   "name": "Libro Aperto dai Taburri",
+   "location": "cimoncino",
+   "activities": [
+    "escursionismo",
+    "trail-running"
+   ],
+   "source": {
+    "osm": 2740238
+   },
+   "cai": "433",
+   "difficulty": "E",
+   "summary": "Salita al Libro Aperto, la montagna a due cime tra Cimone e Abetone."
+  },
+  {
+   "slug": "ospitale-croce-arcana",
+   "name": "Da Ospitale al Passo di Croce Arcana",
+   "location": "doganaccia",
+   "activities": [
+    "escursionismo",
+    "trail-running"
+   ],
+   "source": {
+    "osm": 1750341
+   },
+   "cai": "413",
+   "difficulty": "E",
+   "summary": "Dal borgo di Ospitale (Fanano) al Passo di Croce Arcana, sopra la Doganaccia."
+  },
+  {
+   "slug": "doganaccia-calanca",
+   "name": "Dalla Doganaccia al Passo della Calanca",
+   "location": "doganaccia",
+   "activities": [
+    "escursionismo",
+    "ciaspole"
+   ],
+   "source": {
+    "osm": 357957
+   },
+   "cai": "276",
+   "difficulty": "E",
+   "summary": "Dal Passo della Doganaccia al Passo della Calanca, verso il Lago Scaffaiolo."
+  },
+  {
+   "slug": "corno-alle-scale-dal-cavone",
+   "name": "Corno alle Scale dal Cavone",
+   "location": "corno-alle-scale",
+   "activities": [
+    "escursionismo",
+    "scialpinismo"
+   ],
+   "source": {
+    "osm": 2681463
+   },
+   "cai": "335",
+   "difficulty": "E",
+   "summary": "Dal rifugio Cavone alla vetta del Corno alle Scale."
+  },
+  {
+   "slug": "cavone-duca-degli-abruzzi",
+   "name": "Dal Cavone al Rifugio Duca degli Abruzzi",
+   "location": "lago-scaffaiolo",
+   "activities": [
+    "escursionismo",
+    "ciaspole"
+   ],
+   "source": {
+    "osm": 5336010
+   },
+   "cai": "329",
+   "difficulty": "T",
+   "summary": "Percorso facile dal Cavone al rifugio sul Lago Scaffaiolo."
+  },
+  {
+   "slug": "scaffaiolo-abetone-sentiero-italia",
+   "name": "Dal Lago Scaffaiolo all'Abetone (Sentiero Italia)",
+   "location": "lago-scaffaiolo",
+   "activities": [
+    "escursionismo",
+    "trail-running"
+   ],
+   "source": {
+    "osm": 7535084
+   },
+   "cai": "SI",
+   "difficulty": "E",
+   "summary": "Tappa di crinale del Sentiero Italia dal Lago Scaffaiolo al Passo dell'Abetone."
+  },
+  {
+   "slug": "febbio-lama-lite",
+   "name": "Da Febbio a Lama Lite",
+   "location": "febbio",
+   "activities": [
+    "escursionismo",
+    "ciaspole"
+   ],
+   "source": {
+    "osm": 2897193
+   },
+   "cai": "615",
+   "difficulty": "E",
+   "summary": "Da Febbio al Passo di Lama Lite e al Rifugio Battisti, sotto il Cusna."
+  },
+  {
+   "slug": "ciaspole-rifugio-battisti-lama-lite",
+   "name": "Ciaspolata al Rifugio Battisti",
+   "location": "febbio",
+   "activities": [
+    "ciaspole",
+    "escursionismo"
+   ],
+   "source": {
+    "file": "ciaspole-rifugio-battisti-lama-lite"
+   },
+   "difficulty": "E",
+   "summary": "Salita invernale al Rifugio Battisti e a Lama Lite e ritorno, percorsa da Enrico a gennaio: circa 17 km e 1.000 m di dislivello."
+  },
+  {
+   "slug": "monte-cusna-da-civago",
+   "name": "Monte Cusna da Civago",
+   "location": "febbio",
+   "activities": [
+    "escursionismo",
+    "scialpinismo"
+   ],
+   "source": {
+    "osm": 2897194
+   },
+   "cai": "607",
+   "difficulty": "EE",
+   "summary": "Salita al Cusna dalle Case di Civago: lunga e da esperti."
+  },
+  {
+   "slug": "anello-del-cusna-mtb",
+   "name": "Anello del Cusna in MTB",
+   "location": "febbio",
+   "activities": [
+    "mtb-gravel"
+   ],
+   "source": {
+    "osm": 2617081
+   },
+   "summary": "Itinerario MTB intorno al Monte Cusna."
+  },
+  {
+   "slug": "monte-prado-da-case-del-dolo",
+   "name": "Monte Prado da Case del Dolo",
+   "location": "garfagnana",
+   "activities": [
+    "escursionismo",
+    "scialpinismo"
+   ],
+   "source": {
+    "osm": 2239315
+   },
+   "cai": "631",
+   "difficulty": "E",
+   "summary": "Dalle Case del Dolo alla sella del Monte Prado, la vetta più alta della Toscana."
+  },
+  {
+   "slug": "orecchiella-abetina-mtb",
+   "name": "Orecchiella - Abetina in MTB",
+   "location": "garfagnana",
+   "activities": [
+    "mtb-gravel"
+   ],
+   "source": {
+    "osm": 3162496
+   },
+   "summary": "Itinerario MTB nel Parco dell'Orecchiella."
+  },
+  {
+   "slug": "alta-via-parchi-mtb-tappa-8",
+   "name": "Alta Via dei Parchi in MTB, tappa 8",
+   "location": "abetone",
+   "activities": [
+    "mtb-gravel"
+   ],
+   "source": {
+    "osm": 6652417
+   },
+   "summary": "Tappa MTB dell'Alta Via dei Parchi nella zona dell'Abetone."
+  },
+  {
+   "slug": "alta-via-parchi-mtb-tappa-9",
+   "name": "Alta Via dei Parchi in MTB, tappa 9",
+   "location": "corno-alle-scale",
+   "activities": [
+    "mtb-gravel"
+   ],
+   "source": {
+    "osm": 6681401
+   },
+   "summary": "Tappa MTB dell'Alta Via dei Parchi tra Cimone e Corno alle Scale."
+  },
+  {
+   "slug": "monte-la-nuda-corno",
+   "name": "Monte La Nuda (Corno alle Scale)",
+   "location": "corno-alle-scale",
+   "activities": [
+    "escursionismo"
+   ],
+   "source": {
+    "osm": 2688177
+   },
+   "cai": "327",
+   "difficulty": "E",
+   "summary": "Raccordo dal sentiero 323 alla cima del Monte La Nuda, nel gruppo del Corno alle Scale."
+  }
+ ]
+}

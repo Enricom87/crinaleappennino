@@ -82,6 +82,13 @@
 </section>
 {% endif %}
 
+{% if loc.routes %}
+<section class="wrap">
+  <h2>Percorsi in zona</h2>
+  <ul class="links">{% for r in loc.routes %}<li><a href="{{ u('percorsi/' ~ r.slug ~ '/') }}">{{ r.name }}</a> <span class="muted small">· {{ r.labels|join(', ') }} · {{ r.stats.km }} km, +{{ r.stats.gain }} m</span><br><span class="small">{{ r.cond.notes[0] }}</span></li>{% endfor %}</ul>
+</section>
+{% endif %}
+
 <section class="wrap">
   <h2>Webcam</h2>
   {% if loc.webcams %}
