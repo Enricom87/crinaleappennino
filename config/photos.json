@@ -21,7 +21,8 @@
   },
   "own": {
     "abetone-enrico": {},
-    "polle-enrico": {}
+    "polle-enrico": {},
+    "cimoncino-enrico": {}
   },
   "locations": {
     "_home": {
@@ -42,7 +43,7 @@
       "estate": "ninfa"
     },
     "cimoncino": {
-      "inverno": "cimone-neve-4",
+      "inverno": "cimoncino-enrico",
       "estate": "cimone-trek"
     },
     "doganaccia": {
@@ -87,6 +88,7 @@
     "cimone-neve-1": "center 60%",
     "cimone-neve-4": "center 55%",
     "abetone-enrico": "center 44%",
-    "polle-enrico": "center 30%"
+    "polle-enrico": "center 30%",
+    "cimoncino-enrico": "center 35%"
   }
 }
