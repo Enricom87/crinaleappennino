@@ -163,3 +163,4 @@ details.tech>summary{cursor:pointer;font-weight:600;padding:.6rem 0}
 @media (max-width:640px){.appbar .btn.ghost{display:none}}
 @media (prefers-color-scheme:dark){.appbar{background:linear-gradient(90deg,#14283b,#1a2633)}}
 [hidden]{display:none!important}
+.appbar[data-os="ios"] #install-btn{display:none!important}
