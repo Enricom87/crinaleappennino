@@ -7,7 +7,9 @@
  "newsletter": {
   "provider": "brevo",
   "form_action": "https://c34e0c4a.sibforms.com/serve/MUIFAH2ykVhFKw-zhdS9-cqXwNTCsKT_lQjohgNo4ytFVboxAA5Xs4MRu3Gc7_XM1Ucl2jkNvdb0Xadp3RQcG2IIOCZ9D88Hht0SHemHcLLV4dN6dZ1pLj6VFNgTdnW-MeNjhk71FBchllfAvwkSU1gsubho-_6f7ajzhxAzKqEGKEkqPMrXLiX09JrwwrNaBiGxaefHo3mfLY3Y_Q",
-  "alert_threshold_cm_72h": 5
+  "alert_threshold_cm_72h": 5,
+  "brevo_list_id": 2,
+  "sender_email": "info@crinaleappennino.it"
  },
  "analytics": {
   "cloudflare_token": ""

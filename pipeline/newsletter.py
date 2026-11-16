@@ -43,6 +43,9 @@ def email_html(site: dict, heading: str, items: list[str], sponsor: dict | None)
 
 def send(subject: str, body: str, site: dict) -> bool:
     key, list_id, sender = (os.environ.get(k, "").strip() for k in ("BREVO_API_KEY", "BREVO_LIST_ID", "SENDER_EMAIL"))
+    nl = site.get("newsletter", {})
+    list_id = list_id or str(nl.get("brevo_list_id", ""))   # non segreti: anche in config/site.json
+    sender = sender or nl.get("sender_email", "")
     if not (key and list_id and sender):
         print("Brevo non configurato: nessun invio.")
         return False
