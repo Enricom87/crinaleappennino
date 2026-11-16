@@ -27,17 +27,52 @@ SURFACE_VARS = "temperature_2m,relative_humidity_2m,precipitation,freezing_level
 SYNOPTIC_VARS = "temperature_850hPa,wind_direction_700hPa,wind_speed_700hPa,geopotential_height_500hPa,precipitation"
 
 
-def _get(url: str, params: dict, retries: int = 3) -> dict | list:
+def _get(url: str, params: dict, retries: int = 4) -> dict | list:
     if API_KEY:
         params = {**params, "apikey": API_KEY}
     for attempt in range(retries):
-        r = requests.get(url, params=params, timeout=90)
-        if r.status_code == 429 and attempt < retries - 1:
-            time.sleep(70)
+        try:
+            r = requests.get(url, params=params, timeout=180)
+        except requests.exceptions.RequestException:
+            if attempt == retries - 1:
+                raise
+            time.sleep(20 * (attempt + 1))
+            continue
+        if r.status_code in (429, 500, 502, 503, 504) and attempt < retries - 1:
+            time.sleep(70 if r.status_code == 429 else 20)
             continue
         r.raise_for_status()
         return r.json()
     raise RuntimeError("unreachable")
+
+
+def _chunks(seq: list, n: int):
+    for i in range(0, len(seq), n):
+        yield seq[i:i + n]
+
+
+def _fetch_merged(url: str, ids: list[str], pts: list[dict], base: dict, models: list[str],
+                  chunk: int, suffix_single: bool = True) -> dict:
+    """Una richiesta per modello e per gruppo di punti; unisce le serie orarie per punto."""
+    out: dict[str, dict] = {}
+    for m in models:
+        for grp in _chunks(list(zip(ids, pts)), chunk):
+            gids, gpts = [g[0] for g in grp], [g[1] for g in grp]
+            try:
+                data = _as_list(_get(url, {**_coords(gpts), **base, "models": m}))
+            except Exception as e:  # un modello o un gruppo che fallisce non blocca il resto
+                print(f"saltato {m} per {gids}: {e}")
+                continue
+            for pid, d in zip(gids, data):
+                h = d.get("hourly", {})
+                dst = out.setdefault(pid, {"hourly": {"time": h.get("time", [])}})["hourly"]
+                for k, v in h.items():
+                    if k == "time":
+                        continue
+                    key = k if (not suffix_single or k.endswith("_" + m)) else f"{k}_{m}"
+                    dst[key] = v
+            time.sleep(2)
+    return out
 
 
 def _coords(points: list[dict]) -> dict:
@@ -59,24 +94,25 @@ def fetch_all(config: dict, raw_dir: Path) -> None:
     pts = [config["points"][i] for i in ids]
 
     jobs = {
-        "global": (FORECAST_URL, {**_coords(pts), "hourly": SURFACE_VARS,
-                                  "models": ",".join(GLOBAL_MODELS), "forecast_days": 15}),
-        "lam": (FORECAST_URL, {**_coords(pts), "hourly": SURFACE_VARS,
-                               "models": ",".join(LAM_MODELS), "forecast_days": 3}),
-        "ensemble": (ENSEMBLE_URL, {**_coords(pts), "hourly": "temperature_2m,precipitation",
-                                    "models": ",".join(ENSEMBLE_MODELS), "forecast_days": 15}),
+        "global": (FORECAST_URL, {"hourly": SURFACE_VARS, "forecast_days": 15}, GLOBAL_MODELS, 8, True),
+        "lam": (FORECAST_URL, {"hourly": SURFACE_VARS, "forecast_days": 3}, LAM_MODELS, 12, True),
+        "ensemble": (ENSEMBLE_URL, {"hourly": "temperature_2m,precipitation", "forecast_days": 15},
+                     ENSEMBLE_MODELS, 3, False),
     }
-    for name, (url, params) in jobs.items():
-        data = _as_list(_get(url, params))
-        out = {pid: d for pid, d in zip(ids, data)}
+    for name, (url, base, models, chunk, suffix) in jobs.items():
+        out = _fetch_merged(url, ids, pts, base, models, chunk, suffix)
         (raw_dir / f"{name}.json").write_text(json.dumps(out))
+        print(f"{name}: {len(out)} punti")
         time.sleep(5)
 
     syn = config["synoptic"]
     syn_pts = [dict(syn["west"], elev=0), dict(syn["center"], elev=1500), dict(syn["east"], elev=0)]
-    data = _as_list(_get(FORECAST_URL, {**_coords(syn_pts), "hourly": SYNOPTIC_VARS,
-                                        "models": "ecmwf_ifs025,gfs_global", "forecast_days": 15}))
-    (raw_dir / "synoptic.json").write_text(json.dumps(dict(zip(["west", "center", "east"], data))))
+    try:
+        data = _as_list(_get(FORECAST_URL, {**_coords(syn_pts), "hourly": SYNOPTIC_VARS,
+                                            "models": "ecmwf_ifs025,gfs_global", "forecast_days": 15}))
+        (raw_dir / "synoptic.json").write_text(json.dumps(dict(zip(["west", "center", "east"], data))))
+    except Exception as e:
+        print(f"configurazione sinottica non disponibile: {e}")
 
 
 if __name__ == "__main__":
