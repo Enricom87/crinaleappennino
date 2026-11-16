@@ -117,5 +117,61 @@
   "artist": "CAPTAIN RAJU",
   "license": "CC0",
   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+ },
+ "cand-cer1": {
+  "file": "CerretoLaghi2.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:CerretoLaghi2.jpg",
+  "artist": "F.M.Cucco",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0"
+ },
+ "cand-cer2": {
+  "file": "CerretoLaghi.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:CerretoLaghi.JPG",
+  "artist": "F.M.Cucco",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0"
+ },
+ "cand-cer3": {
+  "file": "Monte La Nuda - Collagna, Reggio Emilia, Italy - March 12, 2017 - 01.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Monte_La_Nuda_-_Collagna,_Reggio_Emilia,_Italy_-_March_12,_2017_-_01.jpg",
+  "artist": "Giorgio Galeotti",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0"
+ },
+ "cand-cer4": {
+  "file": "Monte La Nuda - Comano, Massa-Carrara, Italy - March 12, 2017.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Monte_La_Nuda_-_Comano,_Massa-Carrara,_Italy_-_March_12,_2017.jpg",
+  "artist": "Giorgio Galeotti",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0"
+ },
+ "cand-cer5": {
+  "file": "Il silenzio del ghiaccio.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Il_silenzio_del_ghiaccio.jpg",
+  "artist": "Sky2129",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0"
+ },
+ "cand-sp1": {
+  "file": "San pellegrino in alpe, santuario, esterno 01.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:San_pellegrino_in_alpe,_santuario,_esterno_01.jpg",
+  "artist": "Sailko",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0"
+ },
+ "cand-sp2": {
+  "file": "San pellegrino in alpe, santuario, esterno 03.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:San_pellegrino_in_alpe,_santuario,_esterno_03.jpg",
+  "artist": "Sailko",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0"
+ },
+ "cand-sp3": {
+  "file": "San pellegrino in alpe, santuario, esterno 04.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:San_pellegrino_in_alpe,_santuario,_esterno_04.jpg",
+  "artist": "Sailko",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0"
  }
 }
