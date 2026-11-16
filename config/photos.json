@@ -23,7 +23,8 @@
     "abetone-enrico": {},
     "polle-enrico": {},
     "cimoncino-enrico": {},
-    "corno-enrico": {}
+    "corno-enrico": {},
+    "lagosanto-enrico": {}
   },
   "locations": {
     "_home": {
@@ -60,7 +61,7 @@
       "estate": "scaffaiolo"
     },
     "lago-santo": {
-      "inverno": "lagosanto",
+      "inverno": "lagosanto-enrico",
       "estate": "lagosanto"
     },
     "garfagnana": {
@@ -91,6 +92,7 @@
     "abetone-enrico": "center 44%",
     "polle-enrico": "center 30%",
     "cimoncino-enrico": "center 12%",
-    "corno-enrico": "center 50%"
+    "corno-enrico": "center 50%",
+    "lagosanto-enrico": "center 8%"
   }
 }
