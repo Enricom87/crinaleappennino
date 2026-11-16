@@ -19,15 +19,19 @@ LAM_DAYS = 2  # oggi + domani dai LAM, poi globali
 
 # ---------- fisica di base ----------
 
-def snow_fraction(t: float | None) -> float:
-    """Frazione nevosa dalla temperatura a 2 m (regola semplice e dichiarata)."""
+def snow_fraction(t: float | None, fl: float | None = None, elev: float | None = None) -> float:
+    """Frazione nevosa: temperatura a 2 m e, se c'è, quota dello zero termico.
+
+    La neve arriva di norma fino a circa 300 m sotto lo zero termico; tra 300 e 500 m
+    sotto è mista. Si prende il valore più prudente tra i due criteri."""
     if t is None:
         return 0.0
-    if t <= 0.5:
-        return 1.0
-    if t <= 1.5:
-        return 0.5
-    return 0.0
+    ft = 1.0 if t <= 0.5 else 0.5 if t <= 1.5 else 0.0
+    if fl is None or elev is None:
+        return ft
+    gap = fl - elev
+    ff = 1.0 if gap <= 300 else 0.5 if gap <= 500 else 0.0
+    return min(ft, ff)
 
 
 def wet_bulb(t: float | None, rh: float | None) -> float | None:
@@ -68,7 +72,7 @@ def _day(ts: str) -> str:
     return ts[:10]
 
 
-def per_model_daily(times: list[str], s: dict[str, list]) -> dict[str, dict]:
+def per_model_daily(times: list[str], s: dict[str, list], elev: float | None = None) -> dict[str, dict]:
     """Aggregati giornalieri per un modello."""
     days: dict[str, dict] = defaultdict(lambda: {"precip": 0.0, "snow": 0.0, "t": [], "fl": [],
                                                  "gust": [], "valid": 0})
@@ -81,7 +85,8 @@ def per_model_daily(times: list[str], s: dict[str, list]) -> dict[str, dict]:
         d = days[_day(ts)]
         p = (P[i] if i < len(P) else 0) or 0.0
         d["precip"] += p
-        d["snow"] += p * snow_fraction(t)
+        fl = FL[i] if i < len(FL) else None
+        d["snow"] += p * snow_fraction(t, fl, elev)
         d["t"].append(t)
         d["valid"] += 1
         if i < len(FL) and FL[i] is not None:
@@ -120,12 +125,12 @@ def snowmaking_nights(times: list[str], s: dict[str, list]) -> dict[str, dict]:
     return dict(nights)
 
 
-def blend_point(glob: dict, lam: dict, today: str) -> list[dict]:
+def blend_point(glob: dict, lam: dict, today: str, elev: float | None = None) -> list[dict]:
     """Tabella giornaliera con valore di consenso e forbice tra modelli."""
     g_models = split_models(glob["hourly"], GLOBAL_MODELS)
     l_models = split_models(lam["hourly"], list(LAM_WEIGHTS)) if lam else {}
-    g_daily = {m: per_model_daily(glob["hourly"]["time"], s) for m, s in g_models.items()}
-    l_daily = {m: per_model_daily(lam["hourly"]["time"], s) for m, s in l_models.items()} if lam else {}
+    g_daily = {m: per_model_daily(glob["hourly"]["time"], s, elev) for m, s in g_models.items()}
+    l_daily = {m: per_model_daily(lam["hourly"]["time"], s, elev) for m, s in l_models.items()} if lam else {}
     nights_src = g_models.get("ecmwf_ifs025") or next(iter(g_models.values()), {})
     nights = snowmaking_nights(glob["hourly"]["time"], nights_src) if nights_src else {}
 
@@ -165,12 +170,13 @@ def blend_point(glob: dict, lam: dict, today: str) -> list[dict]:
     return rows
 
 
-def ensemble_probs(ens: dict, today: str) -> dict:
+def ensemble_probs(ens: dict, today: str, elev: float | None = None) -> dict:
     """Probabilità di accumulo (neve stimata) su 72 ore, 7 giorni e tutto l'orizzonte."""
     h = ens["hourly"]
     times = h["time"]
     T = split_members(h, "temperature_2m")
     P = split_members(h, "precipitation")
+    FL = split_members(h, "freezing_level_height")
     n = min(len(T), len(P))
     start = datetime.fromisoformat(today + "T00:00")
     windows = {"h72": start + timedelta(hours=72), "d7": start + timedelta(days=7), "all": start + timedelta(days=16)}
@@ -186,7 +192,8 @@ def ensemble_probs(ens: dict, today: str) -> dict:
             if dt < start:
                 continue
             last_valid = ts if (last_valid is None or ts > last_valid) else last_valid
-            s = p * snow_fraction(t)
+            fl = FL[m][i] if m < len(FL) and i < len(FL[m]) else None
+            s = p * snow_fraction(t, fl, elev)
             for w, end in windows.items():
                 if dt < end:
                     acc[w] += s

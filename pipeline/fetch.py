@@ -96,7 +96,7 @@ def fetch_all(config: dict, raw_dir: Path) -> None:
     jobs = {
         "global": (FORECAST_URL, {"hourly": SURFACE_VARS, "forecast_days": 15}, GLOBAL_MODELS, 8, True),
         "lam": (FORECAST_URL, {"hourly": SURFACE_VARS, "forecast_days": 3}, LAM_MODELS, 12, True),
-        "ensemble": (ENSEMBLE_URL, {"hourly": "temperature_2m,precipitation", "forecast_days": 15},
+        "ensemble": (ENSEMBLE_URL, {"hourly": "temperature_2m,precipitation,freezing_level_height", "forecast_days": 15},
                      ENSEMBLE_MODELS, 3, False),
     }
     for name, (url, base, models, chunk, suffix) in jobs.items():

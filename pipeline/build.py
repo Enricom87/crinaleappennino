@@ -78,8 +78,8 @@ def main() -> None:
     for pid, meta in cfg["points"].items():
         if pid not in glob:
             continue
-        days = blend_point(glob[pid], lam.get(pid), today)
-        probs = ensemble_probs(ens[pid], today) if pid in ens else {}
+        days = blend_point(glob[pid], lam.get(pid), today, meta["elev"])
+        probs = ensemble_probs(ens[pid], today, meta["elev"]) if pid in ens else {}
         pts[pid] = {"id": pid, **meta, "days": days, "probs": probs}
 
     syn_rows = synoptic_days(syn, today) if syn else []
