@@ -148,7 +148,7 @@ def main() -> None:
     def photo_for(slug: str):
         key = pcfg["locations"].get(slug, {}).get(season)
         has = key and ((ROOT / "data" / "photos" / f"{key}.jpg").exists() or (ROOT / "static" / "photos" / f"{key}.jpg").exists())
-        return {"key": key, "credit": pcred.get(key, {})} if has else None
+        return {"key": key, "credit": pcred.get(key, {}), "pos": pcfg["locations"].get(slug, {}).get("pos") or pcfg.get("positions", {}).get(key, "center 60%")} if has else None
 
     for L in locs:
         L["photo"] = photo_for(L["slug"])

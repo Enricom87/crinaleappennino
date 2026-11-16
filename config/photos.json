@@ -20,17 +20,65 @@
   },
   "own": {},
   "locations": {
-    "_home": {"inverno": "cusna-inverno", "estate": "scaffaiolo"},
-    "abetone": {"inverno": "abetone-inverno", "estate": "abetone-estate"},
-    "cimone": {"inverno": "cimone-inverno", "estate": "cimone-estate"},
-    "le-polle": {"inverno": "polle", "estate": "ninfa"},
-    "cimoncino": {"inverno": "cimone-inverno", "estate": "cimone-trek"},
-    "doganaccia": {"inverno": "doganaccia", "estate": "doganaccia"},
-    "corno-alle-scale": {"inverno": "corno-inverno", "estate": "corno-estate"},
-    "lago-scaffaiolo": {"inverno": "corno-inverno", "estate": "scaffaiolo"},
-    "lago-santo": {"inverno": "lagosanto", "estate": "lagosanto"},
-    "garfagnana": {"inverno": "garfagnana", "estate": "garfagnana"},
-    "cerreto-laghi": {"inverno": "cerreto", "estate": "cerreto"},
-    "febbio": {"inverno": "cusna-inverno", "estate": "cusna-estate"}
+    "_home": {
+      "inverno": "cimone-inverno",
+      "estate": "scaffaiolo",
+      "pos": "center 30%"
+    },
+    "abetone": {
+      "inverno": "abetone-inverno",
+      "estate": "abetone-estate"
+    },
+    "cimone": {
+      "inverno": "cimone-inverno",
+      "estate": "cimone-estate"
+    },
+    "le-polle": {
+      "inverno": "cimone-inverno",
+      "estate": "polle"
+    },
+    "cimoncino": {
+      "inverno": "cimone-inverno",
+      "estate": "cimone-trek"
+    },
+    "doganaccia": {
+      "inverno": "doganaccia",
+      "estate": "doganaccia"
+    },
+    "corno-alle-scale": {
+      "inverno": "corno-inverno",
+      "estate": "corno-estate"
+    },
+    "lago-scaffaiolo": {
+      "inverno": "corno-inverno",
+      "estate": "scaffaiolo"
+    },
+    "lago-santo": {
+      "inverno": "lagosanto",
+      "estate": "lagosanto"
+    },
+    "garfagnana": {
+      "inverno": "garfagnana",
+      "estate": "garfagnana"
+    },
+    "cerreto-laghi": {
+      "inverno": "cerreto",
+      "estate": "cerreto"
+    },
+    "febbio": {
+      "inverno": "cusna-inverno",
+      "estate": "cusna-estate"
+    }
+  },
+  "positions": {
+    "cimone-inverno": "center 30%",
+    "cusna-inverno": "center 80%",
+    "corno-inverno": "center 60%",
+    "abetone-inverno": "center 70%",
+    "scaffaiolo": "center 60%",
+    "lagosanto": "center 60%",
+    "cerreto": "center 55%",
+    "doganaccia": "center 70%",
+    "polle": "center 60%"
   }
 }

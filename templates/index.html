@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block main %}
-<section class="hero{% if home_photo %} has-photo{% endif %}"{% if home_photo %} style="--photo:url('{{ u('static/photos/' ~ home_photo.key ~ '.jpg') }}')"{% endif %}>
+<section class="hero{% if home_photo %} has-photo{% endif %}"{% if home_photo %} style="background-image:linear-gradient(180deg,rgba(9,22,36,.35),rgba(9,22,36,.72)),url('{{ u('static/photos/' ~ home_photo.key ~ '.jpg') }}');background-position:{{ home_photo.pos }}"{% endif %}>
   <div class="wrap">
     <p class="kicker">Aggiornato {{ updated }}</p>
     <h1>{% if summer %}Si va in montagna? Ti diciamo dove e fino a che ora.{% else %}Nevica? Quanto? E a che quota? Te lo diciamo prima.{% endif %}</h1>
@@ -21,7 +21,7 @@
   <div class="cards">
   {% for L in locs %}
     <a class="card lvl-{{ L.text.level }}{% if L.photo %} has-photo{% endif %}" href="{{ u(L.slug ~ '/') }}">
-      {% if L.photo %}<span class="card-photo" style="background-image:url('{{ u('static/photos/' ~ L.photo.key ~ '-640.jpg') }}')" role="img" aria-label="{{ L.name }}"></span>{% endif %}
+      {% if L.photo %}<span class="card-photo" style="background-image:url('{{ u('static/photos/' ~ L.photo.key ~ '-640.jpg') }}');background-position:{{ L.photo.pos }}" role="img" aria-label="{{ L.name }}"></span>{% endif %}
       <div class="card-head"><h3>{{ L.name }}</h3><span class="area">{{ L.area }}</span></div>
       {% set m0 = L.mtn[0] if L.mtn else none %}
       {% if summer and m0 %}

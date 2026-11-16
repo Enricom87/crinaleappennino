@@ -2,7 +2,7 @@
 {% block title %}{{ 'Meteo in quota' if summer else 'Neve' }} {{ loc.name }} · previsioni quota per quota · {{ site.name }}{% endblock %}
 {% block desc %}Previsioni neve per {{ loc.name }}: centimetri attesi a {% for p in loc.pts %}{{ p.elev }} m{% if not loop.last %}, {% endif %}{% endfor %}, probabilità, innevamento artificiale e vento. Aggiornate ogni mattina.{% endblock %}
 {% block main %}
-<section class="hero small lvl-{{ loc.text.level }}{% if loc.photo %} has-photo{% endif %}"{% if loc.photo %} style="--photo:url('{{ u('static/photos/' ~ loc.photo.key ~ '.jpg') }}')"{% endif %}>
+<section class="hero small lvl-{{ loc.text.level }}{% if loc.photo %} has-photo{% endif %}"{% if loc.photo %} style="background-image:linear-gradient(180deg,rgba(9,22,36,.35),rgba(9,22,36,.72)),url('{{ u('static/photos/' ~ loc.photo.key ~ '.jpg') }}');background-position:{{ loc.photo.pos }}"{% endif %}>
   <div class="wrap">
     <p class="kicker"><a href="{{ u('') }}">Località</a> · {{ loc.area }} · aggiornato {{ updated }}</p>
     <h1>{{ loc.name }}</h1>

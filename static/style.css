@@ -165,7 +165,7 @@ details.tech>summary{cursor:pointer;font-weight:600;padding:.6rem 0}
 [hidden]{display:none!important}
 .appbar[data-os="ios"] #install-btn{display:none!important}
 
-.hero.has-photo{position:relative;background-image:linear-gradient(180deg,rgba(9,22,36,.45),rgba(9,22,36,.78)),var(--photo);background-size:cover;background-position:center}
+.hero.has-photo{position:relative;background-size:cover;background-position:center 65%}
 .hero.has-photo h1,.hero.has-photo .lead{text-shadow:0 2px 12px rgba(0,0,0,.45)}
 .photo-credit{position:absolute;right:10px;bottom:6px;font-size:11px;color:rgba(255,255,255,.75)}
 .photo-credit a{color:inherit}
