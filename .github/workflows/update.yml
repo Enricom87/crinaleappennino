@@ -32,6 +32,8 @@ jobs:
         run: python pipeline/fetch.py
       - name: Tracciati dei percorsi (solo quelli nuovi)
         run: python pipeline/routes.py
+        timeout-minutes: 12
+        continue-on-error: true
       - name: Costruisci il sito
         run: cd pipeline && python build.py
       - name: Newsletter e allerta neve

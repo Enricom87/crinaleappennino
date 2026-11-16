@@ -28,22 +28,26 @@ def haversine(a, b) -> float:
     return 2 * r * math.asin(math.sqrt(h))
 
 
-def fetch_osm(rel_id: int) -> list[list[list[float]]]:
-    q = f"[out:json][timeout:90];relation({rel_id});out geom;"
-    for url in OVERPASS * 2:
+def fetch_osm_many(rel_ids: list[int]) -> dict[int, list[list[list[float]]]]:
+    """Una sola richiesta Overpass per tutte le relazioni mancanti."""
+    q = f"[out:json][timeout:180];relation(id:{','.join(map(str, rel_ids))});out geom;"
+    last = None
+    for url in OVERPASS:
         try:
-            r = requests.post(url, data={"data": q}, headers=UA, timeout=120)
+            r = requests.post(url, data={"data": q}, headers=UA, timeout=240)
+            print(f"overpass {url}: {r.status_code}", flush=True)
             if r.ok:
-                lines = []
+                out = {}
                 for el in r.json().get("elements", []):
-                    for m in el.get("members", []):
-                        if m.get("type") == "way" and m.get("geometry"):
-                            lines.append([[g["lon"], g["lat"]] for g in m["geometry"]])
-                return lines
-        except requests.RequestException:
-            pass
-        time.sleep(10)
-    raise RuntimeError(f"relazione {rel_id} non scaricata")
+                    out[el["id"]] = [[[g["lon"], g["lat"]] for g in m["geometry"]]
+                                     for m in el.get("members", []) if m.get("type") == "way" and m.get("geometry")]
+                return out
+            last = r.status_code
+        except requests.RequestException as e:
+            last = e
+            print(f"overpass {url}: {e}", flush=True)
+        time.sleep(20)
+    raise RuntimeError(f"Overpass non raggiungibile: {last}")
 
 
 def add_elevation(lines: list[list[list[float]]]) -> None:
@@ -52,7 +56,7 @@ def add_elevation(lines: list[list[list[float]]]) -> None:
     for i in range(0, len(pts), 100):
         grp = pts[i:i + 100]
         r = requests.get(ELEV_URL, params={"latitude": ",".join(f"{p[1]:.5f}" for p in grp),
-                                          "longitude": ",".join(f"{p[0]:.5f}" for p in grp)}, timeout=60)
+                                          "longitude": ",".join(f"{p[0]:.5f}" for p in grp)}, timeout=30)
         r.raise_for_status()
         for p, z in zip(grp, r.json()["elevation"]):
             p.append(round(z))
@@ -96,25 +100,26 @@ def stats(lines: list[list[list[float]]]) -> dict:
 
 def ensure_geometries(cfg: dict) -> None:
     DIR.mkdir(parents=True, exist_ok=True)
-    for r in cfg["routes"]:
-        path = DIR / f"{r['slug']}.geojson"
-        if path.exists():
-            continue
-        if "osm" not in r["source"]:
-            print(f"manca il file per {r['slug']}")
+    todo = [r for r in cfg["routes"] if not (DIR / f"{r['slug']}.geojson").exists() and "osm" in r["source"]]
+    if not todo:
+        print("nessun tracciato nuovo")
+        return
+    geoms = fetch_osm_many([r["source"]["osm"] for r in todo])
+    for r in todo:
+        lines = [thin(ln) for ln in geoms.get(r["source"]["osm"], []) if len(ln) > 1]
+        if not lines:
+            print(f"saltato {r['slug']}: nessuna geometria", flush=True)
             continue
         try:
-            lines = [thin(ln) for ln in fetch_osm(r["source"]["osm"]) if len(ln) > 1]
             add_elevation(lines)
-        except Exception as e:  # un percorso che fallisce non blocca gli altri
-            print(f"saltato {r['slug']}: {e}")
+        except Exception as e:  # senza quote il percorso resta da scaricare al giro dopo
+            print(f"saltato {r['slug']}: quote non disponibili ({e})", flush=True)
             continue
         gj = {"type": "Feature", "properties": {"source": "osm", "osm_relation": r["source"]["osm"],
                                                 "credit": "© OpenStreetMap contributors (ODbL)"},
               "geometry": {"type": "MultiLineString", "coordinates": lines}}
-        path.write_text(json.dumps(gj))
-        print(f"scaricato {r['slug']}: {sum(len(x) for x in lines)} punti")
-        time.sleep(3)
+        (DIR / f"{r['slug']}.geojson").write_text(json.dumps(gj))
+        print(f"scaricato {r['slug']}: {sum(len(x) for x in lines)} punti", flush=True)
 
 
 def load_routes(cfg: dict) -> list[dict]:
