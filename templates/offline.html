@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Senza rete · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>Sei senza rete</h1>
+<p class="lead">Le pagine che hai già aperto e i percorsi salvati restano disponibili. Le previsioni si aggiornano appena torna il segnale.</p>
+<p><a class="btn" href="{{ u('') }}">Torna alla home</a> <a class="btn ghost" href="{{ u('percorsi/') }}">Percorsi</a></p></div></section>
+{% endblock %}

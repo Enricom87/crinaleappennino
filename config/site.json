@@ -11,5 +11,9 @@
  },
  "analytics": {
   "cloudflare_token": ""
+ },
+ "apps": {
+  "android": "",
+  "ios": ""
  }
 }

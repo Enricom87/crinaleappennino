@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}L'app di {{ site.name }} per Android e iPhone{% endblock %}
+{% block desc %}Installa {{ site.name }} sul telefono: previsioni neve e meteo in quota, percorsi salvati anche senza campo.{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap">
+<h1>{{ site.name }} sul tuo telefono</h1>
+<p class="lead">Previsioni neve, bollettino in quota e percorsi con un tocco dalla schermata Home. I percorsi che salvi restano consultabili anche dove non c'è campo.</p>
+{% if site.apps.android or site.apps.ios %}
+<p class="stores">
+  {% if site.apps.android %}<a class="btn" href="{{ site.apps.android }}" rel="noopener">Scarica da Google Play</a>{% endif %}
+  {% if site.apps.ios %}<a class="btn" href="{{ site.apps.ios }}" rel="noopener">Scarica dall'App Store</a>{% endif %}
+</p>
+{% endif %}
+<p><button class="btn" id="install-btn" hidden>Installa l'app</button></p>
+</div></section>
+<section class="wrap twocol">
+  <div>
+    <h2>Android</h2>
+    <ol>
+      <li>Apri <strong>crinaleappennino.it</strong> con Chrome.</li>
+      <li>Tocca <strong>Installa l'app</strong> qui sopra, oppure il menu ⋮ e poi <strong>Installa app</strong>.</li>
+      <li>Trovi l'icona di {{ site.name }} tra le tue app.</li>
+    </ol>
+  </div>
+  <div>
+    <h2>iPhone e iPad</h2>
+    <ol>
+      <li>Apri <strong>crinaleappennino.it</strong> con Safari.</li>
+      <li>Tocca il pulsante <strong>Condividi</strong> (il quadrato con la freccia).</li>
+      <li>Scegli <strong>Aggiungi alla schermata Home</strong>.</li>
+    </ol>
+  </div>
+</section>
+<section class="wrap">
+  <h2>Percorsi senza campo</h2>
+  <p>Nella pagina di ogni percorso trovi <strong>Salva per l'uso offline</strong>: il telefono conserva la scheda e la traccia GPX. La mappa di sfondo ha bisogno di rete; per navigare in montagna senza segnale importa il GPX in un'app con mappe offline.</p>
+</section>
+{% endblock %}

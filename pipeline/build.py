@@ -166,7 +166,7 @@ def main() -> None:
     render("index.html", "index.html")
     for L in locs:
         render("location.html", f"{L['slug']}/index.html", loc=L)
-    for page in ("metodo", "sponsor", "newsletter", "privacy"):
+    for page in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline"):
         render(f"{page}.html", f"{page}/index.html")
     render("percorsi.html", "percorsi/index.html")
     for r in routes:
@@ -175,6 +175,17 @@ def main() -> None:
     render("feed.xml", "feed.xml")
     render("sitemap.xml", "sitemap.xml")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {site['base_url']}/sitemap.xml\n")
+    # app installabile (PWA): manifest e service worker alla radice del sito
+    (OUT / "manifest.webmanifest").write_text(json.dumps({
+        "name": f"{site['name']} · neve e meteo in quota", "short_name": site["name"],
+        "description": site["tagline"], "lang": "it", "start_url": "./", "scope": "./", "display": "standalone",
+        "background_color": "#f6f9fb", "theme_color": "#0f2236",
+        "icons": [{"src": "static/icon-192.png", "sizes": "192x192", "type": "image/png"},
+                  {"src": "static/icon-512.png", "sizes": "512x512", "type": "image/png"},
+                  {"src": "static/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}],
+        "shortcuts": [{"name": "Percorsi", "url": "percorsi/"}, {"name": "Allerta neve", "url": "newsletter/"}],
+    }, ensure_ascii=False, indent=1))
+    (OUT / "sw.js").write_text(env.get_template("sw.js").render(**ctx))
     (OUT / "CNAME").write_text(site["base_url"].split("//")[1] + "\n")
 
     # API per la futura app

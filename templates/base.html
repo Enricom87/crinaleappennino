@@ -8,6 +8,12 @@
 <link rel="stylesheet" href="{{ u('static/style.css') }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ u('feed.xml') }}">
 <link rel="icon" href="{{ u('static/favicon.svg') }}" type="image/svg+xml">
+<link rel="manifest" href="{{ u('manifest.webmanifest') }}">
+<meta name="theme-color" content="#0f2236">
+<link rel="apple-touch-icon" href="{{ u('static/apple-touch-icon.png') }}">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="{{ site.name }}">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 {% if site.analytics.cloudflare_token %}<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ site.analytics.cloudflare_token }}"}'></script>{% endif %}
 </head>
 <body>
@@ -19,6 +25,7 @@
       <a href="{{ u('percorsi/') }}">Percorsi</a>
       <a href="{{ u('newsletter/') }}">Allerta neve</a>
       <a href="{{ u('metodo/') }}">Come lavoriamo</a>
+      <a href="{{ u('app/') }}">App</a>
       <a href="{{ u('sponsor/') }}" class="cta">Diventa sponsor</a>
     </nav>
   </div>
@@ -34,5 +41,25 @@
     <p class="small"><a href="{{ u('privacy/') }}">Privacy</a> · <a href="{{ u('metodo/') }}">Metodo e fonti</a> · <a href="{{ u('feed.xml') }}">RSS</a> · <a href="{{ u('api/v1/forecast.json') }}">Dati JSON</a> · <a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></p>
   </div>
 </footer>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("{{ u('sw.js') }}").catch(() => {});
+}
+let deferredInstall = null;
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault(); deferredInstall = e;
+  document.querySelectorAll("#install-btn").forEach(b => b.hidden = false);
+});
+document.addEventListener("click", async e => {
+  if (e.target.id === "install-btn" && deferredInstall) {
+    deferredInstall.prompt(); await deferredInstall.userChoice; deferredInstall = null; e.target.hidden = true;
+  }
+  if (e.target.dataset && e.target.dataset.save && navigator.serviceWorker && navigator.serviceWorker.controller) {
+    const urls = JSON.parse(e.target.dataset.save).map(p => new URL(p, location.href).href);
+    navigator.serviceWorker.controller.postMessage({ type: "save", urls });
+    e.target.textContent = "Salvato sul telefono ✓"; e.target.disabled = true;
+  }
+});
+</script>
 </body>
 </html>

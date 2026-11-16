@@ -38,7 +38,8 @@
       <p class="warn">Per neve e valanghe consulta sempre il bollettino <a href="https://meteomont.carabinieri.it/" rel="noopener">Meteomont</a>. Queste previsioni non valutano il pericolo valanghe.</p>
       {% endif %}
     </div>
-    <p><a class="btn" href="{{ route.slug }}.gpx" download>Scarica la traccia GPX</a></p>
+    <p><a class="btn" href="{{ route.slug }}.gpx" download>Scarica la traccia GPX</a>
+       <button class="btn ghost" data-save='["./", "{{ route.slug }}.gpx"]'>Salva per l'uso offline</button></p>
     <h3>Altre fonti</h3>
     <ul class="links">
       {% if route.source.osm %}<li><a href="https://www.openstreetmap.org/relation/{{ route.source.osm }}" rel="noopener">Il percorso su OpenStreetMap</a></li>
