@@ -11,10 +11,16 @@ jobs:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: 911dad43ccb3eb2ea8c121be77562383
     steps:
+      - name: Serve il token Cloudflare
+        id: chk
+        run: if [ -z "$CLOUDFLARE_API_TOKEN" ]; then echo "Manca CLOUDFLARE_API_TOKEN: salto."; echo "skip=1" >> $GITHUB_OUTPUT; fi
       - uses: actions/checkout@v4
+        if: steps.chk.outputs.skip != '1'
       - uses: actions/setup-node@v4
+        if: steps.chk.outputs.skip != '1'
         with: { node-version: 22 }
       - name: Spazio per gli iscritti (KV), creato la prima volta
+        if: steps.chk.outputs.skip != '1'
         working-directory: worker
         run: |
           npm i -g wrangler@4 >/dev/null
@@ -25,11 +31,13 @@ jobs:
           fi
           sed -i "s/__KV_ID__/$ID/" wrangler.toml
       - name: Pubblica il bot
+        if: steps.chk.outputs.skip != '1'
         working-directory: worker
         run: |
           wrangler deploy | tee deploy.log
           echo "${{ secrets.TELEGRAM_BOT_TOKEN }}" | wrangler secret put TELEGRAM_BOT_TOKEN
       - name: Collega Telegram al bot
+        if: steps.chk.outputs.skip != '1'
         working-directory: worker
         run: |
           URL=$(grep -o 'https://[a-z0-9.-]*workers.dev' deploy.log | head -1)
