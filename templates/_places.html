@@ -1,0 +1,21 @@
+{% set pl = loc.places %}
+{% if pl %}
+<section class="wrap" id="rifugi">
+  <h2>{{ t("Rifugi e dove dormire") }}</h2>
+  <div class="pl-cols">
+    {% if pl.huts %}<div><h3>🏔️ {{ t("Rifugi e bivacchi") }}</h3>
+      <ul class="pl-list">{% for p in pl.huts %}<li>
+        <b>{{ p.name }}</b>
+        <span class="muted small">{{ p.label }}{% if p.ele %} · {{ p.ele|replace(' m','') }} m{% endif %} · {{ t("a circa {n} km", n=p.km|round|int) if p.km >= 1 else t("qui vicino") }}</span>
+        <span class="pl-links">{% if p.web %}<a href="{{ p.web }}" rel="noopener nofollow" target="_blank">{{ t("Sito") }}</a>{% endif %}{% if p.phone %}<a href="tel:{{ p.phone|replace(' ','') }}">{{ p.phone }}</a>{% endif %}<a href="https://www.google.com/maps/search/?api=1&query={{ p.lat }},{{ p.lon }}" rel="noopener" target="_blank">{{ t("Mappa") }}</a></span>
+      </li>{% endfor %}</ul></div>{% endif %}
+    {% if pl.stay %}<div><h3>🛏️ {{ t("Dove dormire") }}</h3>
+      <ul class="pl-list">{% for p in pl.stay %}<li>
+        <b>{{ p.name }}</b>
+        <span class="muted small">{% if p.stars %}{{ '★' * (p.stars|int if p.stars.isdigit() else 0) }} · {% endif %}{{ t("a circa {n} km", n=p.km|round|int) if p.km >= 1 else t("qui vicino") }}</span>
+        <span class="pl-links">{% if p.web %}<a href="{{ p.web }}" rel="noopener nofollow" target="_blank">{{ t("Sito") }}</a>{% endif %}{% if p.phone %}<a href="tel:{{ p.phone|replace(' ','') }}">{{ p.phone }}</a>{% endif %}<a href="https://www.google.com/maps/search/?api=1&query={{ p.lat }},{{ p.lon }}" rel="noopener" target="_blank">{{ t("Mappa") }}</a></span>
+      </li>{% endfor %}</ul></div>{% endif %}
+  </div>
+  <p class="small muted">{{ t("Dati © OpenStreetMap contributors (ODbL). Prima di salire verifica sempre aperture e posti: soprattutto i rifugi d'inverno possono essere chiusi.") }} <a href="mailto:{{ site.contact_email }}?subject=Struttura%20{{ loc.slug }}">{{ t("Gestisci una struttura e manca o è sbagliata? Scrivici.") }}</a></p>
+</section>
+{% endif %}

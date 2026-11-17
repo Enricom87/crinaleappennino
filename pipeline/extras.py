@@ -134,3 +134,34 @@ def snow_ground(loc: dict, points: dict) -> dict | None:
         delta = T("{d} cm nelle ultime {h} ore", d=f"{s['delta']:+d}", h=s["delta_h"])
     return {"cm": s["cm"], "station": s["name"].replace(" Nivo", ""), "elev": s["elev"],
             "when": T("alle {hh}", hh=loc_t.strftime("%H:%M")), "delta": delta, "source": raw.get("source")}
+
+
+# --- Rifugi e dove dormire (OpenStreetMap) ------------------------------------------------
+_PL_FILE = ROOT / "data" / "places.json"
+
+
+def places(loc: dict, points: dict) -> dict | None:
+    try:
+        raw = json.loads(_PL_FILE.read_text())["places"]
+    except Exception:  # noqa: BLE001
+        return None
+    pts = [points[p] for p in loc["points"] if p in points]
+    base = min(pts, key=lambda p: p["elev"])
+    huts, stay = [], []
+    for p in raw:
+        if p["kind"] in ("rifugio", "bivacco"):
+            d = min(km((q["lat"], q["lon"]), (p["lat"], p["lon"])) for q in pts)
+            if d <= 6:
+                huts.append({**p, "km": d})
+        else:
+            d = km((base["lat"], base["lon"]), (p["lat"], p["lon"]))
+            if d <= 8:
+                stay.append({**p, "km": d})
+    huts.sort(key=lambda x: (x["kind"] != "rifugio", x["km"]))
+    stay.sort(key=lambda x: x["km"])
+    label = {"rifugio": T("Rifugio"), "bivacco": T("Bivacco (incustodito)"), "dormire": T("Dove dormire"),
+             "noleggio": T("Noleggio sci"), "scuola": T("Scuola sci")}
+    fix = lambda xs: [{**x, "km": round(x["km"], 1), "label": label[x["kind"]]} for x in xs]
+    if not huts and not stay:
+        return None
+    return {"huts": fix(huts[:6]), "stay": fix(stay[:8])}
