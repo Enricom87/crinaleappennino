@@ -115,7 +115,7 @@
 <section class="wrap trend-sec" id="tendenza">
   <p class="kicker-dark">{{ t("Tendenza a 2 settimane") }}</p>
   <h2>{{ trendv.head }}</h2>
-  <p class="muted">{{ t("Il modello europeo ECMWF calcola 51 versioni del futuro, ognuna leggermente diversa. Più scenari vanno nella stessa direzione, più la tendenza è affidabile. Fino a {d}.", d=trendv.until) }}</p>
+  <p class="muted">{{ t("Il modello europeo ECMWF calcola 51 versioni del futuro, ognuna leggermente diversa. Più scenari vanno nella stessa direzione, più la tendenza è affidabile. Fino a {d}.", d=trendv.until) }}{% if trendv.has_gfs %} {{ t("Accanto, i 31 scenari del modello americano GFS: quando i due modelli dicono cose diverse, la tendenza è ancora aperta.") }}{% endif %}</p>
   <div class="phases">
   {% for ph in trendv.phases %}
     <div class="phase" style="--c:{{ ph.color }}">
@@ -125,7 +125,10 @@
       <span class="ph-share">{{ t("{p}% degli scenari", p=ph.share) }}</span>
       <div class="ph-bar">{% for lab, col, p in ph.mix %}<span style="width:{{ p }}%;background:{{ col }}" title="{{ lab }} {{ p }}%"></span>{% endfor %}</div>
       <ul class="ph-facts">
-        <li>❄️ {{ t("Probabilità di neve: {p}%", p=ph.snow) }}{% if ph.best %} · {{ t("più probabile {d}", d=ph.best) }}{% endif %}</li>
+        {% if ph.gsnow is none %}<li>❄️ {{ t("Probabilità di neve: {p}%", p=ph.snow) }}{% if ph.best %} · {{ t("più probabile {d}", d=ph.best) }}{% endif %}</li>{% endif %}
+        {% if ph.gsnow is not none %}<li class="ph-vs"><span>{{ t("Neve") }}</span><b class="m-ec">ECMWF {{ ph.snow }}%</b><b class="m-gfs">GFS {{ ph.gsnow }}%</b></li>
+        <li class="ph-vs"><span>{{ t("Aria fredda") }} <small>(&lt; −3 °C)</small></span><b class="m-ec">ECMWF {{ ph.cold }}%</b><b class="m-gfs">GFS {{ ph.gcold }}%</b></li>
+        {% if ph.best %}<li>❄️ {{ t("più probabile {d}", d=ph.best)|capitalize }}</li>{% endif %}{% endif %}
         <li>🌡️ {{ t("{t} °C a 1.500 m", t=ph.t50) }}</li>
         <li>💨 {{ t("Flusso prevalente: {f}", f=ph.flow) }}</li>
         <li>🎯 {{ t("Affidabilità: {c}", c=ph.conf) }}</li>
@@ -134,7 +137,7 @@
   {% endfor %}
   </div>
   <div class="syn-card trend-chart">{{ trendv.chart|safe }}
-    <p class="legend">{% for lab, emo, col in trendv.legend %}<span><i style="background:{{ col }}"></i>{{ lab }}</span>{% endfor %}</p>
+    <p class="legend">{% if trendv.has_gfs %}<span><i style="background:#0f2236;height:3px"></i>ECMWF</span><span><i style="background:#dc2626;height:3px"></i>GFS</span>{% endif %}{% for lab, emo, col in trendv.legend %}<span><i style="background:{{ col }}"></i>{{ lab }}</span>{% endfor %}</p>
     <p class="muted small">{{ t("La linea è lo scenario centrale della temperatura a 1.500 m, la fascia grigia comprende 8 scenari su 10. Le barre in basso mostrano, giorno per giorno, come si dividono i 51 scenari tra i tipi di tempo.") }}</p>
   </div>
 </section>

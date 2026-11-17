@@ -36,7 +36,13 @@ def pct(xs: list[float], q: float) -> float:
 
 
 def trend(raw: dict, today: str) -> dict:
-    h = raw.get("hourly", {})
+    h0 = raw.get("hourly", {})
+    h = {}
+    for k, v in h0.items():  # "temperature_850hPa_member01_ncep_gefs05" -> "temperature_850hPa_member01"
+        for suf in ("_ncep_gefs05", "_ncep_gefs025", "_ecmwf_ifs025"):
+            if k.endswith(suf):
+                k = k[: -len(suf)]
+        h[k] = v
     times = h.get("time", [])
     members = sorted({k.split("_member")[1] for k in h if "_member" in k})
     keys = [""] + [f"_member{m}" for m in members]  # "" = controllo
@@ -73,7 +79,7 @@ def trend(raw: dict, today: str) -> dict:
     return {"days": days}
 
 
-def chart(days: list[dict]) -> str:
+def chart(days: list[dict], gdays: list[dict] | None = None) -> str:
     if len(days) < 3:
         return ""
     W, H, P = 900, 230, 30
@@ -92,6 +98,12 @@ def chart(days: list[dict]) -> str:
          f'<line x1="{P}" x2="{W - P}" y1="{y(0):.1f}" y2="{y(0):.1f}" stroke="#94a3b8" stroke-dasharray="3 4"/>',
          f'<polygon points="{band}" fill="#0f2236" opacity=".12"/>',
          f'<polyline points="{med}" fill="none" stroke="#0f2236" stroke-width="2.5" stroke-linejoin="round"/>']
+    if gdays:
+        gmap = {d["date"]: d for d in gdays}
+        gp = [f"{x(i):.1f},{y(gmap[d['date']]['t50']):.1f}" for i, d in enumerate(days) if d["date"] in gmap]
+        if len(gp) > 1:
+            o.append(f'<polyline points="{" ".join(gp)}" fill="none" stroke="#dc2626" stroke-width="2" '
+                     f'stroke-dasharray="6 5" stroke-linejoin="round"/>')
     # barre del tipo di tempo, sotto il grafico
     bw = (W - 2 * P) / (len(days) - 1) * .62
     for i, d in enumerate(days):
@@ -108,12 +120,14 @@ def chart(days: list[dict]) -> str:
     return "".join(o)
 
 
-def view(raw: dict | None, today: str) -> dict:
+def view(raw: dict | None, today: str, raw_gfs: dict | None = None) -> dict:
     if not raw:
         return {}
     days = trend(raw, today)["days"]
     if len(days) < 6:
         return {}
+    gdays = trend(raw_gfs, today)["days"] if raw_gfs else []
+    gmap = {d["date"]: d for d in gdays}
     phases = []
     for a, b, lab in ((0, 5, "Prossimi 5 giorni"), (5, 10, "Dal 6° al 10° giorno"), (10, 15, "Dall'11° al 15° giorno")):
         seg = days[a:b]
@@ -126,10 +140,14 @@ def view(raw: dict | None, today: str) -> dict:
         conf = T("alta") if spread < 4 else (T("media") if spread < 7 else T("bassa"))
         snow = mix["neve"] + mix["neve-alto"]
         best = max(seg, key=lambda d: d["mix"]["neve"] + d["mix"]["neve-alto"])
+        gseg = [gmap[d["date"]] for d in seg if d["date"] in gmap]
+        gsnow = round(st.mean(g["mix"]["neve"] + g["mix"]["neve-alto"] for g in gseg) * 100) if gseg else None
+        gcold = round(st.mean(g["mix"]["neve"] + g["mix"]["freddo"] for g in gseg) * 100) if gseg else None
+        ecold = round(st.mean(d["mix"]["neve"] + d["mix"]["freddo"] for d in seg) * 100)
         flows = Counter(d["flow"] for d in seg)
         phases.append({"label": T(lab), "from": nice_date(seg[0]["date"], True), "to": nice_date(seg[-1]["date"], True),
                        "emoji": meta[top][1], "type": T(meta[top][0]), "color": meta[top][2],
-                       "share": round(mix[top] * 100), "snow": round(snow * 100),
+                       "share": round(mix[top] * 100), "snow": round(snow * 100), "gsnow": gsnow, "cold": ecold, "gcold": gcold,
                        "best": nice_date(best["date"]) if snow >= .1 else "",
                        "t50": f"{st.mean(d['t50'] for d in seg):+.0f}".replace("+0", "0").replace("-0", "0"),
                        "flow": T(flows.most_common(1)[0][0]), "conf": conf,
@@ -144,5 +162,5 @@ def view(raw: dict | None, today: str) -> dict:
         head = T("🌨️ Qualche chance di neve, soprattutto in quota, intorno a {d}", d=nice_date(best["date"]))
     else:
         head = T("☀️ Due settimane senza segnali seri di neve: i 51 scenari restano quasi tutti miti o asciutti")
-    return {"head": head, "phases": phases, "chart": chart(days),
+    return {"head": head, "phases": phases, "chart": chart(days, gdays), "has_gfs": bool(gdays),
             "legend": [(T(lab), emo, col) for _, lab, emo, col in TYPES], "until": nice_date(days[-1]["date"])}

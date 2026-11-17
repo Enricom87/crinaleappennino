@@ -121,6 +121,11 @@ def fetch_all(config: dict, raw_dir: Path) -> None:
                                 "hourly": "temperature_850hPa,wind_direction_700hPa,precipitation",
                                 "forecast_days": 15})
         (raw_dir / "ens_syn.json").write_text(json.dumps(_as_list(d)[0]))
+        time.sleep(3)
+        g = _get(ENSEMBLE_URL, {**_coords([dict(syn["center"], elev=1500)]), "models": "gfs05",
+                                "hourly": "temperature_850hPa,wind_direction_700hPa,precipitation",
+                                "forecast_days": 16})
+        (raw_dir / "ens_syn_gfs.json").write_text(json.dumps(_as_list(g)[0]))
         print("tendenza: ok")
     except Exception as e:
         print(f"tendenza non disponibile: {e}")

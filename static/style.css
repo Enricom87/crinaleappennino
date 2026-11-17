@@ -348,3 +348,9 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 .trend-chart .legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0 4px;font-size:13px}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 @media(max-width:900px){.phases{grid-template-columns:1fr}}
+
+.ph-vs{display:flex;align-items:center;gap:6px;font-size:13px}
+.ph-vs span{min-width:84px;color:var(--muted)}
+.ph-vs b{font-weight:700;border-radius:6px;padding:1px 7px;font-size:12.5px}
+.m-ec{background:#e2e8f0;color:#0f2236}.m-gfs{background:#fee2e2;color:#991b1b}
+.ph-vs span{min-width:118px}.ph-vs small{font-size:11px}
