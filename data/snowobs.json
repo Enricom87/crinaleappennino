@@ -1,0 +1,119 @@
+{
+ "source": {
+  "name": "Arpae Emilia-Romagna",
+  "license": "CC BY 4.0",
+  "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
+ },
+ "stations": [
+  {
+   "name": "Lagdei",
+   "elev": 1252,
+   "lat": 44.41229,
+   "lon": 10.00854,
+   "cm": 2,
+   "time": "2026-11-17T16:30:00Z",
+   "delta": 2,
+   "delta_h": 5
+  },
+  {
+   "name": "Lago Paduli",
+   "elev": 1151,
+   "lat": 44.3458,
+   "lon": 10.13845,
+   "cm": 0,
+   "time": "2026-11-17T16:30:00Z",
+   "delta": 0,
+   "delta_h": 5
+  },
+  {
+   "name": "Lago Scaffaiolo Nivo",
+   "elev": 1662,
+   "lat": 44.11917,
+   "lon": 10.8175,
+   "cm": 5,
+   "time": "2026-11-17T16:30:00Z",
+   "delta": 0,
+   "delta_h": 5
+  },
+  {
+   "name": "Doccia di Fiumalbo",
+   "elev": 1371,
+   "lat": 44.19013,
+   "lon": 10.67311,
+   "cm": 6,
+   "time": "2026-11-17T16:30:00Z",
+   "delta": -1,
+   "delta_h": 5
+  },
+  {
+   "name": "Ligonchio",
+   "elev": 900,
+   "lat": 44.31699,
+   "lon": 10.34493,
+   "cm": 2,
+   "time": "2026-11-17T16:30:00Z",
+   "delta": -3,
+   "delta_h": 5
+  },
+  {
+   "name": "Febbio",
+   "elev": 1148,
+   "lat": 44.29792,
+   "lon": 10.4275,
+   "cm": 0,
+   "time": "2026-11-17T15:00:00Z",
+   "delta": 0,
+   "delta_h": 1
+  },
+  {
+   "name": "Piandelagotti",
+   "elev": 1219,
+   "lat": 44.23713,
+   "lon": 10.51634,
+   "cm": 2,
+   "time": "2026-11-17T16:30:00Z",
+   "delta": -5,
+   "delta_h": 5
+  },
+  {
+   "name": "Lago Pratignano",
+   "elev": 1319,
+   "lat": 44.1774,
+   "lon": 10.8178,
+   "cm": 0,
+   "time": "2026-11-17T16:30:00Z",
+   "delta": -2,
+   "delta_h": 4
+  },
+  {
+   "name": "Civago",
+   "elev": 1051,
+   "lat": 44.24716,
+   "lon": 10.4658,
+   "cm": 3,
+   "time": "2026-11-17T16:30:00Z",
+   "delta": -14,
+   "delta_h": 5
+  },
+  {
+   "name": "Passo delle Radici",
+   "elev": 1535,
+   "lat": 44.20976,
+   "lon": 10.48864,
+   "cm": 10,
+   "time": "2026-11-17T16:30:00Z",
+   "delta": -2,
+   "delta_h": 5
+  },
+  {
+   "name": "Monteacuto delle Alpi",
+   "elev": 900,
+   "lat": 44.13638,
+   "lon": 10.88741,
+   "cm": 1,
+   "time": "2026-11-17T16:30:00Z",
+   "delta": 1,
+   "delta_h": 5
+  }
+ ]
+}

@@ -1,74 +1,49 @@
 {
- "generated": "2026-11-17T17:37+01:00",
- "alerts": [
-  {
-   "slug": "cimone",
-   "name": "Cimone · Sestola e Passo del Lupo",
-   "title": "⛰️ In vetta torna il bianco: 4-9 cm da martedì 17 novembre, sotto piove",
-   "snow3_top": 6.9
-  },
-  {
-   "slug": "le-polle",
-   "name": "Le Polle · Riolunato",
-   "title": "❄️ Neve solo in alto: 4-9 cm sopra i 2000 m da martedì 17 novembre",
-   "snow3_top": 6.9
-  },
-  {
-   "slug": "cimoncino",
-   "name": "Cimoncino · Fanano",
-   "title": "⛰️ In vetta torna il bianco: 4-9 cm da martedì 17 novembre, sotto piove",
-   "snow3_top": 6.9
-  },
-  {
-   "slug": "febbio",
-   "name": "Febbio · Monte Cusna",
-   "title": "⛰️ In vetta torna il bianco: 6-13 cm da martedì 17 novembre, sotto piove",
-   "snow3_top": 9.7
-  }
- ],
- "overview": "⛰️ In vetta torna il bianco: 4-9 cm da martedì 17 novembre, sotto piove. Chi se la gode di più: Cimone, Le Polle, Cimoncino. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "generated": "2026-11-17T18:06+01:00",
+ "alerts": [],
+ "overview": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita. Chi se la gode di più: Garfagnana, Corno alle Scale, Lago Santo. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
    "slug": "abetone",
    "name": "Abetone",
-   "title": "📡 Qualcosa si muove per mercoledì 25 novembre: possibile nevicata in quota",
+   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
    "level": "watch",
-   "snow3_top": 1.1,
+   "snow3_top": 0.0,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "cimone",
    "name": "Cimone · Sestola e Passo del Lupo",
-   "title": "⛰️ In vetta torna il bianco: 4-9 cm da martedì 17 novembre, sotto piove",
-   "level": "alert",
-   "snow3_top": 6.9,
+   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
+   "level": "watch",
+   "snow3_top": 2.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
-   "title": "❄️ Neve solo in alto: 4-9 cm sopra i 2000 m da martedì 17 novembre",
-   "level": "alert",
-   "snow3_top": 6.9,
+   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
+   "level": "watch",
+   "snow3_top": 2.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "⛰️ In vetta torna il bianco: 4-9 cm da martedì 17 novembre, sotto piove",
-   "level": "alert",
-   "snow3_top": 6.9,
+   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
+   "level": "watch",
+   "snow3_top": 2.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "doganaccia",
    "name": "Doganaccia",
-   "title": "🤞 Segnale di neve per mercoledì 25 novembre: incrociamo le dita",
+   "title": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -77,54 +52,54 @@
   {
    "slug": "corno-alle-scale",
    "name": "Corno alle Scale",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli fiutano neve (da confermare)",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
    "level": "watch",
-   "snow3_top": 1.2,
+   "snow3_top": 0.5,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "lago-scaffaiolo",
    "name": "Lago Scaffaiolo",
-   "title": "📡 Qualcosa si muove per mercoledì 25 novembre: possibile nevicata in quota",
+   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "lago-santo",
    "name": "Lago Santo · Monte Giovo",
-   "title": "📡 Qualcosa si muove per mercoledì 25 novembre: possibile nevicata in quota",
+   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
    "level": "watch",
-   "snow3_top": 2.4,
+   "snow3_top": 0.4,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "garfagnana",
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
-   "title": "🤞 Segnale di neve per mercoledì 25 novembre: incrociamo le dita",
+   "title": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita",
    "level": "watch",
-   "snow3_top": 3.4,
+   "snow3_top": 2.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "cerreto-laghi",
    "name": "Cerreto Laghi",
-   "title": "🤞 Segnale di neve per mercoledì 25 novembre: incrociamo le dita",
+   "title": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita",
    "level": "watch",
-   "snow3_top": 0.7,
+   "snow3_top": 0.0,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "febbio",
    "name": "Febbio · Monte Cusna",
-   "title": "⛰️ In vetta torna il bianco: 6-13 cm da martedì 17 novembre, sotto piove",
-   "level": "alert",
-   "snow3_top": 9.7,
+   "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
+   "level": "watch",
+   "snow3_top": 3.4,
    "verdict": "Meglio di no",
    "back_by": null
   }
