@@ -14,7 +14,7 @@
 {% if summer and loc.mtn %}{% include "_mtn.html" %}{% endif %}
 
 <nav class="subnav" aria-label="{{ t('Sezioni') }}"><div class="wrap">
-  {% if loc.weekend %}<a href="#weekend">{{ t("Weekend") }}</a>{% endif %}<a href="#giorni">{{ t("Previsioni") }}</a>{% if loc.liftinfo and not summer %}<a href="#impianti">{{ t("Impianti") }}</a>{% endif %}{% if loc.extras.list or loc.events.list %}<a href="#cosafare">{{ t("Cosa fare") }}</a>{% endif %}{% if loc.places %}<a href="#rifugi">{{ t("Rifugi") }}</a>{% endif %}{% if loc.hours_top %}<a href="#ore">{{ t("Ora per ora") }}</a>{% endif %}<a href="#analisi">{{ t("Analisi") }}</a>{% if loc.mtn %}<a href="#quota">{{ t("In quota") }}</a>{% endif %}{% if loc.road %}<a href="#strada">{{ t("Strada") }}</a>{% endif %}{% if loc.routes %}<a href="#percorsi">{{ t("Percorsi") }}</a>{% endif %}<a href="#webcam">{{ t("Webcam") }}</a>
+  {% if loc.weekend %}<a href="#weekend">{{ t("Weekend") }}</a>{% endif %}<a href="#giorni">{{ t("Previsioni") }}</a>{% if loc.liftinfo and not summer %}<a href="#impianti">{{ t("Impianti") }}</a>{% endif %}{% if loc.extras.list or loc.events.list %}<a href="#cosafare">{{ t("Cosa fare") }}</a>{% endif %}{% if loc.places %}<a href="#rifugi">{{ t("Rifugi") }}</a>{% endif %}{% if loc.hours_top %}<a href="#ore">{{ t("Ora per ora") }}</a>{% endif %}<a href="#analisi">{{ t("Analisi") }}</a>{% if loc.mtn %}<a href="#quota">{{ t("In quota") }}</a>{% endif %}{% if loc.road or loc.roadrule is not none %}<a href="#strada">{{ t("Strada") }}</a>{% endif %}{% if loc.routes %}<a href="#percorsi">{{ t("Percorsi") }}</a>{% endif %}<a href="#webcam">{{ t("Webcam") }}</a>
 </div></nav>
 {% if loc.ground %}{% set g = loc.ground %}
 <section class="wrap"><div class="ground">
@@ -147,15 +147,17 @@
 {% endfor %}
 </details></section>
 
-{% if loc.road %}
+{% if loc.road or loc.roadrule is not none %}
 <section class="wrap" id="strada">
   <h2>{{ t("Si sale in auto senza sorprese?") }}</h2>
-  {% set risky = [] %}
+  {% if loc.roadrule is not none %}<div class="road-rule">🛞 <span>{% if loc.roadrule %}{{ t("Dal 15 novembre al 15 aprile su {roads} servono gomme invernali o catene a bordo (ordinanza Anas), e anche fuori da queste date se nevica o c'è ghiaccio.", roads=loc.roadrule|join(', ')) }}{% else %}{{ t("Dal 15 novembre al 15 aprile sulle strade di montagna con l'apposito cartello servono gomme invernali o catene a bordo.") }}{% endif %}
+    {{ t("Su provinciali e comunali vale l'ordinanza dell'ente: l'obbligo è sempre indicato dai cartelli.") }}</span></div>{% endif %}
+  {% if loc.road %}{% set risky = [] %}
   {% for p in loc.road %}{% for r in p.days[:5] %}{% if (r.snow >= 1) or (r.tmin <= 0 and r.precip >= 1) %}{% set _ = risky.append((p.name, r)) %}{% endif %}{% endfor %}{% endfor %}
   {% if risky %}
   <ul>{% for name, r in risky %}<li>{{ nice_date(r.date) }} · {{ name }}: {% if r.snow >= 1 %}{{ t("neve stimata {n} cm", n='%.0f'|format(r.snow)) }}{% else %}{{ t("possibile ghiaccio (minima {n} °C dopo precipitazioni)", n=r.tmin|n0) }}{% endif %}. {{ t("Catene a bordo o gomme invernali.") }}</li>{% endfor %}</ul>
-  {% else %}<p>{{ t("Strada tranquilla: nei prossimi 5 giorni i modelli non vedono neve né ghiaccio. Le catene possono restare nel bagagliaio.") }}</p>{% endif %}
-  <p class="muted small">{{ t("Per lo stato reale delle strade consulta ANAS e le Province.") }}</p>
+  {% else %}<p>{{ t("Strada tranquilla: nei prossimi 5 giorni i modelli non vedono neve né ghiaccio. Le catene possono restare nel bagagliaio.") }}</p>{% endif %}{% endif %}
+  <p class="muted small">{{ t("Traffico e chiusure in tempo reale:") }} <a href="https://www.stradeanas.it/it/traffico" rel="noopener" target="_blank">Anas</a> · <a href="https://www.cciss.it/" rel="noopener" target="_blank">CCISS Viaggiare informati</a> · {{ t("e i siti delle Province.") }}</p>
 </section>
 {% endif %}
 

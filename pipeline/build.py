@@ -171,6 +171,8 @@ def main() -> None:
         src = next((L["events"]["source"] for L in locs if L["events"]["source"]), None)
         return {"list": out[:6], "source": src}
 
+    ROADS = json.loads((ROOT / "config" / "roads.json").read_text())
+
     def build_lang():
         """Località e percorsi con i testi nella lingua corrente."""
         locs = []
@@ -207,6 +209,7 @@ def main() -> None:
             L["events"] = events(loc, pts, today)
             L["places"] = places(loc, pts)
             L["aval"] = None if IS_SUMMER else avalanche(loc)
+            L["roadrule"] = None if IS_SUMMER else ROADS.get(loc["slug"], [])
             locs.append(L)
         loc_by_slug = {L["slug"]: L for L in locs}
         routes = []

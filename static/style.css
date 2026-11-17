@@ -450,3 +450,4 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 .aval-high{border-color:#fb923c;background:#fff7ed}
 .aval-g{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:1.3rem;color:#111;flex:none;border:1px solid rgba(0,0,0,.15)}
 .aval-note{background:#fff7ed;border-left:4px solid #fb923c;padding:8px 12px;border-radius:8px;font-weight:600}
+.road-rule{display:flex;gap:10px;align-items:flex-start;background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0 12px;font-size:.95rem}
