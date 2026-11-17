@@ -2,11 +2,20 @@
 {% block main %}
 <section class="hero{% if home_photo %} has-photo{% endif %}"{% if home_photo %} style="background-image:linear-gradient(180deg,rgba(9,22,36,.35),rgba(9,22,36,.72)),url('{{ u('static/photos/' ~ home_photo.key ~ '.jpg') }}');background-position:{{ home_photo.pos }}"{% endif %}>
   <div class="wrap">
-    <p class="kicker">{{ t("Aggiornato {d}", d=updated) }}</p>
-    <h1>{% if summer %}{{ t("Si va in montagna? Ti diciamo dove e fino a che ora.") }}{% else %}{{ t("Nevica? Quanto? E a che quota? Te lo diciamo prima.") }}{% endif %}</h1>
-    <p class="lead">{{ overview }}</p>
-    <p>{% if summer %}<a class="btn" href="{{ u('percorsi/') }}">{{ t("Scegli un percorso") }}</a> {% endif %}<a class="btn{% if summer %} ghost{% endif %}" href="{{ u('newsletter/') }}">❄️ {{ t("Avvisami quando nevica") }}</a>
+    <p class="kicker">{{ t("Appennino tosco-emiliano · dall'Abetone al Cusna") }}</p>
+    <h1>{{ t("La montagna di casa, prima di partire.") }}</h1>
+    <p class="lead">{{ t("Crinale ti dice com'è lassù: neve e meteo per ogni località, ora per ora, impianti aperti, webcam e i percorsi più belli. Aggiornato ogni mattina, gratis.") }}</p>
+    <div class="hero-feats" role="navigation" aria-label="{{ t('Cosa trovi su Crinale') }}">
+      <a href="#localita"><span>❄️</span>{{ t("Neve quota per quota") }}</a>
+      <a href="{{ u(locs[0].slug ~ '/#ore') if locs else '#localita' }}"><span>🕐</span>{{ t("Meteo ora per ora") }}</a>
+      <a href="{{ u(locs[0].slug ~ '/#impianti') if locs else '#localita' }}"><span>🚡</span>{{ t("Impianti aperti") }}</a>
+      <a href="{{ u('percorsi/') }}"><span>🥾</span>{{ t("{n} percorsi", n=routes|length) }}</a>
+      <a href="{{ u(locs[0].slug ~ '/#webcam') if locs else '#localita' }}"><span>📷</span>{{ t("Webcam") }}</a>
+      <a href="{{ site.social.telegram or u('newsletter/') }}"><span>🔔</span>{{ t("Allerte neve") }}</a>
+    </div>
+    <p class="hero-cta">{% if summer %}<a class="btn" href="{{ u('percorsi/') }}">{{ t("Scegli un percorso") }}</a> {% endif %}<a class="btn{% if summer %} ghost{% endif %}" href="#localita">{{ t("Scegli la tua montagna") }} ↓</a>
     {% if site.social.telegram %}<a class="btn tg" href="{{ site.social.telegram }}" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2 1.8 11.7c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.3z"/></svg> {{ t("Segui su Telegram") }}</a>{% endif %}</p>
+    {% if overview %}<div class="today-box"><b>{{ t("Oggi sul crinale") }}</b> <span>{{ overview }}</span> <small>{{ t("aggiornato {d}", d=updated) }}</small></div>{% endif %}
   </div>
   {% if home_photo and home_photo.credit %}<span class="photo-credit">{{ t("Foto") }}: {{ home_photo.credit.artist }} · <a href="{{ home_photo.credit.page }}" rel="noopener">{{ home_photo.credit.license }}</a></span>{% endif %}
 </section>
