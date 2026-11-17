@@ -55,10 +55,26 @@
 </section>
 {% endif %}
 
-{% if syn %}
-<section class="wrap">
-  <h2>{{ t("Dietro le quinte: cosa succede in cielo") }}</h2>
-  <p class="muted">{{ t("Temperatura a circa 1.500 m (850 hPa), direzione del flusso a 3.000 m e posizione della saccatura secondo ECMWF, con GFS a confronto. Sotto i -3 °C a 1.500 m la neve arriva di solito fino alle stazioni.") }}</p>
+{% if synv %}
+<section class="wrap syn-sec">
+  <p class="kicker-dark">{{ t("La configurazione dei prossimi giorni") }}</p>
+  <h2>{{ synv.head }}</h2>
+  <div class="syn-card">
+    <div class="syn-chart-wrap">{{ synv.chart|safe }}<p class="muted small">{{ t("Temperatura a circa 1.500 m (ECMWF). Quando la linea scende nella fascia azzurra, sotto i −3 °C, la neve arriva di solito fino alle stazioni.") }}</p></div>
+    <div class="syn-days">
+    {% for d in synv.days %}
+      <div class="syn-day v-{{ d.vcls }}">
+        <span class="sd-day">{{ d.short }}</span>
+        <span class="sd-emoji" aria-hidden="true">{{ d.emoji }}</span>
+        <span class="sd-pat">{{ d.pattern }}</span>
+        <span class="sd-t" style="background:{{ d.color }}">{{ d.tlab }}</span>
+        {% if d.dir is not none %}<span class="sd-wind" title="{{ d.flow }}"><svg viewBox="0 0 24 24" style="transform:rotate({{ d.dir + 180 }}deg)"><path d="M12 3l5 8h-3.5v10h-3V11H7z" fill="currentColor"/></svg>{{ d.flow|replace("/", "/\u200b") }}</span>{% endif %}
+        <span class="sd-v">{{ d.verdict }}</span>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+  <details class="tech syn-tech"><summary>🔬 {{ t("I numeri per gli esperti") }}</summary>
   <div class="scroll">
   <table class="syn">
     <tr><th>{{ t("Giorno") }}</th><th>{{ t("Configurazione") }}</th><th>T 1.500 m<br><small>ECMWF / GFS</small></th><th>{{ t("Flusso") }}</th><th>{{ t("Per la neve") }}</th></tr>
@@ -69,7 +85,7 @@
       <td><span class="tag t-{{ r.ec.thermal if r.ec else 'nd' }}">{{ t(r.ec.thermal if r.ec else 'n.d.') }}</span></td></tr>
     {% endfor %}
   </table>
-  </div>
+  </div></details>
 </section>
 {% endif %}
 

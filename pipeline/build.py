@@ -13,6 +13,7 @@ from compute import blend_point, ensemble_probs, hourly_point, name_configuratio
 from cards import cards, hourly_strip
 from summer import mountain_days, overview_mtn, summer_text
 from i18n import T
+from synview import syn_view
 from text import location_text, nice_date, overview_text
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -230,7 +231,7 @@ def main() -> None:
                "local_sources": [{**s, "about": T(s["about"]), "links": {k: [{**l, "label": T(l["label"])} for l in v]
                                                                        for k, v in s["links"].items()}}
                                  for s in local_sources],
-               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows,
+               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows, "synv": syn_view(syn_rows),
                "summer": IS_SUMMER,
                "overview": ((overview_mtn(locs) if IS_SUMMER else overview_text(locs)) if locs else ""),
                "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),
