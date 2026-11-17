@@ -1,0 +1,23 @@
+{% set li = loc.liftinfo %}
+{% if li %}
+<section class="wrap" id="impianti">
+  <h2>🚡 {{ t("Impianti e piste oggi") }}</h2>
+  {% if li.link %}
+  <div class="lifts-box"><p>{{ t("Lo stato aggiornato degli impianti è sul sito ufficiale.") }}</p>
+  <a class="btn small" href="{{ li.link }}" rel="noopener">{{ li.name }} →</a></div>
+  {% else %}
+  <div class="lifts-box">
+    <div class="lifts-sum">
+      <div class="lifts-big{% if li.open %} on{% endif %}"><b>{{ li.open }}</b><span>/ {{ li.total }}</span><small>{{ t("impianti aperti") }}</small></div>
+      {% if li.slopes_total %}<div class="lifts-big{% if li.slopes_open %} on{% endif %}"><b>{{ li.slopes_open }}</b><span>/ {{ li.slopes_total }}</span><small>{{ t("piste aperte") }}</small></div>{% endif %}
+      <p class="lifts-note">{% if li.open == 0 %}{{ t("Oggi gli impianti risultano tutti chiusi.") }}{% else %}{{ t("Si scia!") }}{% endif %}
+        <br><span class="muted small">{{ t("Fonte: {src}", src=li.name) }}{% if li.updated %} · {{ t("aggiornato {d}", d=li.updated) }}{% endif %}{% if li.stale %} · ⚠️ {{ t("dato non recente, verifica sul sito ufficiale") }}{% endif %}</span></p>
+    </div>
+    <details class="lifts-list"><summary>{{ t("Vedi tutti gli impianti") }}</summary>
+      <ul>{% for x in li.lifts %}<li class="{{ 'on' if x.open else 'off' }}"><span class="dot"></span>{{ x.name }}{% if li.multi_area and x.area %} <small class="muted">· {{ x.area|title }}</small>{% endif %}<em>{{ t("aperto") if x.open else t("chiuso") }}</em></li>{% endfor %}</ul>
+    </details>
+    <a class="small" href="{{ li.url }}" rel="noopener">{{ t("Orari e dettagli sul sito ufficiale") }} →</a>
+  </div>
+  {% endif %}
+</section>
+{% endif %}

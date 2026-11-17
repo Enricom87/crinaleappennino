@@ -60,3 +60,38 @@ def cards(snow_days: list[dict], mtn_days: list[dict], today: str, n: int = 5) -
             "back_by": m["back_by"], "windy": (m["gust"] or 0) >= 50,
         })
     return out
+
+
+def hour_icon(h: dict) -> str:
+    """Icona per una singola ora, con luna di notte."""
+    hr = int(h["time"][11:13])
+    night = hr < 7 or hr >= 18
+    if h["snow"] >= 1.5:
+        return "snow-heavy"
+    if h["snow"] >= 0.2:
+        return "snow"
+    if h["cape"] >= 500 and h["rain"] >= 0.5:
+        return "storm"
+    if h["rain"] >= 1:
+        return "rain"
+    if h["rain"] >= 0.2:
+        return "rain" if night else "showers"
+    if h["gust"] >= 60:
+        return "wind"
+    if h["cloud"] >= 75:
+        return "cloud"
+    if h["cloud"] >= 35:
+        return "moon-cloud" if night else "partly"
+    return "moon" if night else ("sun" if h["t"] > 0 else "sun-cold")
+
+
+def hourly_strip(hours: list[dict]) -> list[dict]:
+    """Celle per la striscia oraria: ora, icona, temperatura, precipitazione, raffica, cambio di giorno."""
+    from i18n import cap, day_name
+    out, prev = [], None
+    for h in hours:
+        d = h["time"][:10]
+        out.append({**h, "hour": h["time"][11:13], "icon": hour_icon(h),
+                    "newday": cap(day_name(d)) if prev and d != prev else None})
+        prev = d
+    return out

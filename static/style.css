@@ -255,3 +255,31 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 .foot-brand small{color:#9fb2c4}
 @media(max-width:720px){nav>a.tg-ico{display:inline-flex!important}}
 .daycards{scrollbar-width:none}.daycards::-webkit-scrollbar{display:none}
+
+/* previsioni orarie */
+.hourly{display:flex;gap:0;overflow-x:auto;background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:10px 6px;scrollbar-width:thin;scroll-snap-type:x proximity}
+.hr{flex:none;width:62px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 2px;border-radius:12px;scroll-snap-align:start}
+.hr-snow{background:#eef6ff}.hr-rain{background:#f2f6fa}
+.hr-h{font-size:13px;font-weight:700;color:var(--ink2)}
+.hr-ic{width:36px;height:36px}
+.hr-t{font-size:16px;font-weight:700}
+.hr-p{font-size:11.5px;color:#1d6fb8;font-weight:600;min-height:1.2em;white-space:nowrap}
+.hr-w{font-size:11px;color:var(--muted);white-space:nowrap}.hr-w small{font-size:9px}
+.hr-w.strong{color:#b45309;font-weight:700}
+.hr-day{flex:none;display:flex;align-items:stretch;padding:0 4px}
+.hr-day span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#fff;background:var(--ink);border-radius:8px;padding:8px 3px;text-align:center}
+
+/* impianti */
+.lifts-box{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:18px 20px}
+.lifts-sum{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.lifts-big{display:flex;align-items:baseline;gap:4px;background:#f1f4f7;border-radius:14px;padding:10px 16px;flex-wrap:wrap;max-width:140px}
+.lifts-big b{font-size:32px;line-height:1;color:#6b7f93}.lifts-big span{color:var(--muted);font-weight:600}
+.lifts-big small{width:100%;font-size:12px;color:var(--muted)}
+.lifts-big.on{background:#e3f6ea}.lifts-big.on b{color:#16803c}
+.lifts-note{margin:0;flex:1;min-width:220px;font-weight:600}
+.lifts-list{margin:14px 0 8px}.lifts-list summary{cursor:pointer;font-weight:600;color:var(--snow)}
+.lifts-list ul{list-style:none;padding:0;margin:10px 0 0;columns:2 280px;column-gap:24px}
+.lifts-list li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);break-inside:avoid;font-size:14px}
+.lifts-list li em{margin-left:auto;font-style:normal;font-size:12px;font-weight:700;color:#8a99a8}
+.lifts-list li.on em{color:#16803c}
+.dot{width:10px;height:10px;border-radius:50%;background:#c3ccd5;flex:none}.on .dot{background:#22c55e;box-shadow:0 0 0 3px #dcfce7}

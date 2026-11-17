@@ -304,3 +304,32 @@ def name_configuration(row: dict) -> str:
     if flow == "scirocco":
         return "scirocco mite"
     return "configurazione mista"
+
+
+def hourly_point(glob: dict, lam: dict | None, start: str, elev: float | None = None, hours: int = 48) -> list[dict]:
+    """Previsione ora per ora (ora locale) dalle `start` in poi: media pesata dei modelli ad area limitata
+    quando coprono quell'ora, altrimenti dei globali."""
+    def models(src, names):
+        return split_models(src["hourly"], names) if src else {}
+    g = models(glob, GLOBAL_MODELS)
+    l = models(lam, list(LAM_WEIGHTS))
+    gi = {ts: i for i, ts in enumerate(glob["hourly"]["time"])}
+    li = {ts: i for i, ts in enumerate(lam["hourly"]["time"])} if lam else {}
+    times = [ts for ts in glob["hourly"]["time"] if ts >= start][:hours]
+    out = []
+    for ts in times:
+        src, idx, w = (l, li[ts], LAM_WEIGHTS) if ts in li and l else (g, gi[ts], {})
+
+        def mean(var):
+            vals = [(s[var][idx], w.get(m, 1.0)) for m, s in src.items()
+                    if var in s and idx < len(s[var]) and s[var][idx] is not None]
+            return sum(v * k for v, k in vals) / sum(k for _, k in vals) if vals else None
+        t, p, fl = mean("temperature_2m"), mean("precipitation") or 0.0, mean("freezing_level_height")
+        if t is None:
+            continue
+        snow = p * snow_fraction(t, fl, elev)
+        out.append({"time": ts, "t": round(t, 1), "precip": round(p, 1), "snow": round(snow, 1),
+                    "rain": round(max(p - snow, 0), 1), "gust": round(mean("wind_gusts_10m") or 0),
+                    "cloud": round(mean("cloud_cover") or 0), "cape": round(mean("cape") or 0),
+                    "fl": round(fl, -1) if fl is not None else None})
+    return out

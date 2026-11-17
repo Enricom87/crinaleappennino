@@ -14,7 +14,7 @@
 {% if summer and loc.mtn %}{% include "_mtn.html" %}{% endif %}
 
 <nav class="subnav" aria-label="{{ t('Sezioni') }}"><div class="wrap">
-  <a href="#giorni">{{ t("Previsioni") }}</a><a href="#analisi">{{ t("Analisi") }}</a>{% if loc.mtn %}<a href="#quota">{{ t("In quota") }}</a>{% endif %}{% if loc.road %}<a href="#strada">{{ t("Strada") }}</a>{% endif %}{% if loc.routes %}<a href="#percorsi">{{ t("Percorsi") }}</a>{% endif %}<a href="#webcam">{{ t("Webcam") }}</a>
+  <a href="#giorni">{{ t("Previsioni") }}</a>{% if loc.liftinfo and not summer %}<a href="#impianti">{{ t("Impianti") }}</a>{% endif %}{% if loc.hours_top %}<a href="#ore">{{ t("Ora per ora") }}</a>{% endif %}<a href="#analisi">{{ t("Analisi") }}</a>{% if loc.mtn %}<a href="#quota">{{ t("In quota") }}</a>{% endif %}{% if loc.road %}<a href="#strada">{{ t("Strada") }}</a>{% endif %}{% if loc.routes %}<a href="#percorsi">{{ t("Percorsi") }}</a>{% endif %}<a href="#webcam">{{ t("Webcam") }}</a>
 </div></nav>
 <section class="wrap" id="giorni">
   <h2>{{ t("Le prossime giornate") }}</h2>
@@ -26,6 +26,8 @@
   {% endif %}
 </section>
 
+{% if not summer %}{% include "_lifts.html" %}{% endif %}
+{% include "_hourly.html" %}
 <section class="wrap twocol" id="analisi">
   <div>
     <h2>{{ t("Come la vediamo noi") }}</h2>

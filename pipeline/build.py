@@ -9,8 +9,8 @@ from zoneinfo import ZoneInfo
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from compute import blend_point, ensemble_probs, name_configuration, synoptic_days
-from cards import cards
+from compute import blend_point, ensemble_probs, hourly_point, name_configuration, synoptic_days
+from cards import cards, hourly_strip
 from summer import mountain_days, overview_mtn, summer_text
 from i18n import T
 from text import location_text, nice_date, overview_text
@@ -89,7 +89,8 @@ def main() -> None:
             continue
         days = blend_point(glob[pid], lam.get(pid), today, meta["elev"])
         probs = ensemble_probs(ens[pid], today, meta["elev"]) if pid in ens else {}
-        pts[pid] = {"id": pid, **meta, "days": days, "probs": probs}
+        hours = hourly_point(glob[pid], lam.get(pid), now.strftime("%Y-%m-%dT%H:00"), meta["elev"])
+        pts[pid] = {"id": pid, **meta, "days": days, "probs": probs, "hours": hours}
 
     syn_rows = synoptic_days(syn, today) if syn else []
     for r in syn_rows:
@@ -122,6 +123,28 @@ def main() -> None:
         has = key and ((ROOT / "data" / "photos" / f"{key}.jpg").exists() or (ROOT / "static" / "photos" / f"{key}.jpg").exists())
         return {"key": key, "credit": pcred.get(key, {}), "pos": pcfg["locations"].get(slug, {}).get("pos") or pcfg.get("positions", {}).get(key, "center 60%")} if has else None
 
+    lifts_cfg = json.loads((ROOT / "config" / "lifts.json").read_text()) if (ROOT / "config" / "lifts.json").exists() else {}
+    lifts_data = json.loads((ROOT / "data" / "lifts.json").read_text()) if (ROOT / "data" / "lifts.json").exists() else {}
+
+    def lifts_for(slug: str):
+        """Stato impianti e piste della località, dai siti ufficiali (vedi pipeline/lifts.py)."""
+        c = lifts_cfg.get("locations", {}).get(slug)
+        if not c:
+            return None
+        if "link" in c:
+            return {"link": c["link"], "name": c["name"]}
+        d = lifts_data.get(c["source"])
+        if not d:
+            return {"link": lifts_cfg["sources"][c["source"]]["lifts"], "name": lifts_cfg["sources"][c["source"]]["name"]}
+        areas = set(c.get("areas", []))
+        pick = lambda xs: [x for x in xs if not areas or x["area"] in areas]
+        L, S = pick(d["lifts"]), pick(d.get("slopes", []))
+        age_h = (now - datetime.fromisoformat(d["fetched"])).total_seconds() / 3600
+        return {"name": d["name"], "url": d["url"], "updated": d.get("updated") or "", "fetched": d["fetched"],
+                "stale": age_h > 36, "open": sum(x["open"] for x in L), "total": len(L),
+                "slopes_open": sum(x["open"] for x in S), "slopes_total": len(S),
+                "lifts": sorted(L, key=lambda x: (not x["open"], x["area"], x["name"])), "multi_area": len(areas) > 1}
+
     def build_lang():
         """Località e percorsi con i testi nella lingua corrente."""
         locs = []
@@ -139,6 +162,8 @@ def main() -> None:
             low = min(L["pts"], key=lambda p: p["elev"])
             L["low_pt"] = low
             L["cards_top"] = cards(top["days"], L["mtn"], today)
+            L["hours_top"] = hourly_strip(top.get("hours", []))
+            L["hours_base"] = hourly_strip(low.get("hours", [])) if low["id"] != top["id"] else []
             L["cards_base"] = cards(low["days"], mtn[low["id"]], today) if low["id"] != top["id"] else []
             L["sponsors"] = sponsors.get(loc["slug"], []) or []
             L["webcams"] = [{**w, "label": T(w["label"])} for w in (webcams.get(loc["slug"], []) or [])]
@@ -146,6 +171,7 @@ def main() -> None:
                            "entries": [{**l, "label": T(l["label"])} for l in src["links"][loc["slug"]]]}
                           for src in local_sources if loc["slug"] in src["links"]]
             L["photo"] = photo_for(loc["slug"])
+            L["liftinfo"] = lifts_for(loc["slug"])
             locs.append(L)
         loc_by_slug = {L["slug"]: L for L in locs}
         routes = []
@@ -272,7 +298,7 @@ def main() -> None:
     api = {"generated": ctx["updated_iso"], "licence": "Dati elaborati da modelli open data; vedi /metodo/",
            "locations": [{"slug": L["slug"], "name": L["name"], "summary": L["text"],
                           "mountain": {"point": L["mtn_top"]["id"], "days": L["mtn"], "text": L["mtn_text"]},
-                          "points": [{k: p[k] for k in ("id", "name", "lat", "lon", "elev", "days", "probs")}
+                          "points": [{k: p[k] for k in ("id", "name", "lat", "lon", "elev", "days", "probs", "hours") if k in p}
                                      for p in L["pts"]]} for L in locs],
            "synoptic": syn_rows}
     (OUT / "api" / "v1" / "forecast.json").write_text(json.dumps(api, ensure_ascii=False))

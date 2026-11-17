@@ -1,0 +1,14 @@
+{
+ "sources": {
+  "multipass": {"name": "Multipass Abetone", "lifts": "https://www.multipassabetone.it/stato-impianti",
+                "slopes": "https://www.multipassabetone.it/stato-piste", "kind": "multipass"},
+  "cimone": {"name": "Consorzio Cimone", "lifts": "https://www.cimonesci.it/impianti-aperti/", "kind": "cimone"}
+ },
+ "locations": {
+  "abetone": {"source": "multipass"},
+  "cimone": {"source": "cimone", "areas": ["PASSO DEL LUPO", "SESTOLA", "LAGO DELLA NINFA"]},
+  "le-polle": {"source": "cimone", "areas": ["LE POLLE"]},
+  "cimoncino": {"source": "cimone", "areas": ["CIMONCINO"]},
+  "doganaccia": {"link": "https://www.doganaccia2000.it/", "name": "Doganaccia 2000"}
+ }
+}

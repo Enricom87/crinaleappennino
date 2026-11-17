@@ -1,0 +1,26 @@
+{% macro strip(hours) %}
+<div class="hourly" tabindex="0">
+  {% for h in hours %}
+  {% if h.newday %}<div class="hr-day"><span>{{ h.newday }}</span></div>{% endif %}
+  <div class="hr{% if h.snow >= 0.2 %} hr-snow{% elif h.rain >= 0.2 %} hr-rain{% endif %}">
+    <span class="hr-h">{{ h.hour }}</span>
+    <svg class="hr-ic" viewBox="0 0 64 64" aria-hidden="true"><use href="#ic-{{ h.icon }}"/></svg>
+    <span class="hr-t">{{ h.t|n0 }}°</span>
+    <span class="hr-p">{% if h.snow >= 0.2 %}❄ {{ '%.1f'|format(h.snow) }}{% elif h.rain >= 0.2 %}{{ '%.1f'|format(h.rain) }} mm{% else %}&nbsp;{% endif %}</span>
+    <span class="hr-w{% if h.gust >= 50 %} strong{% endif %}">{{ h.gust }}<small> km/h</small></span>
+  </div>
+  {% endfor %}
+</div>
+{% endmacro %}
+{% if loc.hours_top %}
+<section class="wrap" id="ore">
+  <h2>{{ t("Ora per ora") }} <small class="muted">({{ t("prossime 48 ore") }})</small></h2>
+  <div class="alt-row"><h3>⛰️ {{ t("In vetta") }}</h3><span class="muted">{{ loc.mtn_top.name }} · {{ loc.mtn_top.elev }} m</span></div>
+  {{ strip(loc.hours_top) }}
+  {% if loc.hours_base %}
+  <div class="alt-row"><h3>🏡 {{ t("In paese") }}</h3><span class="muted">{{ loc.low_pt.name }} · {{ loc.low_pt.elev }} m</span></div>
+  {{ strip(loc.hours_base) }}
+  {% endif %}
+  <p class="muted small">{{ t("Neve in cm, pioggia in mm, raffiche di vento in km/h. Per oggi e domani dai modelli ad alta risoluzione.") }}</p>
+</section>
+{% endif %}
