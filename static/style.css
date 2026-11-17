@@ -354,3 +354,15 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 .ph-vs b{font-weight:700;border-radius:6px;padding:1px 7px;font-size:12.5px}
 .m-ec{background:#e2e8f0;color:#0f2236}.m-gfs{background:#fee2e2;color:#991b1b}
 .ph-vs span{min-width:118px}.ph-vs small{font-size:11px}
+
+.phases{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.model-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
+.model-chips span{font-size:12.5px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--ink2)}
+.model-chips i,.ph-models i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.ph-models{margin-top:8px;font-size:13px}.ph-models summary{cursor:pointer;font-weight:700;color:var(--snow)}
+.ph-models table{width:100%;border-collapse:collapse;margin-top:6px}
+.ph-models td,.ph-models th{padding:4px 2px;border-bottom:1px solid var(--line);text-align:right}
+.ph-models td:first-child,.ph-models th:first-child{text-align:left}
+.phases{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1100px){.phases{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.phases{grid-template-columns:1fr}}

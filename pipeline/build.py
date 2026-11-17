@@ -20,9 +20,7 @@ def trend_view():
     """Tendenza a 15 giorni; se i dati mancano o qualcosa va storto la sezione semplicemente non appare."""
     try:
         import trend
-        p, g = ROOT / "data" / "raw" / "ens_syn.json", ROOT / "data" / "raw" / "ens_syn_gfs.json"
-        return trend.view(json.loads(p.read_text()), datetime.now(ZoneInfo("Europe/Rome")).date().isoformat(),
-                          json.loads(g.read_text()) if g.exists() else None) if p.exists() else {}
+        return trend.view_dir(ROOT / "data" / "raw" / "ens_trend", datetime.now(ZoneInfo("Europe/Rome")).date().isoformat())
     except Exception as e:  # noqa: BLE001
         print("tendenza non calcolata:", e)
         return {}

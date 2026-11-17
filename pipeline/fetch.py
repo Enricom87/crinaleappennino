@@ -25,6 +25,17 @@ GLOBAL_MODELS = ["ecmwf_ifs025", "gfs_global", "icon_global"]
 ENSEMBLE_MODELS = ["ecmwf_ifs025"]
 SURFACE_VARS = ("temperature_2m,relative_humidity_2m,precipitation,freezing_level_height,wind_gusts_10m,"
                 "cape,cloud_cover")
+# ensemble per la tendenza: chiave, modello Open-Meteo, temperatura usata, giorni richiesti
+TREND_MODELS = [
+    ("ecmwf", "ecmwf_ifs025", "temperature_850hPa", 15),
+    ("aifs", "ecmwf_aifs025", "temperature_850hPa", 15),
+    ("gfs", "gfs05", "temperature_850hPa", 35),
+    ("gem", "gem_global", "temperature_850hPa", 35),
+    ("weathernext", "google_weathernext2_ensemble", "temperature_850hPa", 16),
+    ("icon", "icon_seamless", "temperature_2m", 8),
+    ("ukmo", "ukmo_global_ensemble_20km", "temperature_2m", 11),
+    ("ch2", "meteoswiss_icon_ch2", "temperature_2m", 6),
+]
 SYNOPTIC_VARS = "temperature_850hPa,wind_direction_700hPa,wind_speed_700hPa,geopotential_height_500hPa,precipitation"
 
 
@@ -114,21 +125,19 @@ def fetch_all(config: dict, raw_dir: Path) -> None:
         (raw_dir / "synoptic.json").write_text(json.dumps(dict(zip(["west", "center", "east"], data))))
     except Exception as e:
         print(f"configurazione sinottica non disponibile: {e}")
-    # tendenza a 15 giorni: i 51 scenari ECMWF sopra il crinale
-    try:
-        time.sleep(3)
-        d = _get(ENSEMBLE_URL, {**_coords([dict(syn["center"], elev=1500)]), "models": "ecmwf_ifs025",
-                                "hourly": "temperature_850hPa,wind_direction_700hPa,precipitation",
-                                "forecast_days": 15})
-        (raw_dir / "ens_syn.json").write_text(json.dumps(_as_list(d)[0]))
-        time.sleep(3)
-        g = _get(ENSEMBLE_URL, {**_coords([dict(syn["center"], elev=1500)]), "models": "gfs05",
-                                "hourly": "temperature_850hPa,wind_direction_700hPa,precipitation",
-                                "forecast_days": 16})
-        (raw_dir / "ens_syn_gfs.json").write_text(json.dumps(_as_list(g)[0]))
-        print("tendenza: ok")
-    except Exception as e:
-        print(f"tendenza non disponibile: {e}")
+    # tendenza: tutti gli ensemble disponibili sopra il crinale (vedi pipeline/trend.py)
+    ens_dir = raw_dir / "ens_trend"
+    ens_dir.mkdir(exist_ok=True)
+    for key, model, tvar, days in TREND_MODELS:
+        try:
+            time.sleep(2)
+            d = _get(ENSEMBLE_URL, {**_coords([dict(syn["center"], elev=1500)]), "models": model,
+                                    "hourly": f"{tvar},precipitation" + (",wind_direction_700hPa" if tvar == "temperature_850hPa" else ""),
+                                    "forecast_days": days})
+            (ens_dir / f"{key}.json").write_text(json.dumps(_as_list(d)[0]))
+            print(f"tendenza {key}: ok")
+        except Exception as e:
+            print(f"tendenza {key} non disponibile: {e}")
 
 
 if __name__ == "__main__":
