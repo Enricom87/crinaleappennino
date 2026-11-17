@@ -57,7 +57,7 @@ def cards(snow_days: list[dict], mtn_days: list[dict], today: str, n: int = 5) -
             "short": cap(day_short(m["date"])) if day_label(m["date"], today) not in (T("Oggi"), T("Domani"))
                      else day_label(m["date"], today),
             "tmax": m["tmax"], "tmin": m["tmin"], "snow": round(snow), "gust": m["gust"],
-            "back_by": m["back_by"], "windy": (m["gust"] or 0) >= 50,
+            "back_by": m["back_by"], "windy": (m["gust"] or 0) >= 50, "sure": certainty(m["idx"]),
         })
     return out
 
@@ -95,3 +95,25 @@ def hourly_strip(hours: list[dict]) -> list[dict]:
                     "newday": cap(day_name(d)) if prev and d != prev else None})
         prev = d
     return out
+
+
+def certainty(idx: int) -> dict:
+    """Quanto fidarsi, in base a quanto è lontano il giorno."""
+    if idx <= 1:
+        return {"key": "sure", "label": T("Affidabile"), "icon": "🔒"}
+    if idx <= 4:
+        return {"key": "likely", "label": T("Probabile"), "icon": "📈"}
+    return {"key": "trend", "label": T("Tendenza"), "icon": "🔭"}
+
+
+def prob_word(p: float) -> str:
+    """Probabilità in parole (p in %)."""
+    if p >= 90:
+        return T("quasi sicura")
+    if p >= 60:
+        return T("probabile")
+    if p >= 30:
+        return T("possibile")
+    if p >= 10:
+        return T("poco probabile")
+    return T("improbabile")

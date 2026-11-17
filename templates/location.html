@@ -14,8 +14,28 @@
 {% if summer and loc.mtn %}{% include "_mtn.html" %}{% endif %}
 
 <nav class="subnav" aria-label="{{ t('Sezioni') }}"><div class="wrap">
-  <a href="#giorni">{{ t("Previsioni") }}</a>{% if loc.liftinfo and not summer %}<a href="#impianti">{{ t("Impianti") }}</a>{% endif %}{% if loc.hours_top %}<a href="#ore">{{ t("Ora per ora") }}</a>{% endif %}<a href="#analisi">{{ t("Analisi") }}</a>{% if loc.mtn %}<a href="#quota">{{ t("In quota") }}</a>{% endif %}{% if loc.road %}<a href="#strada">{{ t("Strada") }}</a>{% endif %}{% if loc.routes %}<a href="#percorsi">{{ t("Percorsi") }}</a>{% endif %}<a href="#webcam">{{ t("Webcam") }}</a>
+  {% if loc.weekend %}<a href="#weekend">{{ t("Weekend") }}</a>{% endif %}<a href="#giorni">{{ t("Previsioni") }}</a>{% if loc.liftinfo and not summer %}<a href="#impianti">{{ t("Impianti") }}</a>{% endif %}{% if loc.hours_top %}<a href="#ore">{{ t("Ora per ora") }}</a>{% endif %}<a href="#analisi">{{ t("Analisi") }}</a>{% if loc.mtn %}<a href="#quota">{{ t("In quota") }}</a>{% endif %}{% if loc.road %}<a href="#strada">{{ t("Strada") }}</a>{% endif %}{% if loc.routes %}<a href="#percorsi">{{ t("Percorsi") }}</a>{% endif %}<a href="#webcam">{{ t("Webcam") }}</a>
 </div></nav>
+{% set wk = loc.weekend %}
+{% if wk %}
+<section class="wrap" id="weekend">
+  <div class="wk-box wk-{{ wk.color }}">
+    <div class="wk-main">
+      <span class="wk-kicker">{{ t("Il weekend a {name}", name=loc.name.split(' · ')[0]) }}</span>
+      <span class="wk-title"><i class="wk-dot"></i>{{ wk.title }}</span>
+      <p class="wk-advice">{{ wk.advice }}</p>
+      {% if wk.note %}<p class="wk-note">🚡 {{ wk.note }}</p>{% endif %}
+    </div>
+    <ul class="wk-days">
+      {% for d in wk.days %}<li class="wk-{{ d.color }}"><b>{{ d.name }}</b><span>{{ d.why }}</span></li>{% endfor %}
+    </ul>
+    <div class="wk-foot">
+      <span class="wk-sure s-{{ wk.sure.key }}">{{ wk.sure.icon }} {{ wk.sure.label }}</span>
+      {% if wk.uncertain and site.social.telegram %}<a class="btn small tg" href="{{ site.social.telegram }}" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2 1.8 11.7c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.3z"/></svg> {{ t("Avvisami se cambia") }}</a>{% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
 <section class="wrap" id="giorni">
   <h2>{{ t("Le prossime giornate") }}</h2>
   <div class="alt-row"><h3>⛰️ {{ t("In vetta") }}</h3><span class="muted">{{ loc.mtn_top.name }} · {{ loc.mtn_top.elev }} m</span></div>

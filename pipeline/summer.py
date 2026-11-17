@@ -14,7 +14,7 @@ from statistics import median
 
 from compute import GLOBAL_MODELS, LAM_WEIGHTS, split_models
 
-DAYS = 5
+DAYS = 7  # una settimana: copre sempre il weekend in arrivo
 LAM_DAYS = 2
 PM = range(11, 21)          # ore del pomeriggio in cui nascono i temporali di calore
 STORM_LABELS = {0: "assenti", 1: "isolati", 2: "possibili", 3: "probabili"}

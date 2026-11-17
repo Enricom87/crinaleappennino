@@ -14,6 +14,8 @@ from cards import cards, hourly_strip
 from summer import mountain_days, overview_mtn, summer_text
 from i18n import T
 from synview import syn_view
+from verdict import weekend
+from cards import prob_word
 
 
 def trend_view():
@@ -183,6 +185,7 @@ def main() -> None:
                           for src in local_sources if loc["slug"] in src["links"]]
             L["photo"] = photo_for(loc["slug"])
             L["liftinfo"] = lifts_for(loc["slug"])
+            L["weekend"] = weekend(L, today, IS_SUMMER)
             locs.append(L)
         loc_by_slug = {L["slug"]: L for L in locs}
         routes = []
@@ -227,7 +230,7 @@ def main() -> None:
     env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=select_autoescape(["html", "xml"]))
     import hashlib
     css_v = hashlib.md5((ROOT / "static" / "style.css").read_bytes()).hexdigest()[:8]
-    env.globals.update(nice_date=nice_date, t=T, css_v=css_v)
+    env.globals.update(nice_date=nice_date, t=T, css_v=css_v, prob_word=prob_word)
     env.filters["n0"] = fmt_int
     explicit_index = bool(int(__import__("os").environ.get("EXPLICIT_INDEX", "0")))
     SHARED = ("static/", "api/", "manifest.webmanifest", "sw.js", "feed.xml")

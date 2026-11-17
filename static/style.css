@@ -366,3 +366,25 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 .phases{grid-template-columns:repeat(4,1fr)}
 @media(max-width:1100px){.phases{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.phases{grid-template-columns:1fr}}
+
+/* certezza e verdetto del weekend */
+.dc-sure{font-size:10.5px;font-weight:700;border-radius:999px;padding:2px 7px;white-space:nowrap}
+.s-sure{background:#dcfce7;color:#166534}.s-likely{background:#fef3c7;color:#92400e}.s-trend{background:#ede9fe;color:#5b21b6}
+.wk-pill{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:14px;border-radius:12px;padding:7px 10px}
+.wk-pill small{margin-left:auto;font-size:11px;opacity:.8}
+.wk-green{background:#dcfce7;color:#14532d}.wk-yellow{background:#fef3c7;color:#78350f}.wk-red{background:#fee2e2;color:#7f1d1d}
+.wk-box{display:grid;grid-template-columns:1.2fr 1fr;gap:10px 24px;border-radius:var(--r);padding:20px 22px;box-shadow:var(--shadow);margin-top:24px;border:2px solid transparent}
+.wk-box.wk-green{border-color:#86efac}.wk-box.wk-yellow{border-color:#fcd34d}.wk-box.wk-red{border-color:#fca5a5}
+.wk-kicker{display:block;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.75}
+.wk-title{display:flex;align-items:center;gap:10px;font-size:30px;font-weight:800;letter-spacing:-.02em;margin:4px 0 6px}
+.wk-dot{width:18px;height:18px;border-radius:50%;flex:none;box-shadow:0 0 0 5px rgba(255,255,255,.6)}
+.wk-green .wk-dot{background:#16a34a}.wk-yellow .wk-dot{background:#f59e0b}.wk-red .wk-dot{background:#dc2626}
+.wk-advice{margin:0;font-size:16.5px;font-weight:600}
+.wk-note{margin:8px 0 0;font-size:14px}
+.wk-days{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;align-self:center}
+.wk-days li{display:flex;gap:10px;align-items:baseline;background:rgba(255,255,255,.7);border-radius:10px;padding:8px 12px;color:var(--ink)}
+.wk-days li b{min-width:86px}.wk-days li::before{content:"";width:10px;height:10px;border-radius:50%;flex:none;align-self:center}
+.wk-days li.wk-green::before{background:#16a34a}.wk-days li.wk-yellow::before{background:#f59e0b}.wk-days li.wk-red::before{background:#dc2626}
+.wk-foot{grid-column:1/-1;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.wk-sure{font-size:13px;font-weight:700;border-radius:999px;padding:4px 10px}
+@media(max-width:720px){.wk-box{grid-template-columns:1fr}.wk-title{font-size:25px}}

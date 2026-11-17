@@ -55,6 +55,7 @@
         <span class="loc-name"><h3>{{ nm[0] }}</h3><small>{% if nm|length > 1 %}{{ nm[1:]|join(' · ') }} · {% endif %}{{ L.area }}</small></span>
       </span>
       <span class="loc-body">
+      {% if L.weekend %}<span class="wk-pill wk-{{ L.weekend.color }}"><b>{{ t("Weekend") }}:</b> {{ L.weekend.title }}<small>{{ L.weekend.sure.icon }} {{ L.weekend.sure.label }}</small></span>{% endif %}
       {% if summer and m0 %}
       <p class="card-title">{{ t("oggi in quota") }}{% if m0.back_by %} · {{ t("rientro entro le {h}", h=m0.back_by) }}{% endif %}</p>
       {% if L.cards_top %}<div class="mini-icons">{% for c in L.cards_top[:4] %}<span title="{{ c.phrase }}"><svg viewBox="0 0 64 64"><use href="#ic-{{ c.icon }}"/></svg>{{ c.short }}<strong>{{ c.tmax|n0 }}°</strong></span>{% endfor %}</div>{% endif %}
@@ -126,7 +127,7 @@
       <span class="ph-share">{{ t("{p}% degli scenari", p=ph.share) }}</span>
       <div class="ph-bar">{% for lab, col, p in ph.mix %}<span style="width:{{ p }}%;background:{{ col }}" title="{{ lab }} {{ p }}%"></span>{% endfor %}</div>
       <ul class="ph-facts">
-        <li>❄️ <b>{{ t("Probabilità di neve: {p}%", p=ph.snow) }}</b>{% if ph.best %} · {{ t("più probabile {d}", d=ph.best) }}{% endif %}</li>
+        <li>❄️ <b>{{ t("Neve: {w}", w=prob_word(ph.snow)) }}</b> <span class="muted">({{ t("{p} scenari su 100", p=ph.snow) }})</span>{% if ph.best %} · {{ t("più probabile {d}", d=ph.best) }}{% endif %}</li>
         <li>🤝 {{ t("{a} modelli su {n} vedono neve", a=ph.agree, n=ph.nmodels) }}</li>
         <li>🌡️ {{ t("{t} °C a 1.500 m", t=ph.t50) }}{% if ph.flow %} · 💨 {{ ph.flow }}{% endif %}</li>
         <li>🎯 {{ t("Affidabilità: {c}", c=ph.conf) }}</li>

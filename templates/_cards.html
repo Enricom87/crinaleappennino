@@ -2,6 +2,7 @@
   {% for c in cards %}
   <div class="daycard ic-{{ c.icon }}">
     <span class="dc-day">{{ c.label }}</span>
+    {% if c.sure %}<span class="dc-sure s-{{ c.sure.key }}" title="{{ c.sure.label }}">{{ c.sure.icon }} {{ c.sure.label }}</span>{% endif %}
     <svg class="dc-icon" viewBox="0 0 64 64" role="img" aria-label="{{ c.phrase }}"><use href="#ic-{{ c.icon }}"/></svg>
     <span class="dc-temp"><strong>{{ c.tmax|n0 }}°</strong> <span class="muted">{{ c.tmin|n0 }}°</span></span>
     <span class="dc-phrase">{{ c.phrase }}</span>
