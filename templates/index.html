@@ -92,7 +92,7 @@
         <span class="sd-emoji" aria-hidden="true">{{ d.emoji }}</span>
         <span class="sd-pat">{{ d.pattern }}</span>
         <span class="sd-t" style="background:{{ d.color }}">{{ d.tlab }}</span>
-        {% if d.dir is not none %}<span class="sd-wind" title="{{ d.flow }}"><svg viewBox="0 0 24 24" style="transform:rotate({{ d.dir + 180 }}deg)"><path d="M12 3l5 8h-3.5v10h-3V11H7z" fill="currentColor"/></svg>{{ d.flow|replace("/", "/\u200b") }}</span>{% endif %}
+        <span class="sd-wind">💨 {{ d.flow|replace("/", "/\u200b") }}</span>
         <span class="sd-v">{{ d.verdict }}</span>
       </div>
     {% endfor %}

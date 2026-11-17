@@ -215,7 +215,9 @@ def main() -> None:
             shutil.copy(f, OUT / "static" / "photos" / f"{f.stem}-640.jpg")
 
     env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=select_autoescape(["html", "xml"]))
-    env.globals.update(nice_date=nice_date, t=T)
+    import hashlib
+    css_v = hashlib.md5((ROOT / "static" / "style.css").read_bytes()).hexdigest()[:8]
+    env.globals.update(nice_date=nice_date, t=T, css_v=css_v)
     env.filters["n0"] = fmt_int
     explicit_index = bool(int(__import__("os").environ.get("EXPLICIT_INDEX", "0")))
     SHARED = ("static/", "api/", "manifest.webmanifest", "sw.js", "feed.xml")
