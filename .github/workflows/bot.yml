@@ -13,7 +13,8 @@ jobs:
     steps:
       - name: Serve il token Cloudflare
         id: chk
-        run: if [ -z "$CLOUDFLARE_API_TOKEN" ]; then echo "Manca CLOUDFLARE_API_TOKEN: salto."; echo "skip=1" >> $GITHUB_OUTPUT; fi
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then echo "Manca il token Cloudflare, salto"; echo "skip=1" >> $GITHUB_OUTPUT; fi
       - uses: actions/checkout@v4
         if: steps.chk.outputs.skip != '1'
       - uses: actions/setup-node@v4
