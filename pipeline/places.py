@@ -39,47 +39,52 @@ def kind(t: dict) -> str | None:
     return None
 
 
+def to_place(e: dict, f: str) -> dict | None:
+    t = e.get("tags", {})
+    k, name = kind(t), (t.get("name") or "").strip()
+    lat = e.get("lat") or (e.get("center") or {}).get("lat")
+    lon = e.get("lon") or (e.get("center") or {}).get("lon")
+    if not k or not name or lat is None:
+        return None
+    web = t.get("website") or t.get("contact:website") or t.get("url") or ""
+    if web and not web.startswith("http"):
+        web = "https://" + web
+    return {"id": f"{e['type'][0]}{e['id']}", "kind": k, "name": name, "lat": lat, "lon": lon, "q": f,
+            "ele": t.get("ele", ""), "web": web, "phone": t.get("phone") or t.get("contact:phone") or "",
+            "stars": t.get("stars", ""), "osm": f"https://www.openstreetmap.org/{e['type']}/{e['id']}"}
+
+
 def main() -> None:
+    """Ogni categoria si aggiorna per conto suo (una volta a settimana); se un server è occupato
+    si tiene il dato precedente e si riprova al giro dopo."""
     try:
         old = json.loads(OUT.read_text())
-        age = (datetime.now(timezone.utc) - datetime.fromisoformat(old["fetched"])).days
-        if age < 7:
-            print(f"strutture: dati di {age} giorni fa, li tengo")
-            return
     except Exception:  # noqa: BLE001
-        pass
-    els = []
+        old = {"places": [], "ok": {}}
+    ok, places = dict(old.get("ok") or {}), list(old.get("places") or [])
+    now = datetime.now(timezone.utc)
+    changed = False
     for f in FILTERS:
+        last = ok.get(f)
+        if last and (now - datetime.fromisoformat(last)).days < 7:
+            continue
         for url in OVERPASS:
             try:
                 r = requests.post(url, data={"data": Q(f)}, timeout=90, headers={"User-Agent": "crinaleappennino.it"})
                 r.raise_for_status()
-                els += r.json()["elements"]
+                new = [p for p in (to_place(e, f) for e in r.json()["elements"]) if p]
+                places = [p for p in places if p.get("q") != f] + new
+                ok[f] = now.isoformat()
+                changed = True
+                print(f"strutture: {f} → {len(new)}")
                 break
             except Exception as ex:  # noqa: BLE001
-                print(f"strutture: {url} {f} non disponibile ({str(ex)[:120]})")
+                print(f"strutture: {url} {f} non disponibile ({str(ex)[:100]})")
                 time.sleep(3)
-        else:
-            print("strutture: una query non è riuscita, tengo l'ultimo file")
-            return
         time.sleep(2)
-    out = []
-    for e in els:
-        t = e.get("tags", {})
-        k, name = kind(t), (t.get("name") or "").strip()
-        lat = e.get("lat") or (e.get("center") or {}).get("lat")
-        lon = e.get("lon") or (e.get("center") or {}).get("lon")
-        if not k or not name or lat is None:
-            continue
-        web = t.get("website") or t.get("contact:website") or t.get("url") or ""
-        if web and not web.startswith("http"):
-            web = "https://" + web
-        out.append({"id": f"{e['type'][0]}{e['id']}", "kind": k, "name": name, "lat": lat, "lon": lon,
-                    "ele": t.get("ele", ""), "web": web, "phone": t.get("phone") or t.get("contact:phone") or "",
-                    "stars": t.get("stars", ""), "osm": f"https://www.openstreetmap.org/{e['type']}/{e['id']}"})
-    OUT.write_text(json.dumps({"fetched": datetime.now(timezone.utc).isoformat(), "places": out},
-                              ensure_ascii=False, indent=0))
-    print(f"strutture: {len(out)} da OpenStreetMap")
+    if changed:
+        OUT.write_text(json.dumps({"fetched": now.isoformat(), "ok": ok, "places": places}, ensure_ascii=False, indent=0))
+    print(f"strutture: {len(places)} in archivio, categorie aggiornate {len(ok)}/{len(FILTERS)}")
 
 
 if __name__ == "__main__":
