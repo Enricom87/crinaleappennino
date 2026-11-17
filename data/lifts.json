@@ -1,0 +1,442 @@
+{
+ "multipass": {
+  "name": "Multipass Abetone",
+  "url": "https://www.multipassabetone.it/stato-impianti",
+  "fetched": "2026-11-17T10:01+01:00",
+  "updated": "",
+  "lifts": [
+   {
+    "name": "Seggiovia quadriposto Regine - Selletta",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Tapis Roulant Campo scuola Abetone",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Seggiovia biposto Abetone - Selletta",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Seggiovia campo scuola Abetone",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Seggiovia triposto Campo Tennis",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Tapis Roulant Ovovia",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Seggiovia biposto Villa Imperatori - Selletta",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Sciovia Monte Gomito",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Telecabina 8 posti Casa cantoniera - M.Gomito",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Sciovia Zeno 3",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Seggiovia quadriposto Cà del Cucco - Pulicchio",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Seggiovia Quadriposto Tre potenze",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Seggiovia Quadriposto Val di Luce - M.Gomito",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Seggiovia Triposto Passo d'Annibale",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Seggiovia Quadriposto Passo della Sprella",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Sciovia Jolly",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Sciovia Abetina",
+    "open": false,
+    "area": ""
+   }
+  ],
+  "slopes": [
+   {
+    "name": "Chierroni",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Selletta",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Giulio Ferrari",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Campo scuola Abetone",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Riva",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Stucchi",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "12a. Pista del Lago",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Monte Gomito 1",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Monte Gomito 2",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Zeno 1",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Zeno 2",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Variante Zeno 3 / Zeno 2",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Zeno 3",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "18b. Campo scuola Ovovia",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Stadio da Slalom",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Raccordo Pulicchio / Zeno3",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Seghi (Zona Pulicchio)",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Coppi 1",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Coppi 2",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Raccordo Zeno3 / Pulicchio",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Farinati",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Passo d'Annibale",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Tre Potenze",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Celina Seghi",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Abetina",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Jolly",
+    "open": false,
+    "area": ""
+   },
+   {
+    "name": "Sprella",
+    "open": false,
+    "area": ""
+   }
+  ]
+ },
+ "cimone": {
+  "name": "Consorzio Cimone",
+  "url": "https://www.cimonesci.it/impianti-aperti/",
+  "fetched": "2026-11-17T10:01+01:00",
+  "updated": "07/04/2026 14:00",
+  "lifts": [
+   {
+    "name": "La Capanna 2 - Tappeto di risalita COPERTO",
+    "open": false,
+    "area": "CIMONCINO"
+   },
+   {
+    "name": "La Capanna 1 - Tappeto di risalita",
+    "open": false,
+    "area": "CIMONCINO"
+   },
+   {
+    "name": "Cimoncino1 tronco - Seggiovia 6 posti",
+    "open": false,
+    "area": "CIMONCINO"
+   },
+   {
+    "name": "Lago della Ninfa - Seggiovia 4 posti",
+    "open": false,
+    "area": "LAGO DELLA NINFA"
+   },
+   {
+    "name": "Tappeto Lago della Ninfa",
+    "open": false,
+    "area": "LAGO DELLA NINFA"
+   },
+   {
+    "name": "Polle - Valcava - Seggiovia 6 posti",
+    "open": false,
+    "area": "LE POLLE"
+   },
+   {
+    "name": "Pollicino C. Scuola - Tappeto di risalita COPERTO",
+    "open": false,
+    "area": "LE POLLE"
+   },
+   {
+    "name": "Ariete - Seggiovia 4 posti",
+    "open": false,
+    "area": "LE POLLE"
+   },
+   {
+    "name": "Faggio Bianco - Seggiovia 3 posti",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Del Cimone - Seggiovia 4 posti",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Lamaccione - Seggiovia 4 posti",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Dei Maestri - Tappeto di risalita",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Colombaccio - Pista Bob",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Sestola Pian del Falco - Seggiovia tre posti",
+    "open": false,
+    "area": "SESTOLA"
+   },
+   {
+    "name": "Pian del Falco - Passo del lupo BUS pausa nei feriali dalle ore 12 alle ore 13",
+    "open": false,
+    "area": "SESTOLA"
+   }
+  ],
+  "slopes": [
+   {
+    "name": "Delle Pernici",
+    "open": false,
+    "area": "CIMONCINO"
+   },
+   {
+    "name": "C. Scuola Cimoncino",
+    "open": false,
+    "area": "CIMONCINO"
+   },
+   {
+    "name": "Delle Marmotte",
+    "open": false,
+    "area": "CIMONCINO"
+   },
+   {
+    "name": "Delle Aquile",
+    "open": false,
+    "area": "CIMONCINO"
+   },
+   {
+    "name": "Campo scuola Ninfa",
+    "open": false,
+    "area": "LAGO DELLA NINFA"
+   },
+   {
+    "name": "Campo scuola Lago",
+    "open": false,
+    "area": "LAGO DELLA NINFA"
+   },
+   {
+    "name": "Lago della Ninfa",
+    "open": false,
+    "area": "LAGO DELLA NINFA"
+   },
+   {
+    "name": "Baggiolara",
+    "open": false,
+    "area": "LE POLLE"
+   },
+   {
+    "name": "Pista scoiattolo",
+    "open": false,
+    "area": "LE POLLE"
+   },
+   {
+    "name": "Baggiolara 2",
+    "open": false,
+    "area": "LE POLLE"
+   },
+   {
+    "name": "Campo Scuola Polle",
+    "open": false,
+    "area": "LE POLLE"
+   },
+   {
+    "name": "Sette fontane",
+    "open": false,
+    "area": "LE POLLE"
+   },
+   {
+    "name": "“Razzo”",
+    "open": false,
+    "area": "LE POLLE"
+   },
+   {
+    "name": "Del Lago",
+    "open": false,
+    "area": "LE POLLE"
+   },
+   {
+    "name": "Direttissima Paletta",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Faggio",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Campo Scuola Maestri",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Stadio Slalom Romolo Pelloni",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Betulla",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Colombaccio PISTA DA BOB",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Belladonna",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Sud Beccadella",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Nord Beccadella",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Nord Funivia",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Catinaccio",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   }
+  ]
+ }
+}
