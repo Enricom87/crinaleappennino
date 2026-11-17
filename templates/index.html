@@ -92,20 +92,21 @@
   </div>
 </section>
 
-{% if home_events.list %}
 <section class="wrap" id="eventi">
   <h2>🎟️ {{ t("Eventi in Appennino") }}</h2>
   <p class="muted">{{ t("Cosa succede in montagna nelle prossime settimane, dalle fonti ufficiali.") }}</p>
-  <ul class="ev-list">
+  {% if home_events.list %}<ul class="ev-list">
     {% for e in home_events.list %}
     <li><span class="ev-when">{{ e.when }}</span>
-      <span class="ev-body"><a href="{{ e.url }}" rel="noopener" target="_blank"><b>{{ e.title }}</b></a>
+      <span class="ev-body">{% if e.url %}<a href="{{ e.url }}" rel="noopener" target="_blank"><b>{{ e.title }}</b></a>{% else %}<b>{{ e.title }}</b>{% endif %}
+      {% if e.desc %}<span class="small">{{ e.desc|truncate(160) }}</span>{% endif %}
       <span class="muted small">{{ e.city }} · <a href="{{ u(e.near_url ~ '/#cosafare') }}">{{ e.near }}</a></span></span></li>
     {% endfor %}
-  </ul>
+  </ul>{% endif %}
+  {% if not home_events.list %}<p>{{ t("Nessun evento in programma nelle prossime settimane, per ora.") }}</p>{% endif %}
   {% if home_events.source %}<p class="small muted">{{ t("Eventi: dati aperti di {src}, licenza {lic}.", src=home_events.source.name, lic=home_events.source.license) }}</p>{% endif %}
+  <p class="ev-cta"><a class="btn small ghost" href="{{ u('segnala/') }}">🎟️ {{ t("Organizzi un evento? Segnalalo gratis") }}</a></p>
 </section>
-{% endif %}
 
 {% if site.social.telegram %}
 <section class="wrap">

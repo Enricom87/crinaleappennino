@@ -312,7 +312,7 @@ def main() -> None:
         render("index.html", "")
         for L in locs:
             render("location.html", f"{L['slug']}/", loc=L)
-        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline"):
+        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline", "segnala"):
             render(f"{pg}.html", f"{pg}/")
         render("percorsi.html", "percorsi/")
         for r in routes:

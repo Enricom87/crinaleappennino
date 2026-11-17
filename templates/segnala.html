@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ t("Segnala un evento") }} · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>{{ t("Segnala un evento in Appennino") }}</h1>
+<p class="lead">{{ t("Pro Loco, rifugi, scuole sci, associazioni: raccontaci cosa organizzate. Lo controlliamo e lo pubblichiamo gratis nella pagina della località, in home e sul nostro canale.") }}</p></div></section>
+<section class="wrap narrow">
+<form class="nl ev-form" id="evform">
+  <label>{{ t("Nome dell'evento") }} *<input name="title" required maxlength="120"></label>
+  <div class="ev-row">
+    <label>{{ t("Dal") }} *<input type="date" name="from" required min="{{ today }}"></label>
+    <label>{{ t("Al") }}<input type="date" name="to" min="{{ today }}"></label>
+  </div>
+  <label>{{ t("Località più vicina") }} *<select name="loc" required>
+    <option value="">—</option>
+    {% for L in locs %}<option value="{{ L.slug }}">{{ L.name }}</option>{% endfor %}
+  </select></label>
+  <label>{{ t("Dove, di preciso") }}<input name="place" maxlength="120" placeholder="{{ t('es. Rifugio, piazza, punto di ritrovo') }}"></label>
+  <label>{{ t("Descrizione") }}<textarea name="desc" rows="4" maxlength="600"></textarea></label>
+  <label>{{ t("Link per informazioni o prenotazioni") }}<input name="url" maxlength="300" inputmode="url"></label>
+  <label>{{ t("Chi organizza") }}<input name="org" maxlength="120"></label>
+  <label>{{ t("Email o telefono per contattarti") }} *<input name="contact" required maxlength="160">
+    <small class="muted">{{ t("Non viene pubblicato: ci serve solo se abbiamo domande.") }}</small></label>
+  <input type="text" name="website" value="" class="hp" tabindex="-1" autocomplete="off">
+  <label class="check"><input type="checkbox" required> {{ t('Ho letto la <a href="{url}">privacy policy</a>.', url=u('privacy/'))|safe }}</label>
+  <button class="btn" type="submit">{{ t("Invia la segnalazione") }}</button>
+  <p class="ev-msg" id="evmsg" role="status"></p>
+</form>
+</section>
+<script>
+(function(){
+  var f=document.getElementById('evform'), m=document.getElementById('evmsg');
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var d={}; new FormData(f).forEach(function(v,k){d[k]=v}); d.lang="{{ lang }}";
+    if(!d.to) d.to=d.from;
+    var b=f.querySelector('button'); b.disabled=true; m.textContent="{{ t('Invio in corso…') }}";
+    fetch("{{ site.event_endpoint }}",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(d)})
+      .then(function(r){return r.json().then(function(j){return [r.status,j]})})
+      .then(function(x){
+        if(x[1].ok){f.reset(); m.className='ev-msg ok'; m.textContent="{{ t('Grazie! Lo controlliamo e, se va bene, lo pubblichiamo entro poche ore.') }}";}
+        else if(x[0]===429){m.className='ev-msg err'; m.textContent="{{ t('Hai già inviato diverse segnalazioni oggi: riprova domani.') }}";}
+        else {m.className='ev-msg err'; m.textContent="{{ t('Controlla i campi obbligatori e che le date non siano passate.') }}";}
+      }).catch(function(){m.className='ev-msg err'; m.textContent="{{ t('Invio non riuscito. Riprova tra poco.') }}";})
+      .finally(function(){b.disabled=false});
+  });
+})();
+</script>
+{% endblock %}

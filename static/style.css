@@ -429,3 +429,8 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 .ground-pill small{font-weight:500;color:#475569}
 .tg-btns{display:flex;flex-direction:column;gap:8px;align-items:stretch}
 .tg-band .btn.ghost{background:#fff;color:#0f172a;border:1px solid #cbd5e1;text-align:center}
+/* Segnala un evento */
+.ev-form input:not([type=checkbox]),.ev-form select,.ev-form textarea{font:inherit;font-size:16px;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font-weight:400}
+.ev-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ev-msg{margin:0;font-weight:600}.ev-msg.ok{color:#15803d}.ev-msg.err{color:#b91c1c}
+.ev-cta{margin-top:10px}

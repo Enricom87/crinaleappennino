@@ -6,6 +6,7 @@
 const SITE = "https://crinaleappennino.it";
 const FEED = SITE + "/api/v1/bot.json";
 const LANGS = ["it", "en", "de", "fr", "es", "zh"];
+const CHANNEL = "@crinaleappennino";
 
 const M = {
   it: {
@@ -70,6 +71,81 @@ const M = {
   },
 };
 const DOT = { green: "🟢", yellow: "🟡", red: "🔴" };
+const ORIGINS = ["https://crinaleappennino.it", "https://www.crinaleappennino.it"];
+const cors = (req) => ({
+  "Access-Control-Allow-Origin": ORIGINS.includes(req.headers.get("Origin")) ? req.headers.get("Origin") : ORIGINS[0],
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "content-type",
+});
+const clip = (v, n) => String(v ?? "").replace(/[\u0000-\u001f]/g, " ").trim().slice(0, n);
+const isDate = (d) => /^\d{4}-\d{2}-\d{2}$/.test(d) && !isNaN(Date.parse(d));
+
+// --- Segnalazione eventi: arrivano dal modulo del sito, li approvi tu su Telegram -----------------
+async function submitEvent(req, env) {
+  const h = cors(req);
+  let b;
+  try { b = await req.json(); } catch { return Response.json({ ok: false, err: "json" }, { status: 400, headers: h }); }
+  if (b.website) return Response.json({ ok: true }, { headers: h }); // trappola per i bot di spam
+  const ev = {
+    title: clip(b.title, 120), from: clip(b.from, 10), to: clip(b.to || b.from, 10), loc: clip(b.loc, 40),
+    place: clip(b.place, 120), desc: clip(b.desc, 600), url: clip(b.url, 300), org: clip(b.org, 120),
+    contact: clip(b.contact, 160), lang: LANGS.includes(b.lang) ? b.lang : "it",
+  };
+  const today = new Date().toISOString().slice(0, 10);
+  if (!ev.title || !isDate(ev.from) || !isDate(ev.to) || ev.to < ev.from || ev.to < today || !ev.loc || !ev.contact)
+    return Response.json({ ok: false, err: "campi" }, { status: 400, headers: h });
+  if (ev.url && !/^https?:\/\//.test(ev.url)) ev.url = "https://" + ev.url;
+  const ip = req.headers.get("CF-Connecting-IP") || "x";
+  const rk = `rl:${ip}:${today}`;
+  const n = +(await env.SUBS.get(rk) || 0);
+  if (n >= 5) return Response.json({ ok: false, err: "troppe" }, { status: 429, headers: h });
+  await env.SUBS.put(rk, String(n + 1), { expirationTtl: 86400 });
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  await env.SUBS.put("evp:" + id, JSON.stringify(ev), { expirationTtl: 60 * 86400 });
+  const admin = await env.SUBS.get("admin");
+  if (admin) {
+    const when = ev.from === ev.to ? ev.from : `${ev.from} → ${ev.to}`;
+    await tg(env, "sendMessage", { chat_id: admin, parse_mode: "HTML", disable_web_page_preview: true,
+      text: `🎟️ <b>Nuovo evento da approvare</b>\n\n<b>${esc(ev.title)}</b>\n📅 ${when}\n📍 ${esc(ev.place)} (${esc(ev.loc)})\n\n${esc(ev.desc)}\n\n🔗 ${esc(ev.url)}\n👤 ${esc(ev.org)} · ${esc(ev.contact)}`,
+      reply_markup: { inline_keyboard: [[{ text: "✅ Approva", callback_data: "ea:" + id }, { text: "❌ Rifiuta", callback_data: "er:" + id }]] } });
+  }
+  return Response.json({ ok: true }, { headers: h });
+}
+
+async function moderate(env, cq) {
+  const id = cq.data.slice(3), ok = cq.data.startsWith("ea:");
+  const admin = await env.SUBS.get("admin");
+  if (String(cq.message.chat.id) !== admin) return tg(env, "answerCallbackQuery", { callback_query_id: cq.id });
+  const raw = await env.SUBS.get("evp:" + id);
+  let note = "Già gestito";
+  if (raw) {
+    const ev = JSON.parse(raw);
+    if (ok) {
+      const ttl = Math.max(86400, Math.round((Date.parse(ev.to) - Date.now()) / 1000) + 2 * 86400);
+      const { contact, ...pub } = ev; // il contatto resta privato: non va sul sito
+      await env.SUBS.put("evok:" + id, JSON.stringify({ id, ...pub }), { expirationTtl: ttl });
+      // annuncio anche sul canale pubblico
+      const when = ev.from === ev.to ? ev.from.split("-").reverse().join("/") : ev.from.split("-").reverse().join("/") + " → " + ev.to.split("-").reverse().join("/");
+      await tg(env, "sendMessage", { chat_id: CHANNEL, parse_mode: "HTML", disable_web_page_preview: true,
+        text: `🎟️ <b>${esc(ev.title)}</b>\n📅 ${when} · 📍 ${esc(ev.place || ev.loc)}\n${esc(ev.desc).slice(0, 400)}` + (ev.url ? `\n🔗 ${esc(ev.url)}` : "") });
+    }
+    await env.SUBS.delete("evp:" + id);
+    note = ok ? "✅ Approvato: sarà sul sito al prossimo aggiornamento" : "❌ Rifiutato";
+  }
+  await tg(env, "answerCallbackQuery", { callback_query_id: cq.id, text: note });
+  return tg(env, "editMessageText", { chat_id: cq.message.chat.id, message_id: cq.message.message_id,
+    parse_mode: "HTML", text: (cq.message.text || "").slice(0, 3500) + "\n\n<b>" + note + "</b>" });
+}
+
+async function listEvents(req, env) {
+  const out = [];
+  let cursor;
+  do {
+    const page = await env.SUBS.list({ prefix: "evok:", cursor });
+    for (const k of page.keys) { const v = await env.SUBS.get(k.name); if (v) out.push(JSON.parse(v)); }
+    cursor = page.list_complete ? undefined : page.cursor;
+  } while (cursor);
+  return Response.json({ events: out }, { headers: { ...cors(req), "cache-control": "no-store" } });
+}
 
 const fmt = (s, o) => s.replace(/\{(\w)\}/g, (_, k) => o[k] ?? "");
 const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -122,6 +198,11 @@ async function onMessage(env, msg) {
   const t = M[u.lang];
   const [cmd, arg] = text.split(/\s+/);
   const c = cmd.split("@")[0].toLowerCase();
+  if (c === "/admin") {
+    const cur = await env.SUBS.get("admin");
+    if (!cur) { await env.SUBS.put("admin", String(id)); return tg(env, "sendMessage", { chat_id: id, text: "✅ Sei l'amministratore: qui riceverai gli eventi da approvare." }); }
+    return tg(env, "sendMessage", { chat_id: id, text: cur === String(id) ? "Sei già l'amministratore ✅" : t.help });
+  }
   if (c === "/stop") {
     await env.SUBS.delete("u:" + id);
     return tg(env, "sendMessage", { chat_id: id, text: t.stop });
@@ -149,6 +230,7 @@ async function onMessage(env, msg) {
 }
 
 async function onCallback(env, cq) {
+  if (/^e[ar]:/.test(cq.data || "")) return moderate(env, cq);
   const id = cq.message.chat.id;
   const slug = (cq.data || "").slice(2);
   const data = await feed();
@@ -228,6 +310,9 @@ export default {
       } catch (e) { console.log("errore", e && e.stack); }
       return new Response("ok");
     }
+    if (req.method === "OPTIONS") return new Response(null, { headers: cors(req) });
+    if (url.pathname === "/event" && req.method === "POST") return submitEvent(req, env);
+    if (url.pathname === "/events.json") return listEvents(req, env);
     if (url.pathname === "/setup") {
       // Collega il bot a questo worker. Ripeterlo non fa danni: reimposta sempre lo stesso indirizzo.
       const r = await tg(env, "setWebhook", { url: url.origin + "/tg", secret_token: await secretOf(env),

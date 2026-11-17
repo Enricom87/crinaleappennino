@@ -24,5 +24,6 @@
     "telegram_bot": "https://t.me/crinaleappennino_bot"
   },
   "telegram_chat": "@crinaleappennino",
-  "telegram_brand_version": "2026-11-logo"
+  "telegram_brand_version": "2026-11-logo",
+  "event_endpoint": "https://crinale-bot.enrico-marchionni.workers.dev/event"
 }

@@ -20,12 +20,14 @@
   <ul class="ev-list">
     {% for e in ev.list %}
     <li><span class="ev-when">{{ e.when }}</span>
-      <span class="ev-body"><a href="{{ e.url }}" rel="noopener" target="_blank"><b>{{ e.title }}</b></a>
-      <span class="muted small">{{ e.city }}{% if e.place %} · {{ e.place }}{% endif %}{% if e.km >= 2 %} · {{ t("a circa {n} km", n=e.km) }}{% endif %}</span></span></li>
+      <span class="ev-body">{% if e.url %}<a href="{{ e.url }}" rel="noopener" target="_blank"><b>{{ e.title }}</b></a>{% else %}<b>{{ e.title }}</b>{% endif %}
+      {% if e.desc %}<span class="small">{{ e.desc|truncate(160) }}</span>{% endif %}
+      <span class="muted small">{{ e.city }}{% if e.place %} · {{ e.place }}{% endif %}{% if e.km >= 2 %} · {{ t("a circa {n} km", n=e.km) }}{% endif %}{% if e.org %} · {{ t("organizza {o}", o=e.org) }}{% endif %}</span></span></li>
     {% endfor %}
   </ul>
   {% if ev.source %}<p class="small muted">{{ t("Eventi: dati aperti di {src}, licenza {lic}.", src=ev.source.name, lic=ev.source.license) }}</p>{% endif %}
   {% endif %}
   <p class="small muted">{{ t("Orari e aperture cambiano: controlla sempre il sito ufficiale prima di partire.") }}</p>
+  <p class="ev-cta"><a class="btn small ghost" href="{{ u('segnala/') }}">🎟️ {{ t("Organizzi un evento qui? Segnalalo") }}</a></p>
 </section>
 {% endif %}

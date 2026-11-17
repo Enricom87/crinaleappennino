@@ -46,19 +46,48 @@ def slim(e: dict) -> dict | None:
             "cat": ", ".join(c.get("name", "") for c in (e.get("category") or [])[:2])}
 
 
+COMMUNITY = "https://crinale-bot.enrico-marchionni.workers.dev/events.json"
+
+
+def community() -> list[dict]:
+    """Eventi segnalati dagli organizzatori e approvati a mano su Telegram."""
+    try:
+        r = requests.get(COMMUNITY, timeout=30)
+        r.raise_for_status()
+        out = []
+        for e in r.json().get("events", []):
+            out.append({"id": "c-" + e["id"], "title": e["title"], "sub": "", "from": e["from"], "to": e["to"],
+                        "city": e.get("place") or "", "place": "", "loc": e["loc"], "url": e.get("url") or "",
+                        "cat": "", "desc": e.get("desc") or "", "org": e.get("org") or "", "community": True})
+        print(f"eventi segnalati: {len(out)}")
+        return out
+    except Exception as ex:  # noqa: BLE001
+        print(f"eventi segnalati: non disponibili ({ex})")
+        return []
+
+
 def main() -> None:
+    comm = community()
     for base in BASES:
         try:
             res = {}
             for lang in ("it", "en"):
-                res[lang] = [x for x in map(slim, pull(base, lang)) if x]
+                res[lang] = [x for x in map(slim, pull(base, lang)) if x] + comm
             OUT.parent.mkdir(parents=True, exist_ok=True)
             OUT.write_text(json.dumps({"source": SOURCE, "events": res}, ensure_ascii=False, indent=1))
             print(f"eventi: {len(res['it'])} in zona (da {base})")
             return
         except Exception as ex:  # noqa: BLE001 — la fonte esterna non deve mai rompere il sito
             print(f"eventi: {base} non disponibile ({ex})")
-    print("eventi: tengo l'ultimo file")
+    if comm:  # la fonte regionale è giù ma le segnalazioni ci sono: aggiorno solo quelle
+        try:
+            old = json.loads(OUT.read_text())
+        except Exception:  # noqa: BLE001
+            old = {"source": SOURCE, "events": {"it": [], "en": []}}
+        for lang in ("it", "en"):
+            old["events"][lang] = [e for e in old["events"].get(lang, []) if not e.get("community")] + comm
+        OUT.write_text(json.dumps(old, ensure_ascii=False, indent=1))
+    print("eventi: tengo l'ultimo file per la fonte regionale")
 
 
 if __name__ == "__main__":

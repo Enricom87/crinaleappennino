@@ -79,9 +79,14 @@ def events(loc: dict, points: dict, today: str, days: int = 30) -> dict:
     for e in evs:
         if e["to"] < today or e["from"] > end:
             continue
-        d = km(c, (e["lat"], e["lon"]))
-        if d > RADIUS_EV:
-            continue
+        if e.get("community"):
+            if e.get("loc") != loc["slug"]:
+                continue
+            d = 0
+        else:
+            d = km(c, (e["lat"], e["lon"]))
+            if d > RADIUS_EV:
+                continue
         if e["from"] == e["to"]:
             when = nice_date(e["from"], short=True)
         elif e["from"] <= today:
