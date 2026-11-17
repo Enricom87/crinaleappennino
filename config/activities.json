@@ -1,0 +1,378 @@
+{
+ "_note": "Cosa fare oltre lo sci. 'when': snow = solo con neve, dry = col bel tempo, rain = ottimo anche se piove (al chiuso), any = sempre. 'season': winter/summer/all. Niente orari: cambiano, si rimanda alle fonti ufficiali. 'locs': località a cui proporla (scelte a mano per i collegamenti stradali reali, non in linea d'aria).",
+ "items": [
+  {
+   "id": "lago-nero-ciaspole",
+   "lat": 44.142,
+   "lon": 10.676,
+   "kind": "neve",
+   "season": "winter",
+   "when": "snow",
+   "name": "Ciaspolata al Lago Nero",
+   "text": {
+    "it": "Dall'Orto Botanico Forestale dell'Abetone, nella faggeta della Valle del Sestaione, fino al lago glaciale che d'inverno gela.",
+    "en": "From the Abetone Forest Botanical Garden through the beech woods of the Sestaione valley to a glacial lake that freezes in winter.",
+    "de": "Vom Forstbotanischen Garten Abetone durch die Buchenwälder des Sestaione-Tals zu einem Gletschersee, der im Winter zufriert.",
+    "fr": "Depuis le jardin botanique forestier de l'Abetone, à travers la hêtraie du val Sestaione, jusqu'au lac glaciaire gelé en hiver.",
+    "es": "Desde el Jardín Botánico Forestal de Abetone, por el hayedo del valle del Sestaione, hasta un lago glaciar que se hiela en invierno.",
+    "zh": "从阿贝托内森林植物园出发，穿过塞斯塔约内山谷的山毛榉林，抵达冬季结冰的冰川湖。"
+   },
+   "locs": [
+    "abetone"
+   ]
+  },
+  {
+   "id": "orto-botanico-abetone",
+   "lat": 44.142,
+   "lon": 10.676,
+   "kind": "natura",
+   "season": "summer",
+   "when": "dry",
+   "name": "Orto Botanico Forestale dell'Abetone",
+   "text": {
+    "it": "Sentieri facili tra flora d'alta quota e faggeta: perfetto con bambini.",
+    "en": "Easy trails among high-mountain flora and beech woods: perfect with kids.",
+    "de": "Leichte Wege zwischen Hochgebirgsflora und Buchenwald: ideal mit Kindern.",
+    "fr": "Sentiers faciles entre flore d'altitude et hêtraie : parfait avec des enfants.",
+    "es": "Senderos fáciles entre flora de alta montaña y hayedo: perfecto con niños.",
+    "zh": "高山植物与山毛榉林间的轻松步道，非常适合带孩子。"
+   },
+   "locs": [
+    "abetone"
+   ]
+  },
+  {
+   "id": "ponte-ferriere",
+   "lat": 44.05,
+   "lon": 10.773,
+   "kind": "natura",
+   "season": "all",
+   "when": "dry",
+   "name": "Ponte sospeso delle Ferriere",
+   "text": {
+    "it": "227 metri di passerella a 36 metri sul torrente Lima, tra Mammiano Basso e Popiglio. Fino al 2006 era il ponte pedonale sospeso più lungo del mondo.",
+    "en": "A 227 m footbridge 36 m above the Lima river, between Mammiano Basso and Popiglio. Until 2006 it was the world's longest pedestrian suspension bridge.",
+    "de": "227 m lange Fußgängerbrücke 36 m über dem Fluss Lima, zwischen Mammiano Basso und Popiglio. Bis 2006 die längste Fußgänger-Hängebrücke der Welt.",
+    "fr": "Passerelle de 227 m à 36 m au-dessus de la Lima, entre Mammiano Basso et Popiglio. Jusqu'en 2006, le plus long pont suspendu piéton du monde.",
+    "es": "Pasarela de 227 m a 36 m sobre el río Lima, entre Mammiano Basso y Popiglio. Hasta 2006 fue el puente colgante peatonal más largo del mundo.",
+    "zh": "横跨利马河、离水面36米、长227米的步行吊桥，连接马米亚诺巴索与波皮利奥；2006年前曾是世界最长的步行吊桥。"
+   },
+   "locs": [
+    "abetone",
+    "doganaccia"
+   ]
+  },
+  {
+   "id": "cutigliano",
+   "lat": 44.1,
+   "lon": 10.756,
+   "kind": "borgo",
+   "season": "all",
+   "when": "any",
+   "name": "Borgo di Cutigliano",
+   "text": {
+    "it": "Borgo medievale con il Palazzo dei Capitani della Montagna; da qui parte la funivia per la Doganaccia (quando è in servizio).",
+    "en": "Medieval village with the Palazzo dei Capitani della Montagna; the cable car to Doganaccia starts here (when running).",
+    "de": "Mittelalterliches Dorf mit dem Palazzo dei Capitani della Montagna; hier startet die Seilbahn zur Doganaccia (wenn in Betrieb).",
+    "fr": "Village médiéval avec le Palazzo dei Capitani della Montagna ; le téléphérique vers la Doganaccia part d'ici (quand il fonctionne).",
+    "es": "Pueblo medieval con el Palazzo dei Capitani della Montagna; de aquí sale el teleférico a la Doganaccia (cuando funciona).",
+    "zh": "中世纪小镇，有“山地长官宫”；前往多加纳恰的缆车从这里出发（运营期间）。"
+   },
+   "locs": [
+    "abetone",
+    "doganaccia"
+   ]
+  },
+  {
+   "id": "fiumalbo",
+   "lat": 44.178,
+   "lon": 10.648,
+   "kind": "borgo",
+   "season": "all",
+   "when": "any",
+   "name": "Fiumalbo",
+   "text": {
+    "it": "Borgo in pietra ai piedi del Cimone, tra i Borghi più belli d'Italia: vicoli, torrenti e botteghe.",
+    "en": "Stone village at the foot of Mount Cimone, one of 'I Borghi più belli d'Italia': alleys, streams and little shops.",
+    "de": "Steindorf am Fuß des Cimone, eines der „Borghi più belli d'Italia“: Gassen, Bäche und kleine Läden.",
+    "fr": "Village de pierre au pied du Cimone, parmi les « Borghi più belli d'Italia » : ruelles, torrents et boutiques.",
+    "es": "Pueblo de piedra al pie del Cimone, entre los «Borghi più belli d'Italia»: callejones, arroyos y tiendas.",
+    "zh": "奇莫内山脚下的石头小镇，入选“意大利最美村庄”：小巷、溪流与小店。"
+   },
+   "locs": [
+    "abetone",
+    "cimone",
+    "le-polle",
+    "lago-santo"
+   ]
+  },
+  {
+   "id": "castello-sestola",
+   "lat": 44.2323,
+   "lon": 10.775,
+   "kind": "chiuso",
+   "season": "all",
+   "when": "rain",
+   "name": "Rocca di Sestola",
+   "text": {
+    "it": "Il castello ospita il Museo della Civiltà Montanara (con la sala della neve e i vecchi sci di legno) e il Museo degli Strumenti Musicali Meccanici. Aperture soprattutto la domenica: verifica prima.",
+    "en": "The castle houses the Mountain Life Museum (with a snow room and old wooden skis) and a museum of mechanical musical instruments. Mostly open on Sundays: check before going.",
+    "de": "Die Burg beherbergt das Museum des Berglebens (mit Schneesaal und alten Holzski) und ein Museum mechanischer Musikinstrumente. Meist sonntags geöffnet: vorher prüfen.",
+    "fr": "Le château abrite le musée de la vie montagnarde (salle de la neige, vieux skis en bois) et un musée d'instruments de musique mécaniques. Surtout ouvert le dimanche : vérifiez avant.",
+    "es": "El castillo alberga el Museo de la Vida de Montaña (con sala de la nieve y viejos esquís de madera) y un museo de instrumentos musicales mecánicos. Abre sobre todo los domingos: compruébalo antes.",
+    "zh": "城堡内有山地生活博物馆（含雪之厅与老式木制滑雪板）和机械乐器博物馆。多在周日开放，出发前请确认。"
+   },
+   "locs": [
+    "cimone",
+    "le-polle",
+    "cimoncino"
+   ]
+  },
+  {
+   "id": "ninfa-ciaspole",
+   "lat": 44.211,
+   "lon": 10.7249,
+   "kind": "neve",
+   "season": "winter",
+   "when": "snow",
+   "name": "Ciaspole al Lago della Ninfa",
+   "text": {
+    "it": "Anelli facili nel bosco attorno al lago: la prima ciaspolata ideale, anche con i bambini.",
+    "en": "Easy loops in the woods around the lake: the ideal first snowshoe outing, kids included.",
+    "de": "Leichte Runden im Wald um den See: die ideale erste Schneeschuhtour, auch mit Kindern.",
+    "fr": "Boucles faciles dans les bois autour du lac : la première sortie en raquettes idéale, enfants compris.",
+    "es": "Rutas circulares fáciles en el bosque alrededor del lago: la primera salida con raquetas ideal, también con niños.",
+    "zh": "湖边林间的简单环线，是第一次雪鞋徒步的理想选择，也适合孩子。"
+   },
+   "locs": [
+    "cimone",
+    "le-polle",
+    "cimoncino"
+   ]
+  },
+  {
+   "id": "lago-santo-ciaspole",
+   "lat": 44.1372,
+   "lon": 10.5843,
+   "kind": "neve",
+   "season": "winter",
+   "when": "snow",
+   "name": "Al Lago Santo con le ciaspole",
+   "text": {
+    "it": "Il lago più grande dell'Appennino settentrionale, gelato e silenzioso, con i rifugi sulla riva.",
+    "en": "The largest lake of the northern Apennines, frozen and silent, with mountain huts on its shore.",
+    "de": "Der größte See des nördlichen Apennins, zugefroren und still, mit Hütten am Ufer.",
+    "fr": "Le plus grand lac de l'Apennin septentrional, gelé et silencieux, avec des refuges sur la rive.",
+    "es": "El lago más grande del Apenino septentrional, helado y silencioso, con refugios en la orilla.",
+    "zh": "北亚平宁最大的湖泊，冬季冰封静谧，湖畔有山间小屋。"
+   },
+   "locs": [
+    "lago-santo"
+   ]
+  },
+  {
+   "id": "scaffaiolo-ciaspole",
+   "lat": 44.1186,
+   "lon": 10.8077,
+   "kind": "neve",
+   "season": "winter",
+   "when": "snow",
+   "name": "Lago Scaffaiolo in inverno",
+   "text": {
+    "it": "Sul crinale tra Toscana ed Emilia, con il rifugio Duca degli Abruzzi. Solo con meteo stabile ed esperienza: in cresta il vento non scherza.",
+    "en": "On the ridge between Tuscany and Emilia, with the Duca degli Abruzzi hut. Only in settled weather and with experience: the wind on the ridge is serious.",
+    "de": "Auf dem Kamm zwischen Toskana und Emilia, mit der Hütte Duca degli Abruzzi. Nur bei stabilem Wetter und mit Erfahrung: Der Wind am Kamm ist ernst.",
+    "fr": "Sur la crête entre Toscane et Émilie, avec le refuge Duca degli Abruzzi. Seulement par temps stable et avec de l'expérience : le vent sur la crête est sérieux.",
+    "es": "En la cresta entre Toscana y Emilia, con el refugio Duca degli Abruzzi. Solo con tiempo estable y experiencia: el viento en la cresta es serio.",
+    "zh": "位于托斯卡纳与艾米利亚之间的山脊上，有阿布鲁齐公爵山屋。只在天气稳定且有经验时前往：山脊上的风不可小觑。"
+   },
+   "locs": [
+    "lago-scaffaiolo",
+    "corno-alle-scale",
+    "doganaccia"
+   ]
+  },
+  {
+   "id": "terme-porretta",
+   "lat": 44.155,
+   "lon": 10.973,
+   "kind": "chiuso",
+   "season": "all",
+   "when": "rain",
+   "name": "Terme di Porretta",
+   "text": {
+    "it": "Piscina termale, sauna e percorso vascolare: il piano B perfetto quando in quota piove o tira vento.",
+    "en": "Thermal pool, sauna and a pebble foot path: the perfect plan B when it rains or blows up high.",
+    "de": "Thermalbecken, Sauna und Kneipp-Pfad: der perfekte Plan B, wenn es oben regnet oder stürmt.",
+    "fr": "Piscine thermale, sauna et parcours vasculaire : le plan B parfait quand il pleut ou vente en altitude.",
+    "es": "Piscina termal, sauna y circuito vascular: el plan B perfecto cuando arriba llueve o sopla el viento.",
+    "zh": "温泉泳池、桑拿和鹅卵石足疗步道：山上下雨或刮风时的完美备选。"
+   },
+   "locs": [
+    "corno-alle-scale",
+    "lago-scaffaiolo"
+   ]
+  },
+  {
+   "id": "rocchetta-mattei",
+   "lat": 44.247,
+   "lon": 11.014,
+   "kind": "chiuso",
+   "season": "all",
+   "when": "rain",
+   "name": "Rocchetta Mattei",
+   "text": {
+    "it": "Castello eclettico e fiabesco tra stili moresco e medievale, a Riola: si visita con guida, meglio prenotare.",
+    "en": "A fairy-tale eclectic castle mixing Moorish and medieval styles, at Riola: guided visits, best booked ahead.",
+    "de": "Ein märchenhaft-eklektisches Schloss aus maurischem und mittelalterlichem Stil in Riola: Führungen, am besten reservieren.",
+    "fr": "Château éclectique de conte de fées, entre styles mauresque et médiéval, à Riola : visites guidées, mieux vaut réserver.",
+    "es": "Castillo ecléctico de cuento entre estilo morisco y medieval, en Riola: visitas guiadas, mejor reservar.",
+    "zh": "位于里奥拉、融合摩尔式与中世纪风格的童话般城堡：需随导览参观，最好提前预约。"
+   },
+   "locs": [
+    "corno-alle-scale"
+   ]
+  },
+  {
+   "id": "grotta-vento",
+   "lat": 44.0285,
+   "lon": 10.364,
+   "kind": "chiuso",
+   "season": "all",
+   "when": "rain",
+   "name": "Grotta del Vento",
+   "text": {
+    "it": "Grotta carsica con tre percorsi di diversa durata, a Fornovolasco. Aperta quasi tutto l'anno: con la pioggia è il posto giusto. Porta una giacca, dentro fa fresco.",
+    "en": "Karst cave with three routes of different length, at Fornovolasco. Open almost all year: the right place when it rains. Bring a jacket, it's cool inside.",
+    "de": "Karsthöhle mit drei unterschiedlich langen Routen in Fornovolasco. Fast ganzjährig geöffnet: genau richtig bei Regen. Jacke mitnehmen, drinnen ist es kühl.",
+    "fr": "Grotte karstique avec trois parcours de durée différente, à Fornovolasco. Ouverte presque toute l'année : l'endroit idéal quand il pleut. Prenez une veste, il fait frais.",
+    "es": "Cueva kárstica con tres recorridos de distinta duración, en Fornovolasco. Abierta casi todo el año: el sitio ideal si llueve. Lleva chaqueta, dentro hace fresco.",
+    "zh": "位于福尔诺沃拉斯科的喀斯特溶洞，有三条长度不同的参观路线。几乎全年开放，下雨天的好去处。洞内凉爽，记得带外套。"
+   },
+   "locs": [
+    "garfagnana"
+   ]
+  },
+  {
+   "id": "museo-sanpellegrino",
+   "lat": 44.191,
+   "lon": 10.474,
+   "kind": "chiuso",
+   "season": "all",
+   "when": "rain",
+   "name": "San Pellegrino in Alpe",
+   "text": {
+    "it": "Il borgo-santuario sul crinale e il suo museo etnografico sulla vita di montagna di una volta.",
+    "en": "The sanctuary village on the ridge and its ethnographic museum of old mountain life.",
+    "de": "Das Wallfahrtsdorf am Kamm und sein volkskundliches Museum über das Bergleben von früher.",
+    "fr": "Le village-sanctuaire sur la crête et son musée ethnographique de la vie montagnarde d'autrefois.",
+    "es": "El pueblo-santuario en la cresta y su museo etnográfico sobre la vida de montaña de antaño.",
+    "zh": "山脊上的圣所小村及其展示昔日山地生活的民俗博物馆。"
+   },
+   "locs": [
+    "garfagnana"
+   ]
+  },
+  {
+   "id": "castelnuovo-garfagnana",
+   "lat": 44.11,
+   "lon": 10.408,
+   "kind": "borgo",
+   "season": "all",
+   "when": "any",
+   "name": "Castelnuovo di Garfagnana",
+   "text": {
+    "it": "Il capoluogo della valle: la Rocca ariostesca in centro e, sopra il paese, la Fortezza di Mont'Alfonso.",
+    "en": "The valley's main town: the Ariosto fortress in the centre and, above the town, the Mont'Alfonso fortress.",
+    "de": "Hauptort des Tals: die Ariost-Burg im Zentrum und über dem Ort die Festung Mont'Alfonso.",
+    "fr": "Le chef-lieu de la vallée : la Rocca de l'Arioste au centre et, au-dessus, la forteresse de Mont'Alfonso.",
+    "es": "La capital del valle: la Rocca de Ariosto en el centro y, sobre el pueblo, la fortaleza de Mont'Alfonso.",
+    "zh": "山谷的主要城镇：市中心有阿里奥斯托城堡，镇子上方是蒙阿尔方索要塞。"
+   },
+   "locs": [
+    "garfagnana"
+   ]
+  },
+  {
+   "id": "ponte-diavolo",
+   "lat": 43.983,
+   "lon": 10.548,
+   "kind": "borgo",
+   "season": "all",
+   "when": "any",
+   "name": "Ponte del Diavolo",
+   "text": {
+    "it": "Il ponte medievale a schiena d'asino sul Serchio a Borgo a Mozzano, con la sua leggenda: tappa veloce sulla strada di casa.",
+    "en": "The medieval humpback bridge over the Serchio at Borgo a Mozzano, with its legend: a quick stop on the way home.",
+    "de": "Die mittelalterliche Buckelbrücke über den Serchio in Borgo a Mozzano mit ihrer Legende: kurzer Halt auf dem Heimweg.",
+    "fr": "Le pont médiéval en dos d'âne sur le Serchio à Borgo a Mozzano, avec sa légende : une halte rapide sur le retour.",
+    "es": "El puente medieval en lomo de asno sobre el Serchio en Borgo a Mozzano, con su leyenda: parada rápida camino a casa.",
+    "zh": "博尔戈阿莫扎诺塞尔基奥河上的中世纪驼峰桥，附带传说：回程路上值得短暂停留。"
+   },
+   "locs": [
+    "garfagnana"
+   ]
+  },
+  {
+   "id": "bismantova",
+   "lat": 44.4224,
+   "lon": 10.4148,
+   "kind": "natura",
+   "season": "all",
+   "when": "dry",
+   "name": "Pietra di Bismantova",
+   "text": {
+    "it": "La rupe che ispirò Dante: sentiero CAI 697 da Piazzale Dante, circa 2 ore. Evitala con neve abbondante o ghiaccio.",
+    "en": "The rock that inspired Dante: CAI trail 697 from Piazzale Dante, about 2 hours. Avoid it with deep snow or ice.",
+    "de": "Der Felsen, der Dante inspirierte: CAI-Weg 697 ab Piazzale Dante, etwa 2 Stunden. Bei viel Schnee oder Eis meiden.",
+    "fr": "Le rocher qui inspira Dante : sentier CAI 697 depuis le Piazzale Dante, environ 2 heures. À éviter avec beaucoup de neige ou du verglas.",
+    "es": "La roca que inspiró a Dante: sendero CAI 697 desde Piazzale Dante, unas 2 horas. Evítala con mucha nieve o hielo.",
+    "zh": "启发了但丁的巨岩：从但丁广场出发走CAI 697号步道，约2小时。积雪较深或结冰时请避免。"
+   },
+   "locs": [
+    "cerreto-laghi",
+    "febbio"
+   ]
+  },
+  {
+   "id": "cerreto-laghi-ciaspole",
+   "lat": 44.2979,
+   "lon": 10.2439,
+   "kind": "neve",
+   "season": "winter",
+   "when": "snow",
+   "name": "Ciaspole tra i laghi del Cerreto",
+   "text": {
+    "it": "Passeggiate sulla neve attorno ai laghetti glaciali, nel Parco Nazionale: facili e panoramiche.",
+    "en": "Snow walks around the small glacial lakes, inside the National Park: easy and scenic.",
+    "de": "Schneewanderungen um die kleinen Gletscherseen im Nationalpark: leicht und aussichtsreich.",
+    "fr": "Balades sur la neige autour des petits lacs glaciaires, dans le Parc national : faciles et panoramiques.",
+    "es": "Paseos por la nieve alrededor de los lagos glaciares, en el Parque Nacional: fáciles y panorámicos.",
+    "zh": "在国家公园内的冰川小湖周围雪地漫步，轻松且风景优美。"
+   },
+   "locs": [
+    "cerreto-laghi"
+   ]
+  },
+  {
+   "id": "febbio-ciaspole",
+   "lat": 44.2972,
+   "lon": 10.4279,
+   "kind": "neve",
+   "season": "winter",
+   "when": "snow",
+   "name": "Ciaspole sotto il Cusna",
+   "text": {
+    "it": "Dai prati di Febbio verso il Monte Cusna, il profilo che i reggiani chiamano «l'uomo che dorme».",
+    "en": "From the Febbio meadows towards Monte Cusna, the profile locals call 'the sleeping man'.",
+    "de": "Von den Wiesen von Febbio Richtung Monte Cusna, dessen Profil die Einheimischen „den schlafenden Mann“ nennen.",
+    "fr": "Des prés de Febbio vers le Monte Cusna, le profil que les habitants appellent « l'homme qui dort ».",
+    "es": "De los prados de Febbio hacia el Monte Cusna, el perfil que los lugareños llaman «el hombre que duerme».",
+    "zh": "从费比奥草地走向库斯纳山，当地人称其轮廓为“沉睡的人”。"
+   },
+   "locs": [
+    "febbio"
+   ]
+  }
+ ]
+}

@@ -388,3 +388,22 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 .wk-foot{grid-column:1/-1;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .wk-sure{font-size:13px;font-weight:700;border-radius:999px;padding:4px 10px}
 @media(max-width:720px){.wk-box{grid-template-columns:1fr}.wk-title{font-size:25px}}
+/* Cosa fare oltre lo sci */
+#cosafare h2{margin-bottom:.2rem}
+.act-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:14px 0 6px}
+.act{background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 1px 3px rgba(15,30,60,.08);display:flex;flex-direction:column;gap:6px;border-top:4px solid #cbd5e1}
+.act h3{margin:0;font-size:1.05rem}
+.act p{margin:0;font-size:.93rem;line-height:1.45;color:#334155;flex:1}
+.act-tag{font-size:.75rem;font-weight:700;align-self:flex-start;padding:3px 9px;border-radius:999px;background:#f1f5f9;color:#334155}
+.act-rain{border-top-color:#6366f1}.act-rain .act-tag{background:#eef2ff;color:#3730a3}
+.act-snow{border-top-color:#38bdf8}.act-snow .act-tag{background:#e0f2fe;color:#075985}
+.act-dry{border-top-color:#f59e0b}.act-dry .act-tag{background:#fef3c7;color:#92400e}
+.act-any{border-top-color:#10b981}.act-any .act-tag{background:#d1fae5;color:#065f46}
+.act-map{font-size:.85rem;font-weight:600;text-decoration:none}
+.ev-h{margin:22px 0 8px}
+.ev-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.ev-list li{display:flex;gap:14px;align-items:baseline;background:#fff;border-radius:12px;padding:10px 14px;box-shadow:0 1px 2px rgba(15,30,60,.06)}
+.ev-when{min-width:120px;font-weight:700;color:#0f766e;font-size:.9rem}
+.ev-body{display:flex;flex-direction:column}
+.wk-foot .btn.ghost{background:#fff;color:#0f172a;border:1px solid #cbd5e1}
+@media(max-width:600px){.ev-list li{flex-direction:column;gap:2px}.ev-when{min-width:0}}
