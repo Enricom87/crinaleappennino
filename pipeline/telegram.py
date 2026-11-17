@@ -89,6 +89,18 @@ def main() -> None:
         for a in fresh:
             tg["alerted"][a["slug"]] = now.isoformat()
 
+    # logo e descrizione del canale: si aggiornano da soli quando cambia la versione in config/site.json
+    brand = site.get("telegram_brand_version", "")
+    if brand and tg.get("brand") != brand:
+        api = f"https://api.telegram.org/bot{token}"
+        with open(ROOT / "static" / "brand" / "telegram-640.png", "rb") as f:
+            ok = requests.post(f"{api}/setChatPhoto", data={"chat_id": chat}, files={"photo": f}, timeout=60).ok
+        requests.post(f"{api}/setChatDescription", timeout=30, json={
+            "chat_id": chat, "description": "Previsioni neve e meteo in quota sull'Appennino tosco-emiliano: "
+            "il punto ogni mattina e l'allerta appena arriva la neve. " + site["base_url"]})
+        if ok:
+            tg["brand"] = brand
+
     today = now.date().isoformat()
     if now.hour >= 7 and tg.get("daily") != today and post(token, chat, daily_text(site, latest, sponsor)):
         tg["daily"] = today

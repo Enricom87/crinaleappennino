@@ -7,7 +7,7 @@
 <meta name="description" content="{% block desc %}{{ t("Previsioni neve quota per quota per Abetone, Cimone, Doganaccia, Corno alle Scale, Garfagnana, Cerreto Laghi, Febbio e il crinale tosco-emiliano, aggiornate ogni mattina dai modelli meteo ad alta risoluzione.") }}{% endblock %}">
 <link rel="stylesheet" href="{{ u('static/style.css') }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ u('feed.xml') }}">
-<link rel="icon" href="{{ u('static/favicon.svg') }}" type="image/svg+xml">
+<link rel="icon" href="{{ u('static/brand/mark.svg') }}" type="image/svg+xml">
 {% for a in alternates %}<link rel="alternate" hreflang="{{ a.hreflang }}" href="{{ a.abs }}">
 {% endfor %}<link rel="alternate" hreflang="x-default" href="{{ alternates[0].abs }}">
 <link rel="canonical" href="{% for a in alternates if a.lang == lang %}{{ a.abs }}{% endfor %}">
@@ -23,7 +23,7 @@
 {% include "_icons.html" %}
 <header class="top">
   <div class="wrap bar">
-    <a class="brand" href="{{ u('') }}"><svg viewBox="0 0 40 24" aria-hidden="true"><path d="M2 22 L14 6 L20 13 L26 4 L38 22 Z" fill="currentColor"/><path d="M11 10 L14 6 L17 10 L15.5 9 L14 10.5 L12.5 9 Z M23 8 L26 4 L29 8 L27.5 7 L26 8.5 L24.5 7 Z" fill="#fff"/></svg>{{ site.name }}</a>
+    <a class="brand" href="{{ u('') }}"><img src="{{ u('static/brand/mark.svg') }}" alt="" width="36" height="36"><span class="brand-txt"><b>{{ site.name }}</b><small>APPENNINO</small></span></a>
     <nav>
       <a href="{{ u('#localita') }}">{{ t("Località") }}</a>
       <a href="{{ u('percorsi/') }}">{{ t("Percorsi") }}</a>
@@ -31,13 +31,14 @@
       <a href="{{ u('metodo/') }}">{{ t("Come lavoriamo") }}</a>
       <a href="{{ u('app/') }}">App</a>
       <a href="{{ u('sponsor/') }}" class="cta">{{ t("Diventa sponsor") }}</a>
+      {% if site.social.telegram %}<a class="tg-ico" href="{{ site.social.telegram }}" rel="noopener" aria-label="{{ t('Canale Telegram') }}" title="{{ t('Canale Telegram') }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2 1.8 11.7c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.3z"/></svg><span>Telegram</span></a>{% endif %}
       <details class="langs"><summary aria-label="{{ t('Lingua') }}">🌐 {{ lang|upper }}</summary><div>{% for a in alternates %}<a href="{{ a.href }}" hreflang="{{ a.hreflang }}" lang="{{ a.hreflang }}"{% if a.lang == lang %} aria-current="true"{% endif %}>{{ a.name }}</a>{% endfor %}</div></details>
     </nav>
   </div>
 </header>
 <div class="appbar" id="appbar" hidden>
   <div class="wrap appbar-in">
-    <img src="{{ u('static/icon-192.png') }}" alt="" width="40" height="40">
+    <img src="{{ u('static/brand/mark.svg') }}" alt="" width="36" height="36">
     <div class="appbar-txt">
       <strong>📲 {{ t("Scarica l'app di {name}", name=site.name) }}</strong>
       <span class="ab-android">{{ t("Android: tocca <b>Installa</b> qui accanto, oppure il menu ⋮ di Chrome → <b>Installa app</b>.")|safe }}</span>
@@ -55,6 +56,7 @@
 </main>
 <footer class="foot">
   <div class="wrap">
+    <p class="foot-brand"><img src="{{ u('static/brand/mark.svg') }}" alt="" width="44" height="44"><span><b>{{ site.name }}</b><br><small>{{ site.tagline }}</small></span></p>
     {% if site.social and (site.social.telegram or site.social.whatsapp) %}<p class="follow">{{ t("Seguici:") }}
       {% if site.social.telegram %}<a class="btn small tg" href="{{ site.social.telegram }}" rel="noopener">Telegram</a>{% endif %}
       {% if site.social.whatsapp %}<a class="btn small wa" href="{{ site.social.whatsapp }}" rel="noopener">WhatsApp</a>{% endif %}</p>{% endif %}
