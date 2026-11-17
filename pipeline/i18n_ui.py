@@ -355,4 +355,5 @@ ROWS = [
 ("{d} cm nelle ultime {h} ore", "{d} cm in the last {h} hours", "{d} cm in den letzten {h} Stunden", "{d} cm ces {h} dernières heures", "{d} cm en las últimas {h} horas", "过去{h}小时{d}厘米"),
 ("alle {hh}", "at {hh}", "um {hh}", "à {hh}", "a las {hh}", "{hh}"),
 ("Neve fresca un po' ovunque: scegli la località più comoda.", "Fresh snow pretty much everywhere: pick the handiest spot.", "Fast überall Neuschnee: nimm den bequemsten Ort.", "Neige fraîche un peu partout : choisissez la station la plus pratique.", "Nieve fresca casi en todas partes: elige el sitio más cómodo.", "几乎处处有新雪：选最方便的地方吧。"),
+("Solo le mie località", "Only my places", "Nur meine Orte", "Seulement mes stations", "Solo mis sitios", "只看我的地点"),
 ]

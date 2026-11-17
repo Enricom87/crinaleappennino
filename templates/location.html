@@ -39,7 +39,7 @@
     <div class="wk-foot">
       <span class="wk-sure s-{{ wk.sure.key }}">{{ wk.sure.icon }} {{ wk.sure.label }}</span>
       {% if wk.color == 'red' and loc.extras.list %}<a class="btn small ghost" href="#cosafare">☔ {{ t("Piano B: cosa fare") }}</a>{% endif %}
-      {% if wk.uncertain and site.social.telegram %}<a class="btn small tg" href="{{ site.social.telegram }}" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2 1.8 11.7c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.3z"/></svg> {{ t("Avvisami se cambia") }}</a>{% endif %}
+      {% if wk.uncertain and site.social.telegram_bot %}<a class="btn small tg" href="{{ site.social.telegram_bot }}?start={{ loc.slug }}" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2 1.8 11.7c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.3z"/></svg> {{ t("Avvisami se cambia") }}</a>{% endif %}
     </div>
   </div>
 </section>
