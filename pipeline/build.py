@@ -15,7 +15,7 @@ from summer import mountain_days, overview_mtn, summer_text
 from i18n import T
 from synview import syn_view
 from verdict import weekend
-from extras import activities, events
+from extras import activities, events, snow_ground
 from bestpick import best_pick
 from cards import prob_word
 
@@ -199,7 +199,9 @@ def main() -> None:
             L["liftinfo"] = lifts_for(loc["slug"])
             L["weekend"] = weekend(L, today, IS_SUMMER)
             li = L["liftinfo"] or {}
-            has_snow = not IS_SUMMER and ((li.get("open") or 0) > 0 or (L["text"].get("snow3_top") or 0) >= 3)
+            L["ground"] = None if IS_SUMMER else snow_ground(loc, pts)
+            has_snow = not IS_SUMMER and ((li.get("open") or 0) > 0 or (L["text"].get("snow3_top") or 0) >= 3
+                                          or (L["ground"] or {}).get("cm", 0) >= 10)
             L["extras"] = activities(loc, pts, IS_SUMMER, L["weekend"], has_snow)
             L["events"] = events(loc, pts, today)
             locs.append(L)

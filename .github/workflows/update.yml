@@ -50,6 +50,9 @@ jobs:
       - name: Eventi dagli open data ufficiali
         continue-on-error: true
         run: python pipeline/events.py
+      - name: Neve al suolo misurata (stazioni Arpae)
+        continue-on-error: true
+        run: python pipeline/snowobs.py
       - name: Costruisci il sito
         run: cd pipeline && python build.py
       - name: Newsletter e allerta neve
@@ -71,6 +74,7 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add data/photos data/state.json data/latest.json data/routes data/shop_state.json data/sponsors_sold.json 2>/dev/null || true
           git add data/lifts.json
+          git add data/snowobs.json 2>/dev/null || true
           git add data/events.json 2>/dev/null || true
           git add data/state.json data/latest.json data/routes data/photos 2>/dev/null || true
           git diff --cached --quiet || git commit -m "stato $(date -u +%F_%H%M)"

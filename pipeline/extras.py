@@ -91,3 +91,41 @@ def events(loc: dict, points: dict, today: str, days: int = 30) -> dict:
         out.append({**e, "km": round(d), "when": when})
     out.sort(key=lambda e: (max(e["from"], today), e["km"]))
     return {"list": out[:6], "source": raw.get("source")}
+
+
+# --- Neve al suolo misurata (stazioni Arpae) ---------------------------------------------
+_OBS_FILE = ROOT / "data" / "snowobs.json"
+# Stazione di riferimento scelta a mano: stessa valle e quota simile, non solo la più vicina.
+STATION_FOR = {"abetone": "Doccia di Fiumalbo", "cimone": "Doccia di Fiumalbo", "le-polle": "Doccia di Fiumalbo",
+               "lago-santo": "Doccia di Fiumalbo", "cimoncino": "Lago Pratignano",
+               "doganaccia": "Lago Scaffaiolo Nivo", "corno-alle-scale": "Lago Scaffaiolo Nivo",
+               "lago-scaffaiolo": "Lago Scaffaiolo Nivo", "garfagnana": "Passo delle Radici",
+               "cerreto-laghi": "Lago Paduli", "febbio": "Febbio"}
+
+
+def snow_ground(loc: dict, points: dict) -> dict | None:
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    try:
+        raw = json.loads(_OBS_FILE.read_text())
+    except Exception:  # noqa: BLE001
+        return None
+    sts = raw.get("stations") or []
+    want = STATION_FOR.get(loc["slug"])
+    s = next((x for x in sts if x["name"] == want), None)
+    if not s:
+        c = center(loc, points)
+        near = sorted(((km(c, (x["lat"], x["lon"])), x) for x in sts), key=lambda t: t[0])
+        if not near or near[0][0] > 12:
+            return None
+        s = near[0][1]
+    t = datetime.fromisoformat(s["time"].replace("Z", "+00:00"))
+    age_h = (datetime.now(t.tzinfo) - t).total_seconds() / 3600
+    if age_h > 36:
+        return None
+    loc_t = t.astimezone(ZoneInfo("Europe/Rome"))
+    delta = ""
+    if s["delta_h"] >= 6 and abs(s["delta"]) >= 2:
+        delta = T("{d} cm nelle ultime {h} ore", d=f"{s['delta']:+d}", h=s["delta_h"])
+    return {"cm": s["cm"], "station": s["name"].replace(" Nivo", ""), "elev": s["elev"],
+            "when": T("alle {hh}", hh=loc_t.strftime("%H:%M")), "delta": delta, "source": raw.get("source")}

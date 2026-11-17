@@ -347,4 +347,11 @@ ROWS = [
 ("Brutto ovunque in quota: meglio un piano B al coperto.", "Bad everywhere up high: better an indoor plan B.", "Oben überall schlecht: besser ein Plan B drinnen.", "Mauvais partout en altitude : mieux vaut un plan B à l'abri.", "Mal tiempo arriba en todas partes: mejor un plan B a cubierto.", "山上处处天气不佳：最好选择室内备选方案。"),
 ("{o}/{t} impianti", "{o}/{t} lifts", "{o}/{t} Lifte", "{o}/{t} remontées", "{o}/{t} remontes", "{o}/{t} 条缆车"),
 ("Bel tempo un po' ovunque: scegli la località più comoda.", "Good weather pretty much everywhere: pick the handiest spot.", "Fast überall gutes Wetter: nimm den bequemsten Ort.", "Beau temps un peu partout : choisissez la station la plus pratique.", "Buen tiempo casi en todas partes: elige el sitio más cómodo.", "几乎处处好天气：选最方便的地方吧。"),
+("Neve al suolo misurata", "Measured snow on the ground", "Gemessene Schneehöhe", "Neige au sol mesurée", "Nieve en el suelo medida", "实测地面积雪"),
+("Niente neve al suolo, per ora", "No snow on the ground yet", "Noch kein Schnee am Boden", "Pas encore de neige au sol", "Aún no hay nieve en el suelo", "目前地面无积雪"),
+("Stazione ufficiale {st}, {e} m", "Official station {st}, {e} m", "Offizielle Station {st}, {e} m", "Station officielle {st}, {e} m", "Estación oficial {st}, {e} m", "官方测站 {st}，海拔{e}米"),
+("Dati: {src}, {lic}", "Data: {src}, {lic}", "Daten: {src}, {lic}", "Données : {src}, {lic}", "Datos: {src}, {lic}", "数据：{src}，{lic}"),
+("{n} cm al suolo", "{n} cm on the ground", "{n} cm am Boden", "{n} cm au sol", "{n} cm en el suelo", "地面积雪{n}厘米"),
+("{d} cm nelle ultime {h} ore", "{d} cm in the last {h} hours", "{d} cm in den letzten {h} Stunden", "{d} cm ces {h} dernières heures", "{d} cm en las últimas {h} horas", "过去{h}小时{d}厘米"),
+("alle {hh}", "at {hh}", "um {hh}", "à {hh}", "a las {hh}", "{hh}"),
 ]

@@ -420,3 +420,10 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 .bp-list .wk-dot{width:10px;height:10px;border-radius:50%;display:inline-block;background:#94a3b8}
 .bp-list .wk-green .wk-dot{background:#16a34a}.bp-list .wk-yellow .wk-dot{background:#eab308}.bp-list .wk-red .wk-dot{background:#dc2626}
 .bp-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px}
+/* Neve al suolo misurata */
+.ground{display:flex;align-items:center;gap:16px;background:linear-gradient(90deg,#eff6ff,#fff);border:1px solid #bfdbfe;border-radius:16px;padding:12px 18px;margin-top:14px}
+.ground-n{font-size:2rem;font-weight:800;color:#1d4ed8;line-height:1;white-space:nowrap}
+.ground-n small{font-size:1rem;font-weight:700}
+.ground-t{display:flex;flex-direction:column;gap:2px}
+.ground-pill{display:inline-block;font-size:.8rem;font-weight:700;color:#1d4ed8;background:#eff6ff;border-radius:999px;padding:4px 10px;margin:0 0 8px}
+.ground-pill small{font-weight:500;color:#475569}

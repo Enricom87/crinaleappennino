@@ -16,6 +16,13 @@
 <nav class="subnav" aria-label="{{ t('Sezioni') }}"><div class="wrap">
   {% if loc.weekend %}<a href="#weekend">{{ t("Weekend") }}</a>{% endif %}<a href="#giorni">{{ t("Previsioni") }}</a>{% if loc.liftinfo and not summer %}<a href="#impianti">{{ t("Impianti") }}</a>{% endif %}{% if loc.extras.list or loc.events.list %}<a href="#cosafare">{{ t("Cosa fare") }}</a>{% endif %}{% if loc.hours_top %}<a href="#ore">{{ t("Ora per ora") }}</a>{% endif %}<a href="#analisi">{{ t("Analisi") }}</a>{% if loc.mtn %}<a href="#quota">{{ t("In quota") }}</a>{% endif %}{% if loc.road %}<a href="#strada">{{ t("Strada") }}</a>{% endif %}{% if loc.routes %}<a href="#percorsi">{{ t("Percorsi") }}</a>{% endif %}<a href="#webcam">{{ t("Webcam") }}</a>
 </div></nav>
+{% if loc.ground %}{% set g = loc.ground %}
+<section class="wrap"><div class="ground">
+  <span class="ground-n">{{ g.cm }}<small> cm</small></span>
+  <span class="ground-t"><b>{{ t("Neve al suolo misurata") if g.cm >= 2 else t("Niente neve al suolo, per ora") }}</b>
+  <span class="small muted">{{ t("Stazione ufficiale {st}, {e} m", st=g.station, e=g.elev) }} · {{ g.when }}{% if g.delta %} · {{ g.delta }}{% endif %} · {{ t("Dati: {src}, {lic}", src=g.source.name, lic=g.source.license) }}</span></span>
+</div></section>
+{% endif %}
 {% set wk = loc.weekend %}
 {% if wk %}
 <section class="wrap" id="weekend">

@@ -77,6 +77,7 @@
         <span class="loc-name"><h3>{{ nm[0] }}</h3><small>{% if nm|length > 1 %}{{ nm[1:]|join(' · ') }} · {% endif %}{{ L.area }}</small></span>
       </span>
       <span class="loc-body">
+      {% if L.ground and L.ground.cm >= 2 %}<span class="ground-pill">📏 {{ t("{n} cm al suolo", n=L.ground.cm) }} <small>· {{ L.ground.station }}</small></span>{% endif %}
       {% if L.weekend %}<span class="wk-pill wk-{{ L.weekend.color }}"><b>{{ t("Weekend") }}:</b> {{ L.weekend.title }}<small>{{ L.weekend.sure.icon }} {{ L.weekend.sure.label }}</small></span>{% endif %}
       {% if summer and m0 %}
       <p class="card-title">{{ t("oggi in quota") }}{% if m0.back_by %} · {{ t("rientro entro le {h}", h=m0.back_by) }}{% endif %}</p>
