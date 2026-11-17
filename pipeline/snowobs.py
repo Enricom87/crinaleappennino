@@ -27,9 +27,22 @@ def cfr_stations(prev: dict) -> list[dict]:
     import re
     from datetime import timedelta, timezone as tz
     out = []
+    ses = requests.Session()
+    ses.headers.update({"User-Agent": "Mozilla/5.0 (compatible; crinaleappennino.it)",
+                        "Referer": f"{CFR}/index.php?IDS=42&IDSS=1151", "X-Requested-With": "XMLHttpRequest",
+                        "Accept": "application/json, text/javascript, */*; q=0.01"})
+    try:  # come il browser: prima la pagina (cookie di sessione), poi i dati
+        ses.get(f"{CFR}/index.php", params={"IDS": "42", "IDSS": "1151"}, timeout=30)
+    except Exception:  # noqa: BLE001
+        pass
     for sid, name in CFR_IDS.items():
         try:
-            j = requests.get(f"{CFR}/monitoraggio/actions.php", params={"action": "station", "id": sid}, timeout=30).json()
+            rr = ses.get(f"{CFR}/monitoraggio/actions.php", params={"action": "station", "id": sid}, timeout=30)
+            try:
+                j = rr.json()
+            except ValueError:
+                print(f"neve misurata Toscana: risposta non JSON ({rr.status_code}): {rr.text[:160]!r}")
+                continue
             nv = j.get("nivo")
             if not nv:
                 continue
@@ -40,7 +53,7 @@ def cfr_stations(prev: dict) -> list[dict]:
             old = prev.get(name) or {}
             elev, lat, lon = old.get("elev"), old.get("lat"), old.get("lon")
             if not elev:
-                info = requests.get(f"{CFR}/open_layers/ajax_stations.php", params={"id": sid, "types": "nivo"},
+                info = ses.get(f"{CFR}/open_layers/ajax_stations.php", params={"id": sid, "types": "nivo"},
                                     timeout=30).json()["features"][0]
                 desc = info.get("description", "")
                 m = re.search(r"Quota staz\. slm \[m\]</b>\s*([\d.]+)", desc)

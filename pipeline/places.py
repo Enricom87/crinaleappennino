@@ -11,7 +11,8 @@ import requests
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "places.json"
-OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]
+OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter",
+            "https://maps.mail.ru/osm/tools/overpass/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]
 BBOX = "43.98,10.15,44.45,11.00"
 Q = f"""[out:json][timeout:120];
 (
