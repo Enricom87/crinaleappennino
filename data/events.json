@@ -1,0 +1,78 @@
+{
+ "source": {
+  "name": "Emilia-Romagna Turismo",
+  "url": "https://emiliaromagnaturismo.it/it/open-data",
+  "license": "CC BY 4.0"
+ },
+ "events": {
+  "it": [
+   {
+    "id": 31739,
+    "title": "Mercatini medievali nel borgo",
+    "sub": "Il Medioevo rivive a Savignano sul Panaro anche a fine novembre.",
+    "from": "2026-11-21",
+    "to": "2026-11-22",
+    "city": "Savignano sul Panaro",
+    "place": "",
+    "lat": 44.4791399,
+    "lon": 11.0340207,
+    "url": "https://emiliaromagnaturismo.it/it/eventi/savignano-sul-panaro-mercatini-medievali",
+    "cat": "Mercatini e Mostre Mercato"
+   },
+   {
+    "id": 22748,
+    "title": "Buon Natale Appennino 2026/27",
+    "sub": "Eventi delle Festività in Appennino reggiano",
+    "from": "2026-12-01",
+    "to": "2027-01-10",
+    "city": "Castelnovo ne' Monti",
+    "place": "",
+    "lat": 44.43422,
+    "lon": 10.4009608,
+    "url": "https://emiliaromagnaturismo.it/it/eventi/buon-natale-appennino-reggiano",
+    "cat": "Natale / Mercati di Natale"
+   },
+   {
+    "id": 22750,
+    "title": "La Via dei Presepi 2026/27",
+    "sub": "La tradizione dei Presepi in Appennino reggiano",
+    "from": "2026-12-01",
+    "to": "2027-01-31",
+    "city": "Toano",
+    "place": "",
+    "lat": 44.3910863,
+    "lon": 10.5408622,
+    "url": "https://emiliaromagnaturismo.it/it/eventi/appennino-reggiano-la-via-dei-presepi",
+    "cat": "Natale / Mercati di Natale"
+   },
+   {
+    "id": 35466,
+    "title": "Natale al Cimone!",
+    "sub": "Tutti gli eventi in programma a Natale a Fanano, Sestola, Montecreto e Riolunato",
+    "from": "2026-12-19",
+    "to": "2027-01-07",
+    "city": "Fanano",
+    "place": "",
+    "lat": 44.2086926,
+    "lon": 10.7953051,
+    "url": "https://emiliaromagnaturismo.it/it/eventi/natale-al-cimone",
+    "cat": "Altri eventi"
+   }
+  ],
+  "en": [
+   {
+    "id": 35466,
+    "title": "Natale al Cimone!",
+    "sub": "Tutti gli eventi in programma a Natale a Fanano, Sestola, Montecreto e Riolunato",
+    "from": "2026-12-19",
+    "to": "2027-01-07",
+    "city": "Fanano",
+    "place": "",
+    "lat": 44.2086926,
+    "lon": 10.7953051,
+    "url": "https://emiliaromagnaturismo.it/en/events/natale-al-cimone",
+    "cat": "Other events"
+   }
+  ]
+ }
+}
