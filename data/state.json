@@ -1,4 +1,8 @@
 {
  "alerted": {},
- "weekly": ""
+ "weekly": "",
+ "telegram": {
+  "daily": "2026-11-17",
+  "alerted": {}
+ }
 }
