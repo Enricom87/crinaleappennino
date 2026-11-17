@@ -1,5 +1,11 @@
 {% extends "base.html" %}
-{% block title %}{{ t("Allerta neve via email") }} · {{ site.name }}{% endblock %}
+{% block title %}{{ t("Allerta neve via email") }} · {{ site.name }}{% if site.social.telegram or site.social.whatsapp %}
+<section class="wrap prose"><h2>{{ t("Preferisci le notifiche sul telefono?") }}</h2>
+<p>{{ t("Le stesse allerte arrivano anche sui nostri canali, gratis e senza email.") }}</p>
+<p>{% if site.social.telegram %}<a class="btn tg" href="{{ site.social.telegram }}" rel="noopener">{{ t("Canale Telegram") }}</a>{% endif %}
+{% if site.social.whatsapp %}<a class="btn wa" href="{{ site.social.whatsapp }}" rel="noopener">{{ t("Canale WhatsApp") }}</a>{% endif %}</p></section>
+{% endif %}
+{% endblock %}
 {% block main %}
 <section class="hero small"><div class="wrap"><h1>{{ t("Non perderti la prossima nevicata") }}</h1>
 <p class="lead">{{ t("Un'email quando i modelli vedono almeno {n} cm in arrivo entro 72 ore su una delle nostre località, più un riepilogo ogni giovedì per pianificare il weekend. Gratis, ti cancelli con un clic.", n=site.newsletter.alert_threshold_cm_72h) }}</p>{% if lang != 'it' %}<p class="lead"><small>{{ t("Le email sono in italiano.") }}</small></p>{% endif %}</div></section>
@@ -17,4 +23,10 @@
 <p>{{ t("Iscrizioni in apertura a breve. Nel frattempo scrivici a") }} <a href="mailto:{{ site.contact_email }}?subject=Allerta%20neve">{{ site.contact_email }}</a> {{ t("e ti aggiungiamo noi.") }}</p>
 {% endif %}
 </section>
+{% if site.social.telegram or site.social.whatsapp %}
+<section class="wrap prose"><h2>{{ t("Preferisci le notifiche sul telefono?") }}</h2>
+<p>{{ t("Le stesse allerte arrivano anche sui nostri canali, gratis e senza email.") }}</p>
+<p>{% if site.social.telegram %}<a class="btn tg" href="{{ site.social.telegram }}" rel="noopener">{{ t("Canale Telegram") }}</a>{% endif %}
+{% if site.social.whatsapp %}<a class="btn wa" href="{{ site.social.whatsapp }}" rel="noopener">{{ t("Canale WhatsApp") }}</a>{% endif %}</p></section>
+{% endif %}
 {% endblock %}

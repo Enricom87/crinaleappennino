@@ -288,7 +288,11 @@ def main() -> None:
     state = {"generated": ctx["updated_iso"],
              "alerts": [{"slug": L["slug"], "name": L["name"], "title": L["text"]["title"],
                          "snow3_top": L["text"]["snow3_top"]} for L in locs if L["text"]["level"] == "alert"],
-             "overview": ctx["overview"]}
+             "overview": ctx["overview"], "summer": IS_SUMMER,
+             "locs": [{"slug": L["slug"], "name": L["name"], "title": L["text"]["title"], "level": L["text"]["level"],
+                       "snow3_top": L["text"]["snow3_top"],
+                       "verdict": (L["mtn"] or [{}])[0].get("verdict_label"),
+                       "back_by": (L["mtn"] or [{}])[0].get("back_by")} for L in locs]}
     (ROOT / "data" / "latest.json").write_text(json.dumps(state, ensure_ascii=False, indent=1))
     (ROOT / "data" / "i18n_missing.json").unlink(missing_ok=True)
     if i18n.MISSING:

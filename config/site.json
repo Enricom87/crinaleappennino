@@ -17,5 +17,10 @@
  "apps": {
   "android": "",
   "ios": ""
- }
+ },
+ "social": {
+  "telegram": "",
+  "whatsapp": ""
+ },
+ "telegram_chat": ""
 }

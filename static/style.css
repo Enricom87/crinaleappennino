@@ -179,3 +179,7 @@ details.tech>summary{cursor:pointer;font-weight:600;padding:.6rem 0}
 .langs div{position:absolute;right:0;top:calc(100% + 8px);background:#fff;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:6px;min-width:140px;z-index:20}
 .langs div a{display:block!important;color:var(--ink);padding:7px 10px;border-radius:6px}
 .langs div a:hover,.langs div a[aria-current]{background:#eef4f9;color:var(--ink)}
+
+.follow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn.tg{background:#229ED9;color:#fff;border-color:#229ED9}
+.btn.wa{background:#25D366;color:#fff;border-color:#25D366}

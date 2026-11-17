@@ -171,4 +171,9 @@ ROWS = [
 ("solo al mattino", "mornings only", "nur vormittags", "le matin seulement", "solo por la mañana", "仅限上午"),
 ("occhio", "take care", "Vorsicht", "attention", "ojo", "注意"),
 ("meglio restare a valle", "better stay down in the valley", "besser im Tal bleiben", "mieux vaut rester en vallée", "mejor quedarse en el valle", "最好留在山下"),
+("Seguici:", "Follow us:", "Folge uns:", "Suis-nous :", "Síguenos:", "关注我们："),
+("Preferisci le notifiche sul telefono?", "Prefer notifications on your phone?", "Lieber Benachrichtigungen aufs Handy?", "Tu préfères les notifications sur ton téléphone ?", "¿Prefieres las notificaciones en el móvil?", "更喜欢手机通知？"),
+("Le stesse allerte arrivano anche sui nostri canali, gratis e senza email.", "The same alerts also go out on our channels, free and with no email needed.", "Dieselben Warnungen kommen auch über unsere Kanäle, kostenlos und ohne E-Mail.", "Les mêmes alertes arrivent aussi sur nos canaux, gratuitement et sans e-mail.", "Las mismas alertas llegan también por nuestros canales, gratis y sin correo.", "同样的提醒也会发布在我们的频道上，免费且无需邮箱。"),
+("Canale Telegram", "Telegram channel", "Telegram-Kanal", "Chaîne Telegram", "Canal de Telegram", "Telegram 频道"),
+("Canale WhatsApp", "WhatsApp channel", "WhatsApp-Kanal", "Chaîne WhatsApp", "Canal de WhatsApp", "WhatsApp 频道"),
 ]

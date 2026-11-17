@@ -128,5 +128,7 @@
   <div><h2>{{ t("Avvisami quando nevica a {name}", name=loc.name.split(' · ')[0]) }}</h2>
   <p>{{ t("Ti scriviamo solo quando conta: quando arrivano almeno 5 cm entro 72 ore, più il punto del giovedì per il weekend. Niente spam, promesso.") }}</p></div>
   <a class="btn" href="{{ u('newsletter/') }}">{{ t("Iscriviti gratis") }}</a>
+  {% if site.social.telegram %}<a class="btn ghost tg" href="{{ site.social.telegram }}" rel="noopener">Telegram</a>{% endif %}
+  {% if site.social.whatsapp %}<a class="btn ghost wa" href="{{ site.social.whatsapp }}" rel="noopener">WhatsApp</a>{% endif %}
 </section>
 {% endblock %}
