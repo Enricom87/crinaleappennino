@@ -341,4 +341,10 @@ ROWS = [
 ("Piano B: cosa fare", "Plan B: what to do", "Plan B: was tun", "Plan B : quoi faire", "Plan B: qué hacer", "备选方案"),
 ("Eventi in Appennino", "Events in the Apennines", "Veranstaltungen im Apennin", "Événements dans l'Apennin", "Eventos en los Apeninos", "亚平宁山区活动"),
 ("Cosa succede in montagna nelle prossime settimane, dalle fonti ufficiali.", "What's on in the mountains over the coming weeks, from official sources.", "Was in den nächsten Wochen in den Bergen los ist, aus offiziellen Quellen.", "Ce qui se passe en montagne ces prochaines semaines, d'après les sources officielles.", "Qué pasa en la montaña en las próximas semanas, según fuentes oficiales.", "未来几周山区活动，来自官方来源。"),
+("Dove vado questo weekend?", "Where should I go this weekend?", "Wohin am Wochenende?", "Où aller ce week-end ?", "¿Adónde voy este fin de semana?", "这个周末去哪儿？"),
+("Tutte le località a confronto: tempo, neve fresca e impianti aperti.", "All locations compared: weather, fresh snow and open lifts.", "Alle Orte im Vergleich: Wetter, Neuschnee und offene Lifte.", "Toutes les stations comparées : météo, neige fraîche et remontées ouvertes.", "Todas las localidades comparadas: tiempo, nieve fresca y remontes abiertos.", "所有地点对比：天气、新雪和开放的缆车。"),
+("Il posto migliore è {loc}", "The best spot is {loc}", "Am besten: {loc}", "Le meilleur endroit : {loc}", "El mejor sitio es {loc}", "最佳去处：{loc}"),
+("Brutto ovunque in quota: meglio un piano B al coperto.", "Bad everywhere up high: better an indoor plan B.", "Oben überall schlecht: besser ein Plan B drinnen.", "Mauvais partout en altitude : mieux vaut un plan B à l'abri.", "Mal tiempo arriba en todas partes: mejor un plan B a cubierto.", "山上处处天气不佳：最好选择室内备选方案。"),
+("{o}/{t} impianti", "{o}/{t} lifts", "{o}/{t} Lifte", "{o}/{t} remontées", "{o}/{t} remontes", "{o}/{t} 条缆车"),
+("Bel tempo un po' ovunque: scegli la località più comoda.", "Good weather pretty much everywhere: pick the handiest spot.", "Fast überall gutes Wetter: nimm den bequemsten Ort.", "Beau temps un peu partout : choisissez la station la plus pratique.", "Buen tiempo casi en todas partes: elige el sitio más cómodo.", "几乎处处好天气：选最方便的地方吧。"),
 ]

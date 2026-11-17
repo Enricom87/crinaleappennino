@@ -16,6 +16,7 @@ from i18n import T
 from synview import syn_view
 from verdict import weekend
 from extras import activities, events
+from bestpick import best_pick
 from cards import prob_word
 
 
@@ -262,7 +263,7 @@ def main() -> None:
                                                                        for k, v in s["links"].items()}}
                                  for s in local_sources],
                "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows, "synv": syn_view(syn_rows), "trendv": trend_view(),
-               "summer": IS_SUMMER, "home_events": home_events(locs),
+               "summer": IS_SUMMER, "home_events": home_events(locs), "bestpick": best_pick(locs, IS_SUMMER),
                "overview": ((overview_mtn(locs) if IS_SUMMER else overview_text(locs)) if locs else ""),
                "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),
                "updated_rfc": now.strftime("%a, %d %b %Y %H:%M:%S %z"), "today": today,

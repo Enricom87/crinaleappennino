@@ -407,3 +407,16 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 .ev-body{display:flex;flex-direction:column}
 .wk-foot .btn.ghost{background:#fff;color:#0f172a;border:1px solid #cbd5e1}
 @media(max-width:600px){.ev-list li{flex-direction:column;gap:2px}.ev-when{min-width:0}}
+/* Dove vado questo weekend */
+.bp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:14px}
+.bp-card{background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 2px 10px rgba(15,30,60,.08);border-top:5px solid #22c55e}
+.bp-card.bp-red{border-top-color:#ef4444}
+.bp-day{font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#64748b}
+.bp-card h3{margin:4px 0 12px;font-size:1.2rem;line-height:1.3}
+.bp-list{list-style:none;padding:0;margin:0;display:grid;gap:6px;counter-reset:bp}
+.bp-list a{display:grid;grid-template-columns:auto auto 1fr;gap:4px 10px;align-items:center;padding:8px 10px;border-radius:10px;background:#f8fafc;text-decoration:none;color:inherit}
+.bp-list li:first-child a{background:#f0fdf4}
+.bp-list a span{grid-column:2/4;font-size:.85rem;color:#475569}
+.bp-list .wk-dot{width:10px;height:10px;border-radius:50%;display:inline-block;background:#94a3b8}
+.bp-list .wk-green .wk-dot{background:#16a34a}.bp-list .wk-yellow .wk-dot{background:#eab308}.bp-list .wk-red .wk-dot{background:#dc2626}
+.bp-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px}

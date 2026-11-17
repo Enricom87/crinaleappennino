@@ -41,6 +41,28 @@
   </ol>
 </section>
 
+{% if bestpick %}
+<section class="wrap" id="dovevado">
+  <h2>{{ t("Dove vado questo weekend?") }}</h2>
+  <p class="muted">{{ t("Tutte le località a confronto: tempo, neve fresca e impianti aperti.") }}</p>
+  <div class="bp-grid">
+    {% for b in bestpick %}
+    <article class="bp-card{% if b.red %} bp-red{% endif %}">
+      <span class="bp-day">{{ b.name }}</span>
+      <h3>{{ b.head }}</h3>
+      <ol class="bp-list">
+        {% for r in b.rows %}
+        <li class="wk-{{ r.color }}"><a href="{{ u(r.slug ~ '/#weekend') }}"><i class="wk-dot"></i><b>{{ r.name }}</b><span>{{ r.why }}{% if r.lifts %} · {{ r.lifts }}{% endif %}</span></a></li>
+        {% endfor %}
+      </ol>
+      <div class="bp-foot"><span class="wk-sure s-{{ b.sure.key }}">{{ b.sure.icon }} {{ b.sure.label }}</span>
+      {% if b.red %}<a class="small" href="{{ u(b.plan_b ~ '/#cosafare') }}">☔ {{ t("Piano B: cosa fare") }} →</a>{% endif %}</div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
 <section class="wrap" id="localita">
   <h2>{{ t("Scegli la tua montagna") }}</h2>
   <div class="cards">

@@ -59,7 +59,8 @@ def weekend(L: dict, today: str, summer: bool) -> dict | None:
         if not m:
             continue
         col, why = day_verdict(m, snow_by.get(d, 0), summer)
-        days.append({"date": d, "name": cap(day_name(d)), "color": col, "why": why, "idx": m["idx"]})
+        days.append({"date": d, "name": cap(day_name(d)), "color": col, "why": why, "idx": m["idx"],
+                     "snow": snow_by.get(d, 0)})
     if not days:
         return None
     colors = [x["color"] for x in days]
