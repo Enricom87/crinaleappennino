@@ -2,18 +2,10 @@
 {% block main %}
 <section class="hero{% if home_photo %} has-photo{% endif %}"{% if home_photo %} style="background-image:linear-gradient(180deg,rgba(9,22,36,.35),rgba(9,22,36,.72)),url('{{ u('static/photos/' ~ home_photo.key ~ '.jpg') }}');background-position:{{ home_photo.pos }}"{% endif %}>
   <div class="wrap">
-    <p class="kicker">{{ t("Appennino tosco-emiliano · dall'Abetone al Cusna") }}</p>
-    <h1>{{ t("La montagna di casa, prima di partire.") }}</h1>
-    <p class="lead">{{ t("Crinale ti dice com'è lassù: neve e meteo per ogni località, ora per ora, impianti aperti, webcam e i percorsi più belli. Aggiornato ogni mattina, gratis.") }}</p>
-    <div class="hero-feats" role="navigation" aria-label="{{ t('Cosa trovi su Crinale') }}">
-      <a href="#localita"><span>❄️</span>{{ t("Neve quota per quota") }}</a>
-      <a href="{{ u(locs[0].slug ~ '/#ore') if locs else '#localita' }}"><span>🕐</span>{{ t("Meteo ora per ora") }}</a>
-      <a href="{{ u(locs[0].slug ~ '/#impianti') if locs else '#localita' }}"><span>🚡</span>{{ t("Impianti aperti") }}</a>
-      <a href="{{ u('percorsi/') }}"><span>🥾</span>{{ t("{n} percorsi", n=routes|length) }}</a>
-      <a href="{{ u(locs[0].slug ~ '/#webcam') if locs else '#localita' }}"><span>📷</span>{{ t("Webcam") }}</a>
-      <a href="{{ site.social.telegram or u('newsletter/') }}"><span>🔔</span>{{ t("Allerte neve") }}</a>
-    </div>
-    <p class="hero-cta">{% if summer %}<a class="btn" href="{{ u('percorsi/') }}">{{ t("Scegli un percorso") }}</a> {% endif %}<a class="btn{% if summer %} ghost{% endif %}" href="#localita">{{ t("Scegli la tua montagna") }} ↓</a>
+    <p class="kicker">{{ t("Appennino tosco-emiliano · {n} località · {r} percorsi", n=locs|length, r=routes|length) }}</p>
+    <h1>{{ t("Si sale o no? Te lo diciamo in un minuto.") }}</h1>
+    <p class="lead">{{ t("Il venerdì sera è sempre la stessa storia: dieci siti meteo, tre webcam e il gruppo WhatsApp che dice tutto e il contrario di tutto. Crinale mette insieme i migliori modelli meteo, gli impianti aperti e i percorsi più belli, dall'Abetone al Cusna. In una pagina, ogni mattina, gratis.") }}</p>
+    <p class="hero-cta"><a class="btn" href="#viaggio">{{ t("Scopri come funziona") }} ↓</a>
     {% if site.social.telegram %}<a class="btn tg" href="{{ site.social.telegram }}" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2 1.8 11.7c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.3z"/></svg> {{ t("Segui su Telegram") }}</a>{% endif %}</p>
     {% if overview %}<div class="today-box"><b>{{ t("Oggi sul crinale") }}</b> <span>{{ overview }}</span> <small>{{ t("aggiornato {d}", d=updated) }}</small></div>{% endif %}
   </div>
@@ -25,6 +17,29 @@
   {% for s in global_sponsors %}<a href="{{ s.url }}" rel="sponsored noopener" class="sp">{% if s.logo %}<img src="{{ s.logo }}" alt="{{ s.name }}">{% endif %}<span>{{ s.name }}</span></a>{% endfor %}
 </section>
 {% endif %}
+
+<section class="wrap journey" id="viaggio">
+  <p class="kicker-dark">{{ t("Come funziona") }}</p>
+  <h2>{{ t("Il tuo weekend in Appennino, in quattro mosse") }}</h2>
+  <ol class="steps">
+    <li><span class="st-n">1</span><span class="st-ic">🛋️</span>
+      <h3>{{ t("Venerdì sera, dal divano") }}</h3>
+      <p>{{ t("Scorri le località e scopri dove nevica, dove splende il sole e chi se la gode di più nei prossimi giorni.") }}</p>
+      <a href="#localita">{{ t("Guarda le località") }} →</a></li>
+    <li><span class="st-n">2</span><span class="st-ic">☕</span>
+      <h3>{{ t("Sabato, all'alba") }}</h3>
+      <p>{{ t("Meteo ora per ora, vento in cresta e impianti aperti: decidi a che ora partire e quando rientrare.") }}</p>
+      <a href="{{ u((locs[0].slug if locs else '') ~ '/#ore') }}">{{ t("Apri il meteo ora per ora") }} →</a></li>
+    <li><span class="st-n">3</span><span class="st-ic">🥾</span>
+      <h3>{{ t("Lassù, anche senza campo") }}</h3>
+      <p>{{ t("{n} percorsi con traccia GPX e le condizioni previste alla quota giusta. Salvali sul telefono prima di partire.", n=routes|length) }}</p>
+      <a href="{{ u('percorsi/') }}">{{ t("Scegli un percorso") }} →</a></li>
+    <li><span class="st-n">4</span><span class="st-ic">🔔</span>
+      <h3>{{ t("Il resto della settimana") }}</h3>
+      <p>{{ t("Non devi ricordarti di controllare: quando arriva la neve ti avvisiamo noi, su Telegram o per email.") }}</p>
+      <a href="{{ site.social.telegram or u('newsletter/') }}"{% if site.social.telegram %} rel="noopener"{% endif %}>{{ t("Attiva le allerte") }} →</a></li>
+  </ol>
+</section>
 
 <section class="wrap" id="localita">
   <h2>{{ t("Scegli la tua montagna") }}</h2>

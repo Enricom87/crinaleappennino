@@ -50,6 +50,7 @@ jobs:
       - name: Costruisci il sito
         run: cd pipeline && python build.py
       - name: Newsletter e allerta neve
+        continue-on-error: true
         env:
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
           BREVO_LIST_ID: ${{ secrets.BREVO_LIST_ID }}

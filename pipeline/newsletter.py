@@ -54,6 +54,10 @@ def send(subject: str, body: str, site: dict) -> bool:
         "name": f"{subject} {datetime.now():%Y-%m-%d %H:%M}", "subject": subject,
         "sender": {"name": site["name"], "email": sender}, "htmlContent": body,
         "recipients": {"listIds": [int(list_id)]}})
+    if r.status_code == 401:
+        print("Brevo: chiave rifiutata (401). Controlla la chiave API e, in Brevo > Sicurezza, "
+              "che il blocco degli IP non autorizzati sia disattivato. Nessun invio.")
+        return False
     r.raise_for_status()
     cid = r.json()["id"]
     requests.post(f"{API}/emailCampaigns/{cid}/sendNow", headers=h, timeout=60).raise_for_status()
