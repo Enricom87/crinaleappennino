@@ -1,0 +1,250 @@
+// Crinale · bot Telegram per gli avvisi personali.
+// Gira su Cloudflare Workers (gratuito). Legge i dati pubblici del sito (api/v1/bot.json) e manda a
+// ogni iscritto solo gli avvisi delle località che segue. Conserva soltanto: id della chat Telegram,
+// lingua e località seguite (KV "SUBS"). Con /stop si cancella tutto.
+
+const SITE = "https://crinaleappennino.it";
+const FEED = SITE + "/api/v1/bot.json";
+const LANGS = ["it", "en", "de", "fr", "es", "zh"];
+
+const M = {
+  it: {
+    hi: "Ciao! Sono il bot di <b>Crinale</b> ⛰️\nScegli le località che ti interessano: ti scrivo solo quando c'è qualcosa da sapere (neve in arrivo, il weekend che cambia) e ogni giovedì sera il verdetto del weekend.",
+    pick: "Tocca una località per seguirla o smettere di seguirla:",
+    list: "Segui:", none: "Non segui ancora nessuna località. Scrivi /segui per sceglierle.",
+    stop: "Fatto: ho cancellato le tue preferenze e non ti scriverò più. Per ricominciare scrivi /start.",
+    added: "Ora segui {n} ✅", removed: "Non segui più {n}",
+    alert: "❄️ <b>{n}</b>\n{t}", wkchg: "🔄 <b>Il weekend a {n} è cambiato</b>\n{w}\n{a}",
+    thu: "📅 <b>Il verdetto del weekend</b>", open: "Apri la previsione",
+    help: "Comandi: /segui per scegliere le località · /lista per vedere cosa segui · /stop per cancellarti.",
+  },
+  en: {
+    hi: "Hi! I'm the <b>Crinale</b> bot ⛰️\nPick the places you care about: I'll only write when there's something worth knowing (snow on the way, the weekend changing), plus the weekend verdict every Thursday evening.",
+    pick: "Tap a place to follow or unfollow it:",
+    list: "Following:", none: "You're not following any place yet. Send /segui to pick some.",
+    stop: "Done: I deleted your preferences and won't write again. Send /start to begin again.",
+    added: "Now following {n} ✅", removed: "No longer following {n}",
+    alert: "❄️ <b>{n}</b>\n{t}", wkchg: "🔄 <b>The weekend at {n} has changed</b>\n{w}\n{a}",
+    thu: "📅 <b>Weekend verdict</b>", open: "Open the forecast",
+    help: "Commands: /segui to pick places · /lista to see what you follow · /stop to unsubscribe.",
+  },
+  de: {
+    hi: "Hallo! Ich bin der <b>Crinale</b>-Bot ⛰️\nWähle deine Orte: Ich schreibe nur, wenn es etwas Wichtiges gibt (Schnee im Anmarsch, das Wochenende ändert sich), und jeden Donnerstagabend das Wochenend-Urteil.",
+    pick: "Tippe auf einen Ort, um ihm zu folgen oder nicht mehr zu folgen:",
+    list: "Du folgst:", none: "Du folgst noch keinem Ort. Schreib /segui, um welche zu wählen.",
+    stop: "Erledigt: Deine Einstellungen sind gelöscht, ich schreibe nicht mehr. Mit /start geht's wieder los.",
+    added: "Du folgst jetzt {n} ✅", removed: "Du folgst {n} nicht mehr",
+    alert: "❄️ <b>{n}</b>\n{t}", wkchg: "🔄 <b>Das Wochenende in {n} hat sich geändert</b>\n{w}\n{a}",
+    thu: "📅 <b>Das Wochenend-Urteil</b>", open: "Vorhersage öffnen",
+    help: "Befehle: /segui Orte wählen · /lista was du folgst · /stop abmelden.",
+  },
+  fr: {
+    hi: "Salut ! Je suis le bot de <b>Crinale</b> ⛰️\nChoisis tes stations : je t'écris seulement quand il y a du nouveau (neige en approche, week-end qui change), et chaque jeudi soir le verdict du week-end.",
+    pick: "Touche une station pour la suivre ou ne plus la suivre :",
+    list: "Tu suis :", none: "Tu ne suis encore aucune station. Envoie /segui pour en choisir.",
+    stop: "C'est fait : tes préférences sont effacées, je ne t'écrirai plus. Envoie /start pour recommencer.",
+    added: "Tu suis maintenant {n} ✅", removed: "Tu ne suis plus {n}",
+    alert: "❄️ <b>{n}</b>\n{t}", wkchg: "🔄 <b>Le week-end à {n} a changé</b>\n{w}\n{a}",
+    thu: "📅 <b>Le verdict du week-end</b>", open: "Ouvrir la prévision",
+    help: "Commandes : /segui choisir les stations · /lista voir ce que tu suis · /stop se désinscrire.",
+  },
+  es: {
+    hi: "¡Hola! Soy el bot de <b>Crinale</b> ⛰️\nElige tus sitios: solo te escribo cuando hay algo que saber (nieve en camino, el fin de semana cambia) y cada jueves por la tarde el veredicto del fin de semana.",
+    pick: "Toca un sitio para seguirlo o dejar de seguirlo:",
+    list: "Sigues:", none: "Aún no sigues ningún sitio. Escribe /segui para elegirlos.",
+    stop: "Hecho: he borrado tus preferencias y no te escribiré más. Escribe /start para empezar de nuevo.",
+    added: "Ahora sigues {n} ✅", removed: "Ya no sigues {n}",
+    alert: "❄️ <b>{n}</b>\n{t}", wkchg: "🔄 <b>El fin de semana en {n} ha cambiado</b>\n{w}\n{a}",
+    thu: "📅 <b>El veredicto del fin de semana</b>", open: "Abrir la previsión",
+    help: "Comandos: /segui elegir sitios · /lista ver lo que sigues · /stop darte de baja.",
+  },
+  zh: {
+    hi: "你好！我是 <b>Crinale</b> 机器人 ⛰️\n选择你关注的地点：只有在值得知道时我才会发消息（即将降雪、周末天气变化），每周四晚上发送周末结论。",
+    pick: "点按地点即可关注或取消关注：",
+    list: "已关注：", none: "你还没有关注任何地点。发送 /segui 进行选择。",
+    stop: "已完成：你的偏好已删除，我不会再发消息。发送 /start 重新开始。",
+    added: "已关注 {n} ✅", removed: "已取消关注 {n}",
+    alert: "❄️ <b>{n}</b>\n{t}", wkchg: "🔄 <b>{n} 的周末情况有变</b>\n{w}\n{a}",
+    thu: "📅 <b>周末结论</b>", open: "打开预报",
+    help: "命令：/segui 选择地点 · /lista 查看已关注 · /stop 退订。",
+  },
+};
+const DOT = { green: "🟢", yellow: "🟡", red: "🔴" };
+
+const fmt = (s, o) => s.replace(/\{(\w)\}/g, (_, k) => o[k] ?? "");
+const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const langOf = (code) => { const l = (code || "it").slice(0, 2).toLowerCase(); return LANGS.includes(l) ? l : "en"; };
+
+async function secretOf(env) {
+  const h = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("crinale:" + env.TELEGRAM_BOT_TOKEN));
+  return [...new Uint8Array(h)].slice(0, 20).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function tg(env, method, body) {
+  const r = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`, {
+    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body),
+  });
+  return r.json();
+}
+
+async function feed() {
+  const r = await fetch(FEED + "?t=" + Date.now(), { cf: { cacheTtl: 0 } });
+  return r.json();
+}
+
+const getUser = async (env, id) => JSON.parse((await env.SUBS.get("u:" + id)) || "null");
+const putUser = (env, id, u) => env.SUBS.put("u:" + id, JSON.stringify(u));
+
+function keyboard(data, u) {
+  const rows = [];
+  let row = [];
+  for (const L of data.locs) {
+    const on = u.locs.includes(L.slug);
+    const name = (L.i18n[u.lang] || L.i18n.it).name.split(" · ")[0];
+    row.push({ text: (on ? "✅ " : "▫️ ") + name, callback_data: "t:" + L.slug });
+    if (row.length === 2) { rows.push(row); row = []; }
+  }
+  if (row.length) rows.push(row);
+  return { inline_keyboard: rows };
+}
+
+function listText(data, u) {
+  const t = M[u.lang];
+  const names = data.locs.filter((L) => u.locs.includes(L.slug)).map((L) => "• " + esc((L.i18n[u.lang] || L.i18n.it).name));
+  return names.length ? t.list + "\n" + names.join("\n") : t.none;
+}
+
+async function onMessage(env, msg) {
+  const id = msg.chat.id;
+  const text = (msg.text || "").trim();
+  const data = await feed();
+  let u = (await getUser(env, id)) || { lang: langOf(msg.from && msg.from.language_code), locs: [], sig: {} };
+  const t = M[u.lang];
+  const [cmd, arg] = text.split(/\s+/);
+  const c = cmd.split("@")[0].toLowerCase();
+  if (c === "/stop") {
+    await env.SUBS.delete("u:" + id);
+    return tg(env, "sendMessage", { chat_id: id, text: t.stop });
+  }
+  if (c === "/start") {
+    const slug = (arg || "").replace(/[^a-z0-9-]/g, "");
+    const L0 = data.locs.find((L) => L.slug === slug);
+    if (L0 && !u.locs.includes(slug)) {
+      u.locs.push(slug);
+      u.sig = u.sig || {};
+      u.sig[slug] = { lv: L0.level === "alert" ? L0.i18n.it.title : "", wk: L0.wk_color };
+    }
+    await putUser(env, id, u);
+    return tg(env, "sendMessage", { chat_id: id, parse_mode: "HTML", text: t.hi + "\n\n" + t.pick,
+      reply_markup: keyboard(data, u) });
+  }
+  if (c === "/segui" || c === "/follow") {
+    await putUser(env, id, u);
+    return tg(env, "sendMessage", { chat_id: id, text: t.pick, reply_markup: keyboard(data, u) });
+  }
+  if (c === "/lista" || c === "/list") {
+    return tg(env, "sendMessage", { chat_id: id, parse_mode: "HTML", text: listText(data, u) });
+  }
+  return tg(env, "sendMessage", { chat_id: id, text: t.help });
+}
+
+async function onCallback(env, cq) {
+  const id = cq.message.chat.id;
+  const slug = (cq.data || "").slice(2);
+  const data = await feed();
+  const L = data.locs.find((x) => x.slug === slug);
+  let u = (await getUser(env, id)) || { lang: langOf(cq.from && cq.from.language_code), locs: [], sig: {} };
+  if (!L) return tg(env, "answerCallbackQuery", { callback_query_id: cq.id });
+  const name = (L.i18n[u.lang] || L.i18n.it).name.split(" · ")[0];
+  let note;
+  if (u.locs.includes(slug)) { u.locs = u.locs.filter((s) => s !== slug); note = fmt(M[u.lang].removed, { n: name }); }
+  else { u.locs.push(slug); note = fmt(M[u.lang].added, { n: name }); }
+  // registra lo stato attuale, così il primo avviso arriva solo quando qualcosa cambia davvero
+  u.sig = u.sig || {};
+  u.sig[slug] = { lv: L.level === "alert" ? L.i18n.it.title : "", wk: L.wk_color };
+  await putUser(env, id, u);
+  await tg(env, "answerCallbackQuery", { callback_query_id: cq.id, text: note });
+  return tg(env, "editMessageReplyMarkup", { chat_id: id, message_id: cq.message.message_id, reply_markup: keyboard(data, u) });
+}
+
+function romeNow() {
+  const p = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Rome", weekday: "short", hour: "2-digit",
+    year: "numeric", month: "2-digit", day: "2-digit", hour12: false }).formatToParts(new Date());
+  const g = (t) => p.find((x) => x.type === t).value;
+  return { wd: g("weekday"), hour: +g("hour"), day: `${g("year")}-${g("month")}-${g("day")}` };
+}
+
+async function notifyAll(env) {
+  const data = await feed();
+  const now = romeNow();
+  const thursday = now.wd === "Thu" && now.hour >= 18;
+  let cursor;
+  do {
+    const page = await env.SUBS.list({ prefix: "u:", cursor });
+    for (const k of page.keys) {
+      const id = k.name.slice(2);
+      const u = await getUser(env, id);
+      if (!u || !u.locs.length) continue;
+      const t = M[u.lang] || M.it;
+      u.sig = u.sig || {};
+      let changed = false;
+      const thuLines = [];
+      for (const L of data.locs.filter((x) => u.locs.includes(x.slug))) {
+        const x = L.i18n[u.lang] || L.i18n.it;
+        const prev = u.sig[L.slug] || {};
+        const lv = L.level === "alert" ? L.i18n.it.title : "";
+        const btn = { reply_markup: { inline_keyboard: [[{ text: t.open, url: x.url }]] } };
+        if (lv && lv !== prev.lv && !data.summer) {
+          await tg(env, "sendMessage", { chat_id: id, parse_mode: "HTML", text: fmt(t.alert, { n: esc(x.name), t: esc(x.title) }), ...btn });
+        } else if (!thursday && prev.wk && L.wk_color && prev.wk !== L.wk_color) {
+          await tg(env, "sendMessage", { chat_id: id, parse_mode: "HTML", ...btn,
+            text: fmt(t.wkchg, { n: esc(x.name.split(" · ")[0]), w: (DOT[L.wk_color] || "") + " " + esc(x.wk_title), a: esc(x.wk_advice) }) });
+        }
+        if (thursday && L.wk_color) {
+          thuLines.push(`${DOT[L.wk_color]} <b>${esc(x.name.split(" · ")[0])}</b>: ${esc(x.wk_title)}\n<i>${esc(x.wk_days.join(" · "))}</i>`);
+        }
+        if (prev.lv !== lv || prev.wk !== L.wk_color) { u.sig[L.slug] = { lv, wk: L.wk_color }; changed = true; }
+      }
+      if (thursday && thuLines.length && u.thu !== now.day) {
+        await tg(env, "sendMessage", { chat_id: id, parse_mode: "HTML", disable_web_page_preview: true,
+          text: t.thu + "\n\n" + thuLines.join("\n\n") });
+        u.thu = now.day; changed = true;
+      }
+      if (changed) await putUser(env, id, u);
+    }
+    cursor = page.list_complete ? undefined : page.cursor;
+  } while (cursor);
+}
+
+export default {
+  async fetch(req, env) {
+    const url = new URL(req.url);
+    if (url.pathname === "/tg" && req.method === "POST") {
+      if (req.headers.get("X-Telegram-Bot-Api-Secret-Token") !== (await secretOf(env))) return new Response("no", { status: 403 });
+      const up = await req.json();
+      try {
+        if (up.message && up.message.text) await onMessage(env, up.message);
+        else if (up.callback_query) await onCallback(env, up.callback_query);
+      } catch (e) { console.log("errore", e && e.stack); }
+      return new Response("ok");
+    }
+    if (url.pathname === "/setup") {
+      // Collega il bot a questo worker. Ripeterlo non fa danni: reimposta sempre lo stesso indirizzo.
+      const r = await tg(env, "setWebhook", { url: url.origin + "/tg", secret_token: await secretOf(env),
+        allowed_updates: ["message", "callback_query"], drop_pending_updates: true });
+      const cmds = {
+        it: [["segui", "Scegli le località da seguire"], ["lista", "Le località che segui"], ["stop", "Cancellati"]],
+        en: [["segui", "Pick places to follow"], ["lista", "Places you follow"], ["stop", "Unsubscribe"]],
+      };
+      await tg(env, "setMyCommands", { commands: cmds.en.map(([command, description]) => ({ command, description })) });
+      await tg(env, "setMyCommands", { language_code: "it", commands: cmds.it.map(([command, description]) => ({ command, description })) });
+      const me = await tg(env, "getMe", {});
+      const n = (await env.SUBS.list({ prefix: "u:" })).keys.length;
+      return Response.json({ webhook: r.ok, bot: me.result && me.result.username, iscritti: n });
+    }
+    return new Response("Crinale bot ⛰️");
+  },
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(notifyAll(env));
+  },
+};

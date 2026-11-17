@@ -256,9 +256,21 @@ def main() -> None:
     all_pages = []  # percorsi di pagina (senza lingua), per la sitemap
 
     it_ctx = None
+    bot_feed = {}  # dati per il bot Telegram (avvisi personali), in tutte le lingue
     for lang in LANGS:
         set_lang(lang)
         locs, routes = build_lang()
+        for L in locs:
+            wk = L.get("weekend")
+            f = bot_feed.setdefault(L["slug"], {"slug": L["slug"], "level": L["text"]["level"],
+                                                "snow3_top": L["text"]["snow3_top"],
+                                                "ground": (L.get("ground") or {}).get("cm"),
+                                                "wk_color": wk["color"] if wk else None,
+                                                "wk_sure": wk["sure"]["key"] if wk else None, "i18n": {}})
+            f["i18n"][lang] = {"name": L["name"], "title": L["text"]["title"],
+                               "wk_title": wk["title"] if wk else "", "wk_advice": wk["advice"] if wk else "",
+                               "wk_days": [f"{d['name']}: {d['why']}" for d in wk["days"]] if wk else [],
+                               "url": "https://crinaleappennino.it/" + ("" if lang == "it" else lang + "/") + L["slug"] + "/"}
         offers_l = [{**o, "name": T(o["name"]), "desc": T(o["desc"])} for o in offers()]
         ctx = {"site": {**site, "tagline": T(site["tagline"])}, "locs": locs, "home_photo": photo_for("_home"),
                "local_sources": [{**s, "about": T(s["about"]), "links": {k: [{**l, "label": T(l["label"])} for l in v]
@@ -343,6 +355,9 @@ def main() -> None:
             for r in routes]}, ensure_ascii=False))
     for L in api["locations"]:
         (OUT / "api" / "v1" / f"{L['slug']}.json").write_text(json.dumps(L, ensure_ascii=False))
+
+    (OUT / "api" / "v1" / "bot.json").write_text(json.dumps(
+        {"generated": ctx["updated_iso"], "summer": IS_SUMMER, "locs": list(bot_feed.values())}, ensure_ascii=False))
 
     # stato per newsletter/allerte
     state = {"generated": ctx["updated_iso"],

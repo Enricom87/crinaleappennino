@@ -1,0 +1,13 @@
+# Bot Telegram di Crinale su Cloudflare Workers. Pubblicato in automatico da .github/workflows/bot.yml
+name = "crinale-bot"
+main = "bot.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+# Dopo ogni aggiornamento del sito (05:45, 07:35, 17:35 UTC, ~35 min di build) controlla e avvisa.
+[triggers]
+crons = ["30 6,8,18 * * *"]
+
+[[kv_namespaces]]
+binding = "SUBS"
+id = "__KV_ID__"

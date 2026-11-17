@@ -1,0 +1,38 @@
+name: Bot Telegram (Cloudflare)
+on:
+  push:
+    branches: [main]
+    paths: ["worker/**", ".github/workflows/bot.yml"]
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: 911dad43ccb3eb2ea8c121be77562383
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Spazio per gli iscritti (KV), creato la prima volta
+        working-directory: worker
+        run: |
+          npm i -g wrangler@4 >/dev/null
+          ID=$(wrangler kv namespace list | jq -r '.[] | select(.title=="crinale-subs") | .id')
+          if [ -z "$ID" ]; then
+            wrangler kv namespace create crinale-subs >/dev/null
+            ID=$(wrangler kv namespace list | jq -r '.[] | select(.title=="crinale-subs") | .id')
+          fi
+          sed -i "s/__KV_ID__/$ID/" wrangler.toml
+      - name: Pubblica il bot
+        working-directory: worker
+        run: |
+          wrangler deploy | tee deploy.log
+          echo "${{ secrets.TELEGRAM_BOT_TOKEN }}" | wrangler secret put TELEGRAM_BOT_TOKEN
+      - name: Collega Telegram al bot
+        working-directory: worker
+        run: |
+          URL=$(grep -o 'https://[a-z0-9.-]*workers.dev' deploy.log | head -1)
+          echo "Indirizzo: $URL"
+          sleep 5
+          curl -s "$URL/setup"
