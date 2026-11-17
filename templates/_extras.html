@@ -3,6 +3,7 @@
 <section class="wrap" id="cosafare">
   <h2>{{ t("Cosa fare oltre lo sci") if not summer else t("Cosa fare nei dintorni") }}</h2>
   <p class="muted">{{ ex.lead }}</p>
+  {% if loc.aval and loc.aval.high %}<p class="aval-note">⚠️ {{ t("Pericolo valanghe {l}: scegli percorsi nel bosco e lontano dai pendii ripidi.", l=loc.aval.label|lower) }}</p>{% endif %}
   {% if ex.list %}
   <div class="act-grid">
     {% for a in ex.list %}

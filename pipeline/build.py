@@ -15,7 +15,7 @@ from summer import mountain_days, overview_mtn, summer_text
 from i18n import T
 from synview import syn_view
 from verdict import weekend
-from extras import activities, events, snow_ground, places
+from extras import activities, events, snow_ground, places, avalanche
 from bestpick import best_pick
 from history import record as hist_record, view as hist_view
 from cards import prob_word
@@ -206,6 +206,7 @@ def main() -> None:
             L["extras"] = activities(loc, pts, IS_SUMMER, L["weekend"], has_snow)
             L["events"] = events(loc, pts, today)
             L["places"] = places(loc, pts)
+            L["aval"] = None if IS_SUMMER else avalanche(loc)
             locs.append(L)
         loc_by_slug = {L["slug"]: L for L in locs}
         routes = []

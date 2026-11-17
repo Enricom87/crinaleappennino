@@ -23,6 +23,13 @@
   <span class="small muted">{{ t("Stazione ufficiale {st}, {e} m", st=g.station, e=g.elev) }} · {{ g.when }}{% if g.delta %} · {{ g.delta }}{% endif %} · {{ t("Dati: {src}, {lic}", src=g.source.name, lic=g.source.license) }}</span></span>
 </div></section>
 {% endif %}
+{% if loc.aval %}{% set av = loc.aval %}
+<section class="wrap"><div class="aval{% if av.high %} aval-high{% endif %}">
+  <span class="aval-g" style="background:{{ av.color }}">{{ av.grade }}</span>
+  <span><b>{{ t("Pericolo valanghe: {g} – {l}", g=av.grade, l=av.label) }}</b>{% if av.next %} <span class="muted small">({{ av.next }})</span>{% endif %}<br>
+  <span class="small muted">{% if av.high %}{{ t("Fuori pista e in cresta solo con esperienza e attrezzatura (ARTVA, pala, sonda), meglio con una guida.") }} {% endif %}{{ t("Bollettino Meteomont, settore {sec}.", sec=av.sector) }} <a href="https://meteomont.carabinieri.it/" rel="noopener" target="_blank">{{ t("Leggi il bollettino") }}</a></span></span>
+</div></section>
+{% endif %}
 {% set wk = loc.weekend %}
 {% if wk %}
 <section class="wrap" id="weekend">

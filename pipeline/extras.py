@@ -168,3 +168,32 @@ def places(loc: dict, points: dict) -> dict | None:
     if not huts and not stay:
         return None
     return {"huts": fix(huts[:6]), "stay": fix(stay[:8])}
+
+
+# --- Pericolo valanghe (Meteomont) ---------------------------------------------------------
+_AV_FILE = ROOT / "data" / "avalanche.json"
+SECTOR_FOR = {"abetone": "09/1", "doganaccia": "09/1", "garfagnana": "09/1"}  # le altre: 08/2
+AV_LABEL = {1: "Debole", 2: "Moderato", 3: "Marcato", 4: "Forte", 5: "Molto forte"}
+AV_COLOR = {1: "#ccff66", 2: "#ffff00", 3: "#ff9900", 4: "#ff0000", 5: "#990000"}
+
+
+def avalanche(loc: dict) -> dict | None:
+    from datetime import datetime, timezone
+    try:
+        raw = json.loads(_AV_FILE.read_text())
+    except Exception:  # noqa: BLE001
+        return None
+    fetched = datetime.fromisoformat(raw["fetched"].replace("Z", "+00:00"))
+    if (datetime.now(timezone.utc) - fetched).total_seconds() > 36 * 3600:
+        return None
+    sec = raw["sectors"].get(SECTOR_FOR.get(loc["slug"], "08/2"))
+    if not sec or not sec["days"]:
+        return None
+    days = sorted(sec["days"], key=lambda d: d["offset"])
+    g0 = days[0]["grade"]
+    if not g0:
+        return None  # niente neve o niente dati: nessun avviso
+    word = [T("oggi"), T("domani"), T("dopodomani")]
+    nxt = [f"{word[d['offset']]} {d['grade']}" for d in days[1:3] if d["grade"] and d["offset"] < 3]
+    return {"grade": g0, "label": T(AV_LABEL[g0]), "color": AV_COLOR[g0], "sector": sec["name"],
+            "next": ", ".join(nxt), "high": g0 >= 3}

@@ -445,3 +445,8 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 .pl-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
 .pl-list li{background:#fff;border-radius:12px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;box-shadow:0 1px 2px rgba(15,30,60,.06)}
 .pl-links{display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem;font-weight:600}
+/* Pericolo valanghe */
+.aval{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 18px;margin-top:12px}
+.aval-high{border-color:#fb923c;background:#fff7ed}
+.aval-g{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:1.3rem;color:#111;flex:none;border:1px solid rgba(0,0,0,.15)}
+.aval-note{background:#fff7ed;border-left:4px solid #fb923c;padding:8px 12px;border-radius:8px;font-weight:600}
