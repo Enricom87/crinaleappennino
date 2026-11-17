@@ -111,6 +111,35 @@
   </table>
   </div></details>
 </section>
+{% if trendv %}
+<section class="wrap trend-sec" id="tendenza">
+  <p class="kicker-dark">{{ t("Tendenza a 2 settimane") }}</p>
+  <h2>{{ trendv.head }}</h2>
+  <p class="muted">{{ t("Il modello europeo ECMWF calcola 51 versioni del futuro, ognuna leggermente diversa. Più scenari vanno nella stessa direzione, più la tendenza è affidabile. Fino a {d}.", d=trendv.until) }}</p>
+  <div class="phases">
+  {% for ph in trendv.phases %}
+    <div class="phase" style="--c:{{ ph.color }}">
+      <span class="ph-lab">{{ ph.label }}</span><span class="ph-dates">{{ ph.from }} – {{ ph.to }}</span>
+      <span class="ph-emoji" aria-hidden="true">{{ ph.emoji }}</span>
+      <b class="ph-type">{{ ph.type }}</b>
+      <span class="ph-share">{{ t("{p}% degli scenari", p=ph.share) }}</span>
+      <div class="ph-bar">{% for lab, col, p in ph.mix %}<span style="width:{{ p }}%;background:{{ col }}" title="{{ lab }} {{ p }}%"></span>{% endfor %}</div>
+      <ul class="ph-facts">
+        <li>❄️ {{ t("Probabilità di neve: {p}%", p=ph.snow) }}{% if ph.best %} · {{ t("più probabile {d}", d=ph.best) }}{% endif %}</li>
+        <li>🌡️ {{ t("{t} °C a 1.500 m", t=ph.t50) }}</li>
+        <li>💨 {{ t("Flusso prevalente: {f}", f=ph.flow) }}</li>
+        <li>🎯 {{ t("Affidabilità: {c}", c=ph.conf) }}</li>
+      </ul>
+    </div>
+  {% endfor %}
+  </div>
+  <div class="syn-card trend-chart">{{ trendv.chart|safe }}
+    <p class="legend">{% for lab, emo, col in trendv.legend %}<span><i style="background:{{ col }}"></i>{{ lab }}</span>{% endfor %}</p>
+    <p class="muted small">{{ t("La linea è lo scenario centrale della temperatura a 1.500 m, la fascia grigia comprende 8 scenari su 10. Le barre in basso mostrano, giorno per giorno, come si dividono i 51 scenari tra i tipi di tempo.") }}</p>
+  </div>
+</section>
+{% endif %}
+
 {% endif %}
 
 <section class="wrap promo">

@@ -114,6 +114,16 @@ def fetch_all(config: dict, raw_dir: Path) -> None:
         (raw_dir / "synoptic.json").write_text(json.dumps(dict(zip(["west", "center", "east"], data))))
     except Exception as e:
         print(f"configurazione sinottica non disponibile: {e}")
+    # tendenza a 15 giorni: i 51 scenari ECMWF sopra il crinale
+    try:
+        time.sleep(3)
+        d = _get(ENSEMBLE_URL, {**_coords([dict(syn["center"], elev=1500)]), "models": "ecmwf_ifs025",
+                                "hourly": "temperature_850hPa,wind_direction_700hPa,precipitation",
+                                "forecast_days": 15})
+        (raw_dir / "ens_syn.json").write_text(json.dumps(_as_list(d)[0]))
+        print("tendenza: ok")
+    except Exception as e:
+        print(f"tendenza non disponibile: {e}")
 
 
 if __name__ == "__main__":

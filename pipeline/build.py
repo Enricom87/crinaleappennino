@@ -14,6 +14,17 @@ from cards import cards, hourly_strip
 from summer import mountain_days, overview_mtn, summer_text
 from i18n import T
 from synview import syn_view
+
+
+def trend_view():
+    """Tendenza a 15 giorni; se i dati mancano o qualcosa va storto la sezione semplicemente non appare."""
+    try:
+        import trend
+        p = ROOT / "data" / "raw" / "ens_syn.json"
+        return trend.view(json.loads(p.read_text()), datetime.now(ZoneInfo("Europe/Rome")).date().isoformat()) if p.exists() else {}
+    except Exception as e:  # noqa: BLE001
+        print("tendenza non calcolata:", e)
+        return {}
 from text import location_text, nice_date, overview_text
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -233,7 +244,7 @@ def main() -> None:
                "local_sources": [{**s, "about": T(s["about"]), "links": {k: [{**l, "label": T(l["label"])} for l in v]
                                                                        for k, v in s["links"].items()}}
                                  for s in local_sources],
-               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows, "synv": syn_view(syn_rows),
+               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows, "synv": syn_view(syn_rows), "trendv": trend_view(),
                "summer": IS_SUMMER,
                "overview": ((overview_mtn(locs) if IS_SUMMER else overview_text(locs)) if locs else ""),
                "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),
