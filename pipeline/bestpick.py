@@ -33,7 +33,9 @@ def best_pick(locs: list[dict], summer: bool) -> list[dict]:
         if top[2]["color"] == "red":
             head = T("Brutto ovunque in quota: meglio un piano B al coperto.")
         elif len(rows) > 2 and rows[0][0] - rows[2][0] < 0.5:
-            head = T("Bel tempo un po' ovunque: scegli la località più comoda.")
+            head = (T("Neve fresca un po' ovunque: scegli la località più comoda.")
+                    if (top[2].get("snow") or 0) >= 5 and not summer
+                    else T("Bel tempo un po' ovunque: scegli la località più comoda."))
         else:
             head = T("Il posto migliore è {loc}", loc=top[1]["name"].split(" · ")[0])
         out.append({
