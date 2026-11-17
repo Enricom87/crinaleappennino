@@ -1,0 +1,43 @@
+{
+ "fetched": "2026-11-17T18:14:41Z",
+ "sectors": {
+  "08/2": {
+   "name": "Appennino Emiliano Centrale",
+   "days": [
+    {
+     "offset": 0,
+     "ref": "2026-11-17T00:00:00",
+     "grade": 0,
+     "hs": "--",
+     "hn": "--"
+    },
+    {
+     "offset": 1,
+     "ref": "2026-11-17T00:00:00",
+     "grade": 0,
+     "hs": null,
+     "hn": null
+    }
+   ]
+  },
+  "09/1": {
+   "name": "Alpi Apuane - Appennino Toscano settentrionale",
+   "days": [
+    {
+     "offset": 0,
+     "ref": "2026-11-17T00:00:00",
+     "grade": 0,
+     "hs": "--",
+     "hn": "--"
+    },
+    {
+     "offset": 1,
+     "ref": "2026-11-17T00:00:00",
+     "grade": 0,
+     "hs": null,
+     "hn": null
+    }
+   ]
+  }
+ }
+}
