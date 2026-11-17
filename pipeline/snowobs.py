@@ -53,7 +53,8 @@ def main() -> None:
         hours = (datetime.fromisoformat(t_last.replace("Z", "+00:00"))
                  - datetime.fromisoformat(t0.replace("Z", "+00:00"))).total_seconds() / 3600
         stations.append({"name": s["name"], "elev": round(s["elev"] or 0), "lat": s["lat"], "lon": s["lon"],
-                         "cm": round(cm), "time": t_last, "delta": round(cm - cm0), "delta_h": round(hours)})
+                         "cm": round(cm), "time": t_last, "delta": round(cm - cm0), "delta_h": round(hours),
+                         "series": [[t, round(c, 1)] for t, c in s["obs"]]})
     OUT.write_text(json.dumps({"source": SOURCE, "stations": stations}, ensure_ascii=False, indent=1))
     print(f"neve misurata: {len(stations)} stazioni")
 

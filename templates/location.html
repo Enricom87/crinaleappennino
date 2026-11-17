@@ -57,6 +57,23 @@
 {% if not summer %}{% include "_lifts.html" %}{% endif %}
 {% include "_hourly.html" %}
 {% include "_extras.html" %}
+{% if loc.history %}{% set hs = loc.history %}
+<section class="wrap" id="storico">
+  <h2>{{ t("Avevamo detto / È andata così") }}</h2>
+  <p class="muted">{{ hs.head }} {{ t("Confronto tra la neve prevista il giorno prima e quella misurata dalla stazione ufficiale di {st}.", st=hs.station) }}</p>
+  <div class="hs-grid">
+    {% for r in hs.rows %}
+    <div class="hs-day {{ 'hs-ok' if r.ok else 'hs-ko' }}">
+      <b>{{ r.name }}</b>
+      <span>{{ t("Detto") }}: <strong>{{ r.fc }} cm</strong></span>
+      <span>{{ t("Misurato") }}: <strong>{{ r.obs }} cm</strong></span>
+      <i>{{ "✅" if r.ok else "❌" }}</i>
+    </div>
+    {% endfor %}
+  </div>
+  <p class="small muted">{{ t("La neve misurata è l'aumento dell'altezza del manto: vento e assestamento possono farla sembrare meno di quella caduta. Contiamo come giusta una previsione entro 3 cm o il 40%.") }}</p>
+</section>
+{% endif %}
 <section class="wrap twocol" id="analisi">
   <div>
     <h2>{{ t("Come la vediamo noi") }}</h2>

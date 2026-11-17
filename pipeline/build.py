@@ -17,6 +17,7 @@ from synview import syn_view
 from verdict import weekend
 from extras import activities, events, snow_ground
 from bestpick import best_pick
+from history import record as hist_record, view as hist_view
 from cards import prob_word
 
 
@@ -260,6 +261,10 @@ def main() -> None:
     for lang in LANGS:
         set_lang(lang)
         locs, routes = build_lang()
+        if lang == LANGS[0]:
+            hist_record(locs, today)
+        for L in locs:
+            L["history"] = None if IS_SUMMER else hist_view(L, today)
         for L in locs:
             wk = L.get("weekend")
             f = bot_feed.setdefault(L["slug"], {"slug": L["slug"], "level": L["text"]["level"],
