@@ -101,15 +101,15 @@ def events(loc: dict, points: dict, today: str, days: int = 30) -> dict:
 # --- Neve al suolo misurata (stazioni Arpae) ---------------------------------------------
 _OBS_FILE = ROOT / "data" / "snowobs.json"
 # Stazione di riferimento scelta a mano: stessa valle e quota simile, non solo la più vicina.
-STATION_FOR = {"abetone": "Doccia di Fiumalbo", "cimone": "Doccia di Fiumalbo", "le-polle": "Doccia di Fiumalbo",
-               "lago-santo": "Doccia di Fiumalbo", "cimoncino": "Lago Pratignano",
+STATION_FOR = {"abetone": "Boscolungo", "cimone": "Doccia di Fiumalbo", "le-polle": "Doccia di Fiumalbo",
+               "lago-santo": "Foce a Giovo", "cimoncino": "Lago Pratignano",
                "doganaccia": "Lago Scaffaiolo Nivo", "corno-alle-scale": "Lago Scaffaiolo Nivo",
-               "lago-scaffaiolo": "Lago Scaffaiolo Nivo", "garfagnana": "Passo delle Radici",
+               "lago-scaffaiolo": "Lago Scaffaiolo Nivo", "garfagnana": "Casone di Profecchia",
                "cerreto-laghi": "Lago Paduli", "febbio": "Febbio"}
 
 
 def snow_ground(loc: dict, points: dict) -> dict | None:
-    from datetime import datetime
+    from datetime import datetime, timezone
     from zoneinfo import ZoneInfo
     try:
         raw = json.loads(_OBS_FILE.read_text())
@@ -118,6 +118,8 @@ def snow_ground(loc: dict, points: dict) -> dict | None:
     sts = raw.get("stations") or []
     want = STATION_FOR.get(loc["slug"])
     s = next((x for x in sts if x["name"] == want), None)
+    if s and (datetime.now(timezone.utc) - datetime.fromisoformat(s["time"].replace("Z", "+00:00"))).total_seconds() > 36 * 3600:
+        s = None  # stazione preferita ferma: ripiego sulla più vicina
     if not s:
         c = center(loc, points)
         near = sorted(((km(c, (x["lat"], x["lon"])), x) for x in sts), key=lambda t: t[0])
@@ -133,7 +135,8 @@ def snow_ground(loc: dict, points: dict) -> dict | None:
     if s["delta_h"] >= 6 and abs(s["delta"]) >= 2:
         delta = T("{d} cm nelle ultime {h} ore", d=f"{s['delta']:+d}", h=s["delta_h"])
     return {"cm": s["cm"], "station": s["name"].replace(" Nivo", ""), "elev": s["elev"],
-            "when": T("alle {hh}", hh=loc_t.strftime("%H:%M")), "delta": delta, "source": raw.get("source")}
+            "when": T("alle {hh}", hh=loc_t.strftime("%H:%M")), "delta": delta,
+            "source": s.get("source") or raw.get("source")}
 
 
 # --- Rifugi e dove dormire (OpenStreetMap) ------------------------------------------------
