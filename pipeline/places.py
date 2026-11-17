@@ -8,21 +8,20 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
+import urllib3.util.connection as _conn
+
+_conn.HAS_IPV6 = False  # i runner GitHub a volte non hanno IPv6 verso Overpass
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "places.json"
 OVERPASS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter",
             "https://maps.mail.ru/osm/tools/overpass/api/interpreter", "https://overpass.kumi.systems/api/interpreter"]
 BBOX = "43.98,10.15,44.45,11.00"
-Q = f"""[out:json][timeout:120];
-(
-  nwr["tourism"~"^(alpine_hut|wilderness_hut|hotel|guest_house|hostel|chalet|apartment)$"]({BBOX});
-  nwr["shop"="ski"]({BBOX});
-  nwr["rental"~"ski"]({BBOX});
-  nwr["amenity"="ski_school"]({BBOX});
-  nwr["sport"="skiing"]["amenity"="school"]({BBOX});
-);
-out center tags;"""
+# query piccole e separate: i server pubblici rispondono molto meglio
+FILTERS = ['["tourism"~"^(alpine_hut|wilderness_hut)$"]', '["tourism"="hotel"]',
+           '["tourism"~"^(guest_house|hostel|chalet|apartment)$"]',
+           '["shop"="ski"]', '["rental"~"ski"]', '["amenity"="ski_school"]']
+Q = lambda f: f"[out:json][timeout:60];nwr{f}({BBOX});out center tags;"
 
 
 def kind(t: dict) -> str | None:
@@ -49,18 +48,21 @@ def main() -> None:
             return
     except Exception:  # noqa: BLE001
         pass
-    for url in OVERPASS:
-        try:
-            r = requests.post(url, data={"data": Q}, timeout=180, headers={"User-Agent": "crinaleappennino.it"})
-            r.raise_for_status()
-            els = r.json()["elements"]
-            break
-        except Exception as ex:  # noqa: BLE001
-            print(f"strutture: {url} non disponibile ({ex})")
-            time.sleep(5)
-    else:
-        print("strutture: tengo l'ultimo file")
-        return
+    els = []
+    for f in FILTERS:
+        for url in OVERPASS:
+            try:
+                r = requests.post(url, data={"data": Q(f)}, timeout=90, headers={"User-Agent": "crinaleappennino.it"})
+                r.raise_for_status()
+                els += r.json()["elements"]
+                break
+            except Exception as ex:  # noqa: BLE001
+                print(f"strutture: {url} {f} non disponibile ({str(ex)[:120]})")
+                time.sleep(3)
+        else:
+            print("strutture: una query non è riuscita, tengo l'ultimo file")
+            return
+        time.sleep(2)
     out = []
     for e in els:
         t = e.get("tags", {})
