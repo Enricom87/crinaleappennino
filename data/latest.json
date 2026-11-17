@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-17T08:34+01:00",
+ "generated": "2026-11-17T09:39+01:00",
  "alerts": [],
- "overview": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare). Chi se la gode di più: Febbio, Garfagnana, Lago Santo. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "overview": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare). Chi se la gode di più: Febbio, Garfagnana, Cimone. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
@@ -18,7 +18,7 @@
    "name": "Cimone · Sestola e Passo del Lupo",
    "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
    "level": "watch",
-   "snow3_top": 1.0,
+   "snow3_top": 1.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
@@ -27,7 +27,7 @@
    "name": "Le Polle · Riolunato",
    "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
    "level": "watch",
-   "snow3_top": 1.0,
+   "snow3_top": 1.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
@@ -36,7 +36,7 @@
    "name": "Cimoncino · Fanano",
    "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
    "level": "watch",
-   "snow3_top": 1.0,
+   "snow3_top": 1.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
