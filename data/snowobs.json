@@ -10,10 +10,10 @@
    "elev": 1252,
    "lat": 44.41229,
    "lon": 10.00854,
-   "cm": 2,
-   "time": "2026-11-17T16:30:00Z",
-   "delta": 2,
-   "delta_h": 5
+   "cm": 0,
+   "time": "2026-11-17T17:00:00Z",
+   "delta": 0,
+   "delta_h": 6
   },
   {
    "name": "Lago Paduli",
@@ -21,9 +21,9 @@
    "lat": 44.3458,
    "lon": 10.13845,
    "cm": 0,
-   "time": "2026-11-17T16:30:00Z",
+   "time": "2026-11-17T17:00:00Z",
    "delta": 0,
-   "delta_h": 5
+   "delta_h": 6
   },
   {
    "name": "Lago Scaffaiolo Nivo",
@@ -31,19 +31,19 @@
    "lat": 44.11917,
    "lon": 10.8175,
    "cm": 5,
-   "time": "2026-11-17T16:30:00Z",
+   "time": "2026-11-17T17:00:00Z",
    "delta": 0,
-   "delta_h": 5
+   "delta_h": 6
   },
   {
    "name": "Doccia di Fiumalbo",
    "elev": 1371,
    "lat": 44.19013,
    "lon": 10.67311,
-   "cm": 6,
-   "time": "2026-11-17T16:30:00Z",
-   "delta": -1,
-   "delta_h": 5
+   "cm": 1,
+   "time": "2026-11-17T17:00:00Z",
+   "delta": -6,
+   "delta_h": 6
   },
   {
    "name": "Ligonchio",
@@ -51,9 +51,9 @@
    "lat": 44.31699,
    "lon": 10.34493,
    "cm": 2,
-   "time": "2026-11-17T16:30:00Z",
+   "time": "2026-11-17T17:00:00Z",
    "delta": -3,
-   "delta_h": 5
+   "delta_h": 6
   },
   {
    "name": "Febbio",
@@ -71,49 +71,49 @@
    "lat": 44.23713,
    "lon": 10.51634,
    "cm": 2,
-   "time": "2026-11-17T16:30:00Z",
+   "time": "2026-11-17T17:00:00Z",
    "delta": -5,
-   "delta_h": 5
+   "delta_h": 6
   },
   {
    "name": "Lago Pratignano",
    "elev": 1319,
    "lat": 44.1774,
    "lon": 10.8178,
-   "cm": 0,
-   "time": "2026-11-17T16:30:00Z",
-   "delta": -2,
-   "delta_h": 4
+   "cm": 1,
+   "time": "2026-11-17T17:00:00Z",
+   "delta": -1,
+   "delta_h": 5
   },
   {
    "name": "Civago",
    "elev": 1051,
    "lat": 44.24716,
    "lon": 10.4658,
-   "cm": 3,
-   "time": "2026-11-17T16:30:00Z",
-   "delta": -14,
-   "delta_h": 5
+   "cm": 10,
+   "time": "2026-11-17T17:00:00Z",
+   "delta": -7,
+   "delta_h": 6
   },
   {
    "name": "Passo delle Radici",
    "elev": 1535,
    "lat": 44.20976,
    "lon": 10.48864,
-   "cm": 10,
-   "time": "2026-11-17T16:30:00Z",
-   "delta": -2,
-   "delta_h": 5
+   "cm": 11,
+   "time": "2026-11-17T17:00:00Z",
+   "delta": -1,
+   "delta_h": 6
   },
   {
    "name": "Monteacuto delle Alpi",
    "elev": 900,
    "lat": 44.13638,
    "lon": 10.88741,
-   "cm": 1,
-   "time": "2026-11-17T16:30:00Z",
-   "delta": 1,
-   "delta_h": 5
+   "cm": 2,
+   "time": "2026-11-17T17:00:00Z",
+   "delta": 2,
+   "delta_h": 6
   }
  ]
 }
