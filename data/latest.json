@@ -1,13 +1,13 @@
 {
- "generated": "2026-11-17T20:16+01:00",
+ "generated": "2026-11-18T07:43+01:00",
  "alerts": [],
- "overview": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare). Chi se la gode di più: Febbio, Garfagnana, Lago Santo. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "overview": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita. Chi se la gode di più: Febbio, Lago Santo, Corno alle Scale. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
    "slug": "abetone",
    "name": "Abetone",
-   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -16,35 +16,35 @@
   {
    "slug": "cimone",
    "name": "Cimone · Sestola e Passo del Lupo",
-   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
    "level": "watch",
-   "snow3_top": 1.4,
+   "snow3_top": 0.0,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
-   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
    "level": "watch",
-   "snow3_top": 1.4,
+   "snow3_top": 0.0,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
    "level": "watch",
-   "snow3_top": 1.4,
+   "snow3_top": 0.0,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "doganaccia",
    "name": "Doganaccia",
-   "title": "Spolverata in vetta e poco altro: la neve vera si fa attendere",
-   "level": "low",
+   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
+   "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
    "back_by": null
@@ -52,6 +52,24 @@
   {
    "slug": "corno-alle-scale",
    "name": "Corno alle Scale",
+   "title": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita",
+   "level": "watch",
+   "snow3_top": 0.5,
+   "verdict": "Meglio di no",
+   "back_by": null
+  },
+  {
+   "slug": "lago-scaffaiolo",
+   "name": "Lago Scaffaiolo",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
+   "level": "watch",
+   "snow3_top": 0.0,
+   "verdict": "Meglio di no",
+   "back_by": null
+  },
+  {
+   "slug": "lago-santo",
+   "name": "Lago Santo · Monte Giovo",
    "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
    "level": "watch",
    "snow3_top": 0.2,
@@ -59,36 +77,18 @@
    "back_by": null
   },
   {
-   "slug": "lago-scaffaiolo",
-   "name": "Lago Scaffaiolo",
-   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
-   "level": "watch",
-   "snow3_top": 0.1,
-   "verdict": "Meglio di no",
-   "back_by": null
-  },
-  {
-   "slug": "lago-santo",
-   "name": "Lago Santo · Monte Giovo",
-   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
-   "level": "watch",
-   "snow3_top": 0.0,
-   "verdict": "Meglio di no",
-   "back_by": null
-  },
-  {
    "slug": "garfagnana",
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
-   "title": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita",
+   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
    "level": "watch",
-   "snow3_top": 1.4,
+   "snow3_top": 0.2,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "cerreto-laghi",
    "name": "Cerreto Laghi",
-   "title": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita",
+   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -97,9 +97,9 @@
   {
    "slug": "febbio",
    "name": "Febbio · Monte Cusna",
-   "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
+   "title": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita",
    "level": "watch",
-   "snow3_top": 3.1,
+   "snow3_top": 0.2,
    "verdict": "Meglio di no",
    "back_by": null
   }
