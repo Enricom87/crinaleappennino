@@ -462,3 +462,10 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 .art-item b{font-size:1.1rem}
 .art-link{margin-top:14px}
 .pro-note{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:12px;padding:10px 14px;margin:8px 0 14px;font-size:.95rem}
+/* Segnala la neve */
+.rep-kind{border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rep-kind legend{font-weight:600;padding:0 6px}
+.rep-kind label{display:flex;gap:8px;align-items:center;font-weight:500}
+.rep-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:10px 0}
+.rep{background:#fff;border-radius:12px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;box-shadow:0 1px 2px rgba(15,30,60,.06);font-size:.92rem}
+@media(max-width:600px){.rep-kind{grid-template-columns:1fr}}

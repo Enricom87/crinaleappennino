@@ -14,7 +14,7 @@
 {% if summer and loc.mtn %}{% include "_mtn.html" %}{% endif %}
 
 <nav class="subnav" aria-label="{{ t('Sezioni') }}"><div class="wrap">
-  {% if loc.weekend %}<a href="#weekend">{{ t("Weekend") }}</a>{% endif %}<a href="#giorni">{{ t("Previsioni") }}</a>{% if loc.liftinfo and not summer %}<a href="#impianti">{{ t("Impianti") }}</a>{% endif %}{% if loc.extras.list or loc.events.list %}<a href="#cosafare">{{ t("Cosa fare") }}</a>{% endif %}{% if loc.places %}<a href="#rifugi">{{ t("Rifugi") }}</a>{% endif %}{% if loc.hours_top %}<a href="#ore">{{ t("Ora per ora") }}</a>{% endif %}<a href="#analisi">{{ t("Analisi") }}</a>{% if loc.mtn %}<a href="#quota">{{ t("In quota") }}</a>{% endif %}{% if loc.road or loc.roadrule is not none %}<a href="#strada">{{ t("Strada") }}</a>{% endif %}{% if loc.routes %}<a href="#percorsi">{{ t("Percorsi") }}</a>{% endif %}<a href="#webcam">{{ t("Webcam") }}</a>
+  {% if loc.weekend %}<a href="#weekend">{{ t("Weekend") }}</a>{% endif %}<a href="#giorni">{{ t("Previsioni") }}</a>{% if loc.liftinfo and not summer %}<a href="#impianti">{{ t("Impianti") }}</a>{% endif %}{% if not summer %}<a href="#segnalazioni">{{ t("Segnalazioni") }}</a>{% endif %}{% if loc.extras.list or loc.events.list %}<a href="#cosafare">{{ t("Cosa fare") }}</a>{% endif %}{% if loc.places %}<a href="#rifugi">{{ t("Rifugi") }}</a>{% endif %}{% if loc.hours_top %}<a href="#ore">{{ t("Ora per ora") }}</a>{% endif %}<a href="#analisi">{{ t("Analisi") }}</a>{% if loc.mtn %}<a href="#quota">{{ t("In quota") }}</a>{% endif %}{% if loc.road or loc.roadrule is not none %}<a href="#strada">{{ t("Strada") }}</a>{% endif %}{% if loc.routes %}<a href="#percorsi">{{ t("Percorsi") }}</a>{% endif %}<a href="#webcam">{{ t("Webcam") }}</a>
 </div></nav>
 {% if loc.ground %}{% set g = loc.ground %}
 <section class="wrap"><div class="ground">
@@ -64,6 +64,7 @@
 
 {% if not summer %}{% include "_lifts.html" %}{% endif %}
 {% include "_hourly.html" %}
+{% include "_reports.html" %}
 {% include "_extras.html" %}
 {% include "_places.html" %}
 {% if loc.history %}{% set hs = loc.history %}

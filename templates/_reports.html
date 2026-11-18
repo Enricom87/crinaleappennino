@@ -1,0 +1,20 @@
+{% if not summer %}
+<section class="wrap" id="segnalazioni">
+  <h2>{{ t("Segnalazioni dal territorio") }}</h2>
+  <div id="replist" class="rep-list"><p class="muted">{{ t("Caricamento…") }}</p></div>
+  <p><a class="btn small" href="{{ u('segnala-neve/') }}?loc={{ loc.slug }}">📍 {{ t("Sei qui? Segnala la neve") }}</a></p>
+</section>
+<script>
+(function(){
+  var L={nevica:"❄️ {{ t('Nevica') }}",neve:"⛄ {{ t('Neve al suolo') }}",pioggia:"🌧️ {{ t('Piove') }}",niente:"🟫 {{ t('Niente neve') }}"};
+  var box=document.getElementById('replist');
+  function ago(ts){var m=Math.round((Date.now()-Date.parse(ts))/60000); if(m<60) return "{{ t('{n} min fa') }}".replace('{n}',Math.max(1,m)); var h=Math.round(m/60); if(h<48) return "{{ t('{n} ore fa') }}".replace('{n}',h); return "{{ t('{n} giorni fa') }}".replace('{n}',Math.round(h/24));}
+  function esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  fetch("{{ site.report_endpoint|replace('/report','/reports.json') }}?loc={{ loc.slug }}").then(function(r){return r.json()}).then(function(j){
+    var rs=(j.reports||[]).filter(function(r){return Date.now()-Date.parse(r.ts)<48*3600e3});
+    if(!rs.length){box.innerHTML='<p class="muted">{{ t("Nessuna segnalazione nelle ultime 48 ore.") }}</p>';return}
+    box.innerHTML=rs.slice(0,8).map(function(r){return '<div class="rep"><b>'+L[r.kind]+(r.cm?' · '+r.cm+' cm':'')+'</b><span>'+esc(r.place)+(r.place?' · ':'')+r.elev+' m · '+ago(r.ts)+'</span>'+(r.note?'<span class="muted">'+esc(r.note)+'</span>':'')+'</div>'}).join('');
+  }).catch(function(){box.innerHTML='<p class="muted">{{ t("Segnalazioni non disponibili in questo momento.") }}</p>'});
+})();
+</script>
+{% endif %}

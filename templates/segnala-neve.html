@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ t("Segnala la neve") }} · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>{{ t("Segnala la neve") }}</h1>
+<p class="lead">{{ t("Sei in montagna? Dicci cosa vedi: nevica, quanta ce n'è, o se c'è solo pioggia. La tua segnalazione compare subito nella pagina della località e ci aiuta a rendere le previsioni più precise.") }}</p></div></section>
+<section class="wrap narrow">
+<form class="nl ev-form" id="repform">
+  <label>{{ t("Località più vicina") }} *<select name="loc" required>
+    <option value="">—</option>
+    {% for L in locs %}<option value="{{ L.slug }}">{{ L.name }}</option>{% endfor %}
+  </select></label>
+  <label>{{ t("Dove sei, di preciso") }}<input name="place" maxlength="80" placeholder="{{ t('es. Passo, piazzale, rifugio') }}"></label>
+  <label>{{ t("A che quota (metri)") }} *<input type="number" name="elev" required min="200" max="2200" step="10" inputmode="numeric"></label>
+  <fieldset class="rep-kind"><legend>{{ t("Cosa vedi") }} *</legend>
+    <label><input type="radio" name="kind" value="nevica" required> ❄️ {{ t("Nevica") }}</label>
+    <label><input type="radio" name="kind" value="neve"> ⛄ {{ t("Neve al suolo, non nevica") }}</label>
+    <label><input type="radio" name="kind" value="pioggia"> 🌧️ {{ t("Piove") }}</label>
+    <label><input type="radio" name="kind" value="niente"> 🟫 {{ t("Niente neve") }}</label>
+  </fieldset>
+  <label>{{ t("Centimetri di neve al suolo (se ce n'è)") }}<input type="number" name="cm" min="0" max="400" inputmode="numeric"></label>
+  <label>{{ t("Una nota (strada, piste, ghiaccio…)") }}<input name="note" maxlength="200"></label>
+  <input type="text" name="website" value="" class="hp" tabindex="-1" autocomplete="off">
+  <button class="btn" type="submit">{{ t("Invia la segnalazione") }}</button>
+  <p class="ev-msg" id="repmsg" role="status"></p>
+  <p class="small muted">{{ t("Non chiediamo nome né contatti. Le segnalazioni restano online 3 giorni.") }}</p>
+</form>
+</section>
+<script>
+(function(){
+  var f=document.getElementById('repform'), m=document.getElementById('repmsg');
+  var q=new URLSearchParams(location.search).get('loc'); if(q){f.loc.value=q;}
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var d={}; new FormData(f).forEach(function(v,k){d[k]=v}); d.lang="{{ lang }}";
+    var b=f.querySelector('button'); b.disabled=true; m.textContent="{{ t('Invio in corso…') }}";
+    fetch("{{ site.report_endpoint }}",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(d)})
+      .then(function(r){return r.json().then(function(j){return [r.status,j]})})
+      .then(function(x){
+        if(x[1].ok){var l=f.loc.value; f.reset(); m.className='ev-msg ok'; m.innerHTML="{{ t('Grazie! La tua segnalazione è già online.') }} <a href=\"{{ u('') }}"+l+"/#segnalazioni\">{{ t('Guardala') }} →</a>";}
+        else if(x[0]===429){m.className='ev-msg err'; m.textContent="{{ t('Hai già inviato diverse segnalazioni: riprova tra un po’.') }}";}
+        else {m.className='ev-msg err'; m.textContent="{{ t('Controlla località, quota e cosa vedi.') }}";}
+      }).catch(function(){m.className='ev-msg err'; m.textContent="{{ t('Invio non riuscito. Riprova tra poco.') }}";})
+      .finally(function(){b.disabled=false});
+  });
+})();
+</script>
+{% endblock %}

@@ -338,7 +338,7 @@ def main() -> None:
             render("articolo.html", f"tendenze/{a['date']}/", art=a)
         for L in locs:
             render("location.html", f"{L['slug']}/", loc=L)
-        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline", "segnala"):
+        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline", "segnala", "segnala-neve"):
             render(f"{pg}.html", f"{pg}/")
         render("percorsi.html", "percorsi/")
         for r in routes:

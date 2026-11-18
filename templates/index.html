@@ -115,7 +115,8 @@
     <div><h2>{{ t("Il punto del crinale, ogni mattina su Telegram") }}</h2>
     <p>{{ t("Un messaggio al giorno con tutte le località e un avviso appena arriva la neve. Gratis, niente email.") }}</p></div>
     <div class="tg-btns"><a class="btn tg" href="{{ site.social.telegram }}" rel="noopener">{{ t("Segui su Telegram") }}</a>
-    {% if site.social.telegram_bot %}<a class="btn ghost" href="{{ site.social.telegram_bot }}?start" rel="noopener">🔔 {{ t("Solo le mie località") }}</a>{% endif %}</div>
+    {% if site.social.telegram_bot %}<a class="btn ghost" href="{{ site.social.telegram_bot }}?start" rel="noopener">🔔 {{ t("Solo le mie località") }}</a>{% endif %}
+    <a class="btn ghost" href="{{ u('segnala-neve/') }}">📍 {{ t("Segnala la neve") }}</a></div>
   </div>
 </section>
 {% endif %}

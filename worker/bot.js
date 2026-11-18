@@ -111,6 +111,62 @@ async function submitEvent(req, env) {
   return Response.json({ ok: true }, { headers: h });
 }
 
+// --- Segnala la neve: osservazioni dal territorio, pubblicate subito, rimovibili dall'amministratore ---
+const KINDS = ["nevica", "neve", "pioggia", "niente"];
+async function submitReport(req, env) {
+  const h = cors(req);
+  let b;
+  try { b = await req.json(); } catch { return Response.json({ ok: false }, { status: 400, headers: h }); }
+  if (b.website) return Response.json({ ok: true }, { headers: h });
+  const r = { loc: clip(b.loc, 40), kind: KINDS.includes(b.kind) ? b.kind : "", elev: Math.round(+b.elev || 0),
+              cm: Math.max(0, Math.min(400, Math.round(+b.cm || 0))), note: clip(b.note, 200), place: clip(b.place, 80),
+              ts: new Date().toISOString() };
+  if (!r.loc || !r.kind || r.elev < 200 || r.elev > 2200) return Response.json({ ok: false, err: "campi" }, { status: 400, headers: h });
+  const ip = req.headers.get("CF-Connecting-IP") || "x";
+  const rk = `rlr:${ip}:${r.ts.slice(0, 13)}`;
+  const n = +(await env.SUBS.get(rk) || 0);
+  if (n >= 4) return Response.json({ ok: false, err: "troppe" }, { status: 429, headers: h });
+  await env.SUBS.put(rk, String(n + 1), { expirationTtl: 7200 });
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+  await env.SUBS.put("rep:" + id, JSON.stringify({ id, ...r }), { expirationTtl: 4 * 86400 });
+  const admin = await env.SUBS.get("admin");
+  if (admin) {
+    const what = { nevica: "❄️ nevica", neve: "⛄ neve al suolo", pioggia: "🌧️ pioggia", niente: "🟫 niente neve" }[r.kind];
+    await tg(env, "sendMessage", { chat_id: admin, parse_mode: "HTML",
+      text: `📍 <b>Segnalazione</b> ${esc(r.loc)} · ${esc(r.place)} ${r.elev} m\n${what}${r.cm ? ` · ${r.cm} cm` : ""}\n${esc(r.note)}`,
+      reply_markup: { inline_keyboard: [[{ text: "🗑️ Rimuovi", callback_data: "rr:" + id }]] } });
+  }
+  return Response.json({ ok: true, id }, { headers: h });
+}
+
+async function listReports(req, env) {
+  const url = new URL(req.url);
+  const loc = url.searchParams.get("loc");
+  const out = [];
+  let cursor;
+  do {
+    const page = await env.SUBS.list({ prefix: "rep:", cursor });
+    for (const k of page.keys) {
+      const v = await env.SUBS.get(k.name);
+      if (!v) continue;
+      const r = JSON.parse(v);
+      if (!loc || r.loc === loc) out.push(r);
+    }
+    cursor = page.list_complete ? undefined : page.cursor;
+  } while (cursor);
+  out.sort((a, b) => (a.ts < b.ts ? 1 : -1));
+  return Response.json({ reports: out.slice(0, 50) }, { headers: { ...cors(req), "Access-Control-Allow-Origin": "*", "cache-control": "no-store" } });
+}
+
+async function removeReport(env, cq) {
+  const admin = await env.SUBS.get("admin");
+  if (String(cq.message.chat.id) !== admin) return tg(env, "answerCallbackQuery", { callback_query_id: cq.id });
+  await env.SUBS.delete("rep:" + cq.data.slice(3));
+  await tg(env, "answerCallbackQuery", { callback_query_id: cq.id, text: "Rimossa" });
+  return tg(env, "editMessageText", { chat_id: cq.message.chat.id, message_id: cq.message.message_id,
+    text: (cq.message.text || "") + "\n\n🗑️ Rimossa" });
+}
+
 async function moderate(env, cq) {
   const id = cq.data.slice(3), ok = cq.data.startsWith("ea:");
   const admin = await env.SUBS.get("admin");
@@ -231,6 +287,7 @@ async function onMessage(env, msg) {
 
 async function onCallback(env, cq) {
   if (/^e[ar]:/.test(cq.data || "")) return moderate(env, cq);
+  if (/^rr:/.test(cq.data || "")) return removeReport(env, cq);
   const id = cq.message.chat.id;
   const slug = (cq.data || "").slice(2);
   const data = await feed();
@@ -313,6 +370,8 @@ export default {
     if (req.method === "OPTIONS") return new Response(null, { headers: cors(req) });
     if (url.pathname === "/event" && req.method === "POST") return submitEvent(req, env);
     if (url.pathname === "/events.json") return listEvents(req, env);
+    if (url.pathname === "/report" && req.method === "POST") return submitReport(req, env);
+    if (url.pathname === "/reports.json") return listReports(req, env);
     if (url.pathname === "/setup") {
       // Collega il bot a questo worker. Ripeterlo non fa danni: reimposta sempre lo stesso indirizzo.
       const r = await tg(env, "setWebhook", { url: url.origin + "/tg", secret_token: await secretOf(env),
