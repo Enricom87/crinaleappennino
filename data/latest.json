@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-18T11:01+01:00",
+ "generated": "2026-11-18T11:29+01:00",
  "alerts": [],
  "overview": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita. Chi se la gode di più: Febbio, Cimone, Le Polle. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
@@ -72,7 +72,7 @@
    "name": "Lago Santo · Monte Giovo",
    "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
    "level": "watch",
-   "snow3_top": 0.2,
+   "snow3_top": 0.0,
    "verdict": "Meglio di no",
    "back_by": null
   },
