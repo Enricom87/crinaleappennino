@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-18T16:22+01:00",
+ "generated": "2026-11-18T17:56+01:00",
  "alerts": [],
- "overview": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Febbio (1150 m), da confermare. Chi se la gode di più: Febbio, Garfagnana, Lago Santo. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "overview": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Cusna (2121 m); a Febbio (1150 m) per ora poco o niente. Chi se la gode di più: Febbio, Garfagnana, Lago Santo. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
@@ -16,7 +16,7 @@
   {
    "slug": "cimone",
    "name": "Cimone · Sestola e Passo del Lupo",
-   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Lago della Ninfa (1500 m), da confermare",
+   "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Cimone (2165 m); a Lago della Ninfa (1500 m) per ora poco o niente",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -25,7 +25,7 @@
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
-   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Le Polle (1300 m), da confermare",
+   "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Cimone (2165 m); a Le Polle (1300 m) per ora poco o niente",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -34,7 +34,7 @@
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Cimoncino (1400 m), da confermare",
+   "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Cimone (2165 m); a Cimoncino (1400 m) per ora poco o niente",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -70,7 +70,7 @@
   {
    "slug": "lago-santo",
    "name": "Lago Santo · Monte Giovo",
-   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Lago Santo modenese (1501 m), da confermare",
+   "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Giovo (1991 m); a Lago Santo modenese (1501 m) per ora poco o niente",
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
@@ -79,7 +79,7 @@
   {
    "slug": "garfagnana",
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
-   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Casone di Profecchia (1314 m), da confermare",
+   "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Prado (2054 m); a Casone di Profecchia (1314 m) per ora poco o niente",
    "level": "watch",
    "snow3_top": 0.2,
    "verdict": "Meglio di no",
@@ -97,7 +97,7 @@
   {
    "slug": "febbio",
    "name": "Febbio · Monte Cusna",
-   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Febbio (1150 m), da confermare",
+   "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Cusna (2121 m); a Febbio (1150 m) per ora poco o niente",
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
