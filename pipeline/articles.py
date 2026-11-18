@@ -122,7 +122,17 @@ def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None 
     else:
         ground = T("Per ora le stazioni ufficiali non misurano neve al suolo significativa.")
 
-    return {"date": today, "title": title, "lead": lead, "phases": phases, "models": models,
+    import pro
+    pz = (pro.load().get("zones") or {}).get("pistoiese") or {}
+    pros = []
+    if pz:
+        pros.append(T("I meteorologi del Consorzio LaMMA, nel loro Bollettino Montagna, danno la quota neve sull'Appennino pistoiese a: {l}.",
+                      l=", ".join(f"{nice_date(d, True)} {v['snow_level']} m" for d, v in sorted(pz.items()) if d >= today)))
+        if any(v["snow_level"] <= 1500 for v in pz.values()):
+            pros.append(T("È in linea con un episodio nevoso fino alle quote delle stazioni."))
+        else:
+            pros.append(T("Nei prossimi giorni quindi niente neve alle quote delle stazioni: il loro giudizio coincide con il nostro controllo."))
+    return {"date": today, "title": title, "lead": lead, "phases": phases, "models": models, "pros": pros,
             "weekend": weekend, "ground": ground, "chart": tv.get("chart", ""),
             "pub": nice_date(today)}
 

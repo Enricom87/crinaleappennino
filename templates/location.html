@@ -53,6 +53,7 @@
 {% endif %}
 <section class="wrap" id="giorni">
   <h2>{{ t("Le prossime giornate") }}</h2>
+  {% if loc.pro and loc.pro.days %}<p class="pro-note">🧑‍🔬 {{ t("Quota neve secondo i meteorologi del LaMMA:") }} {% for d in loc.pro.days %}<b>{{ d.name }} {{ d.lv }} m</b>{% if not loop.last %} · {% endif %}{% endfor %}. <a href="{{ loc.pro.src.url }}" rel="noopener" target="_blank">{{ t("Bollettino Montagna") }}</a> <span class="muted small">{{ t("Usiamo il loro bollettino come controllo: dove i modelli mettono neve molto sotto questa quota, non la pubblichiamo.") }}</span></p>{% endif %}
   <div class="alt-row"><h3>⛰️ {{ t("In vetta") }}</h3><span class="muted">{{ loc.mtn_top.name }} · {{ loc.mtn_top.elev }} m</span></div>
   {% with cards = loc.cards_top %}{% include "_cards.html" %}{% endwith %}
   {% if loc.cards_base %}

@@ -17,6 +17,7 @@ from synview import syn_view
 from verdict import weekend
 from extras import activities, events, snow_ground, places, avalanche
 from bestpick import best_pick
+from i18n import day_short
 from articles import due as art_due_fn, compose as art_compose, save as art_save, load_all as art_load
 from history import record as hist_record, view as hist_view
 from cards import prob_word
@@ -121,6 +122,9 @@ def main() -> None:
 
     # dati indipendenti dalla lingua
     base_locs = [loc for loc in cfg["locations"] if all(p in pts for p in loc["points"])]
+    import pro
+    pro_notes = pro.apply(base_locs, pts)  # freno dei meteorologi LaMMA sulla quota neve
+    pro_src = (pro.load().get("source") or {})
     mtn = {}
     for loc in base_locs:
         for pid in loc["points"]:
@@ -211,6 +215,9 @@ def main() -> None:
             L["places"] = places(loc, pts)
             L["aval"] = None if IS_SUMMER else avalanche(loc)
             L["roadrule"] = None if IS_SUMMER else ROADS.get(loc["slug"], [])
+            pn = pro_notes.get(loc["slug"]) or {}
+            L["pro"] = None if IS_SUMMER or not pn else {
+                "src": pro_src, "days": [{"name": day_short(d), "lv": lv} for d, lv in sorted(pn.items()) if d >= today]}
             locs.append(L)
         loc_by_slug = {L["slug"]: L for L in locs}
         routes = []

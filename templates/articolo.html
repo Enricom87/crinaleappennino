@@ -9,6 +9,7 @@
   <h2>{{ t("Fase per fase") }}</h2>
   {% for p in art.phases %}<p class="art-phase" style="border-color:{{ p.color }}"><b>{{ p.emoji }} {{ p.label }}</b><br>{{ p.text }}</p>{% endfor %}
   {% if art.models %}<h2>{{ t("Chi ci crede e chi no") }}</h2>{% for p in art.models %}<p>{{ p }}</p>{% endfor %}{% endif %}
+  {% if art.pros %}<h2>{{ t("Cosa dicono i meteorologi") }}</h2>{% for p in art.pros %}<p>{{ p }}</p>{% endfor %}{% endif %}
   {% if art.weekend %}<h2>{{ t("Il prossimo weekend") }}</h2><ul>{% for p in art.weekend %}<li>{{ p }}</li>{% endfor %}</ul>{% endif %}
   <h2>{{ t("Quanta neve c'è adesso") }}</h2>
   <p>{{ art.ground }}</p>
