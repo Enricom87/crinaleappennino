@@ -18,9 +18,18 @@ OBS = ROOT / "data" / "snowobs.json"
 PUB_DAYS = (0, 3)  # lunedì, giovedì
 
 
+VERSION = 2  # se cambia il modo di scrivere, l'articolo di oggi si riscrive al prossimo aggiornamento
+
+
 def due(today: str) -> bool:
     now = datetime.now(ZoneInfo("Europe/Rome"))
     exists = (DIR / today).exists()
+    if exists:
+        try:
+            if json.loads((DIR / today / "it.json").read_text()).get("v", 1) < VERSION:
+                return True
+        except Exception:  # noqa: BLE001
+            return True
     first_ever = not DIR.exists() or not any(DIR.iterdir())
     return not exists and (first_ever or (date.fromisoformat(today).weekday() in PUB_DAYS and now.hour >= 6))
 
@@ -146,7 +155,7 @@ def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None 
         else:
             pros.append(T("Quote ancora alte: la neve, se arriva, resta sopra i {lv} m.", lv=low_["lv"]))
     big = [telev["head"]] + telev["lines"] if telev else []
-    return {"date": today, "title": title, "lead": lead, "phases": phases, "models": models, "pros": pros, "big": big,
+    return {"v": VERSION, "date": today, "title": title, "lead": lead, "phases": phases, "models": models, "pros": pros, "big": big,
             "weekend": weekend, "ground": ground, "chart": tv.get("chart", ""),
             "pub": nice_date(today)}
 
