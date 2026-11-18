@@ -1,13 +1,13 @@
 {
- "generated": "2026-11-18T17:56+01:00",
+ "generated": "2026-11-18T22:16+01:00",
  "alerts": [],
- "overview": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Cusna (2121 m); a Febbio (1150 m) per ora poco o niente. Chi se la gode di più: Febbio, Garfagnana, Lago Santo. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "overview": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Prado (2054 m); a Casone di Profecchia (1314 m) per ora poco o niente. Chi se la gode di più: Garfagnana, Febbio, Cimone. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
    "slug": "abetone",
    "name": "Abetone",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Passo dell'Abetone (1388 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: possibile neve solo in vetta, al Monte Gomito (1892 m); a Passo dell'Abetone (1388 m) per ora poco o niente",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -18,7 +18,7 @@
    "name": "Cimone · Sestola e Passo del Lupo",
    "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Cimone (2165 m); a Lago della Ninfa (1500 m) per ora poco o niente",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
@@ -27,7 +27,7 @@
    "name": "Le Polle · Riolunato",
    "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Cimone (2165 m); a Le Polle (1300 m) per ora poco o niente",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
@@ -36,7 +36,7 @@
    "name": "Cimoncino · Fanano",
    "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Cimone (2165 m); a Cimoncino (1400 m) per ora poco o niente",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
@@ -54,7 +54,7 @@
    "name": "Corno alle Scale",
    "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Cavone (1430 m), da confermare",
    "level": "watch",
-   "snow3_top": 0.5,
+   "snow3_top": 0.6,
    "verdict": "Meglio di no",
    "back_by": null
   },
@@ -81,7 +81,7 @@
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
    "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Prado (2054 m); a Casone di Profecchia (1314 m) per ora poco o niente",
    "level": "watch",
-   "snow3_top": 0.2,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
@@ -90,7 +90,7 @@
    "name": "Cerreto Laghi",
    "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Cerreto Laghi (1340 m), da confermare",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
