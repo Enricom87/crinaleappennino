@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ t("Come funzionano le previsioni") }} · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>{{ t("Come funzionano le previsioni, spiegato semplice") }}</h1>
+<p class="lead">{{ t("Modelli, uscite, scenari: perché una mappa sui social promette il gelo e il giorno dopo il caldo, e come leggere davvero una previsione a 10 giorni.") }}</p></div></section>
+<section class="wrap narrow explain">
+  <p>{{ t("Immagina di dover indovinare dove arriverà una pallina lanciata giù da una montagna piena di sassi.") }}</p>
+  <h2>🖥️ {{ t("Il modello: un computer che fa questo gioco con l'aria") }}</h2>
+  <p>{{ t("Prende com'è l'aria adesso in tutto il mondo (temperatura, vento, umidità, misurati da stazioni, palloni sonda, aerei e satelliti) e calcola come si muoverà tra un'ora, poi tra due, poi tra un giorno, un passo alla volta, fino a 15 giorni. Ogni centro meteo ha il suo modello: l'americano GFS, l'europeo ECMWF, il tedesco ICON, l'italiano ICON-2I. Sono come bambini diversi che giocano allo stesso gioco, ognuno a modo suo.") }}</p>
+  <h2>🔁 {{ t("L'uscita: una nuova partita") }}</h2>
+  <p>{{ t("Ogni 6 o 12 ore arrivano misure nuove e il computer ricomincia il calcolo da capo. Ogni volta esce una previsione un po' diversa: quella è l'uscita, o la corsa, delle 00, delle 06, delle 12, delle 18.") }}</p>
+  <h2>🎲 {{ t("Perché lontano nel tempo sbagliano") }}</h2>
+  <p>{{ t("Se segui la pallina per un metro, sai dove va. Se la segui per un chilometro, basta che all'inizio sbatta su un sassolino in modo un po' diverso e finisce in una valle completamente diversa. L'aria si comporta allo stesso modo. A 2–3 giorni i modelli sono bravi, a 7 giorni così così, a 12–15 giorni una singola uscita è quasi un tiro di dadi. Per questo un giorno un modello mostra il gelo e il giorno dopo il caldo.") }}</p>
+  <h2>🎯 {{ t("Il trucco: tanti lanci invece di uno") }}</h2>
+  <p>{{ t("Invece di lanciare la pallina una volta, la lanci 50 volte cambiando di pochissimo il punto di partenza. Se 45 palline finiscono nella stessa valle, sei abbastanza sicuro. Se si sparpagliano dappertutto, sai che non si può sapere. Questi lanci si chiamano scenari, o ensemble. Noi ne mettiamo insieme circa 300, da 8 modelli diversi, e contiamo quanti vanno nella stessa direzione.") }}</p>
+  <h2>📣 {{ t("Perché certe mappe sui social sembrano così sicure") }}</h2>
+  <p>{{ t("Una mappa spettacolare è spesso un solo lancio, magari il più strano. Noi invece ti diciamo quante palline su 100 finiscono nel freddo o nella neve. Quando leggi «20 scenari su 100», vuol dire che il freddo è possibile ma non è ancora la cosa più probabile. Quando diventano 60 o 70 su 100, ci si può cominciare a credere.") }}</p>
+  <h2>🔍 {{ t("I modelli con la lente d'ingrandimento") }}</h2>
+  <p>{{ t("Alcuni modelli vedono le montagne nei dettagli: capiscono che sul Cimone nevica mentre a Le Polle piove. Però guardano avanti solo 2–3 giorni. Per questo sul sito i giorni vicini vengono da loro, e le tendenze lontane dal conteggio degli scenari.") }}</p>
+  <div class="cfg"><p><b>{{ t("In breve") }}:</b> {{ t("vicino conta il modello dettagliato, lontano conta quanti scenari su 100 dicono la stessa cosa, non la singola mappa che fa più paura.") }}</p></div>
+  <p><a class="btn" href="{{ u('tendenze/') }}">📈 {{ t("Guarda le tendenze di oggi") }}</a> <a class="btn ghost" href="{{ u('metodo/') }}">{{ t("Metodo e fonti") }}</a></p>
+</section>
+{% endblock %}
