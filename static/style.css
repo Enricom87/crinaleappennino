@@ -469,3 +469,17 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 .rep-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:10px 0}
 .rep{background:#fff;border-radius:12px;padding:10px 14px;display:flex;flex-direction:column;gap:2px;box-shadow:0 1px 2px rgba(15,30,60,.06);font-size:.92rem}
 @media(max-width:600px){.rep-kind{grid-template-columns:1fr}}
+/* Dicembre negli anni */
+.clim-pick select{margin-left:8px;padding:6px 10px;border-radius:10px;border:1px solid var(--line);font:inherit}
+.clim-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:12px 0}
+.clim-kpi div{background:#fff;border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(15,30,60,.06)}
+.clim-kpi b{font-size:1.4rem}.clim-kpi span{font-size:.82rem;color:var(--muted)}
+.clim-fig{margin:12px 0;background:#fff;border-radius:12px;padding:10px}
+.clim-chart{width:100%;height:auto}.clim-chart .b{fill:#5b8fc7}.clim-chart .b.xmas{fill:#9cc6ef}.clim-chart .b.part{fill:#c9d6e3}
+.clim-chart .mean{stroke:#0f2236;stroke-dasharray:4 3}.clim-chart text{font-size:10px;fill:var(--muted)}
+.clim-tbl{width:100%;border-collapse:collapse;font-size:.9rem}.clim-tbl th,.clim-tbl td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:right}
+.clim-tbl th:first-child,.clim-tbl td:first-child{text-align:left}.clim-tbl tr.hi td{background:#eaf3fc}.clim-tbl tr.lo td{color:var(--muted)}
+.tbl-wrap{overflow-x:auto}
+.cfg{background:#fff;border-radius:14px;padding:12px 16px;margin:12px 0;box-shadow:0 1px 2px rgba(15,30,60,.06)}.cfg h3{margin:.2em 0 .4em}.cfg.bad{border-left:4px solid #c8553d}
+.src li{margin:4px 0}
+.clim-mini{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline}

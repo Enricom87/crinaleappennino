@@ -56,6 +56,9 @@ jobs:
       - name: Bollettino Montagna LaMMA (controllo dei meteorologi)
         continue-on-error: true
         run: python pipeline/pro.py
+      - name: Storico di dicembre (rianalisi ERA5)
+        continue-on-error: true
+        run: python pipeline/climate.py
       - name: Segnalazioni dal territorio (archivio)
         continue-on-error: true
         run: python pipeline/reports.py
@@ -87,6 +90,7 @@ jobs:
           git add data/photos data/state.json data/latest.json data/routes data/shop_state.json data/sponsors_sold.json 2>/dev/null || true
           git add data/lifts.json
           git add data/reports.json 2>/dev/null || true
+          git add data/climate.json 2>/dev/null || true
           git add data/pro.json 2>/dev/null || true
           git add data/articles 2>/dev/null || true
           git add data/avalanche.json 2>/dev/null || true

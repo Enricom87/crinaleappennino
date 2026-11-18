@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}{{ t("Dicembre negli anni") }} · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>{{ t("Dicembre negli anni: neve, ghiaccio e freddo dal 1991") }}</h1>
+<p class="lead">{{ t("Per ogni località, il dicembre di ogni anno: quanta neve è caduta, quanti giorni di ghiaccio e di gelo, la minima più bassa, se c'era neve a Natale. E più sotto, le situazioni meteo che portano davvero la neve all'Abetone.") }}</p></div></section>
+<section class="wrap">
+{% set withclim = locs|selectattr("clim")|list %}
+{% if withclim %}
+  <label class="clim-pick">{{ t("Località") }} <select id="climsel">
+    {% for L in withclim %}<option value="{{ L.slug }}">{{ L.name }}</option>{% endfor %}</select></label>
+  {% for L in withclim %}{% set c = L.clim %}
+  <div class="clim-loc" data-loc="{{ L.slug }}"{% if not loop.first %} hidden{% endif %}>
+    <h2>{{ L.name }} <span class="muted small">· {{ c.point }}, {{ c.elev }} m</span></h2>
+    <div class="clim-kpi">
+      <div><b>{{ c.mean.snow|round|int }} cm</b><span>{{ t("neve media di dicembre") }}</span></div>
+      <div><b>{{ c.mean.snow_days|round|int }}</b><span>{{ t("giorni con neve") }}</span></div>
+      <div><b>{{ c.mean.ice|round|int }}</b><span>{{ t("giorni di ghiaccio (max ≤ 0 °C)") }}</span></div>
+      <div><b>{{ c.mean.frost|round|int }}</b><span>{{ t("giorni di gelo (min ≤ 0 °C)") }}</span></div>
+      <div><b>{{ c.xmas }}/{{ c.n }}</b><span>{{ t("Natali con neve al suolo") }}</span></div>
+    </div>
+    <p class="small muted">{{ t("Medie {a}–{b}.", a=1991, b=2020) }}
+    {% if c.trend is not none %}{% if c.trend <= -10 %}{{ t("Negli ultimi 10 anni è caduto in media il {p}% di neve in meno.", p=-c.trend) }}{% elif c.trend >= 10 %}{{ t("Negli ultimi 10 anni è caduto in media il {p}% di neve in più.", p=c.trend) }}{% else %}{{ t("Negli ultimi 10 anni la neve di dicembre è in linea con la media.") }}{% endif %}{% endif %}</p>
+    <figure class="clim-fig">{{ c.chart|safe }}<figcaption class="small muted">{{ t("Neve caduta a dicembre, anno per anno. La linea è la media; in azzurro chiaro gli anni con neve a Natale.") }}</figcaption></figure>
+    <p class="clim-rec small">❄️ {{ t("Il dicembre più nevoso: {y} ({cm} cm).", y=c.records.snow.year, cm=c.records.snow.snow|round|int) }}
+      · 🥶 {{ t("Il più freddo: {y} ({tm} °C).", y=c.records.cold.year, tm=c.records.cold.tmin) }}
+      · 🧊 {{ t("Più giorni di ghiaccio: {y} ({n}).", y=c.records.ice.year, n=c.records.ice.ice) }}
+      · 🟫 {{ t("Il più povero di neve: {y} ({cm} cm).", y=c.records.least.year, cm=c.records.least.snow|round|int) }}</p>
+    <div class="tbl-wrap"><table class="clim-tbl">
+      <thead><tr><th>{{ t("Anno") }}</th><th>{{ t("Neve caduta") }}</th><th>{{ t("Giorni con neve") }}</th><th>{{ t("Ghiaccio") }}</th><th>{{ t("Gelo") }}</th><th>{{ t("Minima") }}</th><th>{{ t("Media") }}</th><th>{{ t("Natale") }}</th></tr></thead>
+      <tbody>{% for r in c.rows %}<tr{% if r.snow >= c.mean.snow * 1.5 %} class="hi"{% elif r.snow <= c.mean.snow * 0.3 %} class="lo"{% endif %}>
+        <td>{{ r.year }}{% if r.partial %} *{% endif %}</td><td>{{ r.snow|round|int }} cm</td><td>{{ r.snow_days }}</td><td>{{ r.ice }}</td><td>{{ r.frost }}</td><td>{{ r.tmin }} °C</td><td>{{ r.tmean }} °C</td><td>{{ "❄️" if r.xmas else "–" }}</td></tr>{% endfor %}</tbody>
+    </table></div>
+  </div>
+  {% endfor %}
+  <p class="small muted">{{ t("Come leggerlo: i valori vengono dalla rianalisi ERA5 (Copernicus/ECMWF) tramite Open-Meteo, riportata alla quota della località. È una ricostruzione del tempo passato, non la misura di un nivometro: per le temperature è affidabile, per la neve in quota tende a sottostimare gli accumuli da sbarramento sul crinale. Usala per confrontare un anno con l'altro, non come centimetri misurati.") }}</p>
+{% else %}
+  <p>{{ t("Lo storico è in preparazione: compare dopo il prossimo aggiornamento.") }}</p>
+{% endif %}
+</section>
+
+<section class="wrap narrow" id="configurazioni">
+  <h2>{{ t("Quando nevica davvero all'Abetone") }}</h2>
+  <p>{{ t("Guardando le grandi nevicate degli ultimi decenni, sul crinale tosco-emiliano tornano sempre le stesse quattro situazioni. Sono anche quelle che cerchiamo nei modelli quando scriviamo le tendenze.") }}</p>
+  <div class="cfg"><h3>1 · {{ t("La neve “di Corsica”: bassa sul Tirreno e libeccio") }}</h3>
+  <p>{{ t("Una depressione si forma tra Corsica, Mar Ligure e alto Tirreno. Le correnti umide da sud-ovest arrivano dal mare, sbattono contro il crinale e sono costrette a salire: è lo sbarramento (stau), che scarica tanta neve soprattutto sul versante toscano, quindi Abetone, Doganaccia e Garfagnana. In montagna lo dicono da sempre: non nevica bene se di Corsica non viene. Il punto debole è la quota neve: se prima non è entrata aria fredda, il libeccio porta aria mite e sotto i 1500–1800 m piove.") }}</p>
+  <p class="small muted">{{ t("Esempi: 4–9 dicembre 2024, neve fino a 400–700 m sul crinale e accumuli diffusi; 5 dicembre 2023, oltre 30 cm all'Abetone; inizio febbraio 2026, oltre 40 cm al Passo.") }}</p></div>
+  <div class="cfg"><h3>2 · {{ t("Prima il freddo, poi la perturbazione") }}</h3>
+  <p>{{ t("È la combinazione migliore. Aria artica o continentale entra da nord o da nord-est e raffredda tutto, valli comprese; uno o due giorni dopo si forma un minimo sul Tirreno che porta l'umidità. La neve cade fino a quote collinari, è asciutta e resta a lungo. Gli inverni memorabili nascono quasi sempre così.") }}</p>
+  <p class="small muted">{{ t("Esempi: gennaio 1985, gelo eccezionale seguito da una depressione sul Mar di Corsica e bufere sul crinale; 12–13 dicembre 2019, aria polare e poi neve abbondante in quota; 2 dicembre 2020, neve in Toscana fino a circa 500 m.") }}</p></div>
+  <div class="cfg"><h3>3 · {{ t("Bora e Burian: il versante emiliano") }}</h3>
+  <p>{{ t("Con venti freddi da est o nord-est l'aria attraversa la pianura e si ferma contro il versante emiliano-romagnolo. Nevica tanto sul lato padano (Cimone, Corno alle Scale, reggiano), mentre il versante toscano resta spesso all'asciutto, sottovento. Fa freddo ovunque, ma all'Abetone la neve può essere poca.") }}</p>
+  <p class="small muted">{{ t("Esempio: febbraio 2012, metri di neve tra Romagna e Marche, molto meno sul lato toscano.") }}</p></div>
+  <div class="cfg"><h3>4 · {{ t("Treno di perturbazioni con il freddo già in posto") }}</h3>
+  <p>{{ t("Quando il getto atlantico scende di latitudine, le perturbazioni arrivano una dopo l'altra ogni due o tre giorni. Se tra un passaggio e l'altro le temperature restano basse, la neve si somma e il manto cresce di settimana in settimana.") }}</p>
+  <p class="small muted">{{ t("Esempi: inizio gennaio 2021, fino a circa 2,4 m sull'Appennino pistoiese; fine novembre–inizio dicembre 2008.") }}</p></div>
+  <div class="cfg bad"><h3>✗ {{ t("Il nemico: settore caldo e anticiclone africano") }}</h3>
+  <p>{{ t("Se una perturbazione arriva con lo zero termico intorno ai 2000 m, piove fin sulle cime e la neve vecchia si scioglie in poche ore. Con l'anticiclone africano invece non piove, ma fa troppo caldo anche per i cannoni. È quello che è successo a metà dicembre 2025, quando gli impianti dell'Abetone hanno chiuso dopo un ottimo inizio di stagione.") }}</p></div>
+  <h3>{{ t("Fonti") }}</h3>
+  <ul class="small src">
+    <li><a href="https://www.lanazione.it/cronaca/neve-toscana-previsioni-db2r2u8v" rel="noopener">La Nazione, 9/12/2024</a> · <a href="https://www.agi.it/cronaca/news/2023-12-05/neve-montagna-toscana-e-appennino-ligure-24297559/" rel="noopener">AGI, 5/12/2023</a> · <a href="https://www.lanazione.it/cronaca/neve-meteo-abetone-kwag404k" rel="noopener">La Nazione, 4/2/2026</a></li>
+    <li><a href="https://www.gonews.it/?p=927773" rel="noopener">gonews.it</a> · <a href="https://www.meteogiornale.it/2024/01/ad-premiere/meteo-100-cm-di-neve-in-valle-padana/" rel="noopener">MeteoGiornale, gennaio 1985</a> · <a href="https://www.varesenews.it/2020/01/1985-la-nevicata-del-secolo/889451/" rel="noopener">VareseNews, 1985</a></li>
+    <li><a href="https://www.centrometeoitaliano.it/notizie-meteo/meteo-italia-irruzione-polare-in-transito-blizzard-in-arrivo-sullo-stivale-ecco-dove-e-quando-12-12-2019-82935/amp/" rel="noopener">Centro Meteo Italiano, 12/12/2019</a> · <a href="https://www.lanazione.it/nete-toscana-previsioni-1.5773328" rel="noopener">La Nazione, 2/12/2020</a></li>
+    <li><a href="https://www.meteoweb.eu/2012/02/bufere-di-neve-in-rotta-su-emiliaromagna-marche-e-abruzzo-sara-un-fine-settimana-di-grandi-nevicate-in-tutto-lappennino-e-sulle-coste-adriatiche/117214/" rel="noopener">MeteoWeb, febbraio 2012</a> · <a href="https://aggiornati.arpae.it/it/ecoscienza/numeri-ecoscienza/anno-2012/numero-1-anno-2012/attualita/febbraio-2012-ma-quanta-neve-e-caduta" rel="noopener">Arpae Ecoscienza 2012</a></li>
+    <li><a href="https://www.meteogiornale.it/2021/01/cronaca-meteo/neve-appennino-emergenza-altra-nevicata-in-arrivo/" rel="noopener">MeteoGiornale, gennaio 2021</a> · <a href="https://aggiornati.arpae.it/it/temi-ambientali/meteo/report-meteo/rapporti-post-evento/rapporto-radar-2008-12-dell2019evento-meteorologico-del-27-28-29-30-novembre-e-1-dicembre-2008" rel="noopener">Arpae, rapporto evento 2008</a></li>
+    <li><a href="https://www.lanazione.it/meteo/abetone-neve-impianti-natale-mu94jonb" rel="noopener">La Nazione, 18/12/2025</a> · <a href="https://open-meteo.com/en/docs/historical-weather-api" rel="noopener">Open-Meteo Historical (ERA5, CC BY 4.0)</a></li>
+  </ul>
+</section>
+<script>
+(function(){var s=document.getElementById('climsel'); if(!s) return;
+ function show(v){document.querySelectorAll('.clim-loc').forEach(function(d){d.hidden=d.dataset.loc!==v})}
+ var q=new URLSearchParams(location.search).get('loc'); if(q&&s.querySelector('option[value="'+q+'"]')){s.value=q;show(q)}
+ s.addEventListener('change',function(){show(s.value)});})();
+</script>
+{% endblock %}

@@ -20,6 +20,7 @@ from bestpick import best_pick
 from i18n import day_short
 from articles import due as art_due_fn, compose as art_compose, save as art_save, load_all as art_load
 from history import record as hist_record, view as hist_view
+from climview import load as clim_load, view as clim_view
 from cards import prob_word
 
 
@@ -268,6 +269,7 @@ def main() -> None:
     all_pages = []  # percorsi di pagina (senza lingua), per la sitemap
 
     it_ctx = None
+    CLIM = clim_load()
     art_due = art_due_fn(today)
     bot_feed = {}  # dati per il bot Telegram (avvisi personali), in tutte le lingue
     for lang in LANGS:
@@ -277,6 +279,7 @@ def main() -> None:
             hist_record(locs, today)
         for L in locs:
             L["history"] = None if IS_SUMMER else hist_view(L, today)
+            L["clim"] = clim_view(L["slug"], CLIM)
         for L in locs:
             wk = L.get("weekend")
             f = bot_feed.setdefault(L["slug"], {"slug": L["slug"], "level": L["text"]["level"],
@@ -338,7 +341,7 @@ def main() -> None:
             render("articolo.html", f"tendenze/{a['date']}/", art=a)
         for L in locs:
             render("location.html", f"{L['slug']}/", loc=L)
-        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline", "segnala", "segnala-neve"):
+        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline", "segnala", "segnala-neve", "dicembre"):
             render(f"{pg}.html", f"{pg}/")
         render("percorsi.html", "percorsi/")
         for r in routes:
