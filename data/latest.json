@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-18T12:47+01:00",
+ "generated": "2026-11-18T13:16+01:00",
  "alerts": [],
- "overview": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare). Chi se la gode di più: Cimone, Le Polle, Cimoncino. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "overview": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare). Chi se la gode di più: Lago Santo, Febbio, Garfagnana. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
@@ -54,7 +54,7 @@
    "name": "Corno alle Scale",
    "title": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita",
    "level": "watch",
-   "snow3_top": 0.5,
+   "snow3_top": 0.6,
    "verdict": "Meglio di no",
    "back_by": null
   },
@@ -63,7 +63,7 @@
    "name": "Lago Scaffaiolo",
    "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
    "level": "watch",
-   "snow3_top": 0.1,
+   "snow3_top": 0.0,
    "verdict": "Meglio di no",
    "back_by": null
   },
@@ -72,7 +72,7 @@
    "name": "Lago Santo · Monte Giovo",
    "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": null
   },

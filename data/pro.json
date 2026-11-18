@@ -1,0 +1,42 @@
+{
+ "source": {
+  "name": "Consorzio LaMMA",
+  "url": "https://www.lamma.toscana.it/meteo/bollettini-meteo/montagna"
+ },
+ "zones": {
+  "pistoiese": {
+   "2026-11-18": {
+    "snow_level": 2300,
+    "fl": 2500,
+    "sky": "molto nuvoloso con possibilità di deboli piogge."
+   },
+   "2026-11-19": {
+    "snow_level": 2200,
+    "fl": 2400,
+    "sky": "molto nuvoloso in mattinata con piogge e rovesci. Attenuazione dei fenomeni e schiarite nel corso del pomeriggio."
+   },
+   "2026-11-20": {
+    "snow_level": 2000,
+    "fl": 2200,
+    "sky": "nuvoloso al mattino con possibili schiarite."
+   }
+  },
+  "garfagnana": {
+   "2026-11-18": {
+    "snow_level": 2400,
+    "fl": 2600,
+    "sky": "molto nuvoloso o coperto con deboli piogge."
+   },
+   "2026-11-19": {
+    "snow_level": 2200,
+    "fl": 2400,
+    "sky": "molto nuvoloso in mattinata con piogge e rovesci. Attenuazione dei fenomeni e schiarite nel corso del pomeriggio."
+   },
+   "2026-11-20": {
+    "snow_level": 1900,
+    "fl": 2100,
+    "sky": "nuvoloso al mattino con possibili schiarite."
+   }
+  }
+ }
+}
