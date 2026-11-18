@@ -70,6 +70,51 @@ def cfr_stations(prev: dict) -> list[dict]:
     return out
 
 
+def model_depth(stations: list[dict]) -> dict[str, float]:
+    """Neve al suolo secondo il modello (Open-Meteo, ICON) nel punto di ogni stazione, in metri."""
+    if not stations:
+        return {}
+    try:
+        r = requests.get("https://api.open-meteo.com/v1/forecast", timeout=60, params={
+            "latitude": ",".join(f"{x['lat']:.4f}" for x in stations),
+            "longitude": ",".join(f"{x['lon']:.4f}" for x in stations),
+            "elevation": ",".join(str(x["elev"] or 0) for x in stations),
+            "hourly": "snow_depth", "models": "icon_seamless", "past_days": 1, "forecast_days": 1, "timezone": "UTC"})
+        r.raise_for_status()
+        j = r.json()
+        j = j if isinstance(j, list) else [j]
+        now = datetime.utcnow().strftime("%Y-%m-%dT%H:00")
+        out = {}
+        for st_, d in zip(stations, j):
+            h = d.get("hourly", {})
+            vals = [v for t, v in zip(h.get("time", []), h.get("snow_depth", [])) if t <= now and v is not None]
+            if vals:
+                out[st_["name"]] = max(vals[-6:])
+        return out
+    except Exception as ex:  # noqa: BLE001
+        print(f"neve misurata: controllo col modello non disponibile ({ex})")
+        return {}
+
+
+def validate(stations: list[dict]) -> None:
+    """I nivometri a ultrasuoni sul prato senza neve «vedono» erba e rumore (5-20 cm che ballano).
+    Una misura vale come neve solo se il modello conferma neve al suolo in quel punto, oppure se è
+    inequivocabile (≥ 30 cm stabili). Altrimenti la stazione conta come 0."""
+    import statistics as st
+    md = model_depth(stations)
+    for s_ in stations:
+        vals = [c for _, c in s_.get("series", [])][-5:] or [s_["cm"]]
+        raw = st.median(vals)
+        m = md.get(s_["name"])
+        ok = raw >= 30 or (m is not None and m >= 0.03 and raw >= 3)
+        s_["raw_cm"], s_["model_cm"], s_["valid"] = round(raw), (round(m * 100) if m is not None else None), ok
+        if not ok:
+            s_["cm"], s_["delta"] = 0, 0
+            s_["series"] = [[t, 0.0] for t, _ in s_.get("series", [])]
+        else:
+            s_["cm"] = round(raw)
+
+
 def main() -> None:
     try:
         prev = {s["name"]: s for s in json.loads(OUT.read_text()).get("stations", [])}
@@ -118,8 +163,11 @@ def main() -> None:
     for s_ in stations:
         s_.setdefault("source", SOURCE)
     stations += tos
+    validate(stations)
     OUT.write_text(json.dumps({"source": SOURCE, "stations": stations}, ensure_ascii=False, indent=1))
-    print(f"neve misurata: {len(stations)} stazioni ({len(tos)} toscane)")
+    print(f"neve misurata: {len(stations)} stazioni ({len(tos)} toscane), confermate "
+          f"{sum(1 for x in stations if x.get('valid'))}: " +
+          ", ".join(f"{x['name']} {x['raw_cm']}→{x['cm']} (modello {x['model_cm']})" for x in stations))
 
 
 if __name__ == "__main__":

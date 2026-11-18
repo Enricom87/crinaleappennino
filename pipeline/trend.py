@@ -82,12 +82,33 @@ def trend(raw: dict, today: str) -> list[dict]:
             if len(tv) < 4 or not pv:
                 continue
             t, p = st.mean(tv), sum(pv)
+            # a blocchi di 6 ore: un fronte che porta prima aria mite e poi fredda non deve «sparire»
+            # nella media del giorno (pioggia al mattino, neve la sera)
+            sp = hp = 0.0
+            for b in range(0, len(idx), 6):
+                bi = idx[b:b + 6]
+                bt = [T8[i] for i in bi if i < len(T8) and T8[i] is not None]
+                bp = sum(P[i] for i in bi if i < len(P) and P[i] is not None)
+                if not bt or bp <= 0:
+                    continue
+                if st.mean(bt) <= -2:
+                    sp += bp
+                elif st.mean(bt) <= 1:
+                    hp += bp
             dv = [D[i] for i in idx if i < len(D) and D[i] is not None]
             if dv:
                 sx, cx = sum(math.sin(math.radians(x)) for x in dv), sum(math.cos(math.radians(x)) for x in dv)
                 flows[flow_of(math.degrees(math.atan2(sx, cx)) % 360)[0]] += 1
             ts_.append(t)
-            types[classify(t, p)] += 1
+            if sp >= 1.5:
+                kind = "neve"
+            elif sp + hp >= 1.5:
+                kind = "neve-alto"
+            else:
+                kind = classify(t, p)
+                if kind.startswith("neve"):
+                    kind = "pioggia"  # la media del giorno è fredda ma nei blocchi con pioggia non lo era
+            types[kind] += 1
         n = sum(types.values())
         if n < 5:
             continue
