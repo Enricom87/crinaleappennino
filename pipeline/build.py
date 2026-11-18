@@ -322,7 +322,7 @@ def main() -> None:
                 all_pages.append(page)
 
         if art_due:
-            a = art_compose(ctx["trendv"], ctx["synv"], ctx["bestpick"], today)
+            a = art_compose(ctx["trendv"], ctx["synv"], ctx["bestpick"], today, locs)
             if a:
                 art_save(lang, a)
         articles = art_load(lang)
