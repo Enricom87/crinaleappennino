@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-18T07:43+01:00",
+ "generated": "2026-11-18T10:08+01:00",
  "alerts": [],
- "overview": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita. Chi se la gode di più: Febbio, Lago Santo, Corno alle Scale. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "overview": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita. Chi se la gode di più: Febbio, Cimone, Le Polle. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
@@ -63,7 +63,7 @@
    "name": "Lago Scaffaiolo",
    "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
@@ -81,7 +81,7 @@
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
    "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
    "level": "watch",
-   "snow3_top": 0.2,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": null
   },
@@ -99,7 +99,7 @@
    "name": "Febbio · Monte Cusna",
    "title": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita",
    "level": "watch",
-   "snow3_top": 0.2,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": null
   }
