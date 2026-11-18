@@ -85,6 +85,9 @@ def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None 
                 w=prob_word(p["snow"]), p=p["snow"], k=p["agree"], n=p["nmodels"], t=p["t50"], c=p["conf"])
         if p.get("best"):
             txt += " " + T("Il giorno più promettente per la neve è {d}.", d=p["best"])
+        if p.get("cold_tail", 0) >= 10:
+            txt += " " + T("Occhio al freddo: in {c} scenari su 100 a 1500 m si scende sotto −2 °C (i più freddi fino a {t} °C), "
+                           "soprattutto intorno a {d}.", c=p["cold_tail"], t=p["tmin10"], d=p["cold_day"])
         if p is ph[0] and ls and p["snow"] < 25:
             txt += " " + T("I modelli globali, a maglie larghe, non colgono la nevicata in vetta di {d} che vedono "
                            "quelli ad alta risoluzione: in questi casi fidati della previsione locale.",

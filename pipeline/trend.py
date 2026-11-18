@@ -36,10 +36,17 @@ MODELS = [  # chiave, nome, provenienza, colore della linea
 VARS = ("temperature_850hPa", "temperature_2m", "precipitation", "wind_direction_700hPa")
 
 
+# Soglie a 850 hPa (~1500 m). Zero termico ≈ 1500 m + 150 m per ogni °C, quota neve ≈ zero termico − 300 m.
+#  ≤ 0 °C  → zero termico ≤ ~1500 m → neve fino alle stazioni (1200-1400 m)
+#  ≤ +2.5 → zero termico ≤ ~1900 m → neve sulle cime e sul crinale (1700-2165 m)
+#  ≤ −2   → aria fredda vera (gelo anche di giorno in quota)
+SNOW_LOW, SNOW_HIGH, COLD = 0.0, 2.5, -2.0
+
+
 def classify(t: float, p: float) -> str:
     if p >= 2.0:
-        return "neve" if t <= -2 else ("neve-alto" if t <= 1 else "pioggia")
-    return "freddo" if t <= -2 else "mite"
+        return "neve" if t <= SNOW_LOW else ("neve-alto" if t <= SNOW_HIGH else "pioggia")
+    return "freddo" if t <= COLD else "mite"
 
 
 def pct(xs: list[float], q: float) -> float:
@@ -72,7 +79,7 @@ def trend(raw: dict, today: str) -> list[dict]:
     for d, idx in sorted(by_day.items()):
         if len(idx) < 12:
             continue
-        ts_, types, flows = [], Counter(), Counter()
+        ts_, mins_, types, flows = [], [], Counter(), Counter()
         for cols in members.values():
             T8 = cols.get("temperature_850hPa") or cols.get("temperature_2m") or []
             P = cols.get("precipitation") or []
@@ -91,15 +98,16 @@ def trend(raw: dict, today: str) -> list[dict]:
                 bp = sum(P[i] for i in bi if i < len(P) and P[i] is not None)
                 if not bt or bp <= 0:
                     continue
-                if st.mean(bt) <= -2:
+                if st.mean(bt) <= SNOW_LOW:
                     sp += bp
-                elif st.mean(bt) <= 1:
+                elif st.mean(bt) <= SNOW_HIGH:
                     hp += bp
             dv = [D[i] for i in idx if i < len(D) and D[i] is not None]
             if dv:
                 sx, cx = sum(math.sin(math.radians(x)) for x in dv), sum(math.cos(math.radians(x)) for x in dv)
                 flows[flow_of(math.degrees(math.atan2(sx, cx)) % 360)[0]] += 1
             ts_.append(t)
+            mins_.append(min(tv))
             if sp >= 1.5:
                 kind = "neve"
             elif sp + hp >= 1.5:
@@ -108,11 +116,14 @@ def trend(raw: dict, today: str) -> list[dict]:
                 kind = classify(t, p)
                 if kind.startswith("neve"):
                     kind = "pioggia"  # la media del giorno è fredda ma nei blocchi con pioggia non lo era
+                if kind == "mite" and min(tv) <= COLD:
+                    kind = "freddo"
             types[kind] += 1
         n = sum(types.values())
         if n < 5:
             continue
         days.append({"date": d, "n": n, "t50": st.median(ts_), "t10": pct(ts_, .1), "t90": pct(ts_, .9),
+                     "tmin10": pct(mins_, .1), "cold": sum(1 for x in mins_ if x <= COLD) / len(mins_),
                      "mix": {k: types.get(k, 0) / n for k, *_ in TYPES},
                      "flow": flows.most_common(1)[0][0] if flows else None})
     return days
@@ -130,6 +141,8 @@ def combine(per_model: dict[str, list[dict]]) -> list[dict]:
         out.append({"date": date, "models": len(rows), "n": sum(r["n"] for r in rows),
                     "t50": st.median(r["t50"] for r in rows), "t10": min(r["t10"] for r in rows),
                     "t90": max(r["t90"] for r in rows),
+                    "tmin10": min(r.get("tmin10", r["t10"]) for r in rows),
+                    "cold": st.mean(r.get("cold", 0) for r in rows),
                     "mix": {k: st.mean(r["mix"][k] for r in rows) for k, *_ in TYPES},
                     "flow": flows.most_common(1)[0][0] if flows else "n.d."})
     return out
@@ -146,11 +159,11 @@ def chart(days: list[dict], per_model: dict[str, list[dict]]) -> str:
     pos = {d["date"]: i for i, d in enumerate(days)}
     band = " ".join(f"{x(i):.1f},{y(d['t90']):.1f}" for i, d in enumerate(days)) + " " + \
         " ".join(f"{x(i):.1f},{y(d['t10']):.1f}" for i, d in reversed(list(enumerate(days))))
-    sy = y(-3)
+    sy = y(0)
     o = [f'<svg viewBox="0 0 {W} {H}" class="syn-chart" role="img" aria-label="{T("Tendenza della temperatura a 1.500 m")}">',
          f'<rect x="{P}" y="{sy:.1f}" width="{W - 2 * P}" height="{H - 88 - sy:.1f}" fill="#dbeafe" opacity=".7"/>',
          f'<line x1="{P}" x2="{W - P}" y1="{sy:.1f}" y2="{sy:.1f}" stroke="#2563eb" stroke-width="1.5"/>',
-         f'<text x="{P + 4}" y="{sy + 14:.1f}" class="lbl snow">❄ {T("soglia neve −3 °C")}</text>',
+         f'<text x="{P + 4}" y="{sy + 14:.1f}" class="lbl snow">❄ {T("neve fino alle stazioni sotto 0 °C")}</text>',
          f'<line x1="{P}" x2="{W - P}" y1="{y(0):.1f}" y2="{y(0):.1f}" stroke="#94a3b8" stroke-dasharray="3 4"/>',
          f'<polygon points="{band}" fill="#0f2236" opacity=".09"/>']
     if len(days) > 15:  # oltre il 15° giorno restano solo GFS e GEM
@@ -224,6 +237,9 @@ def view(raws: dict[str, dict], today: str) -> dict:
                          "t": f"{st.mean(d['t50'] for d in md):+.0f}"})
         flows = Counter(d["flow"] for d in seg if d["flow"] != "n.d.")
         agree = sum(1 for r in rows if r["snow"] >= 30)
+        coldest = max(seg, key=lambda d: d.get("cold", 0))
+        cold_tail = round(coldest.get("cold", 0) * 100)
+        tmin10 = min(d.get("tmin10", d["t10"]) for d in seg)
         phases.append({"label": T(lab), "from": nice_date(seg[0]["date"], True), "to": nice_date(seg[-1]["date"], True),
                        "emoji": meta[top][1], "type": T(meta[top][0]), "color": meta[top][2],
                        "share": round(mix[top] * 100), "snow": round(snow * 100), "snow_low": round(mix["neve"] * 100),
@@ -232,6 +248,8 @@ def view(raws: dict[str, dict], today: str) -> dict:
                        "t50": f"{st.mean(d['t50'] for d in seg):+.0f}".replace("+0", "0").replace("-0", "0"),
                        "flow": T(flows.most_common(1)[0][0]) if flows else "",
                        "conf": conf, "rows": rows, "agree": agree, "nmodels": len(rows),
+                       "cold_tail": cold_tail, "cold_day": nice_date(coldest["date"]) if cold_tail >= 10 else "",
+                       "tmin10": f"{tmin10:+.0f}".replace("+0", "0").replace("-0", "0"),
                        "scen": round(st.mean(d["n"] for d in seg)),
                        "mix": [(T(meta[k][0]), meta[k][2], round(mix[k] * 100)) for k, *_ in TYPES if mix[k] >= .03]})
     tot = lambda d: d["mix"]["neve"] + d["mix"]["neve-alto"]
@@ -242,6 +260,12 @@ def view(raws: dict[str, dict], today: str) -> dict:
                  d=nice_date(best["date"]), p=round(tot(best) * 100))
     elif tot(best) >= .3:
         head = T("🌨️ Qualche chance di neve, soprattutto in quota, intorno a {d}", d=nice_date(best["date"]))
+    elif max(d.get("cold", 0) for d in first15) >= .1:
+        cd = max(first15, key=lambda d: d.get("cold", 0))
+        head = T("🥶 Niente neve sicura, ma un segnale di freddo intorno a {d}: in {p} scenari su 100 a 1500 m si scende sotto −2 °C",
+                 d=nice_date(cd["date"]), p=round(cd["cold"] * 100))
+    elif tot(best) >= .1:
+        head = T("🌨️ Qualche possibilità di neve sulle cime intorno a {d}, niente di deciso", d=nice_date(best["date"]))
     else:
         head = T("☀️ Due settimane senza segnali seri di neve: quasi tutti gli scenari restano miti o asciutti")
     used = [(name, T(origin), col, round(st.mean(d["n"] for d in per_model[k])))

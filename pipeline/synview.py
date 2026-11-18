@@ -47,8 +47,8 @@ def chart(days: list[dict]) -> str:
     y = lambda v: 14 + (hi - v) * (H - 44) / (hi - lo)
     pts = " ".join(f"{x(i):.1f},{y(t):.1f}" for i, t in enumerate(ts))
     area = f"{x(0):.1f},{y(lo):.1f} {pts} {x(len(ts) - 1):.1f},{y(lo):.1f}"
-    snow_y, zero_y = y(-3), y(0)
-    lab_snow, lab_zero = T("soglia neve −3 °C"), T("0 °C")
+    snow_y, zero_y = y(0), y(2.5)
+    lab_snow, lab_zero = T("neve fino alle stazioni sotto 0 °C"), T("neve sulle cime sotto +2,5 °C")
     out = [f'<svg viewBox="0 0 {W} {H}" class="syn-chart" role="img" aria-label="{T("Temperatura a 1.500 m")}">',
            '<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f59e0b" stop-opacity=".28"/>'
            '<stop offset="1" stop-color="#3b82f6" stop-opacity=".05"/></linearGradient></defs>',

@@ -233,9 +233,10 @@ def flow_of(direction: float | None) -> tuple[str, str]:
 def thermal_class(t850: float | None) -> str:
     if t850 is None:
         return "n.d."
-    if t850 <= -3:
-        return "favorevole"
+    # stesse soglie della tendenza (pipeline/trend.py): quota neve ≈ 1500 m + 150 m/°C − 300 m
     if t850 <= 0:
+        return "favorevole"
+    if t850 <= 2.5:
         return "marginale"
     return "sfavorevole"
 
