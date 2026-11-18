@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}{{ t("Dicembre negli anni") }} · {{ site.name }}{% endblock %}
+{% block title %}{{ t("Inverni negli anni") }} · {{ site.name }}{% endblock %}
 {% block main %}
-<section class="hero small"><div class="wrap"><h1>{{ t("Dicembre negli anni: neve, ghiaccio e freddo dal 1991") }}</h1>
-<p class="lead">{{ t("Per ogni località, il dicembre di ogni anno: quanta neve è caduta, quanti giorni di ghiaccio e di gelo, la minima più bassa, se c'era neve a Natale. E più sotto, le situazioni meteo che portano davvero la neve all'Abetone.") }}</p></div></section>
+<section class="hero small"><div class="wrap"><h1>{{ t("Gli inverni dal 1991: neve, ghiaccio e freddo dal 1° dicembre al 31 marzo") }}</h1>
+<p class="lead">{{ t("Per ogni località, ogni stagione dal 1° dicembre al 31 marzo: quanta neve è caduta e in quale mese, quanti giorni di ghiaccio e di gelo, la minima più bassa, se c'era neve a Natale. E più sotto, le situazioni meteo che portano davvero la neve all'Abetone.") }}</p></div></section>
 <section class="wrap">
 {% set withclim = locs|selectattr("clim")|list %}
 {% if withclim %}
@@ -12,26 +12,28 @@
   <div class="clim-loc" data-loc="{{ L.slug }}"{% if not loop.first %} hidden{% endif %}>
     <h2>{{ L.name }} <span class="muted small">· {{ c.point }}, {{ c.elev }} m</span></h2>
     <div class="clim-kpi">
-      <div><b>{{ c.mean.snow|round|int }} cm</b><span>{{ t("neve media di dicembre") }}</span></div>
+      <div><b>{{ c.mean.snow|round|int }} cm</b><span>{{ t("neve media a stagione") }}</span></div>
       <div><b>{{ c.mean.snow_days|round|int }}</b><span>{{ t("giorni con neve") }}</span></div>
       <div><b>{{ c.mean.ice|round|int }}</b><span>{{ t("giorni di ghiaccio (max ≤ 0 °C)") }}</span></div>
       <div><b>{{ c.mean.frost|round|int }}</b><span>{{ t("giorni di gelo (min ≤ 0 °C)") }}</span></div>
       <div><b>{{ c.xmas }}/{{ c.n }}</b><span>{{ t("Natali con neve al suolo") }}</span></div>
     </div>
-    <p class="small muted">{{ t("Medie {a}–{b}.", a=1991, b=2020) }}
-    {% if c.trend is not none %}{% if c.trend <= -10 %}{{ t("Negli ultimi 10 anni è caduto in media il {p}% di neve in meno.", p=-c.trend) }}{% elif c.trend >= 10 %}{{ t("Negli ultimi 10 anni è caduto in media il {p}% di neve in più.", p=c.trend) }}{% else %}{{ t("Negli ultimi 10 anni la neve di dicembre è in linea con la media.") }}{% endif %}{% endif %}</p>
-    <figure class="clim-fig">{{ c.chart|safe }}<figcaption class="small muted">{{ t("Neve caduta a dicembre, anno per anno. La linea è la media; in azzurro chiaro gli anni con neve a Natale.") }}</figcaption></figure>
-    <p class="clim-rec small">❄️ {{ t("Il dicembre più nevoso: {y} ({cm} cm).", y=c.records.snow.year, cm=c.records.snow.snow|round|int) }}
-      · 🥶 {{ t("Il più freddo: {y} ({tm} °C).", y=c.records.cold.year, tm=c.records.cold.tmin) }}
-      · 🧊 {{ t("Più giorni di ghiaccio: {y} ({n}).", y=c.records.ice.year, n=c.records.ice.ice) }}
-      · 🟫 {{ t("Il più povero di neve: {y} ({cm} cm).", y=c.records.least.year, cm=c.records.least.snow|round|int) }}</p>
+    <p class="clim-months small">{{ t("Media per mese") }}: {{ t("dic") }} {{ c.mean.months["12"]|round|int }} cm · {{ t("gen") }} {{ c.mean.months["01"]|round|int }} cm · {{ t("feb") }} {{ c.mean.months["02"]|round|int }} cm · {{ t("mar") }} {{ c.mean.months["03"]|round|int }} cm</p>
+    <p class="small muted">{{ t("Medie delle stagioni dal {a} al {b}.", a="1991/92", b="2020/21") }}
+    {% if c.trend is not none %}{% if c.trend <= -10 %}{{ t("Nelle ultime 10 stagioni è caduto in media il {p}% di neve in meno.", p=-c.trend) }}{% elif c.trend >= 10 %}{{ t("Nelle ultime 10 stagioni è caduto in media il {p}% di neve in più.", p=c.trend) }}{% else %}{{ t("Nelle ultime 10 stagioni la neve è in linea con la media.") }}{% endif %}{% endif %}</p>
+    <figure class="clim-fig">{{ c.chart|safe }}<figcaption class="small muted">{{ t("Neve caduta dal 1° dicembre al 31 marzo, stagione per stagione. La linea è la media; in azzurro chiaro le stagioni con neve a Natale, in grigio quella in corso.") }}</figcaption></figure>
+    <p class="clim-rec small">❄️ {{ t("L'inverno più nevoso: {y} ({cm} cm).", y=c.records.snow.label, cm=c.records.snow.snow|round|int) }}
+      · 🥶 {{ t("Il più freddo: {y} ({tm} °C).", y=c.records.cold.label, tm=c.records.cold.tmin) }}
+      · 🧊 {{ t("Più giorni di ghiaccio: {y} ({n}).", y=c.records.ice.label, n=c.records.ice.ice) }}
+      · 🟫 {{ t("Il più povero di neve: {y} ({cm} cm).", y=c.records.least.label, cm=c.records.least.snow|round|int) }}</p>
     <div class="tbl-wrap"><table class="clim-tbl">
-      <thead><tr><th>{{ t("Anno") }}</th><th>{{ t("Neve caduta") }}</th><th>{{ t("Giorni con neve") }}</th><th>{{ t("Ghiaccio") }}</th><th>{{ t("Gelo") }}</th><th>{{ t("Minima") }}</th><th>{{ t("Media") }}</th><th>{{ t("Natale") }}</th></tr></thead>
+      <thead><tr><th>{{ t("Stagione") }}</th><th>{{ t("Neve caduta") }}</th><th>{{ t("dic") }}</th><th>{{ t("gen") }}</th><th>{{ t("feb") }}</th><th>{{ t("mar") }}</th><th>{{ t("Giorni con neve") }}</th><th>{{ t("Ghiaccio") }}</th><th>{{ t("Gelo") }}</th><th>{{ t("Minima") }}</th><th>{{ t("Media") }}</th><th>{{ t("Natale") }}</th></tr></thead>
       <tbody>{% for r in c.rows %}<tr{% if r.snow >= c.mean.snow * 1.5 %} class="hi"{% elif r.snow <= c.mean.snow * 0.3 %} class="lo"{% endif %}>
-        <td>{{ r.year }}{% if r.partial %} *{% endif %}</td><td>{{ r.snow|round|int }} cm</td><td>{{ r.snow_days }}</td><td>{{ r.ice }}</td><td>{{ r.frost }}</td><td>{{ r.tmin }} °C</td><td>{{ r.tmean }} °C</td><td>{{ "❄️" if r.xmas else "–" }}</td></tr>{% endfor %}</tbody>
+        <td>{{ r.label }}{% if r.partial %} *{% endif %}</td><td><b>{{ r.snow|round|int }} cm</b></td><td>{{ r.months["12"]|round|int }}</td><td>{{ r.months["01"]|round|int }}</td><td>{{ r.months["02"]|round|int }}</td><td>{{ r.months["03"]|round|int }}</td><td>{{ r.snow_days }}</td><td>{{ r.ice }}</td><td>{{ r.frost }}</td><td>{{ r.tmin }} °C</td><td>{{ r.tmean }} °C</td><td>{{ "❄️" if r.xmas else "–" }}</td></tr>{% endfor %}</tbody>
     </table></div>
   </div>
   {% endfor %}
+  <p class="small muted">{{ t("* stagione in corso, aggiornata fino a pochi giorni fa.") }}</p>
   <p class="small muted">{{ t("Come leggerlo: i valori vengono dalla rianalisi ERA5 (Copernicus/ECMWF) tramite Open-Meteo, riportata alla quota della località. È una ricostruzione del tempo passato, non la misura di un nivometro: per le temperature è affidabile, per la neve in quota tende a sottostimare gli accumuli da sbarramento sul crinale. Usala per confrontare un anno con l'altro, non come centimetri misurati.") }}</p>
 {% else %}
   <p>{{ t("Lo storico è in preparazione: compare dopo il prossimo aggiornamento.") }}</p>

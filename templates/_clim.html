@@ -1,13 +1,13 @@
 {% if loc.clim %}{% set c = loc.clim %}
-<section class="wrap" id="dicembri">
-  <h2>{{ t("Dicembre negli anni") }}</h2>
+<section class="wrap" id="inverni">
+  <h2>{{ t("Inverni negli anni") }}</h2>
   <div class="clim-kpi">
-    <div><b>{{ c.mean.snow|round|int }} cm</b><span>{{ t("neve media di dicembre") }}</span></div>
+    <div><b>{{ c.mean.snow|round|int }} cm</b><span>{{ t("neve media a stagione") }}</span></div>
     <div><b>{{ c.mean.ice|round|int }}</b><span>{{ t("giorni di ghiaccio (max ≤ 0 °C)") }}</span></div>
     <div><b>{{ c.mean.frost|round|int }}</b><span>{{ t("giorni di gelo (min ≤ 0 °C)") }}</span></div>
-    <div><b>{{ c.records.snow.year }}</b><span>{{ t("il dicembre più nevoso") }}</span></div>
+    <div><b>{{ c.records.snow.label }}</b><span>{{ t("l'inverno più nevoso") }}</span></div>
   </div>
   <figure class="clim-fig">{{ c.chart|safe }}</figure>
-  <p><a href="{{ u('dicembre/') }}?loc={{ loc.slug }}">{{ t("Tutti gli anni dal 1991 e quando nevica davvero") }} →</a></p>
+  <p><a href="{{ u('inverni/') }}?loc={{ loc.slug }}">{{ t("Tutte le stagioni dal 1991/92 e quando nevica davvero") }} →</a></p>
 </section>
 {% endif %}
