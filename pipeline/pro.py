@@ -1,7 +1,7 @@
-"""Controllo con i meteorologi: il Bollettino Montagna del Consorzio LaMMA (servizio meteo della
-Regione Toscana) dà per i prossimi 3 giorni la quota neve scritta da previsori umani.
-Lo usiamo come freno: se i nostri modelli mettono neve molto sotto la quota indicata dal LaMMA,
-quella neve non la pubblichiamo. Sul sito mostriamo solo il dato (quota neve) con fonte e link."""
+"""Spunto dai meteorologi: il Bollettino Montagna del Consorzio LaMMA (servizio meteo della Regione
+Toscana) dà per i prossimi 3 giorni la quota neve scritta da previsori umani. È un ingresso interno
+del nostro calcolo, non un contenuto da ripubblicare: (1) frena la neve dei modelli molto sotto quella
+quota, (2) corregge la nostra stima della quota neve, che sul sito è nostra (vedi snowline())."""
 from __future__ import annotations
 
 import json
@@ -108,3 +108,27 @@ def apply(base_locs: list[dict], pts: dict) -> dict:
 
 if __name__ == "__main__":
     main()
+
+
+def snowline(loc: dict, pts: dict, today: str, zone_days: dict | None = None, n: int = 5) -> list[dict]:
+    """La nostra quota neve per i prossimi giorni: zero termico dei modelli − 300 m, presa nel punto
+    più alto della località; se c'è il bollettino dei previsori, media 50/50 con la loro quota.
+    Arrotondata a 100 m. Nei giorni senza precipitazioni la quota neve non ha senso: «asciutto»."""
+    from i18n import day_short
+    top = max((pts[p] for p in loc["points"] if p in pts), key=lambda p: p["elev"])
+    out = []
+    for d in top["days"]:
+        if d["date"] < today or len(out) >= n:
+            continue
+        lv = None
+        if d.get("fl_min") is not None:
+            lv = d["fl_min"] - 300
+        pro_lv = (zone_days or {}).get(d["date"], {}).get("snow_level")
+        if pro_lv and lv is not None:
+            lv = 0.5 * lv + 0.5 * pro_lv
+        elif pro_lv:
+            lv = pro_lv
+        dry = (d.get("precip") or 0) < 1
+        out.append({"date": d["date"], "name": day_short(d["date"]), "dry": dry,
+                    "lv": int(round(max(lv, 300) / 100) * 100) if lv is not None else None})
+    return out

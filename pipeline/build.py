@@ -124,7 +124,6 @@ def main() -> None:
     base_locs = [loc for loc in cfg["locations"] if all(p in pts for p in loc["points"])]
     import pro
     pro_notes = pro.apply(base_locs, pts)  # freno dei meteorologi LaMMA sulla quota neve
-    pro_src = (pro.load().get("source") or {})
     mtn = {}
     for loc in base_locs:
         for pid in loc["points"]:
@@ -215,9 +214,8 @@ def main() -> None:
             L["places"] = places(loc, pts)
             L["aval"] = None if IS_SUMMER else avalanche(loc)
             L["roadrule"] = None if IS_SUMMER else ROADS.get(loc["slug"], [])
-            pn = pro_notes.get(loc["slug"]) or {}
-            L["pro"] = None if IS_SUMMER or not pn else {
-                "src": pro_src, "days": [{"name": day_short(d), "lv": lv} for d, lv in sorted(pn.items()) if d >= today]}
+            zd = (pro.load().get("zones") or {}).get(pro.ZONE_FOR.get(loc["slug"], ""))
+            L["snowline"] = None if IS_SUMMER else pro.snowline(loc, pts, today, zd)
             locs.append(L)
         loc_by_slug = {L["slug"]: L for L in locs}
         routes = []

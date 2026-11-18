@@ -122,16 +122,18 @@ def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None 
     else:
         ground = T("Per ora le stazioni ufficiali non misurano neve al suolo significativa.")
 
-    import pro
-    pz = (pro.load().get("zones") or {}).get("pistoiese") or {}
+    sl = next((L.get("snowline") for L in (locs or []) if L.get("slug") == "abetone" and L.get("snowline")), None)
     pros = []
-    if pz:
-        pros.append(T("I meteorologi del Consorzio LaMMA, nel loro Bollettino Montagna, danno la quota neve sull'Appennino pistoiese a: {l}.",
-                      l=", ".join(f"{nice_date(d, True)} {v['snow_level']} m" for d, v in sorted(pz.items()) if d >= today)))
-        if any(v["snow_level"] <= 1500 for v in pz.values()):
-            pros.append(T("È in linea con un episodio nevoso fino alle quote delle stazioni."))
+    wet = [d for d in (sl or []) if not d["dry"] and d["lv"]]
+    if wet:
+        pros.append(T("La nostra stima della quota neve sul crinale nei giorni con precipitazioni: {l}.",
+                      l=", ".join(f"{d['name']} {d['lv']} m" for d in wet)))
+        low_ = min(wet, key=lambda d: d["lv"])
+        if low_["lv"] <= 1500:
+            pros.append(T("Il giorno più interessante è {d}: con la neve intorno ai {lv} m si imbiancano anche le stazioni.",
+                          d=low_["name"], lv=low_["lv"]))
         else:
-            pros.append(T("Nei prossimi giorni quindi niente neve alle quote delle stazioni: il loro giudizio coincide con il nostro controllo."))
+            pros.append(T("Quote ancora alte: la neve, se arriva, resta sopra i {lv} m.", lv=low_["lv"]))
     return {"date": today, "title": title, "lead": lead, "phases": phases, "models": models, "pros": pros,
             "weekend": weekend, "ground": ground, "chart": tv.get("chart", ""),
             "pub": nice_date(today)}
