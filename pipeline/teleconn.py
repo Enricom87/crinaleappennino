@@ -49,7 +49,7 @@ def vortex() -> dict:
     lons = list(range(-180, 180, 15))
     q = {"latitude": ",".join(["60"] * len(lons)), "longitude": ",".join(map(str, lons)),
          "hourly": "wind_speed_10hPa,wind_direction_10hPa", "models": "gfs_global", "forecast_days": 16,
-         "past_days": 5, "wind_speed_unit": "ms", "timezone": "GMT"}
+         "past_days": 14, "wind_speed_unit": "ms", "timezone": "GMT"}
     data = requests.get(OM, params=q, timeout=120).json()
     data = data if isinstance(data, list) else [data]
     by_day = defaultdict(list)
@@ -137,10 +137,31 @@ def view(today: str) -> dict | None:
             lines.append(T("Oscillazione Artica positiva: il freddo resta chiuso intorno al Polo."))
     vx = tc.get("vortex", {})
     fut = [(d, v) for d, v in vx.items() if d >= today]
+    past = [(d, v) for d, v in vx.items() if d < today]
     if fut:
         dmin, vmin = min(fut, key=lambda x: x[1])
         now = fut[0][1]
-        if vmin < 0:
+        pmin = min(past, key=lambda x: x[1]) if past else None
+        end = fut[-1]
+        rev = next((d for d, v in past if v < 0), None)
+        if rev and vmin >= 0:
+            score += 2
+            r0 = date.fromisoformat(rev)
+            lines.append(T("Riscaldamento stratosferico improvviso: intorno a {d} i venti in stratosfera sul 60° parallelo "
+                           "si sono invertiti, da ovest a est (minimo {v} m/s); ora il vortice si sta ricostruendo (circa {e} "
+                           "m/s verso {de}). Dopo eventi così, nelle 2–4 settimane seguenti aumentano le probabilità di aria "
+                           "fredda verso l'Europa: la finestra da tenere d'occhio va da {a} a {b}. Aumenta le probabilità, "
+                           "non le garantisce.", d=nice_date(rev), v=round(pmin[1]), e=round(end[1]), de=nice_date(end[0]),
+                           a=nice_date((r0 + timedelta(days=14)).isoformat()), b=nice_date((r0 + timedelta(days=28)).isoformat())))
+        elif pmin and pmin[1] < 15 and end[1] > now + 10 and vmin >= 0:
+            score += 1
+            lines.append(T("Vortice polare molto debole nelle ultime settimane (fino a {v} m/s {d}), ora in ripresa "
+                           "(circa {e} m/s verso {de}). L'effetto di un vortice debole sul tempo in Europa arriva spesso "
+                           "con 2–4 settimane di ritardo: la finestra da tenere d'occhio va da {a} a {b}.",
+                           v=round(pmin[1]), d=nice_date(pmin[0]), e=round(end[1]), de=nice_date(end[0]),
+                           a=nice_date((date.fromisoformat(pmin[0]) + timedelta(days=14)).isoformat()),
+                           b=nice_date((date.fromisoformat(pmin[0]) + timedelta(days=28)).isoformat())))
+        elif vmin < 0:
             score += 2
             lines.append(T("Vortice polare in crisi: GFS vede l'inversione dei venti in stratosfera intorno a {d} "
                            "(riscaldamento stratosferico improvviso). Nelle 2–4 settimane successive aumentano le "

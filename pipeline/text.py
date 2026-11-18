@@ -77,9 +77,10 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
     elif t10 >= 10:
         days = best_days(top["days"], 3, 10, 3)
         when = nice_date(days[0]) if days else T("la prossima settimana")
-        title = pick([T("👀 Occhio a {when}: i modelli fiutano neve (da confermare)", when=when),
-                      T("🤞 Segnale di neve per {when}: incrociamo le dita", when=when),
-                      T("📡 Qualcosa si muove per {when}: possibile nevicata in quota", when=when)], *k)
+        b10 = window_sum(base["days"], 3, 10)
+        title = (T("👀 Occhio a {when}: i modelli vedono neve fino a {nbase} ({zbase} m), da confermare", when=when, **v)
+                 if b10 >= 3 else
+                 T("👀 Occhio a {when}: possibile neve solo in vetta, al {ntop} ({ztop} m); a {nbase} ({zbase} m) per ora poco o niente", when=when, **v))
         level = "watch"
     elif t3 + t10 >= 1:
         title = pick([T("Solo qualche fiocco in quota, niente di più (per ora)"),

@@ -18,7 +18,7 @@ OBS = ROOT / "data" / "snowobs.json"
 PUB_DAYS = (0, 3)  # lunedì, giovedì
 
 
-VERSION = 2  # se cambia il modo di scrivere, l'articolo di oggi si riscrive al prossimo aggiornamento
+VERSION = 3  # se cambia il modo di scrivere, l'articolo di oggi si riscrive al prossimo aggiornamento
 
 
 def due(today: str) -> bool:
