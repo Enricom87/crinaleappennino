@@ -21,6 +21,7 @@ TYPES = [  # chiave, etichetta, emoji, colore
     ("neve-alto", "Neve in quota, pioggia sotto", "🌨️", "#60a5fa"),
     ("pioggia", "Pioggia", "🌧️", "#94a3b8"),
     ("freddo", "Freddo e asciutto", "🥶", "#a5b4fc"),
+    ("secco", "Asciutto, temperature nella norma", "⛅", "#cbd5e1"),
     ("mite", "Asciutto e mite", "☀️", "#fbbf24"),
 ]
 MODELS = [  # chiave, nome, provenienza, colore della linea
@@ -43,10 +44,18 @@ VARS = ("temperature_850hPa", "temperature_2m", "precipitation", "wind_direction
 SNOW_LOW, SNOW_HIGH, COLD = 0.0, 2.5, -2.0
 
 
-def classify(t: float, p: float) -> str:
+# Temperatura normale a 850 hPa sull'Appennino settentrionale, per mese (valori indicativi di climatologia):
+# "mite" vuol dire sensibilmente sopra la norma del periodo, non semplicemente "sopra lo zero".
+NORMAL_850 = {1: -1.0, 2: -1.0, 3: 0.5, 4: 3.0, 5: 6.5, 6: 10.5, 7: 13.5, 8: 13.5, 9: 10.0, 10: 6.0, 11: 2.0, 12: 0.0}
+MILD = 3.0  # gradi sopra la norma per parlare di mite
+
+
+def classify(t: float, p: float, month: int = 12) -> str:
     if p >= 2.0:
         return "neve" if t <= SNOW_LOW else ("neve-alto" if t <= SNOW_HIGH else "pioggia")
-    return "freddo" if t <= COLD else "mite"
+    if t <= COLD:
+        return "freddo"
+    return "mite" if t >= NORMAL_850[month] + MILD else "secco"
 
 
 def pct(xs: list[float], q: float) -> float:
@@ -113,10 +122,10 @@ def trend(raw: dict, today: str) -> list[dict]:
             elif sp + hp >= 1.5:
                 kind = "neve-alto"
             else:
-                kind = classify(t, p)
+                kind = classify(t, p, int(d[5:7]))
                 if kind.startswith("neve"):
                     kind = "pioggia"  # la media del giorno è fredda ma nei blocchi con pioggia non lo era
-                if kind == "mite" and min(tv) <= COLD:
+                if kind in ("mite", "secco") and min(tv) <= COLD:
                     kind = "freddo"
             types[kind] += 1
         n = sum(types.values())

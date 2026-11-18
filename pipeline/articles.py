@@ -53,6 +53,7 @@ def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None 
     ph = tv["phases"]
     ls = local_snow(locs, today)
     top = max(ph[:3], key=lambda p: p["snow"])
+    cold = max((p for p in ph if p.get("cold_tail", 0) >= 15), key=lambda p: p["cold_tail"], default=None)
     if top["snow"] >= 50 and top.get("snow_low", 0) >= 30:
         title = T("Neve fino alle stazioni tra {a} e {b}: {k} modelli su {n} ci credono",
                   a=top["from"], b=top["to"], k=top["agree"], n=top["nmodels"])
@@ -61,6 +62,12 @@ def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None 
                   a=top["from"], b=top["to"], k=top["agree"], n=top["nmodels"])
     elif top["snow"] >= 25:
         title = T("Qualche spiraglio di neve tra {a} e {b}", a=top["from"], b=top["to"])
+    elif ls and cold:
+        title = T("Neve in vetta {d}, poi un segnale di freddo verso {c}: cosa aspettarsi nelle prossime settimane",
+                  d=nice_date(ls["date"]), c=cold["cold_day"])
+    elif cold:
+        title = T("Neve ancora lontana, ma un segnale di freddo verso {c}: cosa aspettarsi nelle prossime settimane",
+                  c=cold["cold_day"])
     elif ls:
         title = T("Neve in vetta {d}, poi niente di serio: cosa aspettarsi nelle prossime settimane",
                   d=nice_date(ls["date"]))
@@ -71,7 +78,8 @@ def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None 
         lead.append(T("Per i prossimi giorni comandano i modelli ad alta risoluzione: vedono una nevicata {d}, "
                       "circa {cm} cm a {w} ({e} m). È un episodio breve, da confermare nei prossimi aggiornamenti.",
                       d=nice_date(ls["date"]), cm=ls["cm"], w=ls["where"], e=ls["elev"]))
-    lead += [tv["head"] if not ls else T("Oltre quell'episodio, lo sguardo lungo dei modelli globali non vede altra neve seria."),
+    lead += [tv["head"] if not ls else (T("Oltre quell'episodio, lo sguardo lungo dei modelli globali non vede altra neve seria.") if not cold else
+                  T("Oltre quell'episodio niente neve seria per ora, ma una parte degli scenari porta aria fredda verso {c}: è il segnale da seguire nei prossimi aggiornamenti.", c=cold["cold_day"])),
             T("Abbiamo messo insieme {sc} scenari da {n} modelli meteo diversi, fino a {u}.",
               sc=tv["nscen"], n=tv["nmodels"], u=tv["until"])]
     if synv and synv.get("head"):
@@ -79,10 +87,13 @@ def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None 
 
     phases = []
     for p in ph:
-        txt = T("Dal {a} al {b}: prevale {type} ({sh} scenari su 100). Neve: {w} ({p} su 100), "
-                "la vedono {k} modelli su {n}. Temperatura tipica in quota intorno a {t} °C, affidabilità {c}.",
+        txt = T("Dal {a} al {b}: prevale {type} ({sh} scenari su 100). Neve: {w} ({p} su 100). "
+                "Temperatura tipica in quota intorno a {t} °C, affidabilità {c}.",
                 a=p["from"], b=p["to"], type=low(p["type"]), sh=p["share"],
-                w=prob_word(p["snow"]), p=p["snow"], k=p["agree"], n=p["nmodels"], t=p["t50"], c=p["conf"])
+                w=prob_word(p["snow"]), p=p["snow"], t=p["t50"], c=p["conf"])
+        if p["nmodels"]:
+            txt += " " + (T("Nessun modello dà la neve almeno a 30 scenari su 100.") if p["agree"] == 0 else
+                          T("{k} modelli su {n} danno la neve ad almeno 30 scenari su 100.", k=p["agree"], n=p["nmodels"]))
         if p.get("best"):
             txt += " " + T("Il giorno più promettente per la neve è {d}.", d=p["best"])
         if p.get("cold_tail", 0) >= 10:

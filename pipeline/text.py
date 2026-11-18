@@ -55,22 +55,24 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
     # titolo: un aggancio che dice subito la cosa giusta, mai più di quanto dicono i dati
     k = (loc["slug"], date.today().isoformat())
     v = dict(t3=cm(t3), b3=cm(b3), ztop=top["elev"], zbase=base["elev"],
-             zsnow=round((top["elev"] - 200) / 100) * 100)
+             ntop=top["name"], nbase=base["name"])
     if t3 >= 5:
         days = best_days(top["days"], 0, 3)
         when = nice_date(days[0]) if days else T("nei prossimi giorni")
         if b3 >= 3:
             title = pick([T("❄️ Si imbianca tutto: {t3} in vetta e {b3} giù in paese da {when}", when=when, **v),
-                          T("❄️ Ci siamo, arriva la neve! {t3} a {ztop} m da {when}", when=when, **v),
+                          T("❄️ Ci siamo, arriva la neve! {t3} al {ntop} e {b3} a {nbase} da {when}", when=when, **v),
                           T("❄️ Prepara gli sci: da {when} {t3} in quota e neve fino a {zbase} m", when=when, **v)], *k)
         elif b3 >= 1:
-            title = pick([T("❄️ Arriva la neve da {when}: {t3} in vetta, una spolverata a {zbase} m", when=when, **v),
-                          T("❄️ Fiocchi in arrivo! {t3} a {ztop} m da {when}", when=when, **v)], *k)
+            title = T("❄️ Arriva la neve da {when}: {t3} al {ntop} ({ztop} m), solo una spolverata a {nbase} ({zbase} m)", when=when, **v)
         else:
-            title = pick([T("❄️ Neve solo in alto: {t3} sopra i {zsnow} m da {when}", when=when, **v),
-                          T("⛰️ In vetta torna il bianco: {t3} da {when}, sotto piove", when=when, **v)], *k)
+            rain_b = window_sum(base["days"], 0, 3, "precip") >= 2
+            title = (T("⛰️ Neve solo in vetta: {t3} al {ntop} ({ztop} m) da {when}, a {nbase} ({zbase} m) piove", when=when, **v)
+                     if rain_b else
+                     T("⛰️ Neve solo in vetta: {t3} al {ntop} ({ztop} m) da {when}, niente a {nbase} ({zbase} m)", when=when, **v))
         if t3 >= 25:
-            title = T("🔥 Nevicata seria in arrivo: {t3} a {ztop} m da {when}", when=when, **v)
+            title = (T("🔥 Nevicata seria in arrivo: {t3} al {ntop} ({ztop} m) da {when}", when=when, **v) if b3 >= 3 else
+                     T("🔥 Nevicata seria in vetta: {t3} al {ntop} ({ztop} m) da {when}, molta meno a {nbase} ({zbase} m)", when=when, **v))
         level = "alert"
     elif t10 >= 10:
         days = best_days(top["days"], 3, 10, 3)

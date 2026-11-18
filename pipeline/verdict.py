@@ -26,11 +26,20 @@ def weekend_dates(today: str) -> list[str]:
     return [d.isoformat() for d in ds]
 
 
-def day_verdict(m: dict, snow_top: float, summer: bool) -> tuple[str, str]:
-    """Colore (green/yellow/red) e motivo per un giorno."""
+def day_verdict(m: dict, snow_top: float, summer: bool, base: dict | None = None, top: dict | None = None) -> tuple[str, str]:
+    """Colore (green/yellow/red) e motivo per un giorno. base = {name, elev, snow, precip} del punto più basso."""
     rain, gust, storm = m.get("rain") or 0, m.get("gust") or 0, m.get("storm") or 0
     if not summer and snow_top >= 5 and gust < 70:
-        return "green", T("neve fresca ({n} cm in vetta)", n=round(snow_top))
+        if not base or not top or base["name"] == top["name"]:
+            return "green", T("neve fresca ({n} cm in vetta)", n=round(snow_top))
+        if base["snow"] >= 3:
+            return "green", T("neve fresca anche in basso: {b} cm a {nb}, {n} cm al {nt}",
+                              b=round(base["snow"]), nb=base["name"], n=round(snow_top), nt=top["name"])
+        if base["precip"] >= 2:
+            return "yellow", T("neve solo in vetta ({n} cm al {nt}, {et} m), a {nb} ({eb} m) piove",
+                               n=round(snow_top), nt=top["name"], et=top["elev"], nb=base["name"], eb=base["elev"])
+        return "green", T("neve fresca solo in vetta ({n} cm al {nt}, {et} m)",
+                          n=round(snow_top), nt=top["name"], et=top["elev"])
     if m["verdict"] in ("ottima", "buona"):
         why = T("sole") if (m.get("cloud") or 0) < 40 else T("asciutto, con qualche nuvola")
         return "green", why
@@ -53,12 +62,15 @@ def weekend(L: dict, today: str, summer: bool) -> dict | None:
     by_date = {m["date"]: m for m in (L.get("mtn") or [])}
     top = L.get("mtn_top") or {}
     snow_by = {d["date"]: d.get("snow", 0) or 0 for d in top.get("days", [])}
+    lowp = L.get("low_pt") or {}
+    base_by = {d["date"]: {"name": lowp.get("name"), "elev": lowp.get("elev"), "snow": d.get("snow") or 0,
+                           "precip": d.get("precip") or 0} for d in lowp.get("days", [])}
     days = []
     for d in weekend_dates(today):
         m = by_date.get(d)
         if not m:
             continue
-        col, why = day_verdict(m, snow_by.get(d, 0), summer)
+        col, why = day_verdict(m, snow_by.get(d, 0), summer, base_by.get(d), top)
         days.append({"date": d, "name": cap(day_name(d)), "color": col, "why": why, "idx": m["idx"],
                      "snow": snow_by.get(d, 0)})
     if not days:
