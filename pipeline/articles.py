@@ -65,7 +65,10 @@ def compose(tv: dict, synv: dict, bestpick: list, today: str) -> dict | None:
 
     rows = sorted(top["rows"], key=lambda r: -r["snow"])
     models = []
-    if len(rows) >= 2:
+    if rows and rows[0]["snow"] < 20:
+        models.append(T("Nessun modello vede neve seria: il più ottimista, {m1}, arriva a {p1} scenari nevosi su 100.",
+                        m1=rows[0]["name"], p1=rows[0]["snow"]))
+    elif len(rows) >= 2:
         models.append(T("Tra {a} e {b} il modello più convinto è {m1} ({p1} scenari nevosi su 100), "
                         "il più scettico {m2} ({p2}).", a=top["from"], b=top["to"],
                         m1=rows[0]["name"], p1=rows[0]["snow"], m2=rows[-1]["name"], p2=rows[-1]["snow"]))
