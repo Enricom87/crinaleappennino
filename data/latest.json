@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-18T12:19+01:00",
+ "generated": "2026-11-18T12:47+01:00",
  "alerts": [],
  "overview": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare). Chi se la gode di più: Cimone, Le Polle, Cimoncino. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
@@ -99,7 +99,7 @@
    "name": "Febbio · Monte Cusna",
    "title": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita",
    "level": "watch",
-   "snow3_top": 0.1,
+   "snow3_top": 0.2,
    "verdict": "Meglio di no",
    "back_by": null
   }
