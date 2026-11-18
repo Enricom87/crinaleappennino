@@ -14,6 +14,7 @@ from cards import cards, hourly_strip
 from summer import mountain_days, overview_mtn, summer_text
 from i18n import T
 from synview import syn_view
+from teleconn import view as tele_view
 from verdict import weekend
 from extras import activities, events, snow_ground, places, avalanche
 from bestpick import best_pick
@@ -125,6 +126,17 @@ def main() -> None:
     base_locs = [loc for loc in cfg["locations"] if all(p in pts for p in loc["points"])]
     import pro
     pro_notes = pro.apply(base_locs, pts)  # freno dei meteorologi LaMMA sulla quota neve
+    # taratura imparata dagli errori passati e quota neve calcolata dal profilo verticale
+    import calib
+    import snowlevel
+    CAL = calib.factors(calib.update(today))
+    calib.apply(base_locs, pts, CAL)
+    LEVELS = snowlevel.load()
+    pid_off = {}
+    for loc in base_locs:
+        for pid in loc["points"]:
+            pid_off.setdefault(pid, (CAL.get(loc["slug"]) or {}).get("level", 0))
+    print(f"quota neve dal profilo: {len(LEVELS)} punti, {snowlevel.cap(pts, LEVELS, pid_off)} giorni-punto senza neve sotto quota")
     mtn = {}
     for loc in base_locs:
         for pid in loc["points"]:
@@ -216,7 +228,8 @@ def main() -> None:
             L["aval"] = None if IS_SUMMER else avalanche(loc)
             L["roadrule"] = None if IS_SUMMER else ROADS.get(loc["slug"], [])
             zd = (pro.load().get("zones") or {}).get(pro.ZONE_FOR.get(loc["slug"], ""))
-            L["snowline"] = None if IS_SUMMER else pro.snowline(loc, pts, today, zd)
+            L["snowline"] = None if IS_SUMMER else pro.snowline(loc, pts, today, zd, levels=LEVELS,
+                                                                     offset=(CAL.get(loc["slug"]) or {}).get("level", 0))
             locs.append(L)
         loc_by_slug = {L["slug"]: L for L in locs}
         routes = []
@@ -279,6 +292,7 @@ def main() -> None:
             hist_record(locs, today)
         for L in locs:
             L["history"] = None if IS_SUMMER else hist_view(L, today)
+            L["calib"] = None if IS_SUMMER else (CAL.get(L["slug"]) or {"snow": 1.0, "n_snow": 0, "level": 0, "n_level": 0})
             L["clim"] = clim_view(L["slug"], CLIM)
         for L in locs:
             wk = L.get("weekend")
@@ -296,7 +310,7 @@ def main() -> None:
                "local_sources": [{**s, "about": T(s["about"]), "links": {k: [{**l, "label": T(l["label"])} for l in v]
                                                                        for k, v in s["links"].items()}}
                                  for s in local_sources],
-               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows, "synv": syn_view(syn_rows), "trendv": trend_view(),
+               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows, "synv": syn_view(syn_rows), "trendv": trend_view(), "telev": tele_view(today),
                "summer": IS_SUMMER, "home_events": home_events(locs), "bestpick": best_pick(locs, IS_SUMMER),
                "overview": ((overview_mtn(locs) if IS_SUMMER else overview_text(locs)) if locs else ""),
                "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),
@@ -330,7 +344,7 @@ def main() -> None:
                 all_pages.append(page)
 
         if art_due:
-            a = art_compose(ctx["trendv"], ctx["synv"], ctx["bestpick"], today, locs)
+            a = art_compose(ctx["trendv"], ctx["synv"], ctx["bestpick"], today, locs, ctx.get("telev"))
             if a:
                 art_save(lang, a)
         articles = art_load(lang)

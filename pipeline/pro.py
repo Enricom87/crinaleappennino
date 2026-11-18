@@ -110,9 +110,11 @@ if __name__ == "__main__":
     main()
 
 
-def snowline(loc: dict, pts: dict, today: str, zone_days: dict | None = None, n: int = 5) -> list[dict]:
-    """La nostra quota neve per i prossimi giorni: zero termico dei modelli − 300 m, presa nel punto
-    più alto della località; se c'è il bollettino dei previsori, media 50/50 con la loro quota.
+def snowline(loc: dict, pts: dict, today: str, zone_days: dict | None = None, n: int = 5,
+             levels: dict | None = None, offset: int = 0) -> list[dict]:
+    """La nostra quota neve per i prossimi giorni, nel punto più alto della località: calcolata dal profilo
+    verticale col bulbo umido (pipeline/snowlevel.py), o in mancanza zero termico − 300 m; corretta dalla
+    taratura con le segnalazioni; se c'è il bollettino dei previsori pesa per il 30%.
     Arrotondata a 100 m. Nei giorni senza precipitazioni la quota neve non ha senso: «asciutto»."""
     from i18n import day_short
     top = max((pts[p] for p in loc["points"] if p in pts), key=lambda p: p["elev"])
@@ -121,11 +123,14 @@ def snowline(loc: dict, pts: dict, today: str, zone_days: dict | None = None, n:
         if d["date"] < today or len(out) >= n:
             continue
         lv = None
-        if d.get("fl_min") is not None:
-            lv = d["fl_min"] - 300
+        prof = ((levels or {}).get(top["id"]) or {}).get(d["date"])
+        if prof:
+            lv = prof["lv"] + offset
+        elif d.get("fl_min") is not None:
+            lv = d["fl_min"] - 300 + offset
         pro_lv = (zone_days or {}).get(d["date"], {}).get("snow_level")
         if pro_lv and lv is not None:
-            lv = 0.5 * lv + 0.5 * pro_lv
+            lv = 0.7 * lv + 0.3 * pro_lv
         elif pro_lv:
             lv = pro_lv
         dry = (d.get("precip") or 0) < 1

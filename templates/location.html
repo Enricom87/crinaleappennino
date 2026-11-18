@@ -83,6 +83,8 @@
     {% endfor %}
   </div>
   <p class="small muted">{{ t("La neve misurata è l'aumento dell'altezza del manto: vento e assestamento possono farla sembrare meno di quella caduta. Contiamo come giusta una previsione entro 3 cm o il 40%.") }}</p>
+  {% set cb = loc.calib %}{% if cb %}<p class="small">🎯 {% if cb.snow != 1.0 %}{{ t("Taratura attiva: negli ultimi {n} episodi i modelli hanno previsto {w} neve di quella misurata qui, quindi correggiamo le quantità del {p}%.", n=cb.n_snow, w=(t("più") if cb.snow < 1 else t("meno")), p=((1 - cb.snow)|abs * 100)|round|int) }}{% else %}{{ t("Taratura in corso: la correzione automatica parte dopo almeno 4 nevicate confrontate ({n} finora).", n=cb.n_snow) }}{% endif %}
+  {% if cb.level %} {{ t("Dalle vostre segnalazioni, la quota neve qui è di solito {v} m {d} di quanto calcolano i modelli: ne teniamo conto.", v=cb.level|abs, d=(t("più alta") if cb.level > 0 else t("più bassa"))) }}{% endif %}</p>{% endif %}
 </section>
 {% endif %}
 <section class="wrap twocol" id="analisi">

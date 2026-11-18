@@ -36,6 +36,9 @@ TREND_MODELS = [
     ("ukmo", "ukmo_global_ensemble_20km", "temperature_2m", 11),
     ("ch2", "meteoswiss_icon_ch2", "temperature_2m", 6),
 ]
+PROFILE_MODELS = ["italia_meteo_arpae_icon_2i", "ecmwf_ifs025", "icon_global"]
+PROFILE_VARS = ",".join(f"{v}_{p}hPa" for p in (925, 850, 700)
+                        for v in ("temperature", "relative_humidity", "geopotential_height")) + ",precipitation"
 SYNOPTIC_VARS = "temperature_850hPa,wind_direction_700hPa,wind_speed_700hPa,geopotential_height_500hPa,precipitation"
 
 
@@ -108,6 +111,8 @@ def fetch_all(config: dict, raw_dir: Path) -> None:
     jobs = {
         "global": (FORECAST_URL, {"hourly": SURFACE_VARS, "forecast_days": 15, "past_days": 2}, GLOBAL_MODELS, 8, True),
         "lam": (FORECAST_URL, {"hourly": SURFACE_VARS, "forecast_days": 3}, LAM_MODELS, 12, True),
+        # profilo verticale per la quota neve calcolata col bulbo umido (vedi pipeline/snowlevel.py)
+        "profile": (FORECAST_URL, {"hourly": PROFILE_VARS, "forecast_days": 7}, PROFILE_MODELS, 12, True),
         "ensemble": (ENSEMBLE_URL, {"hourly": "temperature_2m,precipitation,freezing_level_height", "forecast_days": 15},
                      ENSEMBLE_MODELS, 3, False),
     }

@@ -40,7 +40,8 @@ def record(locs: list[dict], today: str) -> None:
         fc = h["forecast"].setdefault(L["slug"], {})
         if today not in fc:  # la previsione «del mattino» non si riscrive nel corso della giornata
             fc[today] = {"elev": ref["elev"], "station": st["name"],
-                         "days": {d["date"]: round(d.get("snow", 0) or 0, 1) for d in ref["days"][:4]}}
+                         "days": {d["date"]: round(d.get("snow", 0) or 0, 1) for d in ref["days"][:4]},
+                         "snowline": {x["date"]: x["lv"] for x in (L.get("snowline") or []) if x.get("lv")}}
     for name, st in stations.items():
         ob = h["obs"].setdefault(name, {})
         for t, cm in st.get("series", []):

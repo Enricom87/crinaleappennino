@@ -2,10 +2,14 @@ name: Aggiorna previsioni
 
 on:
   schedule:
-    # orari UTC: corse notturne dei LAM, poi ECMWF 00 completo, poi corse delle 12
-    - cron: "45 5 * * *"
-    - cron: "35 7 * * *"
-    - cron: "35 17 * * *"
+    # orari UTC (+1 in Italia d'inverno), agganciati a quando i modelli sono pronti:
+    # 04:40 LAM notturni (ICON-2I, AROME, ICON-CH2/D2) · 07:40 ECMWF 00 completo · 11:10 GFS 06 e LAM del mattino
+    # 15:40 ICON-2I e AROME delle 12 · 20:20 ECMWF 12 e GFS 12
+    - cron: "40 4 * * *"
+    - cron: "40 7 * * *"
+    - cron: "10 11 * * *"
+    - cron: "40 15 * * *"
+    - cron: "20 20 * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -38,6 +42,9 @@ jobs:
         env:
           OPEN_METEO_API_KEY: ${{ secrets.OPEN_METEO_API_KEY }}
         run: python pipeline/fetch.py
+      - name: Quadro generale (NAO, AO, vortice polare)
+        continue-on-error: true
+        run: python pipeline/teleconn.py
       - name: Sponsor venduti con Stripe
         env:
           STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
@@ -91,6 +98,7 @@ jobs:
           git add data/lifts.json
           git add data/reports.json 2>/dev/null || true
           git add data/seasons.json 2>/dev/null || true
+          git add data/teleconn.json data/calib.json 2>/dev/null || true
           git add data/pro.json 2>/dev/null || true
           git add data/articles 2>/dev/null || true
           git add data/avalanche.json 2>/dev/null || true

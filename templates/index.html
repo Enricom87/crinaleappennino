@@ -180,6 +180,9 @@
     </div>
   {% endfor %}
   </div>
+  {% if telev %}<div class="bigpic"><h3>🌍 {{ t("Il quadro generale: Atlantico, Artico e stratosfera") }}</h3>
+    <p><b>{{ telev.head }}</b></p>{% for l in telev.lines %}<p class="small">{{ l }}</p>{% endfor %}
+    <p class="small muted">{{ t("Indici NAO e AO: NOAA Climate Prediction Center (ensemble GEFS). Vortice polare: vento a 10 hPa sul 60° parallelo, da GFS.") }}</p></div>{% endif %}
   <div class="syn-card trend-chart">{{ trendv.chart|safe }}
     <p class="legend">{% for name, origin, col, n in trendv.models %}<span><i style="background:{{ col }};height:3px"></i>{{ name }}</span>{% endfor %}</p>
     <p class="legend">{% for lab, emo, col in trendv.legend %}<span><i style="background:{{ col }}"></i>{{ lab }}</span>{% endfor %}</p>

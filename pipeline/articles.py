@@ -47,7 +47,7 @@ def local_snow(locs: list[dict], today: str) -> dict | None:
     return best
 
 
-def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None = None) -> dict | None:
+def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None = None, telev: dict | None = None) -> dict | None:
     if not tv or not tv.get("phases"):
         return None
     ph = tv["phases"]
@@ -145,7 +145,8 @@ def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None 
                           d=low_["name"], lv=low_["lv"]))
         else:
             pros.append(T("Quote ancora alte: la neve, se arriva, resta sopra i {lv} m.", lv=low_["lv"]))
-    return {"date": today, "title": title, "lead": lead, "phases": phases, "models": models, "pros": pros,
+    big = [telev["head"]] + telev["lines"] if telev else []
+    return {"date": today, "title": title, "lead": lead, "phases": phases, "models": models, "pros": pros, "big": big,
             "weekend": weekend, "ground": ground, "chart": tv.get("chart", ""),
             "pub": nice_date(today)}
 
