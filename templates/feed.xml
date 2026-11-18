@@ -6,7 +6,13 @@
 <description>{{ site.tagline }}</description>
 <language>it</language>
 <lastBuildDate>{{ updated_rfc }}</lastBuildDate>
-<item>
+{% for a in articles[:10] %}<item>
+  <title>{{ a.title }}</title>
+  <link>{{ site.base_url }}/tendenze/{{ a.date }}/</link>
+  <guid>{{ site.base_url }}/tendenze/{{ a.date }}/</guid>
+  <description>{{ a.lead|join(' ') }}</description>
+</item>
+{% endfor %}<item>
   <title>Bollettino neve del {{ nice_date(today) }}</title>
   <link>{{ site.base_url }}/?d={{ today }}</link>
   <guid isPermaLink="false">{{ today }}</guid>

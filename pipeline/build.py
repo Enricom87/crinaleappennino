@@ -17,6 +17,7 @@ from synview import syn_view
 from verdict import weekend
 from extras import activities, events, snow_ground, places, avalanche
 from bestpick import best_pick
+from articles import due as art_due_fn, compose as art_compose, save as art_save, load_all as art_load
 from history import record as hist_record, view as hist_view
 from cards import prob_word
 
@@ -262,6 +263,7 @@ def main() -> None:
     all_pages = []  # percorsi di pagina (senza lingua), per la sitemap
 
     it_ctx = None
+    art_due = art_due_fn(today)
     bot_feed = {}  # dati per il bot Telegram (avvisi personali), in tutte le lingue
     for lang in LANGS:
         set_lang(lang)
@@ -319,7 +321,16 @@ def main() -> None:
             if lang == "it":
                 all_pages.append(page)
 
+        if art_due:
+            a = art_compose(ctx["trendv"], ctx["synv"], ctx["bestpick"], today)
+            if a:
+                art_save(lang, a)
+        articles = art_load(lang)
+        ctx["articles"] = articles
         render("index.html", "")
+        render("tendenze.html", "tendenze/")
+        for a in articles:
+            render("articolo.html", f"tendenze/{a['date']}/", art=a)
         for L in locs:
             render("location.html", f"{L['slug']}/", loc=L)
         for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline", "segnala"):

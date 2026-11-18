@@ -105,6 +105,17 @@ def main() -> None:
     if now.hour >= 7 and tg.get("daily") != today and post(token, chat, daily_text(site, latest, sponsor)):
         tg["daily"] = today
 
+    # nuovo articolo «Tendenza» (lunedì e giovedì): annuncio con link
+    art_dir = ROOT / "data" / "articles"
+    if art_dir.exists():
+        last = max((d.name for d in art_dir.iterdir() if (d / "it.json").exists()), default="")
+        if last and tg.get("article") != last:
+            a = load(art_dir / last / "it.json", {})
+            text = (f"📰 <b>{e(a.get('title', ''))}</b>\n\n{e((a.get('lead') or [''])[0])}\n\n"
+                    f"👉 <a href=\"{site['base_url']}/tendenze/{last}/\">Leggi l'analisi completa</a>")
+            if post(token, chat, text):
+                tg["article"] = last
+
     STATE.write_text(json.dumps(state, indent=1))
 
 

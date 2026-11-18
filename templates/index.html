@@ -184,6 +184,7 @@
     <p class="legend">{% for lab, emo, col in trendv.legend %}<span><i style="background:{{ col }}"></i>{{ lab }}</span>{% endfor %}</p>
     <p class="muted small">{{ t("Ogni linea è lo scenario centrale di un modello per la temperatura a 1.500 m; la fascia grigia comprende quasi tutti gli scenari. Le barre in basso mostrano, giorno per giorno, come si dividono gli scenari tra i tipi di tempo. ICON, UK Met Office e MeteoSvizzera danno la temperatura al suolo calcolata a 1.500 m.") }}</p>
   </div>
+  {% if articles %}<p class="art-link"><a class="btn small" href="{{ u('tendenze/' ~ articles[0].date ~ '/') }}">📰 {{ t("Leggi l'analisi completa") }}: {{ articles[0].title }}</a></p>{% endif %}
 </section>
 {% endif %}
 

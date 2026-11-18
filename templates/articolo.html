@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ art.title }} · {{ site.name }}{% endblock %}
+{% block main %}
+<article class="wrap narrow art">
+  <p class="muted small"><a href="{{ u('tendenze/') }}">{{ t("Tendenze neve") }}</a> · {{ art.pub }}</p>
+  <h1>{{ art.title }}</h1>
+  {% for p in art.lead %}<p class="{{ 'lead' if loop.first else '' }}">{{ p }}</p>{% endfor %}
+  {% if art.chart %}<figure class="art-chart">{{ art.chart|safe }}<figcaption class="small muted">{{ t("Scenari nevosi giorno per giorno, modello per modello.") }}</figcaption></figure>{% endif %}
+  <h2>{{ t("Fase per fase") }}</h2>
+  {% for p in art.phases %}<p class="art-phase" style="border-color:{{ p.color }}"><b>{{ p.emoji }} {{ p.label }}</b><br>{{ p.text }}</p>{% endfor %}
+  {% if art.models %}<h2>{{ t("Chi ci crede e chi no") }}</h2>{% for p in art.models %}<p>{{ p }}</p>{% endfor %}{% endif %}
+  {% if art.weekend %}<h2>{{ t("Il prossimo weekend") }}</h2><ul>{% for p in art.weekend %}<li>{{ p }}</li>{% endfor %}</ul>{% endif %}
+  <h2>{{ t("Quanta neve c'è adesso") }}</h2>
+  <p>{{ art.ground }}</p>
+  <div class="art-cta">
+    <p>{{ t("Aggiorniamo questa analisi ogni lunedì e giovedì. Vuoi sapere subito se cambia qualcosa per la tua località?") }}</p>
+    {% if site.social.telegram_bot %}<a class="btn tg" href="{{ site.social.telegram_bot }}?start">🔔 {{ t("Attiva gli avvisi su Telegram") }}</a>{% endif %}
+    <a class="btn ghost" href="{{ u('#tendenza') }}">{{ t("Guarda la tendenza aggiornata") }}</a>
+  </div>
+  <p class="small muted">{{ t("Articolo scritto in automatico dai nostri dati: scenari dei modelli Open-Meteo e misure delle stazioni ufficiali.") }}</p>
+</article>
+{% endblock %}

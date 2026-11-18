@@ -39,6 +39,7 @@ def best_pick(locs: list[dict], summer: bool) -> list[dict]:
         else:
             head = T("Il posto migliore è {loc}", loc=top[1]["name"].split(" · ")[0])
         out.append({
+            "tie": len(rows) > 2 and rows[0][0] - rows[2][0] < 0.5,
             "date": date, "name": top[2]["name"], "head": head, "sure": top[3], "red": top[2]["color"] == "red",
             "rows": [{"slug": L["slug"], "name": L["name"].split(" · ")[0], "color": d["color"], "why": d["why"],
                       "lifts": (None if summer or not (L.get("liftinfo") or {}).get("total")

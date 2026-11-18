@@ -205,7 +205,7 @@ def view(raws: dict[str, dict], today: str) -> dict:
         agree = sum(1 for r in rows if r["snow"] >= 30)
         phases.append({"label": T(lab), "from": nice_date(seg[0]["date"], True), "to": nice_date(seg[-1]["date"], True),
                        "emoji": meta[top][1], "type": T(meta[top][0]), "color": meta[top][2],
-                       "share": round(mix[top] * 100), "snow": round(snow * 100),
+                       "share": round(mix[top] * 100), "snow": round(snow * 100), "snow_low": round(mix["neve"] * 100),
                        "cold": round((mix["neve"] + mix["freddo"]) * 100),
                        "best": nice_date(best["date"]) if snow >= .1 else "",
                        "t50": f"{st.mean(d['t50'] for d in seg):+.0f}".replace("+0", "0").replace("-0", "0"),

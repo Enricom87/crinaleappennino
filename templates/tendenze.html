@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ t("Tendenze neve") }} · {{ site.name }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap"><h1>{{ t("Tendenze neve sull'Appennino") }}</h1>
+<p class="lead">{{ t("Ogni lunedì e giovedì leggiamo tutti i modelli e raccontiamo cosa aspettarci nelle prossime settimane, senza tecnicismi.") }}</p></div></section>
+<section class="wrap narrow">
+  {% for a in articles %}
+  <a class="art-item" href="{{ u('tendenze/' ~ a.date ~ '/') }}">
+    <span class="muted small">{{ a.pub }}</span>
+    <b>{{ a.title }}</b>
+    <span class="small">{{ a.lead[0] }}</span>
+  </a>
+  {% else %}<p>{{ t("Il primo articolo arriva al prossimo aggiornamento.") }}</p>{% endfor %}
+</section>
+{% endblock %}
