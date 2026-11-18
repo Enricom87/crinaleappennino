@@ -19,6 +19,7 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 STATE = ROOT / "data" / "state.json"
+BOT_URL = "https://crinale-bot.enrico-marchionni.workers.dev"
 
 
 def load(p: Path, default):
@@ -55,6 +56,38 @@ def daily_text(site: dict, latest: dict, sponsor: dict | None) -> str:
     return "\n".join(lines)
 
 
+def wa_text(site: dict, latest: dict, alert: list | None = None) -> str:
+    """Stesso messaggio in formato WhatsApp (grassetto con *, link in chiaro): da inoltrare a mano sul canale."""
+    base = site["base_url"]
+    if alert:
+        lines = ["*🚨 Allerta neve: ci siamo!*", ""]
+        for a in alert:
+            lines.append(f"• *{a['name'].split(' · ')[0]}*: {a['title']}")
+        lines += ["", f"👉 {base}/"]
+        return "\n".join(lines)
+    lines = ["*☀️ Buongiorno dal crinale*" if latest.get("summer") else "*❄️ Buongiorno dal crinale*", ""]
+    if latest.get("overview"):
+        lines += [latest["overview"], ""]
+    for L in latest.get("locs", []):
+        name = L["name"].split(" · ")[0]
+        txt = L.get("verdict") if latest.get("summer") else L["title"]
+        lines.append(f"• *{name}*: {txt}")
+    lines += ["", f"👉 Tutte le previsioni quota per quota: {base}/"]
+    return "\n".join(lines)
+
+
+def to_admin(token: str, text: str) -> bool:
+    """Manda all'amministratore (in privato, via bot) il testo pronto per il canale WhatsApp."""
+    import hashlib
+    sec = hashlib.sha256(("crinale:" + token).encode()).hexdigest()[:40]
+    try:
+        r = requests.post(BOT_URL + "/admin-note", json={"text": text}, headers={"X-Secret": sec}, timeout=30)
+        return r.ok
+    except Exception as ex:  # noqa: BLE001
+        print("nota WhatsApp all'amministratore non inviata:", ex)
+        return False
+
+
 def alert_text(site: dict, fresh: list[dict], sponsor: dict | None) -> str:
     base = site["base_url"]
     lines = ["<b>🚨 Allerta neve: ci siamo!</b>", ""]
@@ -88,6 +121,8 @@ def main() -> None:
     if fresh and post(token, chat, alert_text(site, fresh, sponsor)):
         for a in fresh:
             tg["alerted"][a["slug"]] = now.isoformat()
+        if site["social"].get("whatsapp"):
+            to_admin(token, "📲 Da inoltrare sul canale WhatsApp:\n\n" + wa_text(site, latest, fresh))
 
     # logo e descrizione del canale: si aggiornano da soli quando cambia la versione in config/site.json
     brand = site.get("telegram_brand_version", "")
@@ -104,6 +139,8 @@ def main() -> None:
     today = now.date().isoformat()
     if now.hour >= 7 and tg.get("daily") != today and post(token, chat, daily_text(site, latest, sponsor)):
         tg["daily"] = today
+        if site["social"].get("whatsapp"):
+            to_admin(token, "📲 Da inoltrare sul canale WhatsApp:\n\n" + wa_text(site, latest))
 
     # nuovo articolo «Tendenza» (lunedì e giovedì): annuncio con link
     art_dir = ROOT / "data" / "articles"

@@ -371,6 +371,15 @@ export default {
     if (url.pathname === "/event" && req.method === "POST") return submitEvent(req, env);
     if (url.pathname === "/events.json") return listEvents(req, env);
     if (url.pathname === "/report" && req.method === "POST") return submitReport(req, env);
+    if (url.pathname === "/admin-note" && req.method === "POST") {
+      // testo pronto per il canale WhatsApp, mandato in privato all'amministratore dalla pipeline
+      if (req.headers.get("X-Secret") !== (await secretOf(env))) return new Response("no", { status: 403 });
+      const admin = await env.SUBS.get("admin");
+      if (!admin) return new Response("nessun amministratore: manda /admin al bot", { status: 409 });
+      const { text } = await req.json();
+      await tg(env, "sendMessage", { chat_id: admin, text: String(text || "").slice(0, 4000), link_preview_options: { is_disabled: true } });
+      return new Response("ok");
+    }
     if (url.pathname === "/reports.json") return listReports(req, env);
     if (url.pathname === "/setup") {
       // Collega il bot a questo worker. Ripeterlo non fa danni: reimposta sempre lo stesso indirizzo.
