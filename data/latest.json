@@ -1,13 +1,13 @@
 {
- "generated": "2026-11-18T15:02+01:00",
+ "generated": "2026-11-18T16:22+01:00",
  "alerts": [],
- "overview": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita. Chi se la gode di più: Febbio, Garfagnana, Cimone. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "overview": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Febbio (1150 m), da confermare. Chi se la gode di più: Febbio, Garfagnana, Lago Santo. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
    "slug": "abetone",
    "name": "Abetone",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli fiutano neve (da confermare)",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Passo dell'Abetone (1388 m), da confermare",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -16,7 +16,7 @@
   {
    "slug": "cimone",
    "name": "Cimone · Sestola e Passo del Lupo",
-   "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Lago della Ninfa (1500 m), da confermare",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -25,7 +25,7 @@
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
-   "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Le Polle (1300 m), da confermare",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -34,7 +34,7 @@
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Cimoncino (1400 m), da confermare",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -43,7 +43,7 @@
   {
    "slug": "doganaccia",
    "name": "Doganaccia",
-   "title": "📡 Qualcosa si muove per mercoledì 25 novembre: possibile nevicata in quota",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Doganaccia (1540 m), da confermare",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -52,16 +52,16 @@
   {
    "slug": "corno-alle-scale",
    "name": "Corno alle Scale",
-   "title": "🤞 Segnale di neve per mercoledì 25 novembre: incrociamo le dita",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Cavone (1430 m), da confermare",
    "level": "watch",
-   "snow3_top": 0.6,
+   "snow3_top": 0.5,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "lago-scaffaiolo",
    "name": "Lago Scaffaiolo",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli fiutano neve (da confermare)",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -70,7 +70,7 @@
   {
    "slug": "lago-santo",
    "name": "Lago Santo · Monte Giovo",
-   "title": "👀 Occhio a domenica 22 novembre: i modelli fiutano neve (da confermare)",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Lago Santo modenese (1501 m), da confermare",
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
@@ -79,16 +79,16 @@
   {
    "slug": "garfagnana",
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
-   "title": "📡 Qualcosa si muove per domenica 22 novembre: possibile nevicata in quota",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Casone di Profecchia (1314 m), da confermare",
    "level": "watch",
-   "snow3_top": 0.1,
+   "snow3_top": 0.2,
    "verdict": "Meglio di no",
    "back_by": null
   },
   {
    "slug": "cerreto-laghi",
    "name": "Cerreto Laghi",
-   "title": "📡 Qualcosa si muove per mercoledì 25 novembre: possibile nevicata in quota",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Cerreto Laghi (1340 m), da confermare",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -97,7 +97,7 @@
   {
    "slug": "febbio",
    "name": "Febbio · Monte Cusna",
-   "title": "🤞 Segnale di neve per domenica 22 novembre: incrociamo le dita",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Febbio (1150 m), da confermare",
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
