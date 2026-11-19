@@ -2,7 +2,7 @@
  "multipass": {
   "name": "Multipass Abetone",
   "url": "https://www.multipassabetone.it/stato-impianti",
-  "fetched": "2026-11-19T17:00+01:00",
+  "fetched": "2026-11-19T17:14+01:00",
   "updated": "",
   "lifts": [
    {
@@ -232,7 +232,7 @@
  "cimone": {
   "name": "Consorzio Cimone",
   "url": "https://www.cimonesci.it/impianti-aperti/",
-  "fetched": "2026-11-19T17:00+01:00",
+  "fetched": "2026-11-19T17:14+01:00",
   "updated": "07/04/2026 14:00",
   "lifts": [
    {
@@ -251,14 +251,19 @@
     "area": "CIMONCINO"
    },
    {
+    "name": "Tappeto Lago della Ninfa",
+    "open": false,
+    "area": "LAGO DELLA NINFA"
+   },
+   {
     "name": "Lago della Ninfa - Seggiovia 4 posti",
     "open": false,
     "area": "LAGO DELLA NINFA"
    },
    {
-    "name": "Tappeto Lago della Ninfa",
+    "name": "Ariete - Seggiovia 4 posti",
     "open": false,
-    "area": "LAGO DELLA NINFA"
+    "area": "LE POLLE"
    },
    {
     "name": "Polle - Valcava - Seggiovia 6 posti",
@@ -271,27 +276,7 @@
     "area": "LE POLLE"
    },
    {
-    "name": "Ariete - Seggiovia 4 posti",
-    "open": false,
-    "area": "LE POLLE"
-   },
-   {
-    "name": "Faggio Bianco - Seggiovia 3 posti",
-    "open": false,
-    "area": "PASSO DEL LUPO"
-   },
-   {
-    "name": "Del Cimone - Seggiovia 4 posti",
-    "open": false,
-    "area": "PASSO DEL LUPO"
-   },
-   {
-    "name": "Lamaccione - Seggiovia 4 posti",
-    "open": false,
-    "area": "PASSO DEL LUPO"
-   },
-   {
-    "name": "Dei Maestri - Tappeto di risalita",
+    "name": "Esperia - Seggiovia 2 posti",
     "open": false,
     "area": "PASSO DEL LUPO"
    },
@@ -301,12 +286,32 @@
     "area": "PASSO DEL LUPO"
    },
    {
-    "name": "Sestola Pian del Falco - Seggiovia tre posti",
+    "name": "Dei Maestri - Tappeto di risalita",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Lamaccione - Seggiovia 4 posti",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Del Cimone - Seggiovia 4 posti",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Faggio Bianco - Seggiovia 3 posti",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Pian del Falco - Passo del lupo BUS pausa nei feriali dalle ore 12 alle ore 13",
     "open": false,
     "area": "SESTOLA"
    },
    {
-    "name": "Pian del Falco - Passo del lupo BUS pausa nei feriali dalle ore 12 alle ore 13",
+    "name": "Sestola Pian del Falco - Seggiovia tre posti",
     "open": false,
     "area": "SESTOLA"
    }
@@ -333,11 +338,6 @@
     "area": "CIMONCINO"
    },
    {
-    "name": "Campo scuola Ninfa",
-    "open": false,
-    "area": "LAGO DELLA NINFA"
-   },
-   {
     "name": "Campo scuola Lago",
     "open": false,
     "area": "LAGO DELLA NINFA"
@@ -348,7 +348,12 @@
     "area": "LAGO DELLA NINFA"
    },
    {
-    "name": "Baggiolara",
+    "name": "Campo scuola Ninfa",
+    "open": false,
+    "area": "LAGO DELLA NINFA"
+   },
+   {
+    "name": "Sette fontane",
     "open": false,
     "area": "LE POLLE"
    },
@@ -358,17 +363,7 @@
     "area": "LE POLLE"
    },
    {
-    "name": "Baggiolara 2",
-    "open": false,
-    "area": "LE POLLE"
-   },
-   {
     "name": "Campo Scuola Polle",
-    "open": false,
-    "area": "LE POLLE"
-   },
-   {
-    "name": "Sette fontane",
     "open": false,
     "area": "LE POLLE"
    },
@@ -378,52 +373,32 @@
     "area": "LE POLLE"
    },
    {
+    "name": "Baggiolara",
+    "open": false,
+    "area": "LE POLLE"
+   },
+   {
     "name": "Del Lago",
     "open": false,
     "area": "LE POLLE"
    },
    {
-    "name": "Direttissima Paletta",
+    "name": "Baggiolara 2",
+    "open": false,
+    "area": "LE POLLE"
+   },
+   {
+    "name": "Cerverola Nord",
+    "open": false,
+    "area": "MONTECRETO"
+   },
+   {
+    "name": "Esperie",
     "open": false,
     "area": "PASSO DEL LUPO"
    },
    {
-    "name": "Faggio",
-    "open": false,
-    "area": "PASSO DEL LUPO"
-   },
-   {
-    "name": "Campo Scuola Maestri",
-    "open": false,
-    "area": "PASSO DEL LUPO"
-   },
-   {
-    "name": "Stadio Slalom Romolo Pelloni",
-    "open": false,
-    "area": "PASSO DEL LUPO"
-   },
-   {
-    "name": "Betulla",
-    "open": false,
-    "area": "PASSO DEL LUPO"
-   },
-   {
-    "name": "Colombaccio PISTA DA BOB",
-    "open": false,
-    "area": "PASSO DEL LUPO"
-   },
-   {
-    "name": "Belladonna",
-    "open": false,
-    "area": "PASSO DEL LUPO"
-   },
-   {
-    "name": "Sud Beccadella",
-    "open": false,
-    "area": "PASSO DEL LUPO"
-   },
-   {
-    "name": "Nord Beccadella",
+    "name": "Catinaccio",
     "open": false,
     "area": "PASSO DEL LUPO"
    },
@@ -433,7 +408,47 @@
     "area": "PASSO DEL LUPO"
    },
    {
-    "name": "Catinaccio",
+    "name": "Nord Beccadella",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Sud Beccadella",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Belladonna",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Colombaccio PISTA DA BOB",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Betulla",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Stadio Slalom Romolo Pelloni",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Campo Scuola Maestri",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Faggio",
+    "open": false,
+    "area": "PASSO DEL LUPO"
+   },
+   {
+    "name": "Direttissima Paletta",
     "open": false,
     "area": "PASSO DEL LUPO"
    }
