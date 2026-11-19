@@ -159,20 +159,19 @@
   <h2>{{ trendv.head }}</h2>
   <p class="muted">{{ t("Mettiamo insieme {m} modelli meteo di tutto il mondo e {n} versioni del futuro, ognuna leggermente diversa. Più scenari e più modelli vanno nella stessa direzione, più la tendenza è affidabile.", m=trendv.nmodels, n=trendv.nscen) }}</p>
   <p class="model-chips">{% for name, origin, col, n in trendv.models %}<span><i style="background:{{ col }}"></i><b>{{ name }}</b> {{ origin }} · {{ n }}</span>{% endfor %}</p>
+  <p class="pc-note">{{ t("I numeri sono scenari su 100: più sono alti, più è probabile.") }} <a href="{{ u('come-funziona/') }}">{{ t("Spiegato semplice") }} →</a></p>
   <div class="phases">
   {% for ph in trendv.phases %}
-    <div class="phase" style="--c:{{ ph.color }}">
-      <span class="ph-lab">{{ ph.label }}</span><span class="ph-dates">{{ ph.from }} – {{ ph.to }} · {{ t("{n} scenari da {m} modelli", n=ph.scen, m=ph.nmodels) }}</span>
-      <p class="ph-head">{{ t("Più probabile") }}: <b>{{ ph.type }}</b> <span class="ph-share">{{ t("{p} su 100", p=ph.share) }}</span></p>
-      {% if ph.share < 50 %}<p class="ph-note">{{ t("Non è ancora deciso: gli scenari sono divisi.") }}</p>{% endif %}
-      <div class="ph-bar">{% for lab, col, p in ph.mix %}<span style="width:{{ p }}%;background:{{ col }}" title="{{ lab }} {{ p }}%"></span>{% endfor %}</div>
-      <ul class="ph-legend">{% for lab, col, p in ph.mix|sort(attribute=2, reverse=true) %}{% if p >= 5 %}<li><i style="background:{{ col }}"></i>{{ lab }} <b>{{ p }}</b></li>{% endif %}{% endfor %}</ul>
-      <ul class="ph-facts">
-        <li>❄️ <b>{{ t("Neve alle stazioni") }}: {{ prob_word(ph.snow_low) }}</b> <span class="muted">({{ t("{p} su 100", p=ph.snow_low) }})</span></li>
-        <li>🏔️ {{ t("Neve almeno in quota") }}: <b>{{ ph.snow }}</b> {{ t("su 100") }}{% if ph.best %} · {{ t("più probabile {d}", d=ph.best) }}{% endif %}</li>
-        <li>🥶 {{ t("Freddo vero (sotto −2 °C a 1.500 m)") }}: <b>{{ ph.cold_tail or 0 }}</b> {{ t("su 100") }}{% if ph.cold_tail and ph.cold_tail >= 10 and ph.cold_day %} · {{ ph.cold_day }}{% endif %}</li>
-        <li>🌡️ {{ t("{t} °C a 1.500 m", t=ph.t50) }} · 🎯 {{ t("Affidabilità: {c}", c=ph.conf) }}</li>
-      </ul>
+    <div class="phase pc">
+      <span class="pc-when">{{ ph.label }} · {{ ph.from }} – {{ ph.to }}</span>
+      <div class="pc-top"><span class="pc-emoji" aria-hidden="true">{{ ph.card.emoji }}</span><b class="pc-head">{{ ph.card.head }}</b></div>
+      {% if ph.card.tag %}<span class="pc-tag pc-{{ ph.card.tag[0] }}">{{ ph.card.tag[1] }}</span>{% endif %}
+      <div class="pc-nums">
+        <div class="pc-n pc-blue"><span>🎿</span><b>{{ ph.snow_low }}</b><small>{{ t("neve alle stazioni") }}</small></div>
+        <div class="pc-n pc-sky"><span>🏔️</span><b>{{ ph.snow }}</b><small>{{ t("neve in quota") }}</small></div>
+        <div class="pc-n pc-ice"><span>🥶</span><b>{{ ph.cold_tail or 0 }}</b><small>{{ t("freddo vero") }}</small></div>
+      </div>
+      <p class="pc-foot">🌡️ {{ t("{t} °C a 1.500 m", t=ph.t50) }} · {{ ph.card.conf }}</p>
       <details class="ph-models"><summary>{{ t("Modello per modello") }}</summary>
         <table><tr><th></th><th>{{ t("Neve") }}</th><th>{{ t("Freddo") }}</th><th>°C</th></tr>
         {% for r in ph.rows %}<tr><td><i style="background:{{ r.color }}"></i>{{ r.name }}</td><td><b>{{ r.snow }}%</b></td><td>{{ r.cold }}%</td><td>{{ r.t }}</td></tr>{% endfor %}

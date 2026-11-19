@@ -16,6 +16,7 @@ from summer import mountain_days, overview_mtn, summer_text
 from i18n import T
 from synview import syn_view
 from teleconn import view as tele_view
+from phasecard import decorate
 from verdict import weekend
 from extras import activities, events, snow_ground, places, avalanche
 from bestpick import best_pick
@@ -338,7 +339,7 @@ def main() -> None:
                "local_sources": [{**s, "about": T(s["about"]), "links": {k: [{**l, "label": T(l["label"])} for l in v]
                                                                        for k, v in s["links"].items()}}
                                  for s in local_sources],
-               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows, "synv": syn_view(syn_rows), "trendv": trend_view(), "telev": tele_view(today),
+               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows, "synv": syn_view(syn_rows), "trendv": decorate(trend_view(), locs), "telev": tele_view(today),
                "summer": IS_SUMMER, "home_events": home_events(locs), "bestpick": best_pick(locs, IS_SUMMER),
                "overview": ((overview_mtn(locs) if IS_SUMMER else overview_text(locs)) if locs else ""),
                "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),
