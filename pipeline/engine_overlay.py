@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw" / "engine_raw.json"
 OUT = ROOT / "data" / "raw" / "engine.json"
 DAYS = 5
+CONCHE = {"val-di-luce"}  # conche chiuse che non sono il punto più basso della località (cuscinetto freddo)
 
 
 def load() -> dict:
@@ -66,7 +67,7 @@ def apply(base_locs: list[dict], pts: dict, cal: dict, today: str) -> dict:
             top = j == len(ids) - 1 and len(ids) > 1
             try:
                 r = _run(code, raw, pts[pid]["elev"], cresta=top and cfg["is_cresta_esposta"],
-                         valle=j == 0 and cfg["is_valle_chiusa"])
+                         valle=not top and cfg["is_valle_chiusa"] and (j == 0 or pid in CONCHE))
             except Exception as e:  # noqa: BLE001
                 print(f"motore fisico: {pid} saltato ({e})")
                 continue

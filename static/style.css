@@ -527,3 +527,10 @@ table.pg th,table.pg td{padding:9px 10px;text-align:left;border-bottom:1px solid
 table.pg th{font-weight:600;color:#5b6b7d;font-size:12.5px}
 table.pg tr.me td{background:#eef5ff;font-weight:600}
 table.pg tr:last-child td{border-bottom:0}
+.why-box{background:#fff;border-radius:22px;padding:22px 20px;margin:22px auto;box-shadow:0 1px 2px rgba(15,30,60,.05),0 8px 24px rgba(15,30,60,.06)}
+.why-box h2{margin:.2em 0 .4em}
+.why{list-style:none;padding:0;margin:14px 0;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.why li{display:flex;gap:10px;align-items:flex-start;background:#f4f8fc;border-radius:16px;padding:12px 14px;font-size:15px;line-height:1.45}
+.why li>span{font-size:24px;line-height:1}
+.why b{display:block;margin-bottom:2px}
+.why-foot{font-size:14.5px;color:#4a5b6d}

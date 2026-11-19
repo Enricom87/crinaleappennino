@@ -1,18 +1,54 @@
 {% extends "base.html" %}
-{% block title %}Come lavoriamo · {{ site.name }}{% endblock %}
+{% block title %}Metodo e fonti · {{ site.name }}{% endblock %}
 {% block main %}
-<section class="hero small"><div class="wrap"><h1>Come lavoriamo</h1>
-<p class="lead">Niente previsioni "a sensazione": ogni mattina confrontiamo i modelli numerici più fini disponibili per l'Appennino e calcoliamo la neve quota per quota.</p></div></section>
+<section class="hero small"><div class="wrap"><h1>Metodo e fonti</h1>
+<p class="lead">Niente previsioni "a sensazione": un calcolo costruito solo per l'Appennino tosco-emiliano, aggiornato più volte al giorno, che stima la neve quota per quota e poi si fa controllare dalle misure.</p></div></section>
 <section class="wrap prose">
+<h2>Perché i primi 5 giorni di Crinale sono diversi</h2>
+<p>I siti meteo nazionali fanno un mestiere difficile: coprono tutta Italia con la stessa formula, da Bolzano a Palermo. E spesso partono da modelli a maglie larghe, 10–25 km, per cui l'Appennino tosco-emiliano è una collina arrotondata alta poco più di mille metri. Il risultato si vede proprio dove a noi interessa: la quota neve e i centimetri che restano a terra.</p>
+<p>Noi facciamo una cosa sola: l'Appennino tra la Garfagnana e il Corno alle Scale. Per i primi 5 giorni ogni località ha un calcolo fisico costruito su misura, ora per ora.</p>
+
+<h3>🧭 1. Il vento sceglie quale modello ascoltare</h3>
+<p>Non facciamo una media alla cieca. Prima guardiamo da dove arriva l'aria a 1.500 m, poi decidiamo a chi dare retta.</p>
+<ul>
+<li><strong>Libeccio e Ostro</strong> (da sud-ovest): l'aria umida del Tirreno sbatte sul versante toscano e scarica lì. Il peso va ai modelli ad altissima risoluzione, ICON-2I di ItaliaMeteo-ARPAE e AROME France di Météo-France, a 2–2,5 km, che vedono le nuvole schiacciarsi contro il crinale.</li>
+<li><strong>Grecale e Bora</strong> (da nord-est): tocca al versante emiliano. Il peso passa a ICON-2I e ICON-CH2 di MeteoSvizzera, più precisi su quel lato.</li>
+<li><strong>Oltre le 48 ore</strong> i dettagli contano meno della tenuta della previsione: comanda l'europeo ECMWF, affiancato da ICON-2I e dall'americano GFS.</li>
+</ul>
+
+<h3>🌡️ 2. La quota neve vera, non lo zero termico</h3>
+<p>Lo zero termico dice dove l'aria è a 0 °C, non dove nevica. Noi calcoliamo la temperatura di bulbo umido, cioè quella che tiene conto di quanto è secca l'aria: con aria secca i fiocchi evaporano un po', si raffreddano e arrivano più in basso. Poi aggiungiamo due cose che i modelli generali trascurano.</p>
+<ul>
+<li><strong>Omotermia</strong>: quando nevica forte, la neve che scende raffredda l'aria attorno a sé e la quota neve si abbassa, fino a 300 m con le precipitazioni più intense. È il motivo per cui a volte "doveva piovere" e invece imbianca.</li>
+<li><strong>Cuscinetti freddi</strong>: nelle conche chiuse come Val di Luce, Boscolungo e Lago Santo l'aria fredda ristagna nelle prime ore di una perturbazione e la neve tiene più in basso.</li>
+</ul>
+
+<h3>📏 3. Neve quota per quota, con la densità giusta</h3>
+<p>Calcoliamo la neve in ogni punto della località: alla base, nei punti intermedi come Val di Luce e in vetta, ognuno alla sua quota reale. Un millimetro d'acqua non fa sempre un centimetro di neve:</p>
+<ul>
+<li>con il Libeccio, vicino a 0 °C, la neve è pesante e bagnata: circa 6–7 cm per 10 mm d'acqua;</li>
+<li>con il freddo da Tramontana è farinosa: fino a 15 cm per 10 mm.</li>
+</ul>
+<p>Sulle creste esposte, come il Monte Gomito, la Croce Arcana e la vetta del Cimone, teniamo conto del vento: oltre i 35 km/h di raffica parte della neve viene portata via, oltre gli 85 km/h ne resta meno di un terzo.</p>
+
+<h3>🔭 4. Due motori, due orizzonti</h3>
+<ul>
+<li><strong>Primi 5 giorni</strong>: la fisica locale descritta qui sopra, ora per ora e quota per quota.</li>
+<li><strong>Dal 6° al 30° giorno</strong> la singola previsione non regge più e passiamo alle probabilità. Contiamo come si comportano circa 300 scenari di 8 centri meteo (europeo, americano, canadese, tedesco, britannico, svizzero, Google) e li leggiamo insieme agli indici che governano il grande freddo: NAO, AO e vortice polare. Così diciamo "freddo in 20 scenari su 100", non "gelo sicuro". <a href="{{ u('come-funziona/') }}">Come funzionano gli scenari, spiegato semplice</a>.</li>
+</ul>
+
+<h3>📊 5. E lo verifichiamo</h3>
+<p>Ogni giorno salviamo cosa avevamo previsto e lo confrontiamo con la neve misurata dalle stazioni Arpae, accanto ai modelli usati così come escono e al nostro metodo precedente. I risultati sono pubblici e non scartiamo le giornate andate male: <a href="{{ u('pagella/') }}">la pagella</a>.</p>
+
 <h2>I modelli</h2>
 <ul>
-<li><strong>Oggi e domani</strong>: modelli ad area limitata ad alta risoluzione (1-2 km), che "vedono" il crinale: ICON-2I di ItaliaMeteo-ARPAE (il riferimento nazionale, con peso doppio), ICON-CH2 di MeteoSvizzera, ICON-D2 del servizio meteo tedesco e AROME di Météo-France.</li>
-<li><strong>Dal terzo giorno</strong>: modelli globali ECMWF, GFS e ICON, con la loro forbice.</li>
-<li><strong>Probabilità</strong>: i 51 scenari dell'ensemble ECMWF. "30% di almeno 10 cm" significa che circa 15 scenari su 51 portano almeno 10 cm.</li>
+<li><strong>Primi 5 giorni</strong>: il calcolo descritto qui sopra, con ICON-2I (ItaliaMeteo-ARPAE), AROME France (Météo-France), ICON-CH2 (MeteoSvizzera), ECMWF, GFS e ICON-EU (DWD). Temperature, nuvole e temporali vengono dalla media pesata dei modelli ad area limitata nei primi 2 giorni, poi dai globali.</li>
+<li><strong>Probabilità di neve</strong>: i 51 scenari dell'ensemble ECMWF. "30% di almeno 10 cm" significa che circa 15 scenari su 51 portano almeno 10 cm.</li>
+<li><strong>Tendenze fino a 30 giorni</strong>: tutti gli ensemble disponibili sopra il crinale, più gli indici NAO e AO (NOAA CPC) e il vento a 10 hPa per il vortice polare.</li>
 <li><strong>Configurazione</strong>: temperatura a 1.500 m, direzione del flusso a 3.000 m e posizione della saccatura, per capire se una perturbazione porta neve o pioggia.</li>
 </ul>
 <h2>Come stimiamo la neve</h2>
-<p>I modelli globali "smussano" le montagne e sottostimano la neve in quota. Per questo calcoliamo la neve da precipitazione e temperatura ricalcolata alla quota reale di ogni punto: sotto 0,5 °C la precipitazione conta tutta come neve, tra 0,5 e 1,5 °C per metà, con il rapporto indicativo di 1 cm di neve per 1 mm d'acqua. In più, la neve conta solo quando lo zero termico è entro 300 m sopra il punto (a metà tra 300 e 500 m): così non si conta neve in vetta quando sopra fa ancora caldo. Neve molto asciutta (freddo intenso) può rendere di più, neve bagnata di meno.</p>
+<p>Per ogni ora: quota neve dal profilo del bulbo umido (2 m, 900, 850, 800 e 700 hPa), corretta per omotermia e cuscinetti freddi; neve dove il bulbo umido alla quota del punto resta sotto 0,5 °C, con un rapporto neve/acqua da 6,5 a 15 a seconda del freddo; riduzione per il vento sulle creste esposte. La taratura automatica corregge poi le quantità in base agli errori misurati nelle stagioni precedenti. Oltre il 5° giorno usiamo il metodo semplificato: neve dalla precipitazione e dalla temperatura ricalcolata alla quota reale del punto.</p>
 <h2>In quota senza neve: temporali, caldo e vento</h2>
 <p>Per ogni località usiamo il punto più alto. Per oggi e domani confrontiamo i modelli ad area limitata (ICON-2I, ICON-D2, ICON-CH2, AROME), per i tre giorni dopo i globali. Il rischio temporali nasce dall'energia disponibile per la convezione (CAPE) e dalla pioggia prevista tra le 11 e le 20: "probabili" quando almeno metà dei modelli vede CAPE oltre 800 J/kg con almeno 1 mm nel pomeriggio, "possibili" sopra 300 J/kg e mezzo millimetro. L'ora di inizio è la mediana tra i modelli; il rientro consigliato è un'ora prima. Il giudizio della giornata tiene conto anche di raffiche (attenzione da 50 km/h, sconsigliata da 70), pioggia totale e nuvolosità. I temporali estivi sono locali: i modelli ne colgono la tendenza, non il singolo cumulonembo sopra la vostra testa.</p>
 <h2>Innevamento artificiale</h2>
@@ -21,6 +57,6 @@
 <p>Sono previsioni automatiche e indicative. Non sostituiscono i bollettini ufficiali di Protezione Civile e Meteomont, né il giudizio sul campo. Non usarle da sole per decidere un'uscita in ambiente innevato.</p>
 <h2>Fonti e licenze</h2>
 <p>Le foto delle località vengono da <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> con licenze libere: autore e licenza sono indicati su ogni foto, con il link alla pagina originale.</p>
-<p>Dati dei modelli: ItaliaMeteo-ARPAE, MeteoSvizzera, DWD, Météo-France, ECMWF, NOAA, distribuiti tramite <a href="https://open-meteo.com/">Open-Meteo</a> con licenza <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Quote del terreno: EU-DEM 25 m (Copernicus) tramite <a href="https://www.opentopodata.org/">OpenTopoData</a> e Copernicus DEM tramite Open-Meteo.</p>
+<p>Dati dei modelli: ItaliaMeteo-ARPAE, MeteoSvizzera, DWD, Météo-France, ECMWF, NOAA, ECCC, UK Met Office, Google, distribuiti tramite <a href="https://open-meteo.com/">Open-Meteo</a> con licenza <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Quote del terreno: EU-DEM 25 m (Copernicus) tramite <a href="https://www.opentopodata.org/">OpenTopoData</a> e Copernicus DEM tramite Open-Meteo.</p>
 </section>
 {% endblock %}
