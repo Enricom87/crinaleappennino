@@ -24,6 +24,7 @@ from i18n import day_short
 from articles import due as art_due_fn, compose as art_compose, save as art_save, load_all as art_load
 from history import record as hist_record, view as hist_view
 import verify
+from seo import location_seo
 from climview import load as clim_load, view as clim_view
 from cards import prob_word
 
@@ -283,6 +284,7 @@ def main() -> None:
             zd = (pro.load().get("zones") or {}).get(pro.ZONE_FOR.get(loc["slug"], ""))
             L["snowline"] = None if IS_SUMMER else pro.snowline(loc, pts, today, zd, levels=LEVELS,
                                                                      offset=(CAL.get(loc["slug"]) or {}).get("level", 0))
+            L["seo"] = location_seo(L, site, IS_SUMMER)
             locs.append(L)
         loc_by_slug = {L["slug"]: L for L in locs}
         routes = []
@@ -429,7 +431,8 @@ def main() -> None:
     ctx_x = {**ctx, "u": lambda p="": p}
     (OUT / "feed.xml").write_text(env.get_template("feed.xml").render(**ctx_x))
     (OUT / "sitemap.xml").write_text(env.get_template("sitemap.xml").render(
-        **ctx_x, pages=[p for p in all_pages if p != "offline/"], prefixes=[prefix(l) for l in LANGS]))
+        **ctx_x, pages=[p for p in all_pages if p != "offline/"], prefixes=[prefix(l) for l in LANGS],
+        lastmod=now.isoformat(timespec="seconds")))
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {site['base_url']}/sitemap.xml\n")
     # app installabile (PWA): manifest e service worker alla radice del sito
     (OUT / "manifest.webmanifest").write_text(json.dumps({

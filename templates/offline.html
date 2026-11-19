@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}{{ t("Senza rete") }} · {{ site.name }}{% endblock %}
+{% block robots %}noindex, follow{% endblock %}
 {% block main %}
 <section class="hero small"><div class="wrap"><h1>{{ t("Sei senza rete") }}</h1>
 <p class="lead">{{ t("Le pagine che hai già aperto e i percorsi salvati restano disponibili. Le previsioni si aggiornano appena torna il segnale.") }}</p>

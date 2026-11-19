@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}{{ site.name }} · {{ site.tagline }}{% endblock %}</title>
 <meta name="description" content="{% block desc %}{{ t("Previsioni neve quota per quota per Abetone, Cimone, Doganaccia, Corno alle Scale, Garfagnana, Cerreto Laghi, Febbio e il crinale tosco-emiliano, aggiornate ogni mattina dai modelli meteo ad alta risoluzione.") }}{% endblock %}">
+<meta name="robots" content="{% block robots %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endblock %}">
+{% set _abs = (alternates | selectattr('lang', 'equalto', lang) | first).abs %}
+{% set _img %}{% block og_image %}{% if home_photo %}{{ site.base_url }}/static/photos/{{ home_photo.key }}.jpg{% endif %}{% endblock %}{% endset %}{% set _img = _img | trim %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{{ self.title() | trim }}">
+<meta property="og:description" content="{{ self.desc() | trim }}">
+<meta property="og:url" content="{{ _abs }}">
+<meta property="og:locale" content="{{ html_lang | replace('-', '_') }}">
+{% if _img %}<meta property="og:image" content="{{ _img }}">
+<meta name="twitter:card" content="summary_large_image">{% endif %}
+{% block head_extra %}{% endblock %}
 <link rel="preload" href="{{ u('static/fonts/pjs-400.woff2') }}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ u('static/fonts/pjs-800.woff2') }}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ u('static/style.css') }}?v={{ css_v }}">
