@@ -46,6 +46,7 @@ LIMITED = False  # superato il limite orario o giornaliero: si salta il resto e 
 
 
 def _get(url: str, params: dict, retries: int = 4) -> dict | list:
+    global LIMITED
     if LIMITED:
         raise RuntimeError("limite Open-Meteo raggiunto, salto")
     if API_KEY:
@@ -59,7 +60,6 @@ def _get(url: str, params: dict, retries: int = 4) -> dict | list:
             time.sleep(20 * (attempt + 1))
             continue
         if r.status_code == 429:
-            global LIMITED
             msg = r.text[:200]
             print(f"limite di richieste Open-Meteo: {msg}", flush=True)
             if "inute" not in msg or attempt == retries - 1:  # limite orario/giornaliero: inutile aspettare
