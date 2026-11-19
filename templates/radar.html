@@ -46,6 +46,8 @@
     attribution: {{ t('Mappa © <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA), dati © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>')|tojson }}}).addTo(map);
   pts.forEach(p => L.circleMarker([p.lat, p.lon], {radius: 6, color: '#0f2236', weight: 2, fillColor: '#fff', fillOpacity: 1})
     .addTo(map).bindTooltip(p.name, {direction: 'top'}));
+  // le tile del radar hanno lo sfondo nero dove non piove: in fusione «screen» il nero sparisce e restano i colori
+  map.createPane('radar'); const pane = map.getPane('radar'); pane.style.zIndex = 450; pane.style.mixBlendMode = 'screen'; pane.style.pointerEvents = 'none';
   const S3 = 'https://s3-prod-dpc-radar-webp-cache.s3.eu-south-1.amazonaws.com/SRI/';
   const pad = n => String(n).padStart(2, '0');
   const path = d => `${d.getUTCFullYear()}/${pad(d.getUTCMonth() + 1)}/${pad(d.getUTCDate())}/${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}`;
@@ -55,7 +57,7 @@
   let layers = [], times = [], cur = -1, timer = null;
   function show(i) {
     if (cur >= 0) layers[cur].setOpacity(0);
-    layers[i].setOpacity(0.75); cur = i; slide.value = i;
+    layers[i].setOpacity(1); cur = i; slide.value = i;
     tlab.textContent = fmt(times[i]) + (i === layers.length - 1 ? ' · ' + {{ t("ultimo")|tojson }} : '');
   }
   function play() { timer = setInterval(() => show((cur + 1) % layers.length), 700); btn.textContent = '⏸'; }
@@ -67,7 +69,7 @@
       const last = new Date(j.lastProducts[0].time);
       for (let k = 11; k >= 0; k--) times.push(new Date(last.getTime() - k * 300000));
       layers = times.map(d => L.tileLayer(S3 + path(d) + '/{z}/{x}/{y}/sri.webp',
-        {maxNativeZoom: 7, maxZoom: 13, opacity: 0, errorTileUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACw=', zIndex: 5}).addTo(map));
+        {pane: 'radar', maxNativeZoom: 7, maxZoom: 13, opacity: 0, errorTileUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACw='}).addTo(map));
       show(layers.length - 1);
       setTimeout(play, 1500);
     }).catch(() => {
