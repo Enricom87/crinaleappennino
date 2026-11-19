@@ -11,12 +11,20 @@
    "lat": 44.41229,
    "lon": 10.00854,
    "cm": 0,
-   "time": "2026-11-19T08:00:00Z",
+   "time": "2026-11-19T11:30:00Z",
    "delta": 0,
-   "delta_h": 0,
+   "delta_h": 4,
    "series": [
     [
      "2026-11-19T08:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:30:00Z",
      0.0
     ]
    ],
@@ -26,7 +34,7 @@
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
    "raw_cm": 1,
-   "model_cm": 0,
+   "model_cm": null,
    "valid": false
   },
   {
@@ -35,14 +43,10 @@
    "lat": 44.3458,
    "lon": 10.13845,
    "cm": 0,
-   "time": "2026-11-19T10:30:00Z",
+   "time": "2026-11-19T11:30:00Z",
    "delta": 0,
-   "delta_h": 5,
+   "delta_h": 6,
    "series": [
-    [
-     "2026-11-19T05:30:00Z",
-     0.0
-    ],
     [
      "2026-11-19T06:00:00Z",
      0.0
@@ -73,6 +77,14 @@
     ],
     [
      "2026-11-19T10:30:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:30:00Z",
      0.0
     ]
    ],
@@ -82,7 +94,7 @@
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
    "raw_cm": 0,
-   "model_cm": 0,
+   "model_cm": null,
    "valid": false
   },
   {
@@ -91,14 +103,10 @@
    "lat": 44.11917,
    "lon": 10.8175,
    "cm": 0,
-   "time": "2026-11-19T10:30:00Z",
+   "time": "2026-11-19T11:00:00Z",
    "delta": 0,
    "delta_h": 5,
    "series": [
-    [
-     "2026-11-19T05:30:00Z",
-     0.0
-    ],
     [
      "2026-11-19T06:00:00Z",
      0.0
@@ -137,6 +145,10 @@
     ],
     [
      "2026-11-19T10:30:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:00:00Z",
      0.0
     ]
    ],
@@ -146,7 +158,7 @@
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
    "raw_cm": 4,
-   "model_cm": 0,
+   "model_cm": null,
    "valid": false
   },
   {
@@ -155,14 +167,10 @@
    "lat": 44.19013,
    "lon": 10.67311,
    "cm": 0,
-   "time": "2026-11-19T10:30:00Z",
+   "time": "2026-11-19T11:30:00Z",
    "delta": 0,
-   "delta_h": 5,
+   "delta_h": 6,
    "series": [
-    [
-     "2026-11-19T05:30:00Z",
-     0.0
-    ],
     [
      "2026-11-19T06:00:00Z",
      0.0
@@ -201,6 +209,14 @@
     ],
     [
      "2026-11-19T10:30:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:30:00Z",
      0.0
     ]
    ],
@@ -210,7 +226,7 @@
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
    "raw_cm": 7,
-   "model_cm": 0,
+   "model_cm": null,
    "valid": false
   },
   {
@@ -219,14 +235,10 @@
    "lat": 44.31699,
    "lon": 10.34493,
    "cm": 0,
-   "time": "2026-11-19T10:30:00Z",
+   "time": "2026-11-19T11:30:00Z",
    "delta": 0,
-   "delta_h": 5,
+   "delta_h": 6,
    "series": [
-    [
-     "2026-11-19T05:30:00Z",
-     0.0
-    ],
     [
      "2026-11-19T06:00:00Z",
      0.0
@@ -266,6 +278,14 @@
     [
      "2026-11-19T10:30:00Z",
      0.0
+    ],
+    [
+     "2026-11-19T11:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:30:00Z",
+     0.0
     ]
    ],
    "source": {
@@ -274,7 +294,7 @@
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
    "raw_cm": 2,
-   "model_cm": 0,
+   "model_cm": null,
    "valid": false
   },
   {
@@ -318,7 +338,7 @@
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
    "raw_cm": 0,
-   "model_cm": 0,
+   "model_cm": null,
    "valid": false
   },
   {
@@ -327,14 +347,10 @@
    "lat": 44.23713,
    "lon": 10.51634,
    "cm": 0,
-   "time": "2026-11-19T10:30:00Z",
+   "time": "2026-11-19T11:30:00Z",
    "delta": 0,
-   "delta_h": 5,
+   "delta_h": 6,
    "series": [
-    [
-     "2026-11-19T05:30:00Z",
-     0.0
-    ],
     [
      "2026-11-19T06:00:00Z",
      0.0
@@ -374,69 +390,13 @@
     [
      "2026-11-19T10:30:00Z",
      0.0
-    ]
-   ],
-   "source": {
-    "name": "Arpae Emilia-Romagna",
-    "license": "CC BY 4.0",
-    "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
-   },
-   "raw_cm": 2,
-   "model_cm": 0,
-   "valid": false
-  },
-  {
-   "name": "Lago Pratignano",
-   "elev": 1319,
-   "lat": 44.1774,
-   "lon": 10.8178,
-   "cm": 0,
-   "time": "2026-11-19T10:30:00Z",
-   "delta": 0,
-   "delta_h": 5,
-   "series": [
+    ],
     [
-     "2026-11-19T05:30:00Z",
+     "2026-11-19T11:00:00Z",
      0.0
     ],
     [
-     "2026-11-19T06:00:00Z",
-     0.0
-    ],
-    [
-     "2026-11-19T06:30:00Z",
-     0.0
-    ],
-    [
-     "2026-11-19T07:00:00Z",
-     0.0
-    ],
-    [
-     "2026-11-19T07:30:00Z",
-     0.0
-    ],
-    [
-     "2026-11-19T08:00:00Z",
-     0.0
-    ],
-    [
-     "2026-11-19T08:30:00Z",
-     0.0
-    ],
-    [
-     "2026-11-19T09:00:00Z",
-     0.0
-    ],
-    [
-     "2026-11-19T09:30:00Z",
-     0.0
-    ],
-    [
-     "2026-11-19T10:00:00Z",
-     0.0
-    ],
-    [
-     "2026-11-19T10:30:00Z",
+     "2026-11-19T11:30:00Z",
      0.0
     ]
    ],
@@ -446,7 +406,75 @@
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
    "raw_cm": 1,
-   "model_cm": 0,
+   "model_cm": null,
+   "valid": false
+  },
+  {
+   "name": "Lago Pratignano",
+   "elev": 1319,
+   "lat": 44.1774,
+   "lon": 10.8178,
+   "cm": 0,
+   "time": "2026-11-19T11:30:00Z",
+   "delta": 0,
+   "delta_h": 6,
+   "series": [
+    [
+     "2026-11-19T06:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T06:30:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T07:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T07:30:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T08:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T08:30:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T09:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T09:30:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T10:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T10:30:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:30:00Z",
+     0.0
+    ]
+   ],
+   "source": {
+    "name": "Arpae Emilia-Romagna",
+    "license": "CC BY 4.0",
+    "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
+   },
+   "raw_cm": 3,
+   "model_cm": null,
    "valid": false
   },
   {
@@ -455,14 +483,10 @@
    "lat": 44.24716,
    "lon": 10.4658,
    "cm": 0,
-   "time": "2026-11-19T10:30:00Z",
+   "time": "2026-11-19T11:30:00Z",
    "delta": 0,
-   "delta_h": 5,
+   "delta_h": 6,
    "series": [
-    [
-     "2026-11-19T05:30:00Z",
-     0.0
-    ],
     [
      "2026-11-19T06:00:00Z",
      0.0
@@ -502,6 +526,14 @@
     [
      "2026-11-19T10:30:00Z",
      0.0
+    ],
+    [
+     "2026-11-19T11:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:30:00Z",
+     0.0
     ]
    ],
    "source": {
@@ -509,8 +541,8 @@
     "license": "CC BY 4.0",
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
-   "raw_cm": 16,
-   "model_cm": 0,
+   "raw_cm": 17,
+   "model_cm": null,
    "valid": false
   },
   {
@@ -519,14 +551,10 @@
    "lat": 44.20976,
    "lon": 10.48864,
    "cm": 0,
-   "time": "2026-11-19T10:30:00Z",
+   "time": "2026-11-19T11:30:00Z",
    "delta": 0,
-   "delta_h": 5,
+   "delta_h": 6,
    "series": [
-    [
-     "2026-11-19T05:30:00Z",
-     0.0
-    ],
     [
      "2026-11-19T06:00:00Z",
      0.0
@@ -565,6 +593,14 @@
     ],
     [
      "2026-11-19T10:30:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:30:00Z",
      0.0
     ]
    ],
@@ -573,8 +609,8 @@
     "license": "CC BY 4.0",
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
-   "raw_cm": 12,
-   "model_cm": 0,
+   "raw_cm": 13,
+   "model_cm": null,
    "valid": false
   },
   {
@@ -583,14 +619,10 @@
    "lat": 44.13638,
    "lon": 10.88741,
    "cm": 0,
-   "time": "2026-11-19T10:30:00Z",
+   "time": "2026-11-19T11:30:00Z",
    "delta": 0,
-   "delta_h": 5,
+   "delta_h": 6,
    "series": [
-    [
-     "2026-11-19T05:30:00Z",
-     0.0
-    ],
     [
      "2026-11-19T06:00:00Z",
      0.0
@@ -629,6 +661,14 @@
     ],
     [
      "2026-11-19T10:30:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:00:00Z",
+     0.0
+    ],
+    [
+     "2026-11-19T11:30:00Z",
      0.0
     ]
    ],
@@ -638,7 +678,7 @@
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
    "raw_cm": 2,
-   "model_cm": 0,
+   "model_cm": null,
    "valid": false
   },
   {
@@ -647,9 +687,9 @@
    "lat": 44.139,
    "lon": 10.674,
    "cm": 0,
-   "time": "2026-11-19T11:00:00Z",
+   "time": "2026-11-19T11:30:00Z",
    "delta": 0,
-   "delta_h": 41,
+   "delta_h": 42,
    "series": [
     [
      "2026-11-17T18:00:00Z",
@@ -722,6 +762,10 @@
     [
      "2026-11-19T11:00:00Z",
      0.0
+    ],
+    [
+     "2026-11-19T11:30:00Z",
+     0.0
     ]
    ],
    "source": {
@@ -730,7 +774,7 @@
     "url": "https://www.cfr.toscana.it"
    },
    "raw_cm": 0,
-   "model_cm": 0,
+   "model_cm": null,
    "valid": false
   },
   {
@@ -818,7 +862,7 @@
     "url": "https://www.cfr.toscana.it"
    },
    "raw_cm": 0,
-   "model_cm": 0,
+   "model_cm": null,
    "valid": false
   },
   {
@@ -827,9 +871,9 @@
    "lat": 44.118,
    "lon": 10.609,
    "cm": 0,
-   "time": "2026-11-19T11:00:00Z",
+   "time": "2026-11-19T11:45:00Z",
    "delta": 0,
-   "delta_h": 41,
+   "delta_h": 42,
    "series": [
     [
      "2026-11-17T18:15:00Z",
@@ -898,6 +942,10 @@
     [
      "2026-11-19T11:00:00Z",
      0.0
+    ],
+    [
+     "2026-11-19T11:45:00Z",
+     0.0
     ]
    ],
    "source": {
@@ -906,7 +954,7 @@
     "url": "https://www.cfr.toscana.it"
    },
    "raw_cm": 0,
-   "model_cm": 0,
+   "model_cm": null,
    "valid": false
   }
  ]
