@@ -42,7 +42,8 @@ def email_html(site: dict, heading: str, items: list[str], sponsor: dict | None)
 
 
 # ---------- grafica della mail (HTML compatibile con i client di posta: tabelle e stili in linea) ----------
-FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"
+# Inter è il carattere più vicino al San Francisco di Apple; sui dispositivi Apple si usa direttamente quello di sistema
+FONT = "-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter','Helvetica Neue',Helvetica,Arial,sans-serif"
 COL = {"green": ("#e7f7ee", "#127a43"), "yellow": ("#fff5d9", "#8a5a00"), "red": ("#fdecec", "#a32d2d")}
 E_ = html.escape
 GIORNI = ["lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato", "domenica"]
@@ -64,7 +65,10 @@ def _shell(site: dict, preheader: str, inner: str, sponsor: dict | None) -> str:
     if site.get("social", {}).get("whatsapp"):
         social.append(f"<a href='{site['social']['whatsapp']}' style='color:#2563eb;text-decoration:none'>WhatsApp</a>")
     return (
-        f"<!doctype html><html><body style='margin:0;padding:0;background:#eef3f9'>"
+        f"<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width'>"
+        f"<link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap' rel='stylesheet'>"
+        f"<style>body,table,td,p,a,h1,h2,div,span{{font-family:{FONT} !important}}h1,h2{{letter-spacing:-.02em}}</style></head>"
+        f"<body style='margin:0;padding:0;background:#eef3f9;-webkit-font-smoothing:antialiased'>"
         f"<div style='display:none;max-height:0;overflow:hidden'>{E_(preheader)}</div>"
         f"<table width='100%' cellpadding='0' cellspacing='0' style='background:#eef3f9;font-family:{FONT}'><tr><td align='center' style='padding:24px 12px'>"
         f"<table width='600' cellpadding='0' cellspacing='0' style='max-width:600px;width:100%;background:#ffffff;border-radius:22px;overflow:hidden'>"
@@ -97,7 +101,7 @@ def weekly_html(site: dict, latest: dict, sponsor: dict | None) -> tuple[str, st
     hero = (f"<tr><td style='padding:28px 28px 8px'>"
             f"<p style='margin:0 0 6px;font-size:13px;font-weight:700;letter-spacing:.06em;color:#2563eb;text-transform:uppercase'>"
             f"{GIORNI[now.weekday()].capitalize()} {now.day} {MESI[now.month - 1]}</p>"
-            f"<h1 style='margin:0 0 14px;font-size:26px;line-height:1.2;color:#0f1b2d;font-weight:800'>{E_(title)}</h1>"
+            f"<h1 style='margin:0 0 14px;font-size:27px;line-height:1.18;color:#0f1b2d;font-weight:700;letter-spacing:-.02em'>{E_(title)}</h1>"
             + "".join(f"<p style='margin:0 0 10px;font-size:16px;line-height:1.5;color:#2c3a50'>{E_(b)}</p>" for b in brief[:4])
             + "</td></tr>")
     # weekend località per località
@@ -115,7 +119,7 @@ def weekly_html(site: dict, latest: dict, sponsor: dict | None) -> tuple[str, st
                  + f"<div style='font-size:14px;line-height:1.45;color:#45536a;margin-top:4px'>{E_(L['title'])}</div>"
                  + (f"<div style='font-size:12px;color:#8391a7;margin-top:3px'>{days}</div>" if days else "")
                  + "</td></tr>")
-    weekend = (f"<tr><td style='padding:18px 28px 6px'><h2 style='margin:0 0 4px;font-size:19px;color:#0f1b2d;font-weight:800'>"
+    weekend = (f"<tr><td style='padding:18px 28px 6px'><h2 style='margin:0 0 4px;font-size:20px;color:#0f1b2d;font-weight:700;letter-spacing:-.01em'>"
                f"🏔️ Il weekend, località per località</h2><table width='100%' cellpadding='0' cellspacing='0'>{rows}</table></td></tr>")
     # prossime settimane
     cards = ""
@@ -130,7 +134,7 @@ def weekly_html(site: dict, latest: dict, sponsor: dict | None) -> tuple[str, st
                   + (f"<div style='font-size:13px;color:#1d5fd1;font-weight:700'>{E_(tag[1])}</div>" if tag else "")
                   + f"<div style='font-size:12px;color:#51607a;margin-top:4px'>🎿 neve alle stazioni {p['snow_low']}/100 · "
                     f"🏔️ in quota {p['snow']}/100 · 🥶 freddo {p['cold']}/100</div></td></tr></table></td></tr>")
-    trend = (f"<tr><td style='padding:18px 28px 6px'><h2 style='margin:0 0 8px;font-size:19px;color:#0f1b2d;font-weight:800'>"
+    trend = (f"<tr><td style='padding:18px 28px 6px'><h2 style='margin:0 0 8px;font-size:20px;color:#0f1b2d;font-weight:700;letter-spacing:-.01em'>"
              f"📈 Le prossime settimane</h2><table width='100%' cellpadding='0' cellspacing='0'>{cards}</table></td></tr>") if cards else ""
     cta = (f"<tr><td style='padding:20px 28px 26px'>{_btn(base + '/', 'Apri le previsioni')}"
            + (_btn(f"{base}/tendenze/{art['date']}/", 'Leggi l’analisi completa', False) if art.get("date") else "")
@@ -148,7 +152,7 @@ def alert_html(site: dict, fresh: list, sponsor: dict | None) -> str:
         for a in fresh)
     inner = (f"<tr><td style='padding:28px 28px 8px'><p style='margin:0 0 6px;font-size:13px;font-weight:700;"
              f"letter-spacing:.06em;color:#2563eb;text-transform:uppercase'>Allerta neve</p>"
-             f"<h1 style='margin:0 0 10px;font-size:26px;line-height:1.2;color:#0f1b2d;font-weight:800'>❄️ Ci siamo: arriva la neve</h1>"
+             f"<h1 style='margin:0 0 10px;font-size:27px;line-height:1.18;color:#0f1b2d;font-weight:700;letter-spacing:-.02em'>❄️ Ci siamo: arriva la neve</h1>"
              f"<p style='margin:0;font-size:16px;line-height:1.5;color:#2c3a50'>Nelle prossime 72 ore è attesa neve in queste località:</p></td></tr>"
              f"<tr><td style='padding:6px 28px'><table width='100%' cellpadding='0' cellspacing='0'>{rows}</table></td></tr>"
              f"<tr><td style='padding:20px 28px 26px'>{_btn(base + '/', 'Guarda quota per quota')}</td></tr>")
