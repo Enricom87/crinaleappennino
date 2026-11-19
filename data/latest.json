@@ -1,13 +1,13 @@
 {
- "generated": "2026-11-19T22:23+01:00",
+ "generated": "2026-11-19T23:01+01:00",
  "alerts": [],
- "overview": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare. Chi se la gode di più: Lago Scaffaiolo, Lago Santo, Cimone. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "overview": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare. Chi se la gode di più: Lago Scaffaiolo, Cimone, Lago Santo. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
    "slug": "abetone",
    "name": "Abetone",
-   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1800 m in su, fino al Monte Gomito (1892 m). Da seguire!",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1700 m in su, fino al Monte Gomito (1892 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -29,10 +29,10 @@
      {
       "date": "2026-11-22",
       "name": "Domenica",
-      "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (1 cm al Monte Gomito, 1892 m)",
+      "color": "red",
+      "why": "pioggia (33 mm)",
       "idx": 3,
-      "snow": 1.2,
+      "snow": 0.9,
       "snow_base": 0
      }
     ],
@@ -49,9 +49,9 @@
   {
    "slug": "cimone",
    "name": "Cimone · Sestola e Passo del Lupo",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2000 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2100 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": 10,
    "weekend": {
@@ -72,10 +72,10 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2000 m in su (7 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 2100 m in su (5 cm al Monte Cimone, 2165 m)",
       "idx": 3,
-      "snow": 7.3,
-      "snow_base": 0.9
+      "snow": 4.7,
+      "snow_base": 1.2
      }
     ],
     "sure": {
@@ -91,9 +91,9 @@
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2000 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2100 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": 10,
    "weekend": {
@@ -114,9 +114,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2000 m in su (7 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 2100 m in su (5 cm al Monte Cimone, 2165 m)",
       "idx": 3,
-      "snow": 7.3,
+      "snow": 4.7,
       "snow_base": 0
      }
     ],
@@ -133,9 +133,9 @@
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2000 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2100 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": 10,
    "weekend": {
@@ -156,9 +156,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2000 m in su (7 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 2100 m in su (5 cm al Monte Cimone, 2165 m)",
       "idx": 3,
-      "snow": 7.3,
+      "snow": 4.7,
       "snow_base": 0
      }
     ],
@@ -217,7 +217,7 @@
   {
    "slug": "corno-alle-scale",
    "name": "Corno alle Scale",
-   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1800 m in su, fino al Corno alle Scale (1945 m). Da seguire!",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1700 m in su, fino al Corno alle Scale (1945 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
@@ -240,9 +240,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (1 cm al Corno alle Scale, 1945 m)",
+      "why": "neve in quota dai 1800 m in su (2 cm al Corno alle Scale, 1945 m)",
       "idx": 3,
-      "snow": 1.3,
+      "snow": 1.9,
       "snow_base": 0
      }
     ],
@@ -301,7 +301,7 @@
   {
    "slug": "lago-santo",
    "name": "Lago Santo · Monte Giovo",
-   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1800 m in su, fino al Monte Giovo (1991 m). Da seguire!",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1700 m in su, fino al Monte Giovo (1991 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
@@ -326,7 +326,7 @@
       "color": "yellow",
       "why": "neve in quota dai 1900 m in su (1 cm al Monte Giovo, 1991 m)",
       "idx": 3,
-      "snow": 1.4,
+      "snow": 1.0,
       "snow_base": 0
      }
     ],
@@ -345,7 +345,7 @@
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
    "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2000 m in su, fino al Monte Prado (2054 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": 10,
    "weekend": {
@@ -366,9 +366,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2000 m in su (8 cm al Monte Prado, 2054 m)",
+      "why": "neve in quota dai 2000 m in su (3 cm al Monte Prado, 2054 m)",
       "idx": 3,
-      "snow": 7.5,
+      "snow": 3.2,
       "snow_base": 0
      }
     ],
@@ -385,7 +385,7 @@
   {
    "slug": "cerreto-laghi",
    "name": "Cerreto Laghi",
-   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1800 m in su, fino al Monte La Nuda (1894 m). Da seguire!",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1700 m in su, fino al Monte La Nuda (1894 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -410,7 +410,7 @@
       "color": "red",
       "why": "pioggia (55 mm)",
       "idx": 3,
-      "snow": 0.7,
+      "snow": 0,
       "snow_base": 0
      }
     ],
@@ -450,9 +450,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2000 m in su (16 cm al Monte Cusna, 2121 m)",
+      "why": "neve in quota dai 2000 m in su (6 cm al Monte Cusna, 2121 m)",
       "idx": 3,
-      "snow": 15.8,
+      "snow": 5.5,
       "snow_base": 0
      }
     ],
@@ -527,28 +527,28 @@
      "slug": "cimone",
      "name": "Cimone",
      "color": "yellow",
-     "why": "neve in quota dai 2000 m in su (7 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 2100 m in su (5 cm al Monte Cimone, 2165 m)",
      "lifts": null
-    },
-    {
-     "slug": "abetone",
-     "name": "Abetone",
-     "color": "yellow",
-     "why": "neve in quota dai 1800 m in su (1 cm al Monte Gomito, 1892 m)",
-     "lifts": "0/17 impianti"
     },
     {
      "slug": "le-polle",
      "name": "Le Polle",
      "color": "yellow",
-     "why": "neve in quota dai 2000 m in su (7 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 2100 m in su (5 cm al Monte Cimone, 2165 m)",
      "lifts": null
     },
     {
      "slug": "cimoncino",
      "name": "Cimoncino",
      "color": "yellow",
-     "why": "neve in quota dai 2000 m in su (7 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 2100 m in su (5 cm al Monte Cimone, 2165 m)",
+     "lifts": null
+    },
+    {
+     "slug": "corno-alle-scale",
+     "name": "Corno alle Scale",
+     "color": "yellow",
+     "why": "neve in quota dai 1800 m in su (2 cm al Corno alle Scale, 1945 m)",
      "lifts": null
     }
    ],
