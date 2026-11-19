@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LEVELS = (925, 850, 700)
-MODELS = {"italia_meteo_arpae_icon_2i": 2.0, "ecmwf_ifs025": 1.0, "icon_global": 1.0}
+MODELS = {"italia_meteo_arpae_icon_2i": 2.0, "meteofrance_arome_france": 2.0, "ecmwf_ifs025": 1.0, "icon_global": 1.0}
 TW_SNOW = 1.0  # °C di bulbo umido
 VARS = ",".join(f"{v}_{p}hPa" for p in LEVELS for v in ("temperature", "relative_humidity", "geopotential_height")) \
     + ",precipitation"

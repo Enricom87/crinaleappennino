@@ -36,7 +36,7 @@ TREND_MODELS = [
     ("ukmo", "ukmo_global_ensemble_20km", "temperature_2m", 11),
     ("ch2", "meteoswiss_icon_ch2", "temperature_2m", 6),
 ]
-PROFILE_MODELS = ["italia_meteo_arpae_icon_2i", "ecmwf_ifs025", "icon_global"]
+PROFILE_MODELS = ["italia_meteo_arpae_icon_2i", "meteofrance_arome_france", "ecmwf_ifs025", "icon_global"]
 PROFILE_VARS = ",".join(f"{v}_{p}hPa" for p in (925, 850, 700)
                         for v in ("temperature", "relative_humidity", "geopotential_height")) + ",precipitation"
 SYNOPTIC_VARS = "temperature_850hPa,wind_direction_700hPa,wind_speed_700hPa,geopotential_height_500hPa,precipitation"

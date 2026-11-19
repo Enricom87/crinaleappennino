@@ -9,7 +9,7 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 
 LAM_WEIGHTS = {"italia_meteo_arpae_icon_2i": 2.0, "meteoswiss_icon_ch2": 1.0,
-               "icon_d2": 1.0, "meteofrance_arome_france": 1.0}
+               "icon_d2": 1.0, "meteofrance_arome_france": 2.0}  # AROME: ottimo sulla neve da rilievo
 GLOBAL_MODELS = ["ecmwf_ifs025", "gfs_global", "icon_global"]
 MODEL_LABELS = {"italia_meteo_arpae_icon_2i": "ICON-2I", "meteoswiss_icon_ch2": "ICON-CH2",
                 "icon_d2": "ICON-D2", "meteofrance_arome_france": "AROME",
