@@ -1,13 +1,13 @@
 {
- "generated": "2026-11-19T12:11+01:00",
+ "generated": "2026-11-19T12:14+01:00",
  "alerts": [],
- "overview": "👀 Occhio a giovedì 26 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare. Chi se la gode di più: Lago Scaffaiolo, Cimone, Cimoncino. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "overview": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare. Chi se la gode di più: Lago Scaffaiolo, Cimone, Cimoncino. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
    "slug": "abetone",
    "name": "Abetone",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1800 m in su, fino al Monte Gomito (1892 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1700 m in su, fino al Monte Gomito (1892 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -16,7 +16,7 @@
   {
    "slug": "cimone",
    "name": "Cimone · Sestola e Passo del Lupo",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1800 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1600 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -25,7 +25,7 @@
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1800 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1600 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -34,7 +34,7 @@
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1800 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1600 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -52,7 +52,7 @@
   {
    "slug": "corno-alle-scale",
    "name": "Corno alle Scale",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1800 m in su, fino al Corno alle Scale (1945 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1700 m in su, fino al Corno alle Scale (1945 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
@@ -61,7 +61,7 @@
   {
    "slug": "lago-scaffaiolo",
    "name": "Lago Scaffaiolo",
-   "title": "👀 Occhio a giovedì 26 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare",
+   "title": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -70,7 +70,7 @@
   {
    "slug": "lago-santo",
    "name": "Lago Santo · Monte Giovo",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1800 m in su, fino al Monte Giovo (1991 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1700 m in su, fino al Monte Giovo (1991 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -79,7 +79,7 @@
   {
    "slug": "garfagnana",
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1800 m in su, fino al Monte Prado (2054 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1700 m in su, fino al Monte Prado (2054 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
@@ -88,7 +88,7 @@
   {
    "slug": "cerreto-laghi",
    "name": "Cerreto Laghi",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1800 m in su, fino al Monte La Nuda (1894 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1700 m in su, fino al Monte La Nuda (1894 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -97,7 +97,7 @@
   {
    "slug": "febbio",
    "name": "Febbio · Monte Cusna",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1800 m in su, fino al Monte Cusna (2121 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1700 m in su, fino al Monte Cusna (2121 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
