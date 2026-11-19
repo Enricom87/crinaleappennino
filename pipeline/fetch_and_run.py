@@ -47,7 +47,7 @@ TOLLERANZA_QUOTA_M = 120
 # Tutte da fonte pubblica (vedi "fonte"). Il controllo automatico sulla quota DEM
 # restituita da Open-Meteo segnala comunque scostamenti > TOLLERANZA_QUOTA_M.
 COORDINATE: dict[str, dict[str, Any]] = {
-    "abetone":          {"lat": 44.1628, "lon": 10.6653, "verificata": True,  "fonte": "Wikipedia (Abetone, 1388 m)"},
+    "abetone":          {"lat": 44.1456, "lon": 10.6653, "verificata": True,  "fonte": "Passo dell'Abetone (1388 m; DEM Open-Meteo 1380 m)"},
     "cimone":           {"lat": 44.2148, "lon": 10.7201, "verificata": True,  "fonte": "OSM node 1781307725 (Passo del Lupo, ~1550 m)"},
     "le_polle":         {"lat": 44.2158, "lon": 10.6903, "verificata": True,  "fonte": "Wikidata Q3828408 (Le Polle, 1280 m)"},
     "cimoncino":        {"lat": 44.1983, "lon": 10.7312, "verificata": True,  "fonte": "OSM node 752891918 (stazione Cimoncino; Rif. Zambelli 1423 m)"},
