@@ -16,7 +16,11 @@ on:
     - cron: "50 13 * * *"
     - cron: "50 17 * * *"
     - cron: "50 22 * * *"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "full = giro completo, light = solo AROME/ICON-2I e motore (per provare)"
+        default: full
 
 permissions:
   contents: write
@@ -40,7 +44,9 @@ jobs:
       - name: Giro completo o leggero
         id: mode
         run: |
-          if [ "${{ github.event_name }}" = "schedule" ] && echo "${{ github.event.schedule }}" | grep -q "^50 "; then
+          if [ "${{ inputs.mode }}" = "light" ]; then
+            echo "mode=light" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "schedule" ] && echo "${{ github.event.schedule }}" | grep -q "^50 "; then
             if python pipeline/snow48.py; then echo "mode=light" >> "$GITHUB_OUTPUT"; else echo "mode=skip" >> "$GITHUB_OUTPUT"; fi
           else
             echo "mode=full" >> "$GITHUB_OUTPUT"
