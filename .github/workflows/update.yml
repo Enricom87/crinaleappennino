@@ -43,6 +43,11 @@ jobs:
         env:
           OPEN_METEO_API_KEY: ${{ secrets.OPEN_METEO_API_KEY }}
         run: python -u pipeline/fetch.py
+      - name: Motore fisico primi 5 giorni (appennino_engine)
+        continue-on-error: true
+        timeout-minutes: 30
+        working-directory: pipeline
+        run: python -u fetch_and_run.py --giorni 5 --out ../data/raw/engine.json --grezzi ../data/raw/engine_raw.json
       - name: Quadro generale (NAO, AO, vortice polare)
         continue-on-error: true
         run: python pipeline/teleconn.py

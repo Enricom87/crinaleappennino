@@ -140,10 +140,15 @@ def main() -> None:
         for pid in loc["points"]:
             pid_off.setdefault(pid, (CAL.get(loc["slug"]) or {}).get("level", 0))
     print(f"quota neve dal profilo: {len(LEVELS)} punti, {snowlevel.cap(pts, LEVELS, pid_off)} giorni-punto senza neve sotto quota")
+    # primi 5 giorni dal motore fisico-statistico (appennino_engine.py): neve, pioggia, quota neve, raffiche
+    import engine_overlay
+    ENGINE_LOC = engine_overlay.apply(base_locs, pts, CAL, today)
     for pid, p in pts.items():  # quota neve del giorno su ogni punto, per dire «neve dai X m in su»
         for d in p["days"]:
             v = (LEVELS.get(pid) or {}).get(d["date"])
-            if v and v.get("wet"):
+            if (d.get("engine") or {}).get("qn") is not None:
+                d["lv"] = d["engine"]["qn"] + pid_off.get(pid, 0)
+            elif v and v.get("wet"):
                 d["lv"] = v.get("lv_min", v["lv"]) + pid_off.get(pid, 0)
             elif d.get("fl_min") is not None and (d.get("precip") or 0) >= 1:
                 d["lv"] = d["fl_min"] - 300
@@ -153,7 +158,9 @@ def main() -> None:
     for pid, p in pts.items():
         for d in p["days"]:
             v = (LEVELS.get(pid) or {}).get(d["date"])
-            if v and v.get("wet"):
+            if (d.get("engine") or {}).get("qn") is not None:
+                _reg.setdefault(d["date"], []).append(d["engine"]["qn"] + pid_off.get(pid, 0))
+            elif v and v.get("wet"):
                 _reg.setdefault(d["date"], []).append(v["lv"] + pid_off.get(pid, 0))
             elif d.get("lv") is not None:
                 _reg.setdefault(d["date"], []).append(d["lv"])
@@ -229,6 +236,7 @@ def main() -> None:
             L["intro"], L["area"] = T(loc.get("intro", "")), T(loc["area"])
             L["text"] = location_text(loc, pts, syn_rows)
             L["pts"] = [pts[p] for p in loc["points"]]
+            L["engine"] = [{**e, "name": day_short(e["date"])} for e in ENGINE_LOC.get(loc["slug"], [])]
             L["road"] = [pts[p] for p in loc.get("road_points", []) if p in pts]
             L["chart"] = svg_snow_chart(L["pts"])
             top = max(L["pts"], key=lambda p: p["elev"])
@@ -444,6 +452,10 @@ def main() -> None:
                                      for p in L["pts"]]} for L in locs],
            "synoptic": syn_rows}
     (OUT / "api" / "v1" / "forecast.json").write_text(json.dumps(api, ensure_ascii=False))
+    _eng = ROOT / "data" / "raw" / "engine.json"
+    if _eng.exists():  # uscita del motore fisico, formato colonnare schema 2.0
+        (OUT / "api" / "v2").mkdir(parents=True, exist_ok=True)
+        shutil.copy(_eng, OUT / "api" / "v2" / "crinale.json")
     (OUT / "api" / "v1" / "routes.json").write_text(json.dumps(
         {"generated": ctx["updated_iso"], "routes": [
             {k: r[k] for k in ("slug", "name", "location", "activities", "summary", "stats", "cond", "credit")}

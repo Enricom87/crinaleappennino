@@ -1,0 +1,15 @@
+{% if loc.engine and not summer %}
+<section class="wrap" id="motore">
+  <h2>🔬 {{ t("I prossimi 5 giorni, quota per quota") }}</h2>
+  <p class="small">{{ t("Calcolo fisico ora per ora: quota neve dal bulbo umido, più bassa quando nevica forte; neve diversa alla base e in cima; vento che porta via la neve sulle creste.") }}</p>
+  <div class="tbl-wrap"><table class="pg">
+    <thead><tr><th>{{ t("Giorno") }}</th><th>❄️ {{ loc.low_pt.name }} ({{ loc.low_pt.elev }} m)</th><th>🏔️ {{ loc.mtn_top.name }} ({{ loc.mtn_top.elev }} m)</th><th>{{ t("Quota neve") }}</th><th>💨 {{ t("Raffiche in cresta") }}</th></tr></thead>
+    <tbody>{% for e in loc.engine %}
+      <tr><td>{{ e.name }} {{ e.date[8:10] }}/{{ e.date[5:7] }}</td>
+        <td>{{ e.base|round|int if e.base >= 0.5 else "–" }}{{ " cm" if e.base >= 0.5 else "" }}</td>
+        <td><b>{{ e.top|round|int if e.top >= 0.5 else "–" }}{{ " cm" if e.top >= 0.5 else "" }}</b></td>
+        <td>{% if e.qn is not none and e.mm >= 1 %}{{ (e.qn / 100)|round|int * 100 }} m{% if e.qn_min is not none and e.qn - e.qn_min >= 150 %} <span class="small">({{ t("fino a {z} m nei rovesci", z=(e.qn_min / 100)|round|int * 100) }})</span>{% endif %}{% else %}–{% endif %}</td>
+        <td>{{ e.gust if e.gust is not none else "–" }}{{ " km/h" if e.gust is not none else "" }}</td></tr>
+    {% endfor %}</tbody></table></div>
+</section>
+{% endif %}

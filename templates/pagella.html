@@ -18,8 +18,8 @@
   <div class="tbl-wrap"><table class="pg">
     <thead><tr><th></th><th>{{ t("Giornate valutate") }}</th><th>{{ t("Giuste") }}</th><th>{{ t("Neve non prevista") }}</th><th>{{ t("Falsi allarmi") }}</th><th>{{ t("Errore medio") }}</th></tr></thead>
     <tbody>
-    {% for who in ["our", "ECMWF", "ICON-2I", "AROME"] %}{% set r = rows[who] %}{% if r %}
-      <tr class="{{ 'me' if who == 'our' else '' }}"><td>{{ site.name if who == 'our' else who ~ ' ' ~ t("grezzo") }}</td><td>{{ r.n }}</td><td><b>{{ r.pct }}%</b></td><td>{{ r.miss }}</td><td>{{ r["false"] }}</td><td>{{ r.mae }} cm</td></tr>
+    {% for who in ["our", "Crinale v1", "ECMWF", "ICON-2I", "AROME"] %}{% set r = rows[who] %}{% if r %}
+      <tr class="{{ 'me' if who == 'our' else '' }}"><td>{{ site.name if who == 'our' else (t("metodo precedente") if who == 'Crinale v1' else who ~ ' ' ~ t("grezzo")) }}</td><td>{{ r.n }}</td><td><b>{{ r.pct }}%</b></td><td>{{ r.miss }}</td><td>{{ r["false"] }}</td><td>{{ r.mae }} cm</td></tr>
     {% endif %}{% endfor %}
     </tbody></table></div>
   {% else %}

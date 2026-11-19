@@ -22,7 +22,7 @@ FILE = ROOT / "data" / "verify.json"
 HIST = ROOT / "data" / "history.json"
 REPORTS = ROOT / "data" / "reports.json"
 SNOWY = 2.0      # cm: da qui in su è «giornata con neve»
-RAW = ("ECMWF", "ICON-2I", "AROME")
+RAW = ("ECMWF", "ICON-2I", "AROME", "Crinale v1")
 START = "2026-11-18"
 MIN_SNOWY = 10   # giornate con neve sotto cui i numeri sono ancora «in costruzione»
 
