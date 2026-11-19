@@ -138,6 +138,13 @@ def main() -> None:
         for pid in loc["points"]:
             pid_off.setdefault(pid, (CAL.get(loc["slug"]) or {}).get("level", 0))
     print(f"quota neve dal profilo: {len(LEVELS)} punti, {snowlevel.cap(pts, LEVELS, pid_off)} giorni-punto senza neve sotto quota")
+    for pid, p in pts.items():  # quota neve del giorno su ogni punto, per dire «neve dai X m in su»
+        for d in p["days"]:
+            v = (LEVELS.get(pid) or {}).get(d["date"])
+            if v and v.get("wet"):
+                d["lv"] = v.get("lv_min", v["lv"]) + pid_off.get(pid, 0)
+            elif d.get("fl_min") is not None and (d.get("precip") or 0) >= 1:
+                d["lv"] = d["fl_min"] - 300
     mtn = {}
     for loc in base_locs:
         for pid in loc["points"]:

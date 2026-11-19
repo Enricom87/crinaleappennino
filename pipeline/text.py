@@ -56,6 +56,13 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
     k = (loc["slug"], date.today().isoformat())
     v = dict(t3=cm(t3), b3=cm(b3), ztop=top["elev"], zbase=base["elev"],
              ntop=top["name"], nbase=base["name"])
+
+    def zfrom(day: str | None) -> int:
+        """Quota da cui nevica quel giorno (quota neve del profilo), tra la base e la vetta, a 100 m."""
+        lv = next((d.get("lv") for d in top["days"] if d["date"] == day), None)
+        if lv is None:
+            lv = (base["elev"] + top["elev"]) / 2
+        return int(round(min(max(lv, base["elev"] + 100), top["elev"] - 100) / 100) * 100)
     if t3 >= 5:
         days = best_days(top["days"], 0, 3)
         when = nice_date(days[0]) if days else T("nei prossimi giorni")
@@ -66,13 +73,12 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
         elif b3 >= 1:
             title = T("❄️ Arriva la neve da {when}: {t3} al {ntop} ({ztop} m), solo una spolverata a {nbase} ({zbase} m)", when=when, **v)
         else:
-            rain_b = window_sum(base["days"], 0, 3, "precip") >= 2
-            title = (T("⛰️ Neve solo in vetta: {t3} al {ntop} ({ztop} m) da {when}, a {nbase} ({zbase} m) piove", when=when, **v)
-                     if rain_b else
-                     T("⛰️ Neve solo in vetta: {t3} al {ntop} ({ztop} m) da {when}, niente a {nbase} ({zbase} m)", when=when, **v))
+            title = T("❄️ Torna la neve da {when}: dai {z} m in su, fino a {t3} al {ntop} ({ztop} m)",
+                      when=when, z=zfrom(days[0] if days else None), **v)
         if t3 >= 25:
             title = (T("🔥 Nevicata seria in arrivo: {t3} al {ntop} ({ztop} m) da {when}", when=when, **v) if b3 >= 3 else
-                     T("🔥 Nevicata seria in vetta: {t3} al {ntop} ({ztop} m) da {when}, molta meno a {nbase} ({zbase} m)", when=when, **v))
+                     T("🔥 Nevicata seria in quota da {when}: dai {z} m in su, fino a {t3} al {ntop} ({ztop} m)",
+                       when=when, z=zfrom(days[0] if days else None), **v))
         level = "alert"
     elif t10 >= 10:
         days = best_days(top["days"], 3, 10, 3)
@@ -81,17 +87,18 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
         b10 = bd.get(days[0], 0) if days else 0  # neve alla base nello stesso giorno indicato nel titolo
         title = (T("👀 Occhio a {when}: i modelli vedono neve fino a {nbase} ({zbase} m), da confermare", when=when, **v)
                  if b10 >= 2 else
-                 T("👀 Occhio a {when}: possibile neve solo in vetta, al {ntop} ({ztop} m); a {nbase} ({zbase} m) per ora poco o niente", when=when, **v))
+                 T("👀 Occhio a {when}: neve in arrivo dai {z} m in su, fino al {ntop} ({ztop} m). Da seguire!",
+                   when=when, z=zfrom(days[0] if days else None), **v))
         level = "watch"
     elif t3 + t10 >= 1:
-        title = pick([T("Solo qualche fiocco in quota, niente di più (per ora)"),
-                      T("Spolverata in vetta e poco altro: la neve vera si fa attendere"),
-                      T("Qualche fiocco qua e là: non è ancora il momento delle pelli")], *k)
+        title = pick([T("❄️ Primi fiocchi in quota: la stagione si sta avvicinando"),
+                      T("❄️ Spolverata in vetta: le montagne cominciano a imbiancarsi"),
+                      T("❄️ Qualche fiocco sulle cime: tieni d'occhio i prossimi aggiornamenti")], *k)
         level = "low"
     else:
-        title = pick([T("Sci nel cassetto: niente neve all'orizzonte per 10 giorni"),
-                      T("Niente neve in vista: meglio scarponi da trekking che da sci"),
-                      T("Calma piatta: nessuna nevicata nei prossimi 10 giorni")], *k)
+        title = pick([T("⏳ La neve si fa attendere: i modelli cambiano ogni giorno, ricontrolla presto"),
+                      T("⏳ Ancora niente neve nei prossimi giorni: noi teniamo d'occhio ogni aggiornamento"),
+                      T("⏳ Pausa prima della neve: intanto la montagna è perfetta per camminare")], *k)
         level = "none"
 
     paras = []
@@ -171,8 +178,8 @@ def overview_text(locs: list[dict]) -> str:
     altezze diverse e metterle in classifica farebbe sembrare che nevichi in una stazione e piova nell'altra."""
     best_top = max(locs, key=lambda l: l["text"]["snow3_top"] * 2 + l["text"]["snow10_top"])
     if best_top["text"]["level"] in ("none", "low"):
-        return T("Per ora l'Appennino resta a secco di neve. Noi guardiamo i modelli ogni mattina: "
-                 "appena spunta la prima occasione te lo diciamo qui (e per email, se ti iscrivi).")
+        return T("La neve si fa desiderare, ma noi teniamo d'occhio i modelli più volte al giorno: "
+                 "appena si apre una finestra te lo diciamo qui per primi (e per email, se ti iscrivi).")
     ranked = sorted(locs, key=lambda l: -l["text"]["snow10_base"])
     if ranked[0]["text"]["snow10_base"] < 3:
         peaks = {}
@@ -184,8 +191,8 @@ def overview_text(locs: list[dict]) -> str:
                      "appena spunta la prima occasione te lo diciamo qui (e per email, se ti iscrivi).")
         names = ", ".join(n for n, _ in sorted(peaks.items(), key=lambda x: -x[1])[:4])
         zmin = int(min(peaks.values()) // 100 * 100)
-        return T("Nei prossimi giorni neve solo sulle cime più alte, sopra i {z} m circa ({names}). "
-                 "Alle stazioni, per ora, pioggia o niente: decide la quota neve, guarda la tua località quota per quota.",
+        return T("❄️ Torna la neve in quota: si imbiancano le cime sopra i {z} m circa ({names}). "
+                 "La quota neve si muove giorno per giorno: guarda fin dove scende nella tua località.",
                  z=zmin, names=names)
     top = ranked[0]
     names = ", ".join(l["name"].split(" · ")[0] for l in ranked[:3] if l["text"]["snow10_base"] >= 3)
