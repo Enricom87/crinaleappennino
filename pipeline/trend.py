@@ -78,7 +78,35 @@ def normalize(raw: dict) -> tuple[list[str], dict[str, dict[str, list]]]:
     return h.get("time", []), out
 
 
-def trend(raw: dict, today: str) -> list[dict]:
+def _first48(raw: dict, today: str):
+    """Media della temperatura (850 hPa o 2 m) di tutti gli scenari nelle prime 48 ore da oggi."""
+    times, members = normalize(raw)
+    idx = [i for i, ts in enumerate(times) if ts[:10] >= today][:48]
+    vals, var = [], None
+    for cols in members.values():
+        var = "temperature_850hPa" if cols.get("temperature_850hPa") else "temperature_2m"
+        col = cols.get(var) or []
+        vals += [col[i] for i in idx if i < len(col) and col[i] is not None]
+    return (st.mean(vals) if len(vals) > 20 else None), var
+
+
+def offsets(raws: dict, today: str) -> dict[str, float]:
+    """I modelli senza 850 hPa danno la temperatura al suolo «a 1.500 m», ricavata da un terreno di modello
+    più basso e liscio: esce sistematicamente più fredda (UK Met Office anche di 4 °C il primo giorno). Nelle
+    prime 48 ore i modelli devono essere d'accordo, quindi li allineiamo agli 850 hPa di ECMWF e teniamo lo
+    stesso scarto per tutti i giorni: resta la loro previsione, senza l'errore di quota."""
+    ref, rv = _first48(raws.get("ecmwf") or {}, today)
+    out = {}
+    if ref is None or rv != "temperature_850hPa":
+        return out
+    for k, r in raws.items():
+        m, var = _first48(r, today)
+        if m is not None and var == "temperature_2m":
+            out[k] = round(ref - m, 1)
+    return out
+
+
+def trend(raw: dict, today: str, off: float = 0.0) -> list[dict]:
     times, members = normalize(raw)
     by_day = defaultdict(list)
     for i, ts in enumerate(times):
@@ -93,7 +121,7 @@ def trend(raw: dict, today: str) -> list[dict]:
             T8 = cols.get("temperature_850hPa") or cols.get("temperature_2m") or []
             P = cols.get("precipitation") or []
             D = cols.get("wind_direction_700hPa") or []
-            tv = [T8[i] for i in idx if i < len(T8) and T8[i] is not None]
+            tv = [T8[i] + off for i in idx if i < len(T8) and T8[i] is not None]
             pv = [P[i] for i in idx if i < len(P) and P[i] is not None]
             if len(tv) < 4 or not pv:
                 continue
@@ -103,7 +131,7 @@ def trend(raw: dict, today: str) -> list[dict]:
             sp = hp = 0.0
             for b in range(0, len(idx), 6):
                 bi = idx[b:b + 6]
-                bt = [T8[i] for i in bi if i < len(T8) and T8[i] is not None]
+                bt = [T8[i] + off for i in bi if i < len(T8) and T8[i] is not None]
                 bp = sum(P[i] for i in bi if i < len(P) and P[i] is not None)
                 if not bt or bp <= 0:
                     continue
@@ -214,7 +242,10 @@ def view_dir(path: Path, today: str) -> dict:
 
 
 def view(raws: dict[str, dict], today: str) -> dict:
-    per_model = {k: trend(r, today) for k, r in raws.items()}
+    off = offsets(raws, today)
+    if off:
+        print("tendenza, allineamento dei modelli senza 850 hPa:", off)
+    per_model = {k: trend(r, today, off.get(k, 0.0)) for k, r in raws.items()}
     per_model = {k: v for k, v in per_model.items() if v}
     days = combine(per_model)[:30]
     if len(days) < 6:
