@@ -43,7 +43,7 @@ def email_html(site: dict, heading: str, items: list[str], sponsor: dict | None)
 
 # ---------- grafica della mail (HTML compatibile con i client di posta: tabelle e stili in linea) ----------
 # Inter è il carattere più vicino al San Francisco di Apple; sui dispositivi Apple si usa direttamente quello di sistema
-FONT = "-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter','Helvetica Neue',Helvetica,Arial,sans-serif"
+FONT = "'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Arial,sans-serif"
 COL = {"green": ("#e7f7ee", "#127a43"), "yellow": ("#fff5d9", "#8a5a00"), "red": ("#fdecec", "#a32d2d")}
 E_ = html.escape
 GIORNI = ["lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato", "domenica"]
@@ -66,7 +66,7 @@ def _shell(site: dict, preheader: str, inner: str, sponsor: dict | None) -> str:
         social.append(f"<a href='{site['social']['whatsapp']}' style='color:#2563eb;text-decoration:none'>WhatsApp</a>")
     return (
         f"<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width'>"
-        f"<link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap' rel='stylesheet'>"
+        f"<link href='https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap' rel='stylesheet'>"
         f"<style>body,table,td,p,a,h1,h2,div,span{{font-family:{FONT} !important}}h1,h2{{letter-spacing:-.02em}}</style></head>"
         f"<body style='margin:0;padding:0;background:#eef3f9;-webkit-font-smoothing:antialiased'>"
         f"<div style='display:none;max-height:0;overflow:hidden'>{E_(preheader)}</div>"

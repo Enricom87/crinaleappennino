@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}{{ site.name }} · {{ site.tagline }}{% endblock %}</title>
 <meta name="description" content="{% block desc %}{{ t("Previsioni neve quota per quota per Abetone, Cimone, Doganaccia, Corno alle Scale, Garfagnana, Cerreto Laghi, Febbio e il crinale tosco-emiliano, aggiornate ogni mattina dai modelli meteo ad alta risoluzione.") }}{% endblock %}">
+<link rel="preload" href="{{ u('static/fonts/pjs-400.woff2') }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ u('static/fonts/pjs-800.woff2') }}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ u('static/style.css') }}?v={{ css_v }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ u('feed.xml') }}">
 <link rel="icon" href="{{ u('static/brand/mark.svg') }}" type="image/svg+xml">
