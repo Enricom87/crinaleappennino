@@ -62,7 +62,7 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
         lv = next((d.get("lv") for d in top["days"] if d["date"] == day), None)
         if lv is None:
             lv = (base["elev"] + top["elev"]) / 2
-        return int(round(min(max(lv, base["elev"] + 100), top["elev"] - 100) / 100) * 100)
+        return int(round(min(max(lv, 500), top["elev"] - 100) / 100) * 100)
     if t3 >= 5:
         days = best_days(top["days"], 0, 3)
         when = nice_date(days[0]) if days else T("nei prossimi giorni")

@@ -146,6 +146,21 @@ def main() -> None:
                 d["lv"] = v.get("lv_min", v["lv"]) + pid_off.get(pid, 0)
             elif d.get("fl_min") is not None and (d.get("precip") or 0) >= 1:
                 d["lv"] = d["fl_min"] - 300
+    # una sola quota neve al giorno per tutto il crinale (mediana dei punti con precipitazione, media
+    # pesata e non il minimo notturno): «dai X m» deve essere lo stesso numero all'Abetone e al Cimone
+    _reg = {}
+    for pid, p in pts.items():
+        for d in p["days"]:
+            v = (LEVELS.get(pid) or {}).get(d["date"])
+            if v and v.get("wet"):
+                _reg.setdefault(d["date"], []).append(v["lv"] + pid_off.get(pid, 0))
+            elif d.get("lv") is not None:
+                _reg.setdefault(d["date"], []).append(d["lv"])
+    _reg = {k: sorted(x)[len(x) // 2] for k, x in _reg.items() if len(x) >= 3}
+    for p in pts.values():
+        for d in p["days"]:
+            if d["date"] in _reg:
+                d["lv"] = _reg[d["date"]]
     mtn = {}
     for loc in base_locs:
         for pid in loc["points"]:
@@ -235,7 +250,7 @@ def main() -> None:
                 t = top_by.get(c["date"]) or {}
                 if c["snow"] < 1 and (t.get("snow") or 0) >= 1:
                     lv = lv_by.get(c["date"]) or (low["elev"] + top["elev"]) / 2
-                    z = int(round(min(max(lv, low["elev"] + 100), top["elev"] - 100) / 100) * 100)
+                    z = int(round(min(max(lv, 500), top["elev"] - 100) / 100) * 100)
                     c.update(icon="snow", zq=z, phrase=T("Neve in quota, dai {z} m in su", z=z))
                 home.append(c)
             L["cards_home"] = home
