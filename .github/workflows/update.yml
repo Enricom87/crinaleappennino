@@ -39,7 +39,7 @@ jobs:
         timeout-minutes: 5
         continue-on-error: true
       - name: Scarica i dati dei modelli
-        timeout-minutes: 25
+        timeout-minutes: 50
         env:
           OPEN_METEO_API_KEY: ${{ secrets.OPEN_METEO_API_KEY }}
         run: python -u pipeline/fetch.py
