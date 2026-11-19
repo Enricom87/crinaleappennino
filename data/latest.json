@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-19T12:55+01:00",
+ "generated": "2026-11-19T15:16+01:00",
  "alerts": [],
  "overview": "👀 Occhio a domenica 22 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare. Chi se la gode di più: Lago Scaffaiolo, Cimone, Corno alle Scale. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
@@ -7,56 +7,254 @@
   {
    "slug": "abetone",
    "name": "Abetone",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1700 m in su, fino al Monte Gomito (1892 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1800 m in su, fino al Monte Gomito (1892 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": 10
+   "back_by": 10,
+   "weekend": {
+    "color": "green",
+    "title": "Si sale sabato",
+    "advice": "Scegli sabato: è il giorno migliore del weekend.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "green",
+      "why": "asciutto, con qualche nuvola",
+      "idx": 2,
+      "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 1800 m in su (10 cm al Monte Gomito, 1892 m)",
+      "idx": 3,
+      "snow": 10.3,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "likely",
+     "label": "Probabile",
+     "icon": "📈"
+    },
+    "note": "Oggi gli impianti risultano chiusi: ottimo per ciaspole e passeggiate, non ancora per sciare.",
+    "uncertain": true
+   },
+   "region": null
   },
   {
    "slug": "cimone",
    "name": "Cimone · Sestola e Passo del Lupo",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1600 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2100 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": 10
+   "back_by": 10,
+   "weekend": {
+    "color": "green",
+    "title": "Si sale sabato",
+    "advice": "Scegli sabato: è il giorno migliore del weekend.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "green",
+      "why": "sole",
+      "idx": 2,
+      "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 2100 m in su (27 cm al Monte Cimone, 2165 m)",
+      "idx": 3,
+      "snow": 27.0,
+      "snow_base": 1.2
+     }
+    ],
+    "sure": {
+     "key": "likely",
+     "label": "Probabile",
+     "icon": "📈"
+    },
+    "note": "",
+    "uncertain": true
+   },
+   "region": null
   },
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1600 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2100 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": 10
+   "back_by": 10,
+   "weekend": {
+    "color": "green",
+    "title": "Si sale sabato",
+    "advice": "Scegli sabato: è il giorno migliore del weekend.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "green",
+      "why": "sole",
+      "idx": 2,
+      "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 2100 m in su (27 cm al Monte Cimone, 2165 m)",
+      "idx": 3,
+      "snow": 27.0,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "likely",
+     "label": "Probabile",
+     "icon": "📈"
+    },
+    "note": "",
+    "uncertain": true
+   },
+   "region": null
   },
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1600 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2100 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": 10
+   "back_by": 10,
+   "weekend": {
+    "color": "green",
+    "title": "Si sale sabato",
+    "advice": "Scegli sabato: è il giorno migliore del weekend.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "green",
+      "why": "sole",
+      "idx": 2,
+      "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 2100 m in su (27 cm al Monte Cimone, 2165 m)",
+      "idx": 3,
+      "snow": 27.0,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "likely",
+     "label": "Probabile",
+     "icon": "📈"
+    },
+    "note": "",
+    "uncertain": true
+   },
+   "region": null
   },
   {
    "slug": "doganaccia",
    "name": "Doganaccia",
-   "title": "👀 Occhio a giovedì 26 novembre: i modelli vedono neve fino a Doganaccia (1540 m), da confermare",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1600 m in su, fino al Croce Arcana (1675 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": 10
+   "back_by": 10,
+   "weekend": {
+    "color": "green",
+    "title": "Si sale sabato",
+    "advice": "Scegli sabato: è il giorno migliore del weekend.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "green",
+      "why": "asciutto, con qualche nuvola",
+      "idx": 2,
+      "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 1600 m in su (3 cm al Croce Arcana, 1675 m)",
+      "idx": 3,
+      "snow": 3.4,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "likely",
+     "label": "Probabile",
+     "icon": "📈"
+    },
+    "note": "",
+    "uncertain": true
+   },
+   "region": null
   },
   {
    "slug": "corno-alle-scale",
    "name": "Corno alle Scale",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1700 m in su, fino al Corno alle Scale (1945 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1800 m in su, fino al Corno alle Scale (1945 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
-   "back_by": 10
+   "back_by": 10,
+   "weekend": {
+    "color": "green",
+    "title": "Si sale sabato",
+    "advice": "Scegli sabato: è il giorno migliore del weekend.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "green",
+      "why": "asciutto, con qualche nuvola",
+      "idx": 2,
+      "snow": 0.1,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 1800 m in su (18 cm al Corno alle Scale, 1945 m)",
+      "idx": 3,
+      "snow": 18.1,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "likely",
+     "label": "Probabile",
+     "icon": "📈"
+    },
+    "note": "",
+    "uncertain": true
+   },
+   "region": null
   },
   {
    "slug": "lago-scaffaiolo",
@@ -65,43 +263,373 @@
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": 10
+   "back_by": 10,
+   "weekend": {
+    "color": "green",
+    "title": "Si sale!",
+    "advice": "Prenota pure: il weekend si annuncia buono.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "green",
+      "why": "asciutto, con qualche nuvola",
+      "idx": 2,
+      "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "green",
+      "why": "neve fresca (6 cm in vetta)",
+      "idx": 3,
+      "snow": 5.9,
+      "snow_base": 5.9
+     }
+    ],
+    "sure": {
+     "key": "likely",
+     "label": "Probabile",
+     "icon": "📈"
+    },
+    "note": "",
+    "uncertain": true
+   },
+   "region": null
   },
   {
    "slug": "lago-santo",
    "name": "Lago Santo · Monte Giovo",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1700 m in su, fino al Monte Giovo (1991 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1900 m in su, fino al Monte Giovo (1991 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.2,
    "verdict": "Meglio di no",
-   "back_by": 10
+   "back_by": 10,
+   "weekend": {
+    "color": "green",
+    "title": "Si sale sabato",
+    "advice": "Scegli sabato: è il giorno migliore del weekend.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "green",
+      "why": "asciutto, con qualche nuvola",
+      "idx": 2,
+      "snow": 0.1,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 1900 m in su (25 cm al Monte Giovo, 1991 m)",
+      "idx": 3,
+      "snow": 25.0,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "likely",
+     "label": "Probabile",
+     "icon": "📈"
+    },
+    "note": "",
+    "uncertain": true
+   },
+   "region": null
   },
   {
    "slug": "garfagnana",
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1700 m in su, fino al Monte Prado (2054 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2000 m in su, fino al Monte Prado (2054 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 0.1,
+   "snow3_top": 0.2,
    "verdict": "Meglio di no",
-   "back_by": 10
+   "back_by": 10,
+   "weekend": {
+    "color": "green",
+    "title": "Si sale sabato",
+    "advice": "Scegli sabato: è il giorno migliore del weekend.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "green",
+      "why": "asciutto, con qualche nuvola",
+      "idx": 2,
+      "snow": 0.1,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 2000 m in su (30 cm al Monte Prado, 2054 m)",
+      "idx": 3,
+      "snow": 30.4,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "likely",
+     "label": "Probabile",
+     "icon": "📈"
+    },
+    "note": "",
+    "uncertain": true
+   },
+   "region": null
   },
   {
    "slug": "cerreto-laghi",
    "name": "Cerreto Laghi",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1700 m in su, fino al Monte La Nuda (1894 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1800 m in su, fino al Monte La Nuda (1894 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
-   "back_by": 10
+   "back_by": 10,
+   "weekend": {
+    "color": "green",
+    "title": "Si sale sabato",
+    "advice": "Scegli sabato: è il giorno migliore del weekend.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "green",
+      "why": "asciutto, con qualche nuvola",
+      "idx": 2,
+      "snow": 0.1,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 1800 m in su (16 cm al Monte La Nuda, 1894 m)",
+      "idx": 3,
+      "snow": 15.9,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "likely",
+     "label": "Probabile",
+     "icon": "📈"
+    },
+    "note": "",
+    "uncertain": true
+   },
+   "region": null
   },
   {
    "slug": "febbio",
    "name": "Febbio · Monte Cusna",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1700 m in su, fino al Monte Cusna (2121 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2000 m in su, fino al Monte Cusna (2121 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
-   "back_by": 10
+   "back_by": 10,
+   "weekend": {
+    "color": "green",
+    "title": "Si sale sabato",
+    "advice": "Scegli sabato: è il giorno migliore del weekend.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "green",
+      "why": "asciutto, con qualche nuvola",
+      "idx": 2,
+      "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 2000 m in su (34 cm al Monte Cusna, 2121 m)",
+      "idx": 3,
+      "snow": 34.1,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "likely",
+     "label": "Probabile",
+     "icon": "📈"
+    },
+    "note": "",
+    "uncertain": true
+   },
+   "region": null
   }
- ]
+ ],
+ "bestpick": [
+  {
+   "tie": true,
+   "date": "2026-11-21",
+   "name": "Sabato",
+   "head": "Bel tempo un po' ovunque: scegli la località più comoda.",
+   "sure": {
+    "key": "likely",
+    "label": "Probabile",
+    "icon": "📈"
+   },
+   "red": false,
+   "rows": [
+    {
+     "slug": "abetone",
+     "name": "Abetone",
+     "color": "green",
+     "why": "asciutto, con qualche nuvola",
+     "lifts": "0/17 impianti"
+    },
+    {
+     "slug": "cimone",
+     "name": "Cimone",
+     "color": "green",
+     "why": "sole",
+     "lifts": null
+    },
+    {
+     "slug": "le-polle",
+     "name": "Le Polle",
+     "color": "green",
+     "why": "sole",
+     "lifts": null
+    },
+    {
+     "slug": "cimoncino",
+     "name": "Cimoncino",
+     "color": "green",
+     "why": "sole",
+     "lifts": null
+    }
+   ],
+   "plan_b": "abetone"
+  },
+  {
+   "tie": false,
+   "date": "2026-11-22",
+   "name": "Domenica",
+   "head": "Il posto migliore è Lago Scaffaiolo",
+   "sure": {
+    "key": "likely",
+    "label": "Probabile",
+    "icon": "📈"
+   },
+   "red": false,
+   "rows": [
+    {
+     "slug": "lago-scaffaiolo",
+     "name": "Lago Scaffaiolo",
+     "color": "green",
+     "why": "neve fresca (6 cm in vetta)",
+     "lifts": null
+    },
+    {
+     "slug": "cimone",
+     "name": "Cimone",
+     "color": "yellow",
+     "why": "neve in quota dai 2100 m in su (27 cm al Monte Cimone, 2165 m)",
+     "lifts": null
+    },
+    {
+     "slug": "abetone",
+     "name": "Abetone",
+     "color": "yellow",
+     "why": "neve in quota dai 1800 m in su (10 cm al Monte Gomito, 1892 m)",
+     "lifts": "0/17 impianti"
+    },
+    {
+     "slug": "le-polle",
+     "name": "Le Polle",
+     "color": "yellow",
+     "why": "neve in quota dai 2100 m in su (27 cm al Monte Cimone, 2165 m)",
+     "lifts": null
+    }
+   ],
+   "plan_b": "lago-scaffaiolo"
+  }
+ ],
+ "phases": [
+  {
+   "label": "Prossimi 5 giorni",
+   "from": "gio 19",
+   "to": "lun 23",
+   "card": {
+    "emoji": "🌦️",
+    "head": "Variabile, neve solo sulle cime",
+    "tag": [
+     "snow",
+     "Domenica neve dai 2200 m"
+    ],
+    "conf": "affidabile"
+   },
+   "snow": 1,
+   "snow_low": 0,
+   "cold": 3
+  },
+  {
+   "label": "Dal 6° al 10° giorno",
+   "from": "mar 24",
+   "to": "sab 28",
+   "card": {
+    "emoji": "🌨️",
+    "head": "Si rinfresca, neve possibile in quota",
+    "tag": [
+     "snow",
+     "Da segnare: giovedì 26 novembre"
+    ],
+    "conf": "abbastanza affidabile"
+   },
+   "snow": 17,
+   "snow_low": 3,
+   "cold": 7
+  },
+  {
+   "label": "Dall'11° al 15° giorno",
+   "from": "dom 29",
+   "to": "gio 3",
+   "card": {
+    "emoji": "☀️",
+    "head": "Pausa più asciutta e mite",
+    "tag": null,
+    "conf": "ancora incerta"
+   },
+   "snow": 11,
+   "snow_low": 4,
+   "cold": 8
+  },
+  {
+   "label": "Dal 16° al 30° giorno",
+   "from": "ven 4",
+   "to": "ven 18",
+   "card": {
+    "emoji": "🧊",
+    "head": "Segnale di freddo da seguire",
+    "tag": [
+     "cold",
+     "Freddo verso martedì 15 dicembre"
+    ],
+    "conf": "ancora incerta"
+   },
+   "snow": 10,
+   "snow_low": 4,
+   "cold": 20
+  }
+ ],
+ "article": {
+  "title": "Neve sulle cime domenica 22 novembre, e verso martedì 15 dicembre si affaccia l'inverno",
+  "brief": [
+   "❄️ Domenica 22 novembre: neve sulle cime dai 2200 m circa in su, fino a circa 32 cm sul Monte Cusna (2121 m).",
+   "👀 Giovedì 26 novembre è il giorno da segnare la prossima settimana: la neve compare in circa uno scenario su cinque.",
+   "🥶 Verso martedì 15 dicembre il freddo prende forza: per ora compare in circa uno scenario su cinque.",
+   "🌍 Il quadro generale, tra Artico e stratosfera, spinge nella stessa direzione."
+  ],
+  "date": "2026-11-19"
+ }
 }
