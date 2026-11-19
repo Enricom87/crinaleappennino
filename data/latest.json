@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-18T22:16+01:00",
+ "generated": "2026-11-19T07:06+01:00",
  "alerts": [],
- "overview": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Prado (2054 m); a Casone di Profecchia (1314 m) per ora poco o niente. Chi se la gode di più: Garfagnana, Febbio, Cimone. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "overview": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Prado (2054 m); a Casone di Profecchia (1314 m) per ora poco o niente. Chi se la gode di più: Garfagnana, Febbio, Lago Santo. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
@@ -11,88 +11,88 @@
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": null
+   "back_by": 10
   },
   {
    "slug": "cimone",
    "name": "Cimone · Sestola e Passo del Lupo",
    "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Cimone (2165 m); a Lago della Ninfa (1500 m) per ora poco o niente",
    "level": "watch",
-   "snow3_top": 0.1,
+   "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": null
+   "back_by": 10
   },
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
    "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Cimone (2165 m); a Le Polle (1300 m) per ora poco o niente",
    "level": "watch",
-   "snow3_top": 0.1,
+   "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": null
+   "back_by": 10
   },
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
    "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Cimone (2165 m); a Cimoncino (1400 m) per ora poco o niente",
    "level": "watch",
-   "snow3_top": 0.1,
+   "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": null
+   "back_by": 10
   },
   {
    "slug": "doganaccia",
    "name": "Doganaccia",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Doganaccia (1540 m), da confermare",
+   "title": "👀 Occhio a giovedì 26 novembre: i modelli vedono neve fino a Doganaccia (1540 m), da confermare",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": null
+   "back_by": 10
   },
   {
    "slug": "corno-alle-scale",
    "name": "Corno alle Scale",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Cavone (1430 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: possibile neve solo in vetta, al Corno alle Scale (1945 m); a Cavone (1430 m) per ora poco o niente",
    "level": "watch",
-   "snow3_top": 0.6,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
-   "back_by": null
+   "back_by": 10
   },
   {
    "slug": "lago-scaffaiolo",
    "name": "Lago Scaffaiolo",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare",
+   "title": "👀 Occhio a giovedì 26 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
-   "back_by": null
+   "back_by": 10
   },
   {
    "slug": "lago-santo",
    "name": "Lago Santo · Monte Giovo",
    "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Giovo (1991 m); a Lago Santo modenese (1501 m) per ora poco o niente",
    "level": "watch",
-   "snow3_top": 0.1,
+   "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": null
+   "back_by": 10
   },
   {
    "slug": "garfagnana",
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
    "title": "👀 Occhio a domenica 22 novembre: possibile neve solo in vetta, al Monte Prado (2054 m); a Casone di Profecchia (1314 m) per ora poco o niente",
    "level": "watch",
-   "snow3_top": 0.1,
+   "snow3_top": 0.2,
    "verdict": "Meglio di no",
-   "back_by": null
+   "back_by": 10
   },
   {
    "slug": "cerreto-laghi",
    "name": "Cerreto Laghi",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Cerreto Laghi (1340 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: possibile neve solo in vetta, al Monte La Nuda (1894 m); a Cerreto Laghi (1340 m) per ora poco o niente",
    "level": "watch",
-   "snow3_top": 0.1,
+   "snow3_top": 0.0,
    "verdict": "Meglio di no",
-   "back_by": null
+   "back_by": 10
   },
   {
    "slug": "febbio",
@@ -101,7 +101,7 @@
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
-   "back_by": null
+   "back_by": 10
   }
  ]
 }
