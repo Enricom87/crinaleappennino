@@ -14,7 +14,9 @@ def score(L: dict, d: dict, summer: bool) -> float:
     li = L.get("liftinfo") or {}
     if li.get("open"):
         s += 4 + 2 * min(li["open"] / max(li.get("total") or 1, 1), 1)
-    s += min(d.get("snow") or 0, 20) / 4
+    # conta la neve dove si scia (punto basso della località), non quella in vetta: le vette hanno altezze
+    # diverse (Cimone 2165 m, Gomito 1892 m) e il confronto penalizzerebbe le località con la cima più bassa
+    s += min(d.get("snow_base") or 0, 20) / 4
     return s
 
 
@@ -34,7 +36,7 @@ def best_pick(locs: list[dict], summer: bool) -> list[dict]:
             head = T("Brutto ovunque in quota: meglio un piano B al coperto.")
         elif len(rows) > 2 and rows[0][0] - rows[2][0] < 0.5:
             head = (T("Neve fresca solo sulle vette, un po' ovunque: in basso poca o niente.")
-                    if (top[2].get("snow") or 0) >= 5 and not summer
+                    if (top[2].get("snow") or 0) >= 1 and not summer
                     else T("Bel tempo un po' ovunque: scegli la località più comoda."))
         else:
             head = T("Il posto migliore è {loc}", loc=top[1]["name"].split(" · ")[0])

@@ -161,15 +161,33 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
                        t=f"{(0 if round(e['t850']) == 0 else round(e['t850'])):+d}", thermal=T(e["thermal"])))
 
     return {"title": title, "level": level, "paragraphs": paras,
-            "snow3_top": round(t3, 1), "snow3_base": round(b3, 1), "snow10_top": round(t10, 1), "p7": p7}
+            "snow3_top": round(t3, 1), "snow3_base": round(b3, 1), "snow10_top": round(t10, 1), "p7": p7,
+            "snow10_base": round(window_sum(base["days"], 0, 10), 1),
+            "top_name": top["name"], "top_elev": top["elev"]}
 
 
 def overview_text(locs: list[dict]) -> str:
-    ranked = sorted(locs, key=lambda l: -(l["text"]["snow3_top"] * 2 + l["text"]["snow10_top"]))
-    top = ranked[0]
-    if top["text"]["level"] in ("none", "low"):
+    """Il riassunto in home. Si confrontano le località solo dove si scia (punto basso): le vette hanno
+    altezze diverse e metterle in classifica farebbe sembrare che nevichi in una stazione e piova nell'altra."""
+    best_top = max(locs, key=lambda l: l["text"]["snow3_top"] * 2 + l["text"]["snow10_top"])
+    if best_top["text"]["level"] in ("none", "low"):
         return T("Per ora l'Appennino resta a secco di neve. Noi guardiamo i modelli ogni mattina: "
                  "appena spunta la prima occasione te lo diciamo qui (e per email, se ti iscrivi).")
-    names = ", ".join(l["name"].split(" · ")[0] for l in ranked[:3])
+    ranked = sorted(locs, key=lambda l: -l["text"]["snow10_base"])
+    if ranked[0]["text"]["snow10_base"] < 3:
+        peaks = {}
+        for l in locs:
+            if l["text"]["snow10_top"] >= 3:
+                peaks[l["text"]["top_name"]] = l["text"]["top_elev"]
+        if not peaks:
+            return T("Per ora l'Appennino resta a secco di neve. Noi guardiamo i modelli ogni mattina: "
+                     "appena spunta la prima occasione te lo diciamo qui (e per email, se ti iscrivi).")
+        names = ", ".join(n for n, _ in sorted(peaks.items(), key=lambda x: -x[1])[:4])
+        zmin = int(min(peaks.values()) // 100 * 100)
+        return T("Nei prossimi giorni neve solo sulle cime più alte, sopra i {z} m circa ({names}). "
+                 "Alle stazioni, per ora, pioggia o niente: decide la quota neve, guarda la tua località quota per quota.",
+                 z=zmin, names=names)
+    top = ranked[0]
+    names = ", ".join(l["name"].split(" · ")[0] for l in ranked[:3] if l["text"]["snow10_base"] >= 3)
     return T("{title}. Chi se la gode di più: {names}. "
              "Scegli la tua località e guarda quanta ne arriva, quota per quota.", title=top["text"]["title"], names=names)

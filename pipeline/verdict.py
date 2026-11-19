@@ -29,6 +29,11 @@ def weekend_dates(today: str) -> list[str]:
 def day_verdict(m: dict, snow_top: float, summer: bool, base: dict | None = None, top: dict | None = None) -> tuple[str, str]:
     """Colore (green/yellow/red) e motivo per un giorno. base = {name, elev, snow, precip} del punto più basso."""
     rain, gust, storm = m.get("rain") or 0, m.get("gust") or 0, m.get("storm") or 0
+    base_rain = bool(base and top and base["name"] != top["name"] and base["precip"] >= 2 and base["snow"] < 3)
+    if not summer and base_rain and snow_top >= 1 and gust < 70:
+        # piove dove si scia: stessa valutazione per tutte le località, qualunque sia l'altezza della vetta
+        return "yellow", T("neve solo in vetta ({n} cm al {nt}, {et} m), a {nb} ({eb} m) piove",
+                           n=round(snow_top), nt=top["name"], et=top["elev"], nb=base["name"], eb=base["elev"])
     if not summer and snow_top >= 5 and gust < 70:
         if not base or not top or base["name"] == top["name"]:
             return "green", T("neve fresca ({n} cm in vetta)", n=round(snow_top))
@@ -75,7 +80,7 @@ def weekend(L: dict, today: str, summer: bool) -> dict | None:
             continue
         col, why = day_verdict(m, snow_by.get(d, 0), summer, base_by.get(d), top)
         days.append({"date": d, "name": cap(day_name(d)), "color": col, "why": why, "idx": m["idx"],
-                     "snow": snow_by.get(d, 0)})
+                     "snow": snow_by.get(d, 0), "snow_base": (base_by.get(d) or {}).get("snow", 0)})
     if not days:
         return None
     colors = [x["color"] for x in days]
