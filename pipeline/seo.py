@@ -20,12 +20,17 @@ def location_seo(L: dict, site: dict, summer: bool) -> dict:
     wet = [e for e in eng if (e.get("mm") or 0) >= 1 and e.get("qn") is not None]
     snowy = [e for e in eng if (e["top"] or 0) >= 1]
     first = snowy[0] if snowy else None
-    qn = _r100(first["qn"]) if first and first.get("qn") is not None else None
+    qn = None
+    if first and first.get("qn") is not None:
+        q = first["qn"]
+        if q >= top["elev"] and first.get("qn_min") is not None:  # nevica in vetta solo nei rovesci più forti
+            q = first["qn_min"]
+        qn = min(_r100(q), int(top["elev"] // 100 * 100))
     when = nice_date(first["date"]) if first else None
 
     if summer or not eng:
         title = desc = None
-    elif t_cm >= 1:
+    elif t_cm >= 5:
         title = T("Neve {name}: {t} cm in vetta, quota neve {qn} m · {site}",
                   name=name, t=t_cm, qn=qn or top["elev"], site=site["name"])
         desc = T("{name}: {t} cm previsti in vetta ({ztop} m) e {b} cm alla base nei prossimi 5 giorni, neve da "
