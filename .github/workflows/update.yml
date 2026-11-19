@@ -103,7 +103,7 @@ jobs:
           git add data/articles 2>/dev/null || true
           git add data/avalanche.json 2>/dev/null || true
           git add data/places.json 2>/dev/null || true
-          git add data/history.json 2>/dev/null || true
+          git add data/history.json data/verify.json 2>/dev/null || true
           git add data/snowobs.json 2>/dev/null || true
           git add data/events.json 2>/dev/null || true
           git add data/state.json data/latest.json data/routes data/photos 2>/dev/null || true

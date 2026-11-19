@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ t("La pagella delle previsioni") }} · {{ site.name }}{% endblock %}
+{% block main %}
+{% set P = pagella %}
+<section class="hero small"><div class="wrap"><h1>📊 {{ t("La pagella: quanto ci prendiamo") }}</h1>
+<p class="lead">{{ t("Ogni giorno salviamo cosa prevedevamo e lo confrontiamo con la neve misurata dalle stazioni ufficiali. Niente trucchi: i giorni asciutti, facili da indovinare, non contano.") }}</p></div></section>
+<section class="wrap narrow explain">
+  {% if not P.ready %}
+  <div class="cfg"><p>🛠️ <b>{{ t("Pagella in costruzione.") }}</b> {{ t("Raccogliamo i dati dal {d}: finora {n} giornate con neve valutate. I numeri diventano affidabili dopo almeno {m} nevicate, quindi per ora prendili come un primo assaggio.", d=P.start[8:10] ~ "/" ~ P.start[5:7] ~ "/" ~ P.start[:4], n=P.snowy, m=10) }}</p></div>
+  {% endif %}
+
+  <h2>❄️ {{ t("Neve fresca: noi contro i modelli grezzi") }}</h2>
+  <p>{{ t("Per ogni giornata in cui era prevista neve o ne è caduta, la previsione è giusta se sbaglia di non più di 3 cm o del 40 %. Confrontiamo la nostra previsione con quella dei singoli modelli usati così come escono, senza correzioni.") }}</p>
+  {% for lead, lab in [(1, t("Previsione per domani")), (2, t("Per dopodomani")), (3, t("A 3 giorni"))] %}
+  {% set rows = P.leads[lead] %}
+  <h3>{{ lab }}</h3>
+  {% if rows.our %}
+  <div class="tbl-wrap"><table class="pg">
+    <thead><tr><th></th><th>{{ t("Giornate valutate") }}</th><th>{{ t("Giuste") }}</th><th>{{ t("Neve non prevista") }}</th><th>{{ t("Falsi allarmi") }}</th><th>{{ t("Errore medio") }}</th></tr></thead>
+    <tbody>
+    {% for who in ["our", "ECMWF", "ICON-2I", "AROME"] %}{% set r = rows[who] %}{% if r %}
+      <tr class="{{ 'me' if who == 'our' else '' }}"><td>{{ site.name if who == 'our' else who ~ ' ' ~ t("grezzo") }}</td><td>{{ r.n }}</td><td><b>{{ r.pct }}%</b></td><td>{{ r.miss }}</td><td>{{ r["false"] }}</td><td>{{ r.mae }} cm</td></tr>
+    {% endif %}{% endfor %}
+    </tbody></table></div>
+  {% else %}
+  <p class="small">{{ t("Ancora nessuna giornata con neve da valutare.") }}</p>
+  {% endif %}
+  {% endfor %}
+
+  {% if P.events %}
+  <h2>🗓️ {{ t("Le ultime giornate con neve") }}</h2>
+  <p class="small">{{ t("Previsione fatta il giorno prima, alla quota della stazione di riferimento.") }}</p>
+  <div class="tbl-wrap"><table class="pg">
+    <thead><tr><th>{{ t("Giorno") }}</th><th>{{ t("Località") }}</th><th>{{ t("Noi") }}</th><th>ECMWF</th><th>{{ t("Misurato") }}</th><th></th></tr></thead>
+    <tbody>{% for e in P.events %}
+      <tr><td>{{ e.day }} {{ e.date[8:10] }}/{{ e.date[5:7] }}</td><td>{{ e.name }} <span class="small">({{ e.station }})</span></td><td>{{ e.our }} cm</td><td>{{ e.ecmwf }} cm</td><td><b>{{ e.obs }} cm</b></td><td>{{ "✅" if e.ok else "❌" }}</td></tr>
+    {% endfor %}</tbody></table></div>
+  {% endif %}
+
+  <h2>🏔️ {{ t("Quota neve") }}</h2>
+  {% if P.level.n %}
+  <p>{{ t("Sulle segnalazioni arrivate dal territorio («nevica» o «piove» a una certa quota), la quota neve prevista il giorno prima era giusta in {g} casi su {n}.", g=P.level.good, n=P.level.n) }}</p>
+  {% else %}
+  <p>{{ t("Per la quota neve servono le vostre segnalazioni: quando sei in montagna e nevica o piove, diccelo con la quota.") }} <a href="{{ u('segnala-neve/') }}">{{ t("Segnala la neve") }}</a></p>
+  {% endif %}
+
+  <div class="cfg"><p><b>{{ t("Da dove vengono le misure") }}:</b> {{ t("altezza della neve dalle stazioni della rete idrometeorologica di Arpae Emilia-Romagna (licenza CC BY 4.0) e segnalazioni degli utenti. Una stazione misura un punto: vento e sole possono far differire la neve sulle piste.") }}</p></div>
+  <p><a class="btn" href="{{ u('come-funziona/') }}">{{ t("Come funzionano le previsioni") }}</a> <a class="btn ghost" href="{{ u('metodo/') }}">{{ t("Metodo e fonti") }}</a></p>
+</section>
+{% endblock %}

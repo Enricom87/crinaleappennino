@@ -23,6 +23,7 @@ from bestpick import best_pick
 from i18n import day_short
 from articles import due as art_due_fn, compose as art_compose, save as art_save, load_all as art_load
 from history import record as hist_record, view as hist_view
+import verify
 from climview import load as clim_load, view as clim_view
 from cards import prob_word
 
@@ -334,6 +335,8 @@ def main() -> None:
         locs, routes = build_lang()
         if lang == LANGS[0]:
             hist_record(locs, today)
+            if not IS_SUMMER:
+                verify.record(locs, today)
         for L in locs:
             L["history"] = None if IS_SUMMER else hist_view(L, today)
             L["calib"] = None if IS_SUMMER else (CAL.get(L["slug"]) or {"snow": 1.0, "n_snow": 0, "level": 0, "n_level": 0})
@@ -393,13 +396,19 @@ def main() -> None:
                 art_save(lang, a)
         articles = art_load(lang)
         ctx["articles"] = articles
+        pg = verify.scores(today)
+        names = {L["slug"]: L["name"] for L in locs}
+        for e in pg["events"]:
+            e["name"] = names.get(e["slug"], e["slug"])
+            e["day"] = day_short(e["date"])
+        ctx["pagella"] = pg
         render("index.html", "")
         render("tendenze.html", "tendenze/")
         for a in articles:
             render("articolo.html", f"tendenze/{a['date']}/", art=a)
         for L in locs:
             render("location.html", f"{L['slug']}/", loc=L)
-        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline", "segnala", "segnala-neve", "inverni", "come-funziona"):
+        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline", "segnala", "segnala-neve", "inverni", "come-funziona", "pagella"):
             render(f"{pg}.html", f"{pg}/")
         render("percorsi.html", "percorsi/")
         for r in routes:
