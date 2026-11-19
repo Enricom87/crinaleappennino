@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-19T16:19+01:00",
+ "generated": "2026-11-19T17:01+01:00",
  "alerts": [],
  "overview": "👀 Occhio a giovedì 26 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare. Chi se la gode di più: Lago Scaffaiolo, Cimone, Corno alle Scale. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
@@ -30,9 +30,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (2 cm al Monte Gomito, 1892 m)",
+      "why": "neve in quota dai 1800 m in su (1 cm al Monte Gomito, 1892 m)",
       "idx": 3,
-      "snow": 2.1,
+      "snow": 1.2,
       "snow_base": 0
      }
     ],
@@ -49,7 +49,7 @@
   {
    "slug": "cimone",
    "name": "Cimone · Sestola e Passo del Lupo",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2100 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2000 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -72,10 +72,10 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2100 m in su (9 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 2000 m in su (8 cm al Monte Cimone, 2165 m)",
       "idx": 3,
-      "snow": 8.8,
-      "snow_base": 0
+      "snow": 7.6,
+      "snow_base": 0.8
      }
     ],
     "sure": {
@@ -91,7 +91,7 @@
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2100 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2000 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -114,9 +114,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2100 m in su (9 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 2000 m in su (8 cm al Monte Cimone, 2165 m)",
       "idx": 3,
-      "snow": 8.8,
+      "snow": 7.6,
       "snow_base": 0
      }
     ],
@@ -133,7 +133,7 @@
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2100 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 2000 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -156,9 +156,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2100 m in su (9 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 2000 m in su (8 cm al Monte Cimone, 2165 m)",
       "idx": 3,
-      "snow": 8.8,
+      "snow": 7.6,
       "snow_base": 0
      }
     ],
@@ -240,9 +240,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (3 cm al Corno alle Scale, 1945 m)",
+      "why": "neve in quota dai 1800 m in su (1 cm al Corno alle Scale, 1945 m)",
       "idx": 3,
-      "snow": 2.9,
+      "snow": 1.2,
       "snow_base": 0
      }
     ],
@@ -284,8 +284,8 @@
       "color": "red",
       "why": "pioggia (41 mm)",
       "idx": 3,
-      "snow": 0.5,
-      "snow_base": 0.5
+      "snow": 0.1,
+      "snow_base": 0.1
      }
     ],
     "sure": {
@@ -301,7 +301,7 @@
   {
    "slug": "lago-santo",
    "name": "Lago Santo · Monte Giovo",
-   "title": "👀 Occhio a domenica 22 novembre: neve in arrivo dai 1900 m in su, fino al Monte Giovo (1991 m). Da seguire!",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1900 m in su, fino al Monte Giovo (1991 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.1,
    "verdict": "Meglio di no",
@@ -324,9 +324,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 1900 m in su (4 cm al Monte Giovo, 1991 m)",
+      "why": "neve in quota dai 1900 m in su (2 cm al Monte Giovo, 1991 m)",
       "idx": 3,
-      "snow": 4.1,
+      "snow": 1.5,
       "snow_base": 0
      }
     ],
@@ -366,9 +366,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2000 m in su (6 cm al Monte Prado, 2054 m)",
+      "why": "neve in quota dai 2000 m in su (9 cm al Monte Prado, 2054 m)",
       "idx": 3,
-      "snow": 5.6,
+      "snow": 8.9,
       "snow_base": 0
      }
     ],
@@ -407,10 +407,10 @@
      {
       "date": "2026-11-22",
       "name": "Domenica",
-      "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (2 cm al Monte La Nuda, 1894 m)",
+      "color": "red",
+      "why": "pioggia (58 mm)",
       "idx": 3,
-      "snow": 2.1,
+      "snow": 0.7,
       "snow_base": 0
      }
     ],
@@ -450,9 +450,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2000 m in su (13 cm al Monte Cusna, 2121 m)",
+      "why": "neve in quota dai 2000 m in su (15 cm al Monte Cusna, 2121 m)",
       "idx": 3,
-      "snow": 13.2,
+      "snow": 15.4,
       "snow_base": 0
      }
     ],
@@ -524,35 +524,35 @@
    "red": false,
    "rows": [
     {
-     "slug": "abetone",
-     "name": "Abetone",
-     "color": "yellow",
-     "why": "neve in quota dai 1800 m in su (2 cm al Monte Gomito, 1892 m)",
-     "lifts": "0/17 impianti"
-    },
-    {
      "slug": "cimone",
      "name": "Cimone",
      "color": "yellow",
-     "why": "neve in quota dai 2100 m in su (9 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 2000 m in su (8 cm al Monte Cimone, 2165 m)",
      "lifts": null
+    },
+    {
+     "slug": "abetone",
+     "name": "Abetone",
+     "color": "yellow",
+     "why": "neve in quota dai 1800 m in su (1 cm al Monte Gomito, 1892 m)",
+     "lifts": "0/17 impianti"
     },
     {
      "slug": "le-polle",
      "name": "Le Polle",
      "color": "yellow",
-     "why": "neve in quota dai 2100 m in su (9 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 2000 m in su (8 cm al Monte Cimone, 2165 m)",
      "lifts": null
     },
     {
      "slug": "cimoncino",
      "name": "Cimoncino",
      "color": "yellow",
-     "why": "neve in quota dai 2100 m in su (9 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 2000 m in su (8 cm al Monte Cimone, 2165 m)",
      "lifts": null
     }
    ],
-   "plan_b": "abetone"
+   "plan_b": "cimone"
   }
  ],
  "phases": [
@@ -567,11 +567,11 @@
      "snow",
      "Domenica neve dai 2200 m"
     ],
-    "conf": "affidabile"
+    "conf": "abbastanza affidabile"
    },
    "snow": 2,
    "snow_low": 0,
-   "cold": 3
+   "cold": 6
   },
   {
    "label": "Dal 6° al 10° giorno",
@@ -582,13 +582,13 @@
     "head": "Si rinfresca, neve possibile in quota",
     "tag": [
      "snow",
-     "Da segnare: giovedì 26 novembre"
+     "Da segnare: mercoledì 25 novembre"
     ],
     "conf": "abbastanza affidabile"
    },
-   "snow": 16,
-   "snow_low": 4,
-   "cold": 7
+   "snow": 18,
+   "snow_low": 5,
+   "cold": 13
   },
   {
    "label": "Dall'11° al 15° giorno",
@@ -600,7 +600,7 @@
     "tag": null,
     "conf": "ancora incerta"
    },
-   "snow": 10,
+   "snow": 11,
    "snow_low": 4,
    "cold": 8
   },
