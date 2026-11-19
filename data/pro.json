@@ -5,28 +5,23 @@
  },
  "zones": {
   "pistoiese": {
-   "2026-11-18": {
-    "snow_level": 2300,
-    "fl": 2500,
-    "sky": "molto nuvoloso con possibilità di deboli piogge."
-   },
    "2026-11-19": {
     "snow_level": 2200,
     "fl": 2400,
-    "sky": "molto nuvoloso in mattinata con piogge e rovesci. Attenuazione dei fenomeni e schiarite nel corso del pomeriggio."
+    "sky": "molto nuvoloso in mattinata con piogge e rovesci temporaleschi. Attenuazione dei fenomeni e schiarite nel corso del pomeriggio."
    },
    "2026-11-20": {
     "snow_level": 2000,
     "fl": 2200,
-    "sky": "nuvoloso al mattino con possibili schiarite."
+    "sky": "variabili."
+   },
+   "2026-11-21": {
+    "snow_level": 1900,
+    "fl": 2100,
+    "sky": "poco nuvoloso con nubi in aumento in serata"
    }
   },
   "garfagnana": {
-   "2026-11-18": {
-    "snow_level": 2400,
-    "fl": 2600,
-    "sky": "molto nuvoloso o coperto con deboli piogge."
-   },
    "2026-11-19": {
     "snow_level": 2200,
     "fl": 2400,
@@ -35,7 +30,12 @@
    "2026-11-20": {
     "snow_level": 1900,
     "fl": 2100,
-    "sky": "nuvoloso al mattino con possibili schiarite."
+    "sky": "variabile."
+   },
+   "2026-11-21": {
+    "snow_level": 2000,
+    "fl": 2200,
+    "sky": "poco nuvoloso con nubi in aumento in serata"
    }
   }
  }
