@@ -18,7 +18,7 @@ OBS = ROOT / "data" / "snowobs.json"
 PUB_DAYS = (0, 3)  # lunedì, giovedì
 
 
-VERSION = 3  # se cambia il modo di scrivere, l'articolo di oggi si riscrive al prossimo aggiornamento
+VERSION = 4  # se cambia il modo di scrivere, l'articolo di oggi si riscrive al prossimo aggiornamento
 
 
 def due(today: str) -> bool:
@@ -96,10 +96,15 @@ def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None 
 
     phases = []
     for p in ph:
-        txt = T("Dal {a} al {b}: prevale {type} ({sh} scenari su 100). Neve: {w} ({p} su 100). "
-                "Temperatura tipica in quota intorno a {t} °C, affidabilità {c}.",
-                a=p["from"], b=p["to"], type=low(p["type"]), sh=p["share"],
-                w=prob_word(p["snow"]), p=p["snow"], t=p["t50"], c=p["conf"])
+        if p["share"] >= 50:
+            txt = T("Dal {a} al {b}: prevale {type} ({sh} scenari su 100).", a=p["from"], b=p["to"],
+                    type=low(p["type"]), sh=p["share"])
+        else:  # nessun tipo di tempo ha la maggioranza: lo diciamo, invece di far sembrare deciso il più frequente
+            parts = sorted(p.get("mix", []), key=lambda x: -x[2])[:3]
+            txt = T("Dal {a} al {b} gli scenari sono divisi: {list}.", a=p["from"], b=p["to"],
+                    list=", ".join(T("{type} {n} su 100", type=low(n), n=v) for n, _c, v in parts))
+        txt += " " + T("Neve: {w} ({p} su 100). Temperatura tipica in quota intorno a {t} °C, affidabilità {c}.",
+                       w=prob_word(p["snow"]), p=p["snow"], t=p["t50"], c=p["conf"])
         if p["nmodels"]:
             txt += " " + (T("Nessun modello dà la neve almeno a 30 scenari su 100.") if p["agree"] == 0 else
                           T("{k} modelli su {n} danno la neve ad almeno 30 scenari su 100.", k=p["agree"], n=p["nmodels"]))
@@ -155,6 +160,13 @@ def compose(tv: dict, synv: dict, bestpick: list, today: str, locs: list | None 
         else:
             pros.append(T("Quote ancora alte: la neve, se arriva, resta sopra i {lv} m.", lv=low_["lv"]))
     big = [telev["head"]] + telev["lines"] if telev else []
+    if telev and telev.get("score", 0) >= 1:
+        cmax = max((p.get("cold_tail", 0) for p in ph), default=0)
+        if cmax < 50:  # i due segnali vanno letti insieme, altrimenti sembrano in contraddizione
+            big.append(T("Come si leggono insieme: il quadro generale dice che, nelle prossime settimane, il freddo è "
+                         "più probabile del solito; i modelli per ora lo vedono in {c} scenari su 100, mentre gli altri "
+                         "restano su tempo perturbato e mite, con neve solo in alta quota. Se il freddo si conferma, quel "
+                         "numero salirà nei prossimi aggiornamenti: è il segnale da seguire.", c=cmax))
     return {"v": VERSION, "date": today, "title": title, "lead": lead, "phases": phases, "models": models, "pros": pros, "big": big,
             "weekend": weekend, "ground": ground, "chart": tv.get("chart", ""),
             "pub": nice_date(today)}

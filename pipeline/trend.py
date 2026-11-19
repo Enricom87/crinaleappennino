@@ -19,7 +19,7 @@ from i18n import T, cap, day_short, nice_date
 TYPES = [  # chiave, etichetta, emoji, colore
     ("neve", "Neve fino alle stazioni", "❄️", "#2563eb"),
     ("neve-alto", "Neve in quota, pioggia sotto", "🌨️", "#60a5fa"),
-    ("pioggia", "Pioggia", "🌧️", "#94a3b8"),
+    ("pioggia", "Perturbato, neve solo in alta quota", "🌧️", "#94a3b8"),
     ("freddo", "Freddo e asciutto", "🥶", "#a5b4fc"),
     ("secco", "Asciutto, temperature nella norma", "⛅", "#cbd5e1"),
     ("mite", "Asciutto e mite", "☀️", "#fbbf24"),

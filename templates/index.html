@@ -164,12 +164,15 @@
     <div class="phase" style="--c:{{ ph.color }}">
       <span class="ph-lab">{{ ph.label }}</span><span class="ph-dates">{{ ph.from }} – {{ ph.to }} · {{ t("{n} scenari da {m} modelli", n=ph.scen, m=ph.nmodels) }}</span>
       <span class="ph-emoji" aria-hidden="true">{{ ph.emoji }}</span>
-      <b class="ph-type">{{ ph.type }}</b>
+      {% if ph.share >= 50 %}<b class="ph-type">{{ ph.type }}</b>
       <span class="ph-share">{{ t("{p}% degli scenari", p=ph.share) }}</span>
+      {% else %}<b class="ph-type">{{ t("Scenari divisi") }}</b>
+      <span class="ph-share">{% for lab, col, p in ph.mix|sort(attribute=2, reverse=true) %}{% if loop.index <= 2 %}{{ lab }} {{ p }}%{% if loop.index == 1 %} · {% endif %}{% endif %}{% endfor %}</span>{% endif %}
       <div class="ph-bar">{% for lab, col, p in ph.mix %}<span style="width:{{ p }}%;background:{{ col }}" title="{{ lab }} {{ p }}%"></span>{% endfor %}</div>
       <ul class="ph-facts">
         <li>❄️ <b>{{ t("Neve: {w}", w=prob_word(ph.snow)) }}</b> <span class="muted">({{ t("{p} scenari su 100", p=ph.snow) }})</span>{% if ph.best %} · {{ t("più probabile {d}", d=ph.best) }}{% endif %}</li>
-        <li>🤝 {{ t("{a} modelli su {n} vedono neve", a=ph.agree, n=ph.nmodels) }}</li>
+        <li>🤝 {{ t("{a} modelli su {n} danno neve in almeno 30 scenari su 100", a=ph.agree, n=ph.nmodels) }}</li>
+        {% if ph.cold_tail and ph.cold_tail >= 10 %}<li>🥶 <b>{{ t("Segnale di freddo: {c} scenari su 100 sotto −2 °C", c=ph.cold_tail) }}</b>{% if ph.cold_day %} · {{ ph.cold_day }}{% endif %}</li>{% endif %}
         <li>🌡️ {{ t("{t} °C a 1.500 m", t=ph.t50) }}{% if ph.flow %} · 💨 {{ ph.flow }}{% endif %}</li>
         <li>🎯 {{ t("Affidabilità: {c}", c=ph.conf) }}</li>
       </ul>
