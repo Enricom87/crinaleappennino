@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-19T20:24+01:00",
+ "generated": "2026-11-19T21:25+01:00",
  "alerts": [],
  "overview": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare. Chi se la gode di più: Lago Scaffaiolo, Lago Santo, Cimone. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
@@ -555,6 +555,7 @@
    "plan_b": "cimone"
   }
  ],
+ "snow48": 0.1,
  "phases": [
   {
    "label": "Prossimi 5 giorni",
@@ -582,13 +583,13 @@
     "head": "Si rinfresca, neve possibile in quota",
     "tag": [
      "snow",
-     "Da segnare: giovedì 26 novembre"
+     "Da segnare: mercoledì 25 novembre"
     ],
     "conf": "abbastanza affidabile"
    },
-   "snow": 15,
-   "snow_low": 2,
-   "cold": 3
+   "snow": 16,
+   "snow_low": 3,
+   "cold": 4
   },
   {
    "label": "Dall'11° al 15° giorno",
@@ -601,7 +602,7 @@
     "conf": "ancora incerta"
    },
    "snow": 9,
-   "snow_low": 2,
+   "snow_low": 3,
    "cold": 6
   },
   {
