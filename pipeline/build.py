@@ -439,7 +439,14 @@ def main() -> None:
              "locs": [{"slug": L["slug"], "name": L["name"], "title": L["text"]["title"], "level": L["text"]["level"],
                        "snow3_top": L["text"]["snow3_top"],
                        "verdict": (L["mtn"] or [{}])[0].get("verdict_label"),
-                       "back_by": (L["mtn"] or [{}])[0].get("back_by")} for L in locs]}
+                       "back_by": (L["mtn"] or [{}])[0].get("back_by"),
+                       "weekend": L.get("weekend"), "region": L.get("region")} for L in locs],
+             "bestpick": ctx.get("bestpick"),
+             "phases": [{"label": p["label"], "from": p["from"], "to": p["to"], "card": p.get("card"),
+                         "snow": p["snow"], "snow_low": p.get("snow_low", 0), "cold": p.get("cold_tail") or 0}
+                        for p in ((ctx.get("trendv") or {}).get("phases") or [])],
+             "article": (lambda a: {"title": a["title"], "brief": a.get("brief", []), "date": a["date"]}
+                         if a else None)((ctx.get("articles") or [None])[0])}
     (ROOT / "data" / "latest.json").write_text(json.dumps(state, ensure_ascii=False, indent=1))
     (ROOT / "data" / "i18n_missing.json").unlink(missing_ok=True)
     if i18n.MISSING:
