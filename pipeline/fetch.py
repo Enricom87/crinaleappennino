@@ -42,19 +42,33 @@ PROFILE_VARS = ",".join(f"{v}_{p}hPa" for p in (925, 850, 700)
 SYNOPTIC_VARS = "temperature_850hPa,wind_direction_700hPa,wind_speed_700hPa,geopotential_height_500hPa,precipitation"
 
 
+LIMITED = False  # superato il limite orario o giornaliero: si salta il resto e si tengono i dati precedenti
+
+
 def _get(url: str, params: dict, retries: int = 4) -> dict | list:
+    if LIMITED:
+        raise RuntimeError("limite Open-Meteo raggiunto, salto")
     if API_KEY:
         params = {**params, "apikey": API_KEY}
     for attempt in range(retries):
         try:
-            r = requests.get(url, params=params, timeout=180)
+            r = requests.get(url, params=params, timeout=90)
         except requests.exceptions.RequestException:
             if attempt == retries - 1:
                 raise
             time.sleep(20 * (attempt + 1))
             continue
-        if r.status_code in (429, 500, 502, 503, 504) and attempt < retries - 1:
-            time.sleep(70 if r.status_code == 429 else 20)
+        if r.status_code == 429:
+            global LIMITED
+            msg = r.text[:200]
+            print(f"limite di richieste Open-Meteo: {msg}", flush=True)
+            if "inute" not in msg or attempt == retries - 1:  # limite orario/giornaliero: inutile aspettare
+                LIMITED = True
+                r.raise_for_status()
+            time.sleep(65)
+            continue
+        if r.status_code in (500, 502, 503, 504) and attempt < retries - 1:
+            time.sleep(20)
             continue
         r.raise_for_status()
         return r.json()
@@ -118,8 +132,11 @@ def fetch_all(config: dict, raw_dir: Path) -> None:
     }
     for name, (url, base, models, chunk, suffix) in jobs.items():
         out = _fetch_merged(url, ids, pts, base, models, chunk, suffix)
+        if LIMITED or not out:
+            print(f"{name}: tengo i dati precedenti", flush=True)
+            continue
         (raw_dir / f"{name}.json").write_text(json.dumps(out))
-        print(f"{name}: {len(out)} punti")
+        print(f"{name}: {len(out)} punti", flush=True)
         time.sleep(5)
 
     syn = config["synoptic"]
@@ -149,4 +166,6 @@ if __name__ == "__main__":
     root = Path(__file__).resolve().parents[1]
     cfg = json.loads((root / "config" / "locations.json").read_text())
     fetch_all(cfg, root / "data" / "raw")
+    if not (root / "data" / "raw" / "global.json").exists():
+        raise SystemExit("dati dei modelli non scaricati (limite Open-Meteo?): il sito resta quello di prima")
     print("ok")
