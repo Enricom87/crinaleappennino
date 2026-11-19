@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-19T15:31+01:00",
+ "generated": "2026-11-19T16:19+01:00",
  "alerts": [],
  "overview": "👀 Occhio a giovedì 26 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare. Chi se la gode di più: Lago Scaffaiolo, Cimone, Corno alle Scale. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
@@ -32,7 +32,7 @@
       "color": "yellow",
       "why": "neve in quota dai 1800 m in su (2 cm al Monte Gomito, 1892 m)",
       "idx": 3,
-      "snow": 1.7,
+      "snow": 2.1,
       "snow_base": 0
      }
     ],
@@ -569,7 +569,7 @@
     ],
     "conf": "affidabile"
    },
-   "snow": 1,
+   "snow": 2,
    "snow_low": 0,
    "cold": 3
   },
@@ -586,8 +586,8 @@
     ],
     "conf": "abbastanza affidabile"
    },
-   "snow": 17,
-   "snow_low": 3,
+   "snow": 16,
+   "snow_low": 4,
    "cold": 7
   },
   {
@@ -595,12 +595,12 @@
    "from": "dom 29",
    "to": "gio 3",
    "card": {
-    "emoji": "☀️",
-    "head": "Pausa più asciutta e mite",
+    "emoji": "🌦️",
+    "head": "Variabile, neve solo sulle cime",
     "tag": null,
     "conf": "ancora incerta"
    },
-   "snow": 11,
+   "snow": 10,
    "snow_low": 4,
    "cold": 8
   },
