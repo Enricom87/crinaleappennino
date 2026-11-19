@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ t("Radar e prossime ore sul crinale") }} · {{ site.name }}{% endblock %}
+{% block desc %}{{ t("Radar meteo della Protezione Civile sull'Appennino tosco-emiliano, aggiornato ogni 5 minuti, con la neve e la pioggia previste nelle prossime ore alla base e in vetta di ogni località.") }}{% endblock %}
+{% block head_extra %}<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap">
+  <h1>📡 {{ t("Radar e prossime ore") }}</h1>
+  <p class="lead">{{ t("Dove sta piovendo o nevicando adesso, l'ultima ora in movimento, e cosa aspettarsi nelle prossime 3-6 ore in ogni località.") }}</p>
+</div></section>
+
+<section class="wrap">
+  <div class="radar-box">
+    <div id="radar" class="radar-map" aria-label="{{ t('Mappa radar') }}"></div>
+    <div class="radar-bar">
+      <button id="rplay" type="button" aria-label="{{ t('Avvia o ferma') }}">⏸</button>
+      <input id="rslide" type="range" min="0" max="11" value="11" aria-label="{{ t('Orario') }}">
+      <span id="rtime" class="radar-time">…</span>
+    </div>
+    <p class="small radar-note" id="rmsg">{{ t("Il radar vede la precipitazione, non se è pioggia o neve: per quello guarda la quota neve nelle schede qui sotto.") }}</p>
+    <p class="small">{{ t("Intensità della precipitazione al suolo stimata da radar e pluviometri (prodotto SRI), ogni 5 minuti.") }} {{ t("Dati") }}: <a href="https://radar.protezionecivile.it/" rel="noopener">Radar-DPC, Dipartimento della Protezione Civile</a> (<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.it" rel="noopener">CC BY-SA 4.0</a>).</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>⏱️ {{ t("Prossime ore, località per località") }}</h2>
+  <p class="small">{{ t("Dal calcolo delle {h}, con i modelli ad alta risoluzione AROME e ICON-2I.", h=updated) }}</p>
+  <div class="nc-grid">
+  {% for n in nowcast %}
+    <a class="nc" href="{{ u(n.slug ~ '/') }}">
+      <b>{{ n.name }}</b>
+      {% for k, pt in [("top", n.top), ("low", n.low)] %}
+      <div class="nc-row"><span>{{ "🏔️" if k == "top" else "🏠" }} {{ pt.elev }} m</span>
+        <span>{% if pt.h3.snow >= 0.5 %}❄️ <b>{{ pt.h3.snow|round|int }} cm</b> {{ t("in 3 ore") }}{% elif pt.h3.rain >= 0.3 %}🌧️ {{ pt.h3.rain }} mm {{ t("in 3 ore") }}{% elif pt.h6.snow >= 0.5 %}❄️ {{ pt.h6.snow|round|int }} cm {{ t("entro 6 ore") }}{% elif pt.h6.rain >= 0.3 %}🌦️ {{ t("pioggia entro 6 ore") }}{% else %}☁️ {{ t("asciutto") }}{% endif %}{% if pt.h3.t is not none %} · {{ pt.h3.t|round|int }}°{% endif %}</span></div>
+      {% endfor %}
+    </a>
+  {% endfor %}
+  </div>
+</section>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+(function () {
+  const pts = {{ nowcast|tojson }};
+  const map = L.map('radar', {scrollWheelZoom: false, zoomControl: true}).setView([44.2, 10.65], 9);
+  L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {maxZoom: 13, opacity: 0.85,
+    attribution: {{ t('Mappa © <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA), dati © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>')|tojson }}}).addTo(map);
+  pts.forEach(p => L.circleMarker([p.lat, p.lon], {radius: 6, color: '#0f2236', weight: 2, fillColor: '#fff', fillOpacity: 1})
+    .addTo(map).bindTooltip(p.name, {direction: 'top'}));
+  const S3 = 'https://s3-prod-dpc-radar-webp-cache.s3.eu-south-1.amazonaws.com/SRI/';
+  const pad = n => String(n).padStart(2, '0');
+  const path = d => `${d.getUTCFullYear()}/${pad(d.getUTCMonth() + 1)}/${pad(d.getUTCDate())}/${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}`;
+  const fmt = d => d.toLocaleTimeString({{ html_lang|tojson }}, {hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome'});
+  const msg = document.getElementById('rmsg'), tlab = document.getElementById('rtime');
+  const slide = document.getElementById('rslide'), btn = document.getElementById('rplay');
+  let layers = [], times = [], cur = -1, timer = null;
+  function show(i) {
+    if (cur >= 0) layers[cur].setOpacity(0);
+    layers[i].setOpacity(0.75); cur = i; slide.value = i;
+    tlab.textContent = fmt(times[i]) + (i === layers.length - 1 ? ' · ' + {{ t("ultimo")|tojson }} : '');
+  }
+  function play() { timer = setInterval(() => show((cur + 1) % layers.length), 700); btn.textContent = '⏸'; }
+  function stop() { clearInterval(timer); timer = null; btn.textContent = '▶'; }
+  btn.onclick = () => timer ? stop() : play();
+  slide.oninput = () => { stop(); show(+slide.value); };
+  fetch('https://radar-api.protezionecivile.it/findLastProductByType?type=SRI')
+    .then(r => r.json()).then(j => {
+      const last = new Date(j.lastProducts[0].time);
+      for (let k = 11; k >= 0; k--) times.push(new Date(last.getTime() - k * 300000));
+      layers = times.map(d => L.tileLayer(S3 + path(d) + '/{z}/{x}/{y}/sri.webp',
+        {maxNativeZoom: 7, maxZoom: 13, opacity: 0, errorTileUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACw=', zIndex: 5}).addTo(map));
+      show(layers.length - 1);
+      setTimeout(play, 1500);
+    }).catch(() => {
+      msg.innerHTML = {{ (t("Il radar della Protezione Civile non risponde in questo momento.") ~ ' <a href="https://radar.protezionecivile.it/" rel="noopener">' ~ t("Aprilo sul loro sito") ~ '</a>.')|tojson }};
+      tlab.textContent = '–';
+    });
+})();
+</script>
+{% endblock %}

@@ -10,6 +10,12 @@ on:
     - cron: "10 11 * * *"
     - cron: "40 15 * * *"
     - cron: "20 20 * * *"
+    # aggiornamenti leggeri (solo se c'è neve nelle 48 ore): AROME, ICON-2I e motore fisico, primi giorni
+    - cron: "50 1 * * *"
+    - cron: "50 9 * * *"
+    - cron: "50 13 * * *"
+    - cron: "50 17 * * *"
+    - cron: "50 22 * * *"
   workflow_dispatch: {}
 
 permissions:
@@ -24,66 +30,108 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      mode: ${{ steps.mode.outputs.mode }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install requests jinja2 pillow beautifulsoup4
+      - name: Giro completo o leggero
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ] && echo "${{ github.event.schedule }}" | grep -q "^50 "; then
+            if python pipeline/snow48.py; then echo "mode=light" >> "$GITHUB_OUTPUT"; else echo "mode=skip" >> "$GITHUB_OUTPUT"; fi
+          else
+            echo "mode=full" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.mode.outputs.mode != 'skip'
+        run: pip install requests jinja2 pillow beautifulsoup4
+      - name: Dati dell'ultimo giro completo (solo giro leggero)
+        if: steps.mode.outputs.mode == 'light'
+        uses: actions/cache/restore@v4
+        with:
+          path: data/raw
+          key: raw-none
+          restore-keys: raw-
       - name: Tracciati dei percorsi (solo quelli nuovi)
+        if: steps.mode.outputs.mode == 'full'
         run: python pipeline/routes.py
         timeout-minutes: 20
         continue-on-error: true
       - name: Foto delle località (solo quelle nuove)
+        if: steps.mode.outputs.mode == 'full'
         run: python pipeline/photos.py
         timeout-minutes: 5
         continue-on-error: true
       - name: Scarica i dati dei modelli
+        if: steps.mode.outputs.mode != 'skip'
         timeout-minutes: 50
         env:
           OPEN_METEO_API_KEY: ${{ secrets.OPEN_METEO_API_KEY }}
+          FETCH_ONLY: ${{ steps.mode.outputs.mode == 'light' && 'lam,profile' || '' }}
         run: python -u pipeline/fetch.py
+      - name: Conserva i dati per i giri leggeri
+        if: steps.mode.outputs.mode == 'full'
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: data/raw
+          key: raw-${{ github.run_id }}
       - name: Motore fisico primi 5 giorni (appennino_engine)
+        if: steps.mode.outputs.mode != 'skip'
         continue-on-error: true
         timeout-minutes: 30
         working-directory: pipeline
         run: python -u fetch_and_run.py --giorni 5 --out ../data/raw/engine.json --grezzi ../data/raw/engine_raw.json
       - name: Quadro generale (NAO, AO, vortice polare)
+        if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/teleconn.py
       - name: Sponsor venduti con Stripe
+        if: steps.mode.outputs.mode == 'full'
         env:
           STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
         run: python pipeline/shop.py
         continue-on-error: true
       - name: Stato impianti dai siti ufficiali
+        if: steps.mode.outputs.mode != 'skip'
         continue-on-error: true
         timeout-minutes: 3
         run: python pipeline/lifts.py
       - name: Eventi dagli open data ufficiali
+        if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/events.py
       - name: Rifugi e strutture da OpenStreetMap (settimanale)
+        if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/places.py
       - name: Bollettino Montagna LaMMA (controllo dei meteorologi)
+        if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/pro.py
       - name: Storico stagioni 1 dic - 31 mar (rianalisi ERA5)
+        if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/climate.py
       - name: Segnalazioni dal territorio (archivio)
+        if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/reports.py
       - name: Pericolo valanghe (Meteomont)
+        if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/avalanche.py
       - name: Neve al suolo misurata (stazioni Arpae)
+        if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/snowobs.py
       - name: Costruisci il sito
+        if: steps.mode.outputs.mode != 'skip'
         run: cd pipeline && python build.py
       - name: Newsletter e allerta neve
+        if: steps.mode.outputs.mode != 'skip'
         continue-on-error: true
         env:
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
@@ -91,11 +139,13 @@ jobs:
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
         run: python pipeline/newsletter.py
       - name: Canale Telegram
+        if: steps.mode.outputs.mode != 'skip'
         continue-on-error: true
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: python pipeline/telegram.py
       - name: Salva lo stato degli invii
+        if: steps.mode.outputs.mode != 'skip'
         continue-on-error: true  # se il salvataggio fallisce il sito va comunque online
         run: |
           git config user.name "crinale-bot"
@@ -115,11 +165,13 @@ jobs:
           git add data/state.json data/latest.json data/routes data/photos 2>/dev/null || true
           git diff --cached --quiet || git commit -m "stato $(date -u +%F_%H%M)"
           for i in 1 2 3; do git push && break; git pull --rebase -X theirs && sleep 3; done
-      - uses: actions/upload-pages-artifact@v3
+      - if: steps.mode.outputs.mode != 'skip'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: site
   deploy:
     needs: build
+    if: needs.build.outputs.mode != 'skip'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

@@ -130,6 +130,9 @@ def fetch_all(config: dict, raw_dir: Path) -> None:
         "ensemble": (ENSEMBLE_URL, {"hourly": "temperature_2m,precipitation,freezing_level_height", "forecast_days": 15},
                      ENSEMBLE_MODELS, 3, False),
     }
+    only = [x for x in os.environ.get("FETCH_ONLY", "").split(",") if x]
+    if only:  # aggiornamento leggero: solo i modelli dei primi giorni, il resto viene dalla cache dell'ultimo giro
+        jobs = {k: v for k, v in jobs.items() if k in only}
     for name, (url, base, models, chunk, suffix) in jobs.items():
         out = _fetch_merged(url, ids, pts, base, models, chunk, suffix)
         if LIMITED or not out:
@@ -139,6 +142,8 @@ def fetch_all(config: dict, raw_dir: Path) -> None:
         print(f"{name}: {len(out)} punti", flush=True)
         time.sleep(5)
 
+    if only:
+        return
     syn = config["synoptic"]
     syn_pts = [dict(syn["west"], elev=0), dict(syn["center"], elev=1500), dict(syn["east"], elev=0)]
     try:

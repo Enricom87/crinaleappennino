@@ -412,13 +412,25 @@ def main() -> None:
             e["name"] = names.get(e["slug"], e["slug"])
             e["day"] = day_short(e["date"])
         ctx["pagella"] = pg
+        # prossime ore per la pagina radar: base e vetta di ogni località, dal calcolo di questo giro
+        nowc = []
+        for L in locs:
+            lo, tp = L["low_pt"], L["mtn_top"]
+            def nxt(pt, h):
+                hs = [x for x in (pt.get("hours") or []) if x["time"] >= now.strftime("%Y-%m-%dT%H:00")][:h]
+                return {"snow": round(sum(x["snow"] for x in hs), 1), "rain": round(sum(x["rain"] for x in hs), 1),
+                        "t": hs[0]["t"] if hs else None}
+            nowc.append({"slug": L["slug"], "name": L["name"].split(" · ")[0], "lat": lo["lat"], "lon": lo["lon"],
+                         "low": {"name": lo["name"], "elev": lo["elev"], "h3": nxt(lo, 3), "h6": nxt(lo, 6)},
+                         "top": {"name": tp["name"], "elev": tp["elev"], "h3": nxt(tp, 3), "h6": nxt(tp, 6)}})
+        ctx["nowcast"] = nowc
         render("index.html", "")
         render("tendenze.html", "tendenze/")
         for a in articles:
             render("articolo.html", f"tendenze/{a['date']}/", art=a)
         for L in locs:
             render("location.html", f"{L['slug']}/", loc=L)
-        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline", "segnala", "segnala-neve", "inverni", "come-funziona", "pagella"):
+        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline", "segnala", "segnala-neve", "inverni", "come-funziona", "pagella", "radar"):
             render(f"{pg}.html", f"{pg}/")
         render("percorsi.html", "percorsi/")
         for r in routes:
@@ -481,6 +493,8 @@ def main() -> None:
                        "back_by": (L["mtn"] or [{}])[0].get("back_by"),
                        "weekend": L.get("weekend"), "region": L.get("region")} for L in locs],
              "bestpick": ctx.get("bestpick"),
+             # neve prevista nelle prossime 48 ore su qualsiasi punto: decide gli aggiornamenti leggeri ogni 3 ore
+             "snow48": round(max([d.get("snow") or 0 for p in pts.values() for d in p["days"] if d["idx"] <= 1] or [0]), 1),
              "phases": [{"label": p["label"], "from": p["from"], "to": p["to"], "card": p.get("card"),
                          "snow": p["snow"], "snow_low": p.get("snow_low", 0), "cold": p.get("cold_tail") or 0}
                         for p in ((ctx.get("trendv") or {}).get("phases") or [])],
