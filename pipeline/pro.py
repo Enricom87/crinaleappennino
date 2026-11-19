@@ -134,6 +134,9 @@ def snowline(loc: dict, pts: dict, today: str, zone_days: dict | None = None, n:
         elif pro_lv:
             lv = pro_lv
         dry = (d.get("precip") or 0) < 1
-        out.append({"date": d["date"], "name": day_short(d["date"]), "dry": dry,
+        late = None
+        if prof and prof.get("lv_last") is not None and prof["lv_first"] - prof["lv_last"] >= 400:
+            late = int(round((prof["lv_last"] + offset) / 100) * 100)  # la quota crolla durante il giorno
+        out.append({"date": d["date"], "name": day_short(d["date"]), "dry": dry, "late": late,
                     "lv": int(round(max(lv, 300) / 100) * 100) if lv is not None else None})
     return out

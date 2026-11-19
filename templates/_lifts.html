@@ -3,7 +3,7 @@
 <section class="wrap" id="impianti">
   <h2>🚡 {{ t("Impianti e piste oggi") }}</h2>
   {% if li.link %}
-  <div class="lifts-box"><p>{{ t("Lo stato aggiornato degli impianti è sul sito ufficiale.") }}</p>
+  <div class="lifts-box"><p>{% if li.off %}{{ t("Il gestore non ha ancora pubblicato lo stato degli impianti per questa stagione: verifica sul sito ufficiale.") }}{% else %}{{ t("Lo stato aggiornato degli impianti è sul sito ufficiale.") }}{% endif %}</p>
   <a class="btn small" href="{{ li.link }}" rel="noopener">{{ li.name }} →</a></div>
   {% else %}
   <div class="lifts-box">

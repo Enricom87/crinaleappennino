@@ -50,6 +50,9 @@ def day_verdict(m: dict, snow_top: float, summer: bool, base: dict | None = None
             return "yellow", T("vento forte in cresta ({g} km/h)", g=round(gust))
         return "yellow", T("tempo incerto, qualche pioggia")
     if rain >= 5:
+        if not summer and top and snow_top >= 1:
+            return "red", T("pioggia ({n} mm), in vetta mista a neve (circa {s} cm al {nt}, {et} m)",
+                            n=round(rain), s=round(snow_top), nt=top["name"], et=top["elev"])
         return "red", T("pioggia ({n} mm)", n=round(rain))
     if gust >= 70:
         return "red", T("vento molto forte in cresta ({g} km/h)", g=round(gust))
@@ -96,7 +99,7 @@ def weekend(L: dict, today: str, summer: bool) -> dict | None:
         advice += " " + T("La previsione può ancora cambiare: ti avvisiamo noi se migliora.")
     note = ""
     li = L.get("liftinfo") or {}
-    if not summer and li.get("total") and li.get("open") == 0:
+    if not summer and li.get("total") and li.get("open") == 0 and not li.get("stale"):
         note = T("Oggi gli impianti risultano chiusi: ottimo per ciaspole e passeggiate, non ancora per sciare.")
     return {"color": color, "title": title, "advice": advice, "days": days, "sure": sure, "note": note,
             "uncertain": sure["key"] != "sure"}

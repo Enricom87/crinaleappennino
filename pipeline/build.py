@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 from datetime import datetime
 from pathlib import Path
@@ -173,6 +174,12 @@ def main() -> None:
         pick = lambda xs: [x for x in xs if not areas or x["area"] in areas]
         L, S = pick(d["lifts"]), pick(d.get("slopes", []))
         age_h = (now - datetime.fromisoformat(d["fetched"])).total_seconds() / 3600
+        upd = re.search(r"(\d{1,2})/(\d{1,2})/(\d{4})", d.get("updated") or "")
+        if upd:
+            ud = datetime(int(upd[3]), int(upd[2]), int(upd[1]), tzinfo=now.tzinfo)
+            if (now - ud).days > 3:  # il gestore non aggiorna da giorni (stagione chiusa): niente numeri, solo il link
+                src = lifts_cfg["sources"][c["source"]]
+                return {"link": src["lifts"], "name": src["name"], "off": True}
         return {"name": d["name"], "url": d["url"], "updated": d.get("updated") or "", "fetched": d["fetched"],
                 "stale": age_h > 36, "open": sum(x["open"] for x in L), "total": len(L),
                 "slopes_open": sum(x["open"] for x in S), "slopes_total": len(S),
