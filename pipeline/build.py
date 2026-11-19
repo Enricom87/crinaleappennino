@@ -224,6 +224,20 @@ def main() -> None:
             L["hours_top"] = hourly_strip(top.get("hours", []))
             L["hours_base"] = hourly_strip(low.get("hours", [])) if low["id"] != top["id"] else []
             L["cards_base"] = cards(low["days"], mtn[low["id"]], today) if low["id"] != top["id"] else []
+            # schede della home: la neve si mostra dove si scia (punto basso); se nevica solo più su si dice
+            # «dai X m», uguale per tutte le località, invece dei cm in vetta (vette di altezze diverse)
+            home = []
+            top_by = {c["date"]: c for c in L["cards_top"]}
+            lv_by = {d["date"]: d.get("lv") for d in top["days"]}
+            for c in (L["cards_base"] or L["cards_top"]):
+                c = dict(c)
+                t = top_by.get(c["date"]) or {}
+                if c["snow"] < 1 and (t.get("snow") or 0) >= 1:
+                    lv = lv_by.get(c["date"]) or (low["elev"] + top["elev"]) / 2
+                    z = int(round(min(max(lv, low["elev"] + 100), top["elev"] - 100) / 100) * 100)
+                    c.update(icon="snow", zq=z, phrase=T("Neve in quota, dai {z} m in su", z=z))
+                home.append(c)
+            L["cards_home"] = home
             L["sponsors"] = sponsors.get(loc["slug"], []) or []
             L["webcams"] = [{**w, "label": T(w["label"])} for w in (webcams.get(loc["slug"], []) or [])]
             L["local"] = [{**src, "about": T(src["about"]),
