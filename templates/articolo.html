@@ -4,6 +4,14 @@
 <article class="wrap narrow art">
   <p class="muted small"><a href="{{ u('tendenze/') }}">{{ t("Tendenze neve") }}</a> · {{ art.pub }}</p>
   <h1>{{ art.title }}</h1>
+  {% if art.sections %}
+  {% if art.brief %}<div class="art-brief"><p class="small muted">{{ t("In breve") }}</p><ul>{% for b in art.brief %}<li>{{ b }}</li>{% endfor %}</ul></div>{% endif %}
+  {% for s in art.sections %}<h2>{{ s.h }}</h2>{% for p in s.p %}<p>{{ p }}</p>{% endfor %}
+  {% if loop.index == 1 and art.chart %}<figure class="art-chart">{{ art.chart|safe }}<figcaption class="small muted">{{ t("Scenari nevosi giorno per giorno, modello per modello.") }}</figcaption></figure>{% endif %}{% endfor %}
+  <h2>{{ t("Quanta neve c'è adesso") }}</h2>
+  <p>{{ art.ground }}</p>
+  <p class="small muted">{{ t("Per scrivere questo articolo abbiamo messo insieme {n} scenari da {m} modelli meteo.", n=art.nscen, m=art.nmodels) }} {{ t("Cosa vuol dire «scenari su 100»?") }} <a href="{{ u('come-funziona/') }}">{{ t("Spiegato semplice") }} →</a></p>
+  {% else %}
   {% for p in art.lead %}<p class="{{ 'lead' if loop.first else '' }}">{{ p }}</p>{% endfor %}
   {% if art.chart %}<figure class="art-chart">{{ art.chart|safe }}<figcaption class="small muted">{{ t("Scenari nevosi giorno per giorno, modello per modello.") }}</figcaption></figure>{% endif %}
   <h2>{{ t("Fase per fase") }}</h2>
@@ -15,6 +23,7 @@
   {% if art.weekend %}<h2>{{ t("Il prossimo weekend") }}</h2><ul>{% for p in art.weekend %}<li>{{ p }}</li>{% endfor %}</ul>{% endif %}
   <h2>{{ t("Quanta neve c'è adesso") }}</h2>
   <p>{{ art.ground }}</p>
+  {% endif %}
   <div class="art-cta">
     <p>{{ t("Aggiorniamo questa analisi ogni lunedì e giovedì. Vuoi sapere subito se cambia qualcosa per la tua località?") }}</p>
     {% if site.social.telegram_bot %}<a class="btn tg" href="{{ site.social.telegram_bot }}?start">🔔 {{ t("Attiva gli avvisi su Telegram") }}</a>{% endif %}

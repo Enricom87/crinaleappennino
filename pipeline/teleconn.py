@@ -106,12 +106,14 @@ def view(today: str) -> dict | None:
     if not tc:
         return None
     lines, score = [], 0
+    flags = {"nao": None, "ao": None, "vortex": None}
     nao = tc.get("nao", {}).get("fc", {})
     wk2 = _tail(nao, today, 7, 16)
     if wk2:
         m = st.mean(v["mean"] for v in wk2)
         neg = round(100 * st.mean(v["neg"] for v in wk2))
         pos = round(100 * st.mean(v["pos"] for v in wk2))
+        flags["nao"] = "neg" if m <= -0.5 else ("pos" if m >= 0.5 else "zero")
         if m <= -0.5:
             score += 1
             lines.append(T("NAO negativa nella seconda settimana ({n} scenari su 100): la corrente atlantica scende "
@@ -128,6 +130,7 @@ def view(today: str) -> dict | None:
     wk2 = _tail(ao, today, 7, 16)
     if wk2:
         m = st.mean(v["mean"] for v in wk2)
+        flags["ao"] = "neg" if m <= -1 else ("pos" if m >= 1 else "zero")
         if m <= -1:
             score += 1
             lines.append(T("Oscillazione Artica in forte calo: l'aria fredda polare tende a scivolare verso le medie "
@@ -147,6 +150,9 @@ def view(today: str) -> dict | None:
         if rev and vmin >= 0:
             score += 2
             r0 = date.fromisoformat(rev)
+            flags["vortex"] = {"kind": "ssw", "date": nice_date(rev),
+                               "a": nice_date((r0 + timedelta(days=14)).isoformat()),
+                               "b": nice_date((r0 + timedelta(days=28)).isoformat())}
             lines.append(T("Riscaldamento stratosferico improvviso: intorno a {d} i venti in stratosfera sul 60° parallelo "
                            "si sono invertiti, da ovest a est (minimo {v} m/s); ora il vortice si sta ricostruendo (circa {e} "
                            "m/s verso {de}). Dopo eventi così, nelle 2–4 settimane seguenti aumentano le probabilità di aria "
@@ -154,6 +160,7 @@ def view(today: str) -> dict | None:
                            "non le garantisce.", d=nice_date(rev), v=round(pmin[1]), e=round(end[1]), de=nice_date(end[0]),
                            a=nice_date((r0 + timedelta(days=14)).isoformat()), b=nice_date((r0 + timedelta(days=28)).isoformat())))
         elif pmin and pmin[1] < 15 and end[1] > now + 10 and vmin >= 0:
+            flags["vortex"] = {"kind": "weak"}
             score += 1
             lines.append(T("Vortice polare molto debole nelle ultime settimane (fino a {v} m/s {d}), ora in ripresa "
                            "(circa {e} m/s verso {de}). L'effetto di un vortice debole sul tempo in Europa arriva spesso "
@@ -162,6 +169,7 @@ def view(today: str) -> dict | None:
                            a=nice_date((date.fromisoformat(pmin[0]) + timedelta(days=14)).isoformat()),
                            b=nice_date((date.fromisoformat(pmin[0]) + timedelta(days=28)).isoformat())))
         elif vmin < 0:
+            flags["vortex"] = {"kind": "ssw_coming", "date": nice_date(dmin)}
             score += 2
             lines.append(T("Vortice polare in crisi: GFS vede l'inversione dei venti in stratosfera intorno a {d} "
                            "(riscaldamento stratosferico improvviso). Nelle 2–4 settimane successive aumentano le "
@@ -185,7 +193,7 @@ def view(today: str) -> dict | None:
         head = T("Il quadro generale non aiuta: prevalgono i segnali di tempo mite e anticiclonico.")
     else:
         head = T("Il quadro generale è neutro: nessuna spinta decisa.")
-    return {"head": head, "lines": lines, "score": score,
+    return {"head": head, "lines": lines, "score": score, "flags": flags,
             "nao": [(d, v["mean"]) for d, v in nao.items()], "vortex": list(vx.items())}
 
 
