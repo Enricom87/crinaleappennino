@@ -191,6 +191,14 @@ def main() -> None:
                  for d in pts[q]["days"] if d["date"] == k and (d.get("snow") or 0) >= 2]
         if snowy:
             _reg[k] = min(_reg[k], min(snowy) - 100)
+    # idem in basso: se la base di una stazione (≤ 1.600 m) prende ≥ 2 cm, «dai X m» non può stare sopra
+    # quella base (era «Domenica neve dai 1800 m» con 3 cm al Lago della Ninfa, 1500 m)
+    bases = {min(loc["points"], key=lambda q: pts[q]["elev"] if q in pts else 9999) for loc in base_locs}
+    for k in list(_reg):
+        snowy = [pts[q]["elev"] for q in bases if q in pts and pts[q]["elev"] <= 1600
+                 for d in pts[q]["days"] if d["date"] == k and (d.get("snow") or 0) >= 2]
+        if snowy:
+            _reg[k] = min(_reg[k], int(min(snowy) // 100 * 100))
     REG_LV = dict(_reg)
     for p in pts.values():
         for d in p["days"]:

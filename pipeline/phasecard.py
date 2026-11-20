@@ -10,6 +10,7 @@ def engine_phase(p: dict, engine: dict, reg_lv: dict, locs: list) -> None:
     low = {L["slug"] for L in locs if L["low_pt"]["elev"] <= 1600}
     st_eng = {k: v for k, v in engine.items() if k in low} or engine
     base = max((sum(e["base"] or 0 for e in v) for v in st_eng.values()), default=0)
+    base_day = max((e["base"] or 0 for v in st_eng.values() for e in v), default=0)  # stessa soglia della quota neve
     top = max((sum(e["top"] or 0 for e in v) for v in engine.values()), default=0)
     mm = max((sum(e["mm"] or 0 for e in v) for v in engine.values()), default=0)
     by_day: dict[str, float] = {}
@@ -18,7 +19,7 @@ def engine_phase(p: dict, engine: dict, reg_lv: dict, locs: list) -> None:
             by_day[e["date"]] = max(by_day.get(e["date"], 0), e["top"] or 0)
     snowiest = max(by_day, key=by_day.get) if by_day and max(by_day.values()) >= 1 else None
     qn = int(round(reg_lv[snowiest] / 100) * 100) if snowiest in reg_lv else None  # stessa quota dell'etichetta
-    if base >= 3:
+    if base >= 3 and base_day >= 2:
         e, h = "❄️", T("Neve fino alle stazioni")
     elif top >= 5:
         e, h = "🌨️", T("Neve in quota")
