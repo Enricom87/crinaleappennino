@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-20T21:33+01:00",
+ "generated": "2026-11-20T22:21+01:00",
  "alerts": [
   {
    "slug": "cimone",
@@ -388,7 +388,7 @@
       "date": "2026-11-21",
       "name": "Sabato",
       "color": "yellow",
-      "why": "vento forte in cresta (65 km/h)",
+      "why": "vento forte in cresta (64 km/h)",
       "idx": 1,
       "snow": 0,
       "snow_base": 0
@@ -430,7 +430,7 @@
       "date": "2026-11-21",
       "name": "Sabato",
       "color": "yellow",
-      "why": "vento forte in cresta (66 km/h)",
+      "why": "vento forte in cresta (67 km/h)",
       "idx": 1,
       "snow": 0,
       "snow_base": 0
@@ -472,7 +472,7 @@
       "date": "2026-11-21",
       "name": "Sabato",
       "color": "red",
-      "why": "vento molto forte in cresta (75 km/h)",
+      "why": "vento molto forte in cresta (76 km/h)",
       "idx": 1,
       "snow": 0,
       "snow_base": 0
@@ -601,9 +601,9 @@
     ],
     "conf": "calcolo fisico ora per ora"
    },
-   "snow": 2,
+   "snow": 3,
    "snow_low": 0,
-   "cold": 1
+   "cold": 2
   },
   {
    "label": "Dal 6° al 10° giorno",
@@ -618,8 +618,8 @@
     ],
     "conf": "abbastanza affidabile"
    },
-   "snow": 30,
-   "snow_low": 9,
+   "snow": 31,
+   "snow_low": 8,
    "cold": 13
   },
   {
@@ -627,15 +627,15 @@
    "from": "lun 30",
    "to": "ven 4",
    "card": {
-    "emoji": "🌨️",
-    "head": "Si rinfresca, neve possibile in quota",
+    "emoji": "🧊",
+    "head": "Segnale di freddo da seguire",
     "tag": [
      "cold",
      "Freddo verso martedì 1 dicembre"
     ],
     "conf": "ancora incerta"
    },
-   "snow": 15,
+   "snow": 14,
    "snow_low": 8,
    "cold": 17
   },
