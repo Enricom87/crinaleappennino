@@ -1,27 +1,34 @@
 {
- "generated": "2026-11-20T05:27+01:00",
- "alerts": [],
- "overview": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago della Ninfa (1500 m), da confermare. Chi se la gode di più: Cimone, Doganaccia, Cimoncino. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "generated": "2026-11-20T09:27+01:00",
+ "alerts": [
+  {
+   "slug": "febbio",
+   "name": "Febbio · Monte Cusna",
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1500 m in su, fino a 4-9 cm al Monte Cusna (2121 m)",
+   "snow3_top": 6.3
+  }
+ ],
+ "overview": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago della Ninfa (1500 m), da confermare. Chi se la gode di più: Cimone, Cimoncino, Corno alle Scale. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
    "slug": "abetone",
    "name": "Abetone",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Passo dell'Abetone (1388 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1300 m in su, fino al Monte Gomito (1892 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 0.2,
+   "snow3_top": 1.1,
    "verdict": "Meglio di no",
    "back_by": null,
    "weekend": {
-    "color": "red",
-    "title": "Meglio rimandare",
-    "advice": "Il weekend non si annuncia bene in quota. La previsione può ancora cambiare: ti avvisiamo noi se migliora.",
+    "color": "yellow",
+    "title": "Si può, con attenzione",
+    "advice": "Parti presto e tieni d'occhio il cielo. La previsione può ancora cambiare: ti avvisiamo noi se migliora.",
     "days": [
      {
       "date": "2026-11-21",
       "name": "Sabato",
       "color": "red",
-      "why": "vento molto forte in cresta (74 km/h)",
+      "why": "vento molto forte in cresta (72 km/h)",
       "idx": 1,
       "snow": 0,
       "snow_base": 0
@@ -29,10 +36,10 @@
      {
       "date": "2026-11-22",
       "name": "Domenica",
-      "color": "red",
-      "why": "pioggia (45 mm)",
+      "color": "yellow",
+      "why": "neve in quota dai 1500 m in su (1 cm al Monte Gomito, 1892 m)",
       "idx": 2,
-      "snow": 0.2,
+      "snow": 1.1,
       "snow_base": 0
      }
     ],
@@ -51,7 +58,7 @@
    "name": "Cimone · Sestola e Passo del Lupo",
    "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago della Ninfa (1500 m), da confermare",
    "level": "watch",
-   "snow3_top": 3.7,
+   "snow3_top": 4.8,
    "verdict": "Occhio",
    "back_by": null,
    "weekend": {
@@ -72,9 +79,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2000 m in su (4 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 1600 m in su (5 cm al Monte Cimone, 2165 m)",
       "idx": 2,
-      "snow": 3.6,
+      "snow": 4.8,
       "snow_base": 0
      }
     ],
@@ -91,9 +98,9 @@
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Le Polle (1300 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1300 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 3.7,
+   "snow3_top": 4.8,
    "verdict": "Occhio",
    "back_by": null,
    "weekend": {
@@ -114,9 +121,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2000 m in su (4 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 1500 m in su (5 cm al Monte Cimone, 2165 m)",
       "idx": 2,
-      "snow": 3.6,
+      "snow": 4.8,
       "snow_base": 0
      }
     ],
@@ -133,9 +140,9 @@
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Cimoncino (1400 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1300 m in su, fino al Monte Cimone (2165 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 3.7,
+   "snow3_top": 4.8,
    "verdict": "Occhio",
    "back_by": null,
    "weekend": {
@@ -156,9 +163,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2000 m in su (4 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 1500 m in su (5 cm al Monte Cimone, 2165 m)",
       "idx": 2,
-      "snow": 3.6,
+      "snow": 4.8,
       "snow_base": 0
      }
     ],
@@ -175,7 +182,7 @@
   {
    "slug": "doganaccia",
    "name": "Doganaccia",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Doganaccia (1540 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1300 m in su, fino al Croce Arcana (1675 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Occhio",
@@ -198,7 +205,7 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "red",
-      "why": "pioggia (42 mm)",
+      "why": "pioggia (32 mm)",
       "idx": 2,
       "snow": 0,
       "snow_base": 0
@@ -217,9 +224,9 @@
   {
    "slug": "corno-alle-scale",
    "name": "Corno alle Scale",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Cavone (1430 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1300 m in su, fino al Corno alle Scale (1945 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 0.5,
+   "snow3_top": 1.4,
    "verdict": "Meglio di no",
    "back_by": null,
    "weekend": {
@@ -230,8 +237,8 @@
      {
       "date": "2026-11-21",
       "name": "Sabato",
-      "color": "yellow",
-      "why": "vento forte in cresta (70 km/h)",
+      "color": "red",
+      "why": "vento molto forte in cresta (72 km/h)",
       "idx": 1,
       "snow": 0.1,
       "snow_base": 0
@@ -239,10 +246,10 @@
      {
       "date": "2026-11-22",
       "name": "Domenica",
-      "color": "red",
-      "why": "pioggia (42 mm)",
+      "color": "yellow",
+      "why": "neve in quota dai 1500 m in su (1 cm al Corno alle Scale, 1945 m)",
       "idx": 2,
-      "snow": 0.2,
+      "snow": 1.1,
       "snow_base": 0
      }
     ],
@@ -261,19 +268,19 @@
    "name": "Lago Scaffaiolo",
    "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago Scaffaiolo (1775 m), da confermare",
    "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 0.1,
    "verdict": "Meglio di no",
    "back_by": null,
    "weekend": {
-    "color": "yellow",
-    "title": "Si può, con attenzione",
-    "advice": "Parti presto e tieni d'occhio il cielo. La previsione può ancora cambiare: ti avvisiamo noi se migliora.",
+    "color": "red",
+    "title": "Meglio rimandare",
+    "advice": "Il weekend non si annuncia bene in quota. La previsione può ancora cambiare: ti avvisiamo noi se migliora.",
     "days": [
      {
       "date": "2026-11-21",
       "name": "Sabato",
-      "color": "yellow",
-      "why": "vento forte in cresta (70 km/h)",
+      "color": "red",
+      "why": "vento molto forte in cresta (72 km/h)",
       "idx": 1,
       "snow": 0,
       "snow_base": 0
@@ -282,10 +289,10 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "red",
-      "why": "pioggia (42 mm)",
+      "why": "pioggia (37 mm)",
       "idx": 2,
-      "snow": 0,
-      "snow_base": 0
+      "snow": 0.1,
+      "snow_base": 0.1
      }
     ],
     "sure": {
@@ -301,9 +308,9 @@
   {
    "slug": "lago-santo",
    "name": "Lago Santo · Monte Giovo",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago Santo modenese (1501 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1300 m in su, fino al Monte Giovo (1991 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 0.2,
+   "snow3_top": 1.0,
    "verdict": "Meglio di no",
    "back_by": null,
    "weekend": {
@@ -324,9 +331,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "red",
-      "why": "pioggia (45 mm)",
+      "why": "pioggia (37 mm)",
       "idx": 2,
-      "snow": 0.1,
+      "snow": 0.9,
       "snow_base": 0
      }
     ],
@@ -343,51 +350,9 @@
   {
    "slug": "garfagnana",
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Casone di Profecchia (1314 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1300 m in su, fino al Monte Prado (2054 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 0.8,
-   "verdict": "Occhio",
-   "back_by": null,
-   "weekend": {
-    "color": "yellow",
-    "title": "Si può, con attenzione",
-    "advice": "Parti presto e tieni d'occhio il cielo. La previsione può ancora cambiare: ti avvisiamo noi se migliora.",
-    "days": [
-     {
-      "date": "2026-11-21",
-      "name": "Sabato",
-      "color": "yellow",
-      "why": "vento forte in cresta (64 km/h)",
-      "idx": 1,
-      "snow": 0,
-      "snow_base": 0
-     },
-     {
-      "date": "2026-11-22",
-      "name": "Domenica",
-      "color": "red",
-      "why": "pioggia (40 mm)",
-      "idx": 2,
-      "snow": 0.7,
-      "snow_base": 0
-     }
-    ],
-    "sure": {
-     "key": "likely",
-     "label": "Probabile",
-     "icon": "📈"
-    },
-    "note": "",
-    "uncertain": true
-   },
-   "region": null
-  },
-  {
-   "slug": "cerreto-laghi",
-   "name": "Cerreto Laghi",
-   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1200 m in su, fino al Monte La Nuda (1894 m). Da seguire!",
-   "level": "watch",
-   "snow3_top": 0.0,
+   "snow3_top": 1.9,
    "verdict": "Occhio",
    "back_by": null,
    "weekend": {
@@ -407,10 +372,52 @@
      {
       "date": "2026-11-22",
       "name": "Domenica",
-      "color": "red",
-      "why": "pioggia (49 mm)",
+      "color": "yellow",
+      "why": "neve in quota dai 1500 m in su (2 cm al Monte Prado, 2054 m)",
       "idx": 2,
+      "snow": 1.8,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "likely",
+     "label": "Probabile",
+     "icon": "📈"
+    },
+    "note": "",
+    "uncertain": true
+   },
+   "region": null
+  },
+  {
+   "slug": "cerreto-laghi",
+   "name": "Cerreto Laghi",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1300 m in su, fino al Monte La Nuda (1894 m). Da seguire!",
+   "level": "watch",
+   "snow3_top": 0.8,
+   "verdict": "Occhio",
+   "back_by": null,
+   "weekend": {
+    "color": "yellow",
+    "title": "Si può, con attenzione",
+    "advice": "Parti presto e tieni d'occhio il cielo. La previsione può ancora cambiare: ti avvisiamo noi se migliora.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "yellow",
+      "why": "vento forte in cresta (63 km/h)",
+      "idx": 1,
       "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "red",
+      "why": "pioggia (60 mm)",
+      "idx": 2,
+      "snow": 0.7,
       "snow_base": 0
      }
     ],
@@ -427,9 +434,9 @@
   {
    "slug": "febbio",
    "name": "Febbio · Monte Cusna",
-   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1200 m in su, fino al Monte Cusna (2121 m). Da seguire!",
-   "level": "watch",
-   "snow3_top": 2.6,
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1500 m in su, fino a 4-9 cm al Monte Cusna (2121 m)",
+   "level": "alert",
+   "snow3_top": 6.3,
    "verdict": "Meglio di no",
    "back_by": null,
    "weekend": {
@@ -441,7 +448,7 @@
       "date": "2026-11-21",
       "name": "Sabato",
       "color": "yellow",
-      "why": "vento forte in cresta (66 km/h)",
+      "why": "vento forte in cresta (67 km/h)",
       "idx": 1,
       "snow": 0,
       "snow_base": 0
@@ -450,9 +457,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2000 m in su (3 cm al Monte Cusna, 2121 m)",
+      "why": "neve in quota dai 1500 m in su (6 cm al Monte Cusna, 2121 m)",
       "idx": 2,
-      "snow": 2.6,
+      "snow": 6.3,
       "snow_base": 0
      }
     ],
@@ -524,35 +531,35 @@
    "red": false,
    "rows": [
     {
+     "slug": "abetone",
+     "name": "Abetone",
+     "color": "yellow",
+     "why": "neve in quota dai 1500 m in su (1 cm al Monte Gomito, 1892 m)",
+     "lifts": "0/17 impianti"
+    },
+    {
      "slug": "cimone",
      "name": "Cimone",
      "color": "yellow",
-     "why": "neve in quota dai 2000 m in su (4 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 1600 m in su (5 cm al Monte Cimone, 2165 m)",
      "lifts": null
     },
     {
      "slug": "le-polle",
      "name": "Le Polle",
      "color": "yellow",
-     "why": "neve in quota dai 2000 m in su (4 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 1500 m in su (5 cm al Monte Cimone, 2165 m)",
      "lifts": null
     },
     {
      "slug": "cimoncino",
      "name": "Cimoncino",
      "color": "yellow",
-     "why": "neve in quota dai 2000 m in su (4 cm al Monte Cimone, 2165 m)",
-     "lifts": null
-    },
-    {
-     "slug": "febbio",
-     "name": "Febbio",
-     "color": "yellow",
-     "why": "neve in quota dai 2000 m in su (3 cm al Monte Cusna, 2121 m)",
+     "why": "neve in quota dai 1500 m in su (5 cm al Monte Cimone, 2165 m)",
      "lifts": null
     }
    ],
-   "plan_b": "cimone"
+   "plan_b": "abetone"
   }
  ],
  "snow48": 0.2,
@@ -570,7 +577,7 @@
     ],
     "conf": "affidabile"
    },
-   "snow": 2,
+   "snow": 1,
    "snow_low": 0,
    "cold": 4
   },
@@ -583,11 +590,11 @@
     "head": "Si rinfresca, neve possibile in quota",
     "tag": [
      "snow",
-     "Da segnare: giovedì 26 novembre"
+     "Da segnare: mercoledì 25 novembre"
     ],
     "conf": "ancora incerta"
    },
-   "snow": 20,
+   "snow": 21,
    "snow_low": 4,
    "cold": 8
   },
@@ -596,8 +603,8 @@
    "from": "lun 30",
    "to": "ven 4",
    "card": {
-    "emoji": "☀️",
-    "head": "Pausa più asciutta e mite",
+    "emoji": "🌦️",
+    "head": "Variabile, neve solo sulle cime",
     "tag": null,
     "conf": "ancora incerta"
    },
@@ -618,7 +625,7 @@
     ],
     "conf": "ancora incerta"
    },
-   "snow": 16,
+   "snow": 15,
    "snow_low": 7,
    "cold": 26
   }
