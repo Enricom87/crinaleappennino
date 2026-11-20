@@ -164,3 +164,38 @@ def apply(base_locs: list[dict], pts: dict, cal: dict, today: str) -> dict:
                     "gust": g["cima"]["raffica_max_kmh"], "mm": g["precip_mm"]}
                    for g in r["giornaliero"] if g["data"] >= today][:DAYS]
             for slug, r in per_loc.items()}
+
+
+def t850_days(today: str) -> dict[str, float]:
+    """Temperatura a 850 hPa (circa 1.500 m) giorno per giorno, pesata come fa il motore (regime di vento e
+    anticipo), media sulle località. Come per il grafico della configurazione: media delle ore con
+    precipitazione, o di tutte le ore se il giorno è asciutto."""
+    from datetime import datetime
+    raw_all = load()
+    per_day: dict[str, list[float]] = {}
+    for code, raw in raw_all.items():
+        try:
+            dati = eng.estrai_dati_modelli(raw)
+        except Exception:  # noqa: BLE001
+            continue
+        rif = eng._riferimento_default(dati)
+        rows: dict[str, list[tuple[float, float]]] = {}
+        for i, t in enumerate(dati.tempi):
+            day = t.date().isoformat()
+            if day < today:
+                continue
+            lead = max(0.0, (t - rif).total_seconds() / 3600.0)
+            diag = {m: eng.diagnostica_modello(dati, m, i, 1500, 1500) for m in dati.modelli}
+            dir850, _ = eng.direzione_850_riferimento(diag)
+            regime = eng.classifica_regime(dir850, lead)
+            pesi = eng.PESI_REGIME[regime]
+            sost = eng.SOSTITUTI_LUNGO_TERMINE if regime == "lungo_termine" else None
+            t850, _ = eng.media_pesata({m: dati.valore(m, "temperature_850hPa", i) for m in dati.modelli}, pesi, sost)
+            pr, _ = eng.media_pesata({m: dati.valore(m, "precipitation", i) for m in dati.modelli}, pesi, sost)
+            if t850 is not None:
+                rows.setdefault(day, []).append((t850, pr or 0))
+        for day, v in rows.items():
+            wet = [t for t, p in v if p >= 0.3]
+            sel = wet or [t for t, _ in v]
+            per_day.setdefault(day, []).append(sum(sel) / len(sel))
+    return {d: round(sum(v) / len(v), 1) for d, v in sorted(per_day.items())[:DAYS]}

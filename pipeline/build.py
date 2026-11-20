@@ -10,7 +10,7 @@ from zoneinfo import ZoneInfo
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from compute import blend_point, ensemble_probs, hourly_point, name_configuration, synoptic_days, visibility_days
+from compute import blend_point, ensemble_probs, hourly_point, name_configuration, synoptic_days, thermal_class, visibility_days
 from cards import cards, hourly_strip
 from summer import mountain_days, overview_mtn, summer_text
 from i18n import T
@@ -150,6 +150,19 @@ def main() -> None:
     # primi 5 giorni dal motore fisico-statistico (appennino_engine.py): neve, pioggia, quota neve, raffiche
     import engine_overlay
     ENGINE_LOC = engine_overlay.apply(base_locs, pts, CAL, today)
+    # grafico «configurazione»: giorni 1-5 dal motore (ICON-2I, AROME, ICON-CH2, ECMWF, GFS pesati per regime),
+    # dal 6° la mediana pesata dei modelli a scenari (famiglie bilanciate); ECMWF grezzo solo se manca il resto
+    TV = trend_view()
+    _eng_t = engine_overlay.t850_days(today)
+    _multi = (TV or {}).get("tmed", {})
+    for r in syn_rows:
+        base_r = r.get("ec") or r.get("gfs")
+        if not base_r:
+            continue
+        t_new, src = (_eng_t.get(r["date"]), "engine") if r["date"] in _eng_t else (_multi.get(r["date"]), "multi")
+        if t_new is None:
+            continue
+        r["mix"] = {**base_r, "t850": t_new, "thermal": thermal_class(t_new), "src": src}
     for pid, p in pts.items():  # quota neve del giorno su ogni punto, per dire «neve dai X m in su»
         for d in p["days"]:
             v = (LEVELS.get(pid) or {}).get(d["date"])
@@ -405,7 +418,7 @@ def main() -> None:
                "local_sources": [{**s, "about": T(s["about"]), "links": {k: [{**l, "label": T(l["label"])} for l in v]
                                                                        for k, v in s["links"].items()}}
                                  for s in local_sources],
-               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows, "synv": syn_view(syn_rows, REG_LV, min(L["low_pt"]["elev"] for L in locs if L["low_pt"]["elev"] <= 1600)), "trendv": decorate(trend_view(), locs), "telev": tele_view(today),
+               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows, "synv": syn_view(syn_rows, REG_LV, min(L["low_pt"]["elev"] for L in locs if L["low_pt"]["elev"] <= 1600)), "trendv": decorate(trend_view(), locs, ENGINE_LOC, REG_LV), "telev": tele_view(today),
                "summer": IS_SUMMER, "home_events": home_events(locs), "bestpick": best_pick(locs, IS_SUMMER),
                "overview": ((overview_mtn(locs) if IS_SUMMER else overview_text(locs)) if locs else ""),
                "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),

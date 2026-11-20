@@ -158,10 +158,10 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
                        d=nice_date(d), g=g))
 
     # configurazione
-    syn = [s for s in syn_rows if s.get("ec") and s["ec"]["precip"] >= 1][:3]
+    syn = [s for s in syn_rows if (s.get("mix") or s.get("ec")) and (s.get("mix") or s["ec"])["precip"] >= 1][:3]
     if syn:
         s = syn[0]
-        e = s["ec"]
+        e = s.get("mix") or s["ec"]
         paras.append(T("Per gli appassionati ({d}): {name}, flusso {flow} in quota, "
                        "circa {t} °C a 1.500 m: {thermal} per la neve.",
                        d=nice_date(s["date"]), name=T(s["name"]), flow=T(e["flow"]),

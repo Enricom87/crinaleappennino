@@ -166,21 +166,41 @@ def trend(raw: dict, today: str, off: float = 0.0) -> list[dict]:
     return days
 
 
+# Peso di ogni modello nelle percentuali: per famiglia, non per numero di scenari (ECMWF ne ha 51 + 51 con AIFS,
+# GEM 21): così un centro con tanti membri non decide da solo. Se un modello manca quel giorno (orizzonte più corto)
+# i pesi si ridistribuiscono sugli altri.
+WEIGHTS = {"ecmwf": .30, "aifs": .15, "gfs": .20, "icon": .10, "ch2": .05, "weathernext": .10, "ukmo": .05, "gem": .05}
+
+
+def wmedian(pairs: list[tuple[float, float]]) -> float:
+    """Mediana pesata di (valore, peso)."""
+    pairs = sorted(pairs)
+    tot, acc = sum(w for _, w in pairs), 0.0
+    for v, w in pairs:
+        acc += w
+        if acc >= tot / 2:
+            return v
+    return pairs[-1][0]
+
+
 def combine(per_model: dict[str, list[dict]]) -> list[dict]:
-    """Un giorno "medio": ogni modello pesa uguale."""
+    """Un giorno "medio": ogni modello pesa secondo WEIGHTS (famiglie bilanciate), non per numero di scenari."""
     dates = sorted({d["date"] for days in per_model.values() for d in days})
     out = []
     for date in dates:
-        rows = [d for days in per_model.values() for d in days if d["date"] == date]
+        rows = [(k, d) for k, days in per_model.items() for d in days if d["date"] == date]
         if not rows:
             continue
-        flows = Counter(r["flow"] for r in rows if r["flow"])
-        out.append({"date": date, "models": len(rows), "n": sum(r["n"] for r in rows),
-                    "t50": st.median(r["t50"] for r in rows), "t10": min(r["t10"] for r in rows),
-                    "t90": max(r["t90"] for r in rows),
-                    "tmin10": min(r.get("tmin10", r["t10"]) for r in rows),
-                    "cold": st.mean(r.get("cold", 0) for r in rows),
-                    "mix": {k: st.mean(r["mix"][k] for r in rows) for k, *_ in TYPES},
+        ws = {k: WEIGHTS.get(k, .05) for k, _ in rows}
+        tw = sum(ws.values())
+        wm = lambda f: sum(ws[k] * f(r) for k, r in rows) / tw  # noqa: E731
+        flows = Counter(r["flow"] for _, r in rows if r["flow"])
+        out.append({"date": date, "models": len(rows), "n": sum(r["n"] for _, r in rows),
+                    "t50": wmedian([(r["t50"], ws[k]) for k, r in rows]), "t10": min(r["t10"] for _, r in rows),
+                    "t90": max(r["t90"] for _, r in rows),
+                    "tmin10": min(r.get("tmin10", r["t10"]) for _, r in rows),
+                    "cold": wm(lambda r: r.get("cold", 0)),
+                    "mix": {k2: wm(lambda r, k2=k2: r["mix"][k2]) for k2, *_ in TYPES},
                     "flow": flows.most_common(1)[0][0] if flows else "n.d."})
     return out
 
@@ -311,5 +331,6 @@ def view(raws: dict[str, dict], today: str) -> dict:
     used = [(name, T(origin), col, round(st.mean(d["n"] for d in per_model[k])))
             for k, name, origin, col in MODELS if k in per_model]
     return {"head": head, "phases": phases, "chart": chart(days, per_model), "models": used,
+            "tmed": {d["date"]: d["t50"] for d in days},
             "nscen": sum(u[3] for u in used), "nmodels": len(used),
             "legend": [(T(lab), emo, col) for _, lab, emo, col in TYPES], "until": nice_date(days[-1]["date"])}

@@ -70,7 +70,7 @@ def chart(days: list[dict]) -> str:
 def syn_view(rows: list[dict], reg_lv: dict | None = None, z_station: int = 1300) -> dict:
     days = []
     for r in rows[:10]:
-        e = r.get("ec") or r.get("gfs")
+        e = r.get("mix") or r.get("ec") or r.get("gfs")
         if not e:
             continue
         t = e["t850"]
