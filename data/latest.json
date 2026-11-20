@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-20T09:27+01:00",
+ "generated": "2026-11-20T10:23+01:00",
  "alerts": [
   {
    "slug": "febbio",
@@ -28,7 +28,7 @@
       "date": "2026-11-21",
       "name": "Sabato",
       "color": "red",
-      "why": "vento molto forte in cresta (72 km/h)",
+      "why": "vento molto forte in cresta (74 km/h)",
       "idx": 1,
       "snow": 0,
       "snow_base": 0
@@ -140,7 +140,7 @@
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1300 m in su, fino al Monte Cimone (2165 m). Da seguire!",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Cimoncino (1400 m), da confermare",
    "level": "watch",
    "snow3_top": 4.8,
    "verdict": "Occhio",
@@ -289,7 +289,7 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "red",
-      "why": "pioggia (37 mm)",
+      "why": "pioggia (32 mm)",
       "idx": 2,
       "snow": 0.1,
       "snow_base": 0.1
@@ -579,7 +579,7 @@
    },
    "snow": 1,
    "snow_low": 0,
-   "cold": 4
+   "cold": 2
   },
   {
    "label": "Dal 6° al 10° giorno",
@@ -590,11 +590,11 @@
     "head": "Si rinfresca, neve possibile in quota",
     "tag": [
      "snow",
-     "Da segnare: mercoledì 25 novembre"
+     "Da segnare: giovedì 26 novembre"
     ],
     "conf": "ancora incerta"
    },
-   "snow": 21,
+   "snow": 20,
    "snow_low": 4,
    "cold": 8
   },
