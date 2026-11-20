@@ -93,12 +93,20 @@
       </span>
       <span class="loc-body">
       {% if L.ground and L.ground.cm >= 2 %}<span class="ground-pill">📏 {{ t("{n} cm al suolo", n=L.ground.cm) }} <small>· {{ L.ground.station }}</small></span>{% endif %}
-      {% if L.weekend %}<span class="wk-pill wk-{{ L.weekend.color }}"><b>{{ t("Weekend") }}:</b> {{ L.weekend.title }}<small>{{ L.weekend.sure.icon }} {{ L.weekend.sure.label }}</small></span>{% endif %}
+      {% if L.weekend %}<span class="wk-pill wk-light wk-{{ L.weekend.color }}"><i class="wk-dot" aria-hidden="true"></i><b>{{ t("Weekend") }}</b> {{ L.weekend.title }}<small>{{ L.weekend.sure.icon }} {{ L.weekend.sure.label }}</small></span>{% endif %}
       {% if summer and m0 %}
       <p class="card-title">{{ t("oggi in quota") }}{% if m0.back_by %} · {{ t("rientro entro le {h}", h=m0.back_by) }}{% endif %}</p>
       {% if L.cards_top %}<div class="mini-icons">{% for c in L.cards_top[:4] %}<span title="{{ c.phrase }}"><svg viewBox="0 0 64 64"><use href="#ic-{{ c.icon }}"/></svg>{{ c.short }}<strong>{{ c.tmax|n0 }}°</strong></span>{% endfor %}</div>{% endif %}
       {% else %}
       <p class="card-title">{{ L.text.title }}</p>
+      {% if L.stats and L.stats.top is not none %}
+      <div class="loc-stats">
+        <div><span aria-hidden="true">🏔️</span><b>{{ L.stats.top }} cm</b><small>{{ t("in vetta, 5 giorni") }}</small></div>
+        <div><span aria-hidden="true">❄️</span><b>{{ (L.stats.qn ~ ' m') if L.stats.qn else '–' }}</b><small>{{ t("quota neve") }}</small></div>
+        <div><span aria-hidden="true">💨</span><b>{{ L.stats.gust }}<i> km/h</i></b><small>{{ t("raffica max") }}</small></div>
+      </div>
+      {% if L.stats.q %}<span class="q-tag q-{{ L.stats.q.key }}">{{ L.stats.q.label }}</span>{% endif %}
+      {% endif %}
       {% if L.cards_home %}<div class="mini-icons">{% for c in L.cards_home[:4] %}<span title="{{ c.phrase }}"><svg viewBox="0 0 64 64"><use href="#ic-{{ c.icon }}"/></svg>{{ c.short }}{% if c.snow %}<strong>{{ c.snow }} cm</strong>{% elif c.zq %}<strong class="zq">{{ t("da {z} m", z=c.zq) }}</strong>{% endif %}</span>{% endfor %}</div>{% endif %}
       {% endif %}
       </span>
@@ -106,6 +114,23 @@
   {% endfor %}
   </div>
 </section>
+
+{% if not summer and pagella %}{% set P1 = pagella.leads[1] %}
+<section class="wrap">
+  <a class="pg-banner" href="{{ u('pagella/') }}">
+    <span class="pg-ico" aria-hidden="true">📊</span>
+    <span class="pg-txt">
+      <b>{{ t("La pagella: quanto ci prendiamo") }}</b>
+      {% if pagella.ready and P1.our %}
+      <span>{{ t("Previsioni per domani, ultime {n} giornate con neve: giuste il {p}%", n=P1.our.n, p=P1.our.pct) }}{% if P1.ECMWF %} · {{ t("ECMWF grezzo {p}%", p=P1.ECMWF.pct) }}{% endif %}</span>
+      {% else %}
+      <span>{{ t("Ogni giorno confrontiamo le previsioni con la neve misurata dalle stazioni e con i modelli grezzi. Pagella in costruzione: {n} giornate con neve valutate finora.", n=pagella.snowy) }}</span>
+      {% endif %}
+    </span>
+    <span class="pg-go" aria-hidden="true">→</span>
+  </a>
+</section>
+{% endif %}
 
 <section class="wrap" id="eventi">
   <h2>🎟️ {{ t("Eventi in Appennino") }}</h2>

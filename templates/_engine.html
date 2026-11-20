@@ -1,6 +1,7 @@
 {% if loc.engine and not summer %}
 <section class="wrap" id="motore">
   <h2>🔬 {{ t("I prossimi 5 giorni, quota per quota") }}</h2>
+  {% if loc.stats and loc.stats.q %}<p><span class="q-tag q-{{ loc.stats.q.key }}">{{ loc.stats.q.label }}</span> <span class="small muted">{{ t("che neve sarà in vetta") }}</span></p>{% endif %}
   <p class="small">{{ t("Calcolo fisico ora per ora: quota neve dal bulbo umido, più bassa quando nevica forte; neve diversa alla base e in cima; vento che porta via la neve sulle creste.") }}</p>
   <div class="tbl-wrap"><table class="pg">
     <thead><tr><th>{{ t("Giorno") }}</th><th>❄️ {{ loc.low_pt.name }} ({{ loc.low_pt.elev }} m)</th><th>🏔️ {{ loc.mtn_top.name }} ({{ loc.mtn_top.elev }} m)</th><th>{{ t("Quota neve") }}</th><th>💨 {{ t("Raffiche in cresta") }}</th></tr></thead>

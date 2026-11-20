@@ -23,6 +23,32 @@ DAYS = 5
 CONCHE = {"val-di-luce"}  # conche chiuse che non sono il punto più basso della località (cuscinetto freddo)
 
 
+QUALITY: dict[str, dict] = {}  # slug -> qualità della neve prevista in cima nei primi 5 giorni
+
+
+def quality(r: dict, cfg: dict, today: str) -> dict | None:
+    """Che neve sarà, dalle ore di nevicata in cima: densità (SLR, che il motore ricava dal bulbo umido),
+    vento durante la nevicata e settore del flusso. Solo se cadono almeno 2 cm."""
+    rows = [h for h in r["orario"] if h["time"][:10] >= today and (h["cima"]["neve_cm"] or 0) > 0][:24 * DAYS]
+    cm = sum(h["cima"]["neve_cm"] for h in rows)
+    if cm < 2:
+        return None
+    slr = sum(h["cima"]["slr"] * h["cima"]["neve_cm"] for h in rows) / cm
+    gust = max((h["cima"]["raffica_kmh"] or 0) for h in rows)
+    lib = sum(h["cima"]["neve_cm"] for h in rows if h.get("settore_850") == "libeccio") / cm
+    if gust >= 60 and cfg.get("is_cresta_esposta"):
+        key, label = "vento", "🌬️ Ventata in cresta"
+    elif slr >= 12:
+        key, label = "polvere", "✨ Farinosa, polvere"
+    elif slr >= 9:
+        key, label = "asciutta", "❄️ Asciutta e leggera"
+    elif lib >= 0.5:
+        key, label = "pesante", "💧 Pesante, da Libeccio"
+    else:
+        key, label = "umida", "💧 Umida e pesante"
+    return {"key": key, "label": label, "slr": round(slr, 1), "gust": round(gust)}
+
+
 def load() -> dict:
     try:
         return json.loads(RAW.read_text())
@@ -120,6 +146,11 @@ def apply(base_locs: list[dict], pts: dict, cal: dict, today: str) -> dict:
                     hr["gust"] = round(h[o["blk"]]["raffica_kmh"])
             break  # per le ore basta la prima località che contiene il punto
     print(f"motore fisico: {len(acc)} punti, {n} giorni-punto dai primi {DAYS} giorni")
+    QUALITY.clear()
+    for slug, r in per_loc.items():
+        q = quality(r, eng.LOCALITA_CONFIG[slug.replace("-", "_")], today)
+        if q:
+            QUALITY[slug] = q
     return {slug: [{"date": g["data"], "qn": g["quota_neve_media_m"], "qn_min": g["quota_neve_min_m"],
                     "base": g["base"]["neve_cm"], "top": g["cima"]["neve_cm"],
                     "gust": g["cima"]["raffica_max_kmh"], "mm": g["precip_mm"]}

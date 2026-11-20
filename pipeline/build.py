@@ -24,6 +24,7 @@ from i18n import day_short
 from articles import due as art_due_fn, compose as art_compose, save as art_save, load_all as art_load
 from history import record as hist_record, view as hist_view
 import verify
+import engine_overlay
 from seo import location_seo
 from climview import load as clim_load, view as clim_view
 from cards import prob_word
@@ -243,6 +244,16 @@ def main() -> None:
             L["text"] = location_text(loc, pts, syn_rows)
             L["pts"] = [pts[p] for p in loc["points"]]
             L["engine"] = [{**e, "name": day_short(e["date"])} for e in ENGINE_LOC.get(loc["slug"], [])]
+            # numeri della card in home: tutti dal motore (una sola fonte), quota neve = quella dei titoli
+            _e = L["engine"]
+            _first = next((e for e in _e if (e["top"] or 0) >= 1), None)
+            _z = REG_LV.get(_first["date"]) if _first else None
+            L["stats"] = {"top": round(sum(e["top"] or 0 for e in _e)) if _e else None,
+                          "qn": (min(int(round(_z / 100.0) * 100), int(max(p["elev"] for p in L["pts"]) // 100 * 100)) if _z else None),
+                          "gust": max((e["gust"] or 0) for e in _e) if _e else None,
+                          "q": engine_overlay.QUALITY.get(loc["slug"])}
+            if L["stats"]["q"]:
+                L["stats"]["q"] = {**L["stats"]["q"], "label": T(L["stats"]["q"]["label"])}
             L["road"] = [pts[p] for p in loc.get("road_points", []) if p in pts]
             L["chart"] = svg_snow_chart(L["pts"])
             top = max(L["pts"], key=lambda p: p["elev"])
