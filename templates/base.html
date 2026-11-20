@@ -55,14 +55,13 @@
 <div class="appbar" id="appbar" hidden>
   <div class="wrap appbar-in">
     <img src="{{ u('static/brand/mark.svg') }}" alt="" width="36" height="36">
-    <div class="appbar-txt">
+    <a class="appbar-txt" href="{{ u('app/') }}">
       <strong>📲 {{ t("Scarica l'app di {name}", name=site.name) }}</strong>
-      <span class="ab-android">{{ t("Android: tocca <b>Installa</b> qui accanto, oppure il menu ⋮ di Chrome → <b>Installa app</b>.")|safe }}</span>
-      <span class="ab-ios">{{ t("iPhone: apri il sito con Safari, tocca <b>Condividi</b> ⬆️ e poi <b>Aggiungi alla schermata Home</b>.")|safe }}</span>
-      <span class="ab-other">{{ t("Dal telefono: Android con Chrome → <b>Installa app</b>; iPhone con Safari → Condividi → <b>Aggiungi alla schermata Home</b>.")|safe }}</span>
-    </div>
+      <small class="ab-short ab-ios">{{ t("Tocca <b>Condividi</b> ⬆️ e poi <b>Aggiungi alla schermata Home</b>")|safe }}</small>
+      <small class="ab-short ab-android">{{ t("Menu ⋮ di Chrome → <b>Installa app</b>")|safe }}</small>
+      <small class="ab-short ab-inapp">{{ t("Apri il sito in Safari o Chrome per installarla")|safe }}</small>
+    </a>
     <button class="btn small" id="install-btn" hidden>{{ t("Installa") }}</button>
-    <a class="btn small ghost" href="{{ u('app/') }}">{{ t("Come fare") }}</a>
     <button class="ab-close" id="appbar-close" aria-label="{{ t('Chiudi') }}">×</button>
   </div>
 </div>
@@ -86,16 +85,24 @@
   const bar = document.getElementById("appbar");
   if (!bar) return;
   const installed = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
-  let closed = false;
-  try { closed = localStorage.getItem("appbar-closed") === "1"; } catch (e) {}
-  if (installed || closed) return;
+  if (installed) return;
   const ua = navigator.userAgent;
-  const kind = /iPhone|iPad|iPod/.test(ua) ? "ios" : /Android/.test(ua) ? "android" : "other";
-  bar.dataset.os = kind;
+  const mobile = /iPhone|iPad|iPod|Android/.test(ua);
+  if (!mobile) return;
+  let visits = 1, closedAt = 0;
+  try {
+    visits = +localStorage.getItem("ab-visits") || 0;
+    if (!sessionStorage.getItem("ab-s")) { visits++; localStorage.setItem("ab-visits", visits); sessionStorage.setItem("ab-s", "1"); }
+    closedAt = +localStorage.getItem("ab-closed-at") || (localStorage.getItem("appbar-closed") === "1" ? Date.now() : 0);
+  } catch (e) {}
+  // dalla seconda visita; se chiuso, ripropone dopo 30 giorni
+  if (visits < 2 || (closedAt && Date.now() - closedAt < 30 * 864e5)) return;
+  const inapp = /FBAN|FBAV|Instagram|Line\/|Telegram|WhatsApp|GSA\//.test(ua);
+  bar.dataset.os = inapp ? "inapp" : /iPhone|iPad|iPod/.test(ua) ? "ios" : "android";
   bar.hidden = false;
   document.getElementById("appbar-close").addEventListener("click", () => {
     bar.hidden = true;
-    try { localStorage.setItem("appbar-closed", "1"); } catch (e) {}
+    try { localStorage.setItem("ab-closed-at", Date.now()); localStorage.removeItem("appbar-closed"); } catch (e) {}
   });
 })();
 if ("serviceWorker" in navigator) {
@@ -105,6 +112,7 @@ let deferredInstall = null;
 window.addEventListener("beforeinstallprompt", e => {
   e.preventDefault(); deferredInstall = e;
   document.querySelectorAll("#install-btn, .install-btn").forEach(b => b.hidden = false);
+  const ab = document.getElementById("appbar"); if (ab) ab.classList.add("can-install");
 });
 document.addEventListener("click", async e => {
   if ((e.target.id === "install-btn" || e.target.classList.contains("install-btn")) && deferredInstall) {

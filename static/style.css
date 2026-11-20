@@ -255,8 +255,10 @@ details.tech{background:#fff;border-radius:var(--r);padding:4px 18px 12px;box-sh
 
 /* banner app: solo sul telefono, una riga */
 @media(min-width:900px){.appbar{display:none!important}}
-.appbar-txt span{display:none!important}
-.appbar-txt{font-size:14px}
+.appbar-txt{font-size:14px;color:inherit;text-decoration:none;line-height:1.3}
+.appbar-txt .ab-short{display:none;font-size:12.5px;opacity:.85}
+.appbar[data-os="ios"] .ab-ios,.appbar[data-os="android"] .ab-android,.appbar[data-os="inapp"] .ab-inapp{display:block}
+.appbar.can-install .ab-android{display:none}
 .appbar-in{padding-top:8px;padding-bottom:8px}
 
 /* piè di pagina */
