@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from datetime import date
 
-from i18n import DAYS, T, nice_date  # noqa: F401  (nice_date riesportato per gli altri moduli)
+from i18n import day_short, DAYS, T, nice_date  # noqa: F401  (nice_date riesportato per gli altri moduli)
 
 GIORNI = DAYS["it"]
 
@@ -168,7 +168,8 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
                        t=f"{(0 if round(e['t850']) == 0 else round(e['t850'])):+d}", thermal=T(e["thermal"])))
 
     return {"title": title, "level": level, "paragraphs": paras,
-            "snow3_top": round(t3, 1), "snow3_base": round(b3, 1), "snow10_top": round(t10, 1), "p7": p7,
+            "snow3_top": round(t3, 1), "snow3_base": round(b3, 1),
+            "snow3_until": day_short(next((d["date"] for d in top["days"] if d["idx"] == 2), top["days"][-1]["date"])), "snow10_top": round(t10, 1), "p7": p7,
             "snow10_base": round(window_sum(base["days"], 0, 10), 1), "base_elev": base["elev"],
             "top_name": top["name"], "top_elev": top["elev"]}
 

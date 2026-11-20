@@ -864,4 +864,5 @@ ROWS = [
 ('americano delle {h}', 'American {h}:00', 'Amerikanisch {h} Uhr', 'américain de {h} h', 'americano de las {h}', '美国{h}时'),
 ('delle {h}', '{h}:00', '{h} Uhr', 'de {h} h', 'de las {h}', '{h}时'),
 ('prossimo aggiornamento verso le {h}', 'next update around {h}', 'nächstes Update gegen {h}', 'prochaine mise à jour vers {h}', 'próxima actualización hacia las {h}', '下次更新约{h}'),
+('{n} cm entro {d}', '{n} cm by {d}', '{n} cm bis {d}', "{n} cm d'ici {d}", '{n} cm hasta el {d}', '{d}前{n}厘米'),
 ]

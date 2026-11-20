@@ -86,7 +86,7 @@
     <a class="card loc lvl-{{ L.text.level }}" href="{{ u(L.slug ~ '/') }}">
       <span class="loc-photo"{% if L.photo %} style="background-image:linear-gradient(180deg,rgba(9,22,36,0) 35%,rgba(9,22,36,.78)),url('{{ u('static/photos/' ~ L.photo.key ~ '-640.jpg') }}');background-position:{{ L.photo.pos }}"{% endif %}>
         {% if summer and m0 %}<span class="loc-badge pill v-{{ m0.verdict }}">{{ t(m0.verdict_label) }}</span>
-        {% elif L.text.snow3_top >= 1 %}<span class="loc-badge b-snow">❄️ {{ t("{n} cm in 3 giorni", n=L.text.snow3_top|round|int) }}</span>
+        {% elif L.text.snow3_top >= 1 %}<span class="loc-badge b-snow">❄️ {{ t("{n} cm entro {d}", n=L.text.snow3_top|round|int, d=L.text.snow3_until) }}</span>
         {% elif L.text.level == 'watch' %}<span class="loc-badge b-watch">👀 {{ t("Neve in vista") }}</span>
         {% else %}<span class="loc-badge b-none">{{ t("Niente neve per ora") }}</span>{% endif %}
         <span class="loc-name"><h3>{{ nm[0] }}</h3><small>{% if nm|length > 1 %}{{ nm[1:]|join(' · ') }} · {% endif %}{{ L.area }}</small></span>
@@ -96,14 +96,14 @@
       {% if L.weekend %}<span class="wk-pill wk-light wk-{{ L.weekend.color }}"><i class="wk-dot" aria-hidden="true"></i><b>{{ t("Weekend") }}</b> {{ L.weekend.title }}<small>{{ L.weekend.sure.icon }} {{ L.weekend.sure.label }}</small></span>{% endif %}
       {% if summer and m0 %}
       <p class="card-title">{{ t("oggi in quota") }}{% if m0.back_by %} · {{ t("rientro entro le {h}", h=m0.back_by) }}{% endif %}</p>
-      {% if L.cards_top %}<div class="mini-icons">{% for c in L.cards_top[:4] %}<span title="{{ c.phrase }}"><svg viewBox="0 0 64 64"><use href="#ic-{{ c.icon }}"/></svg>{{ c.short }}<strong>{{ c.tmax|n0 }}°</strong></span>{% endfor %}</div>{% endif %}
+      {% if L.cards_top %}<div class="mini-icons">{% for c in L.cards_top[:4] %}<span title="{{ c.phrase }}"><svg viewBox="0 0 64 64"><use href="#ic-{{ c.icon }}"/></svg>{{ c.short }} <strong>{{ c.tmax|n0 }}°</strong></span>{% endfor %}</div>{% endif %}
       {% else %}
       <p class="card-title">{{ L.text.title }}</p>
       {% if L.stats and L.stats.top is not none %}
       <div class="loc-stats">
-        <div><span aria-hidden="true">🏔️</span><b>{{ L.stats.top }} cm</b><small>{{ t("in vetta, 5 giorni") }}</small></div>
-        <div><span aria-hidden="true">❄️</span><b>{{ (L.stats.qn ~ ' m') if L.stats.qn else '–' }}</b><small>{{ t("quota neve") }}</small></div>
-        <div><span aria-hidden="true">💨</span><b>{{ L.stats.gust }}<i> km/h</i></b><small>{{ t("raffica max") }}</small></div>
+        <div><span aria-hidden="true">🏔️</span> <b>{{ L.stats.top }} cm</b> <small>{{ t("in vetta, 5 giorni") }}</small></div>
+        <div><span aria-hidden="true">❄️</span> <b>{{ (L.stats.qn ~ ' m') if L.stats.qn else '–' }}</b> <small>{{ t("quota neve") }}</small></div>
+        <div><span aria-hidden="true">💨</span> <b>{{ L.stats.gust }}<i> km/h</i></b> <small>{{ t("raffica max") }}</small></div>
       </div>
       {% if L.stats.q or L.stats.vis or L.roadsnow %}<span class="tag-row">
         {% if L.roadsnow %}<span class="q-tag road-tag">❄️ {{ t("Neve su strada") }} · {{ L.roadsnow[0].name }}</span>{% endif %}
@@ -111,7 +111,7 @@
         {% if L.stats.vis == 'nebbia' %}<span class="q-tag vis-nebbia">🌫️ {{ t("Whiteout in cresta") }}</span>{% elif L.stats.vis == 'variabile' %}<span class="q-tag vis-variabile">⛅ {{ t("Visibilità variabile") }}</span>{% elif L.stats.vis == 'ottima' %}<span class="q-tag vis-ottima">☀️ {{ t("Visibilità ottima") }}</span>{% endif %}
       </span>{% endif %}
       {% endif %}
-      {% if L.cards_home %}<div class="mini-icons">{% for c in L.cards_home[:4] %}<span title="{{ c.phrase }}"><svg viewBox="0 0 64 64"><use href="#ic-{{ c.icon }}"/></svg>{{ c.short }}{% if c.snow %}<strong>{{ c.snow }} cm</strong>{% elif c.zq %}<strong class="zq">{{ t("da {z} m", z=c.zq) }}</strong>{% endif %}</span>{% endfor %}</div>{% endif %}
+      {% if L.cards_home %}<div class="mini-icons">{% for c in L.cards_home[:4] %}<span title="{{ c.phrase }}"><svg viewBox="0 0 64 64"><use href="#ic-{{ c.icon }}"/></svg>{{ c.short }} {% if c.snow %}<strong>{{ c.snow }} cm</strong>{% elif c.zq %}<strong class="zq">{{ t("da {z} m", z=c.zq) }}</strong>{% endif %}</span>{% endfor %}</div>{% endif %}
       {% endif %}
       </span>
     </a>
