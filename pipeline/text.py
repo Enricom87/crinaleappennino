@@ -104,8 +104,9 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
     paras = []
     # prossimi 3 giorni
     rain3 = window_sum(base["days"], 0, 3, "precip")
-    fl = [r["fl_min"] for r in base["days"] if r["idx"] < 3 and r["fl_min"] is not None]
-    fl_txt = T(", con quota zero termico minima intorno ai {fl} m", fl=f"{round(min(fl), -2):.0f}") if fl else ""
+    # quota neve (non zero termico: il sito usa la quota neve calcolata ovunque, deve dire lo stesso numero)
+    lvs = [r["lv"] for r in base["days"] if r["idx"] < 3 and (r.get("precip") or 0) >= 1 and r.get("lv") is not None]
+    fl_txt = T(", con la quota neve intorno ai {fl} m", fl=f"{round(min(lvs), -2):.0f}") if lvs else ""
     if t3 < 0.5 and rain3 >= 5:
         paras.append(T("Nei prossimi 3 giorni piove ({rain} mm), ma fa troppo caldo per la neve, "
                        "anche in vetta{fl_txt}. Ombrello sì, sci no.", rain=f"{rain3:.0f}", fl_txt=fl_txt))

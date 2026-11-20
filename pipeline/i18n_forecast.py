@@ -95,4 +95,5 @@ ROWS = [
 ("marginale", "borderline", "grenzwertig", "limite", "marginal", "临界"),
 ("sfavorevole", "unfavourable", "ungünstig", "défavorable", "desfavorable", "不利"),
 ("n.d.", "n/a", "k. A.", "n.d.", "n.d.", "无数据"),
+(', con la quota neve intorno ai {fl} m', ', with the snow level around {fl} m', ', mit der Schneefallgrenze bei etwa {fl} m', ', avec la limite pluie-neige vers {fl} m', ', con la cota de nieve en torno a {fl} m', '，雪线约{fl}米'),
 ]
