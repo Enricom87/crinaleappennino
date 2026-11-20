@@ -1,0 +1,41 @@
+name: Nuova corsa europea? Aggiorna il sito
+# Ogni 10 minuti guarda su Open-Meteo quando è uscita l'ultima corsa europea (principale e scenari).
+# Se è uscita dopo l'inizio dell'ultimo aggiornamento del sito, fa partire un aggiornamento completo.
+# Non serve nessun token: il GITHUB_TOKEN può avviare un workflow_dispatch.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+permissions:
+  actions: write
+  contents: read
+concurrency:
+  group: trigger
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Controlla e avvia
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          a1=$(curl -sf --max-time 20 https://api.open-meteo.com/data/ecmwf_ifs025/static/meta.json | jq -r .last_run_availability_time || echo 0)
+          a2=$(curl -sf --max-time 20 https://ensemble-api.open-meteo.com/data/ecmwf_ifs025_ensemble/static/meta.json | jq -r .last_run_availability_time || echo 0)
+          newest=$(( a1 > a2 ? a1 : a2 ))
+          # ultimo aggiornamento vero: in corso/in coda, oppure durato più di 5 minuti (i giri «leggeri» saltati durano secondi)
+          last=$(gh run list -R "$REPO" -w update.yml -L 15 --json createdAt,updatedAt,status,conclusion \
+                 --jq '[.[] | select(.status != "completed" or ((.updatedAt|fromdateiso8601) - (.createdAt|fromdateiso8601) > 300 and .conclusion == "success"))][0].createdAt // "1970-01-01T00:00:00Z"')
+          last_s=$(date -d "$last" +%s)
+          now=$(date +%s)
+          echo "ultima corsa europea uscita: $(date -d @$newest -u) · ultimo aggiornamento partito: $last"
+          if [ "$newest" -gt "$last_s" ] && [ $(( now - last_s )) -gt 7200 ]; then
+            echo "nuova corsa e più di 2 ore dall'ultimo aggiornamento: avvio"
+            gh workflow run update.yml -R "$REPO" --ref main
+          elif [ "$newest" -gt "$last_s" ]; then
+            echo "nuova corsa, ma l'ultimo aggiornamento è di meno di 2 ore fa: aspetto"
+          else
+            echo "niente di nuovo"
+          fi
