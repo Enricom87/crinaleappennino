@@ -167,9 +167,31 @@ def fetch_all(config: dict, raw_dir: Path) -> None:
             print(f"tendenza {key} non disponibile: {e}")
 
 
+RUN_META = {  # quando è partita e quando è uscita l'ultima corsa di ogni modello (per dirlo sul sito)
+    "ecmwf": "https://api.open-meteo.com/data/ecmwf_ifs025/static/meta.json",
+    "ens": "https://ensemble-api.open-meteo.com/data/ecmwf_ifs025_ensemble/static/meta.json",
+    "gfs": "https://api.open-meteo.com/data/ncep_gfs025/static/meta.json",
+    "icon2i": "https://api.open-meteo.com/data/italia_meteo_arpae_icon_2i/static/meta.json",
+    "arome": "https://api.open-meteo.com/data/meteofrance_arome_france0025/static/meta.json",
+}
+
+
+def fetch_runs(raw_dir: Path) -> None:
+    out = {}
+    for k, url in RUN_META.items():
+        try:
+            j = requests.get(url, timeout=20).json()
+            out[k] = {"init": j["last_run_initialisation_time"], "avail": j["last_run_availability_time"],
+                      "every": j.get("update_interval_seconds", 21600)}
+        except Exception as e:  # noqa: BLE001
+            print(f"orario corsa {k}: {e}")
+    (raw_dir / "runs.json").write_text(json.dumps(out))
+
+
 if __name__ == "__main__":
     root = Path(__file__).resolve().parents[1]
     cfg = json.loads((root / "config" / "locations.json").read_text())
+    fetch_runs(root / "data" / "raw")
     fetch_all(cfg, root / "data" / "raw")
     if not (root / "data" / "raw" / "global.json").exists():
         raise SystemExit("dati dei modelli non scaricati (limite Open-Meteo?): il sito resta quello di prima")

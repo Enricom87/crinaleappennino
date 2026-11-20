@@ -355,6 +355,38 @@ async function notifyAll(env) {
   } while (cursor);
 }
 
+
+// Aggiornamento del sito appena esce una nuova corsa europea (principale o scenari) su Open-Meteo:
+// ogni 10 minuti confronta l'orario di uscita con l'ultimo visto e, se è cambiato, fa partire il giro su GitHub.
+// Serve il segreto GH_DISPATCH_TOKEN (token GitHub con permesso Actions: lettura e scrittura su questo repository).
+const RUN_META = {
+  ecmwf: "https://api.open-meteo.com/data/ecmwf_ifs025/static/meta.json",
+  ens: "https://ensemble-api.open-meteo.com/data/ecmwf_ifs025_ensemble/static/meta.json",
+};
+const MIN_GAP_MIN = 120; // al massimo un giro ogni 2 ore: rispetta i limiti del servizio gratuito
+async function checkRuns(env) {
+  if (!env.GH_DISPATCH_TOKEN) return;
+  const seen = JSON.parse((await env.SUBS.get("runs_seen")) || "{}");
+  const now = {};
+  for (const [k, u] of Object.entries(RUN_META)) {
+    try { const j = await (await fetch(u, { cf: { cacheTtl: 0 } })).json(); now[k] = j.last_run_availability_time; } catch (e) { /* riprova al prossimo giro */ }
+  }
+  const changed = Object.keys(now).filter(k => now[k] && now[k] !== seen[k]);
+  if (!changed.length) return;
+  const last = +((await env.SUBS.get("runs_last_dispatch")) || 0);
+  if (Date.now() - last < MIN_GAP_MIN * 60000) return; // non segno come visto: partirà al prossimo controllo utile
+  const r = await fetch("https://api.github.com/repos/Enricom87/crinaleappennino/actions/workflows/update.yml/dispatches", {
+    method: "POST",
+    headers: { "Authorization": "Bearer " + env.GH_DISPATCH_TOKEN, "Accept": "application/vnd.github+json",
+               "User-Agent": "crinale-bot", "X-GitHub-Api-Version": "2022-11-28", "Content-Type": "application/json" },
+    body: JSON.stringify({ ref: "main" }),
+  });
+  if (r.status === 204) {
+    await env.SUBS.put("runs_seen", JSON.stringify({ ...seen, ...now }));
+    await env.SUBS.put("runs_last_dispatch", String(Date.now()));
+  }
+}
+
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
@@ -398,6 +430,7 @@ export default {
     return new Response("Crinale bot ⛰️");
   },
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(notifyAll(env));
+    if (event.cron === "*/10 * * * *") ctx.waitUntil(checkRuns(env));
+    else ctx.waitUntil(notifyAll(env));
   },
 };

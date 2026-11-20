@@ -859,4 +859,9 @@ ROWS = [
 ('ottima', 'excellent', 'sehr gut', 'excellente', 'excelente', '极佳'),
 ('variabile', 'variable', 'wechselnd', 'variable', 'variable', '多变'),
 ('nebbia', 'fog', 'Nebel', 'brouillard', 'niebla', '雾'),
+('europeo delle {h}', 'European {h}:00 run', 'Europäisch {h} Uhr', 'européen de {h} h', 'europeo de las {h}', '欧洲{h}时'),
+('scenari delle {h}', 'scenarios {h}:00', 'Szenarien {h} Uhr', 'scénarios de {h} h', 'escenarios de las {h}', '情景{h}时'),
+('americano delle {h}', 'American {h}:00', 'Amerikanisch {h} Uhr', 'américain de {h} h', 'americano de las {h}', '美国{h}时'),
+('delle {h}', '{h}:00', '{h} Uhr', 'de {h} h', 'de las {h}', '{h}时'),
+('prossimo aggiornamento verso le {h}', 'next update around {h}', 'nächstes Update gegen {h}', 'prochaine mise à jour vers {h}', 'próxima actualización hacia las {h}', '下次更新约{h}'),
 ]

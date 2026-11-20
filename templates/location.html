@@ -7,6 +7,7 @@
 <section class="hero small lvl-{{ loc.text.level }}{% if loc.photo %} has-photo{% endif %}"{% if loc.photo %} style="background-image:linear-gradient(180deg,rgba(9,22,36,.35),rgba(9,22,36,.72)),url('{{ u('static/photos/' ~ loc.photo.key ~ '.jpg') }}');background-position:{{ loc.photo.pos }}"{% endif %}>
   <div class="wrap">
     <p class="kicker"><a href="{{ u('') }}">{{ t("Località") }}</a> · {{ loc.area }} · {{ t("aggiornato {d}", d=updated) }}</p>
+    <p class="kicker runs-k">{% include "_runs.html" %}</p>
     <h1>{{ loc.name }}</h1>
     <p class="lead">{{ loc.text.title }}</p>
   </div>

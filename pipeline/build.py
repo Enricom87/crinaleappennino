@@ -24,6 +24,7 @@ from i18n import day_short
 from articles import due as art_due_fn, compose as art_compose, save as art_save, load_all as art_load
 from history import record as hist_record, view as hist_view
 import verify
+import runs as runs_mod
 import engine_overlay
 from seo import location_seo
 from climview import load as clim_load, view as clim_view
@@ -461,6 +462,7 @@ def main() -> None:
                          "low": {"name": lo["name"], "elev": lo["elev"], "h3": nxt(lo, 3), "h6": nxt(lo, 6)},
                          "top": {"name": tp["name"], "elev": tp["elev"], "h3": nxt(tp, 3), "h6": nxt(tp, 6)}})
         ctx["nowcast"] = nowc
+        ctx["runs"] = runs_mod.view(now)
         render("index.html", "")
         render("tendenze.html", "tendenze/")
         for a in articles:
