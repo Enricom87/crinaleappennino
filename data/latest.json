@@ -1,13 +1,13 @@
 {
- "generated": "2026-11-20T04:51+01:00",
+ "generated": "2026-11-20T05:27+01:00",
  "alerts": [],
- "overview": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare. Chi se la gode di più: Lago Scaffaiolo, Cimone, Cimoncino. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "overview": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago della Ninfa (1500 m), da confermare. Chi se la gode di più: Cimone, Doganaccia, Cimoncino. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
    "slug": "abetone",
    "name": "Abetone",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Passo dell'Abetone (1388 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Passo dell'Abetone (1388 m), da confermare",
    "level": "watch",
    "snow3_top": 0.2,
    "verdict": "Meglio di no",
@@ -49,9 +49,9 @@
   {
    "slug": "cimone",
    "name": "Cimone · Sestola e Passo del Lupo",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Lago della Ninfa (1500 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago della Ninfa (1500 m), da confermare",
    "level": "watch",
-   "snow3_top": 3.5,
+   "snow3_top": 3.7,
    "verdict": "Occhio",
    "back_by": null,
    "weekend": {
@@ -72,9 +72,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2100 m in su (3 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 2000 m in su (4 cm al Monte Cimone, 2165 m)",
       "idx": 2,
-      "snow": 3.4,
+      "snow": 3.6,
       "snow_base": 0
      }
     ],
@@ -91,9 +91,9 @@
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Le Polle (1300 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Le Polle (1300 m), da confermare",
    "level": "watch",
-   "snow3_top": 3.5,
+   "snow3_top": 3.7,
    "verdict": "Occhio",
    "back_by": null,
    "weekend": {
@@ -114,9 +114,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2100 m in su (3 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 2000 m in su (4 cm al Monte Cimone, 2165 m)",
       "idx": 2,
-      "snow": 3.4,
+      "snow": 3.6,
       "snow_base": 0
      }
     ],
@@ -133,9 +133,9 @@
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Cimoncino (1400 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Cimoncino (1400 m), da confermare",
    "level": "watch",
-   "snow3_top": 3.5,
+   "snow3_top": 3.7,
    "verdict": "Occhio",
    "back_by": null,
    "weekend": {
@@ -156,9 +156,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2100 m in su (3 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 2000 m in su (4 cm al Monte Cimone, 2165 m)",
       "idx": 2,
-      "snow": 3.4,
+      "snow": 3.6,
       "snow_base": 0
      }
     ],
@@ -175,7 +175,7 @@
   {
    "slug": "doganaccia",
    "name": "Doganaccia",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Doganaccia (1540 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Doganaccia (1540 m), da confermare",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Occhio",
@@ -217,7 +217,7 @@
   {
    "slug": "corno-alle-scale",
    "name": "Corno alle Scale",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Cavone (1430 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Cavone (1430 m), da confermare",
    "level": "watch",
    "snow3_top": 0.5,
    "verdict": "Meglio di no",
@@ -259,7 +259,7 @@
   {
    "slug": "lago-scaffaiolo",
    "name": "Lago Scaffaiolo",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Lago Scaffaiolo (1775 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago Scaffaiolo (1775 m), da confermare",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Meglio di no",
@@ -301,7 +301,7 @@
   {
    "slug": "lago-santo",
    "name": "Lago Santo · Monte Giovo",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Lago Santo modenese (1501 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago Santo modenese (1501 m), da confermare",
    "level": "watch",
    "snow3_top": 0.2,
    "verdict": "Meglio di no",
@@ -343,7 +343,7 @@
   {
    "slug": "garfagnana",
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino a Casone di Profecchia (1314 m), da confermare",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Casone di Profecchia (1314 m), da confermare",
    "level": "watch",
    "snow3_top": 0.8,
    "verdict": "Occhio",
@@ -385,7 +385,7 @@
   {
    "slug": "cerreto-laghi",
    "name": "Cerreto Laghi",
-   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1800 m in su, fino al Monte La Nuda (1894 m). Da seguire!",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1200 m in su, fino al Monte La Nuda (1894 m). Da seguire!",
    "level": "watch",
    "snow3_top": 0.0,
    "verdict": "Occhio",
@@ -427,9 +427,9 @@
   {
    "slug": "febbio",
    "name": "Febbio · Monte Cusna",
-   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1800 m in su, fino al Monte Cusna (2121 m). Da seguire!",
+   "title": "👀 Occhio a mercoledì 25 novembre: neve in arrivo dai 1200 m in su, fino al Monte Cusna (2121 m). Da seguire!",
    "level": "watch",
-   "snow3_top": 1.5,
+   "snow3_top": 2.6,
    "verdict": "Meglio di no",
    "back_by": null,
    "weekend": {
@@ -450,9 +450,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 2000 m in su (2 cm al Monte Cusna, 2121 m)",
+      "why": "neve in quota dai 2000 m in su (3 cm al Monte Cusna, 2121 m)",
       "idx": 2,
-      "snow": 1.5,
+      "snow": 2.6,
       "snow_base": 0
      }
     ],
@@ -527,28 +527,28 @@
      "slug": "cimone",
      "name": "Cimone",
      "color": "yellow",
-     "why": "neve in quota dai 2100 m in su (3 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 2000 m in su (4 cm al Monte Cimone, 2165 m)",
      "lifts": null
     },
     {
      "slug": "le-polle",
      "name": "Le Polle",
      "color": "yellow",
-     "why": "neve in quota dai 2100 m in su (3 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 2000 m in su (4 cm al Monte Cimone, 2165 m)",
      "lifts": null
     },
     {
      "slug": "cimoncino",
      "name": "Cimoncino",
      "color": "yellow",
-     "why": "neve in quota dai 2100 m in su (3 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 2000 m in su (4 cm al Monte Cimone, 2165 m)",
      "lifts": null
     },
     {
      "slug": "febbio",
      "name": "Febbio",
      "color": "yellow",
-     "why": "neve in quota dai 2000 m in su (2 cm al Monte Cusna, 2121 m)",
+     "why": "neve in quota dai 2000 m in su (3 cm al Monte Cusna, 2121 m)",
      "lifts": null
     }
    ],
@@ -610,17 +610,17 @@
    "from": "sab 5",
    "to": "sab 19",
    "card": {
-    "emoji": "🧊",
-    "head": "Segnale di freddo da seguire",
+    "emoji": "🥶",
+    "head": "Arriva il freddo",
     "tag": [
      "cold",
-     "Freddo verso sabato 5 dicembre"
+     "Freddo verso martedì 15 dicembre"
     ],
     "conf": "ancora incerta"
    },
-   "snow": 14,
+   "snow": 16,
    "snow_low": 7,
-   "cold": 20
+   "cold": 26
   }
  ],
  "article": {
