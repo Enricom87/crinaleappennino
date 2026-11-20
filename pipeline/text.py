@@ -199,5 +199,5 @@ def overview_text(locs: list[dict]) -> str:
                  z=zmin, names=names)
     top = ranked[0]
     names = ", ".join(l["name"].split(" · ")[0] for l in ranked[:3] if l["text"]["snow10_base"] >= 3)
-    return T("{title}. Chi se la gode di più: {names}. "
+    return T("{title}. Nei prossimi 10 giorni chi ne prende di più alla base: {names}. "
              "Scegli la tua località e guarda quanta ne arriva, quota per quota.", title=top["text"]["title"], names=names)
