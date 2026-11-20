@@ -86,7 +86,7 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
         bd = {d["date"]: d.get("snow") or 0 for d in base["days"]}
         b10 = bd.get(days[0], 0) if days else 0  # neve alla base nello stesso giorno indicato nel titolo
         title = (T("👀 Occhio a {when}: i modelli vedono neve fino alla base, a {nbase} ({zbase} m), da confermare", when=when, **v)
-                 if b10 >= 2 else
+                 if b10 >= 2 and (days and zfrom(days[0]) <= base["elev"] + 100) else
                  T("👀 Occhio a {when}: neve in arrivo dai {z} m in su, fino al {ntop} ({ztop} m). Da seguire!",
                    when=when, z=zfrom(days[0] if days else None), **v))
         level = "watch"

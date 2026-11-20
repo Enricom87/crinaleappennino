@@ -171,8 +171,10 @@ def main() -> None:
             elif d.get("lv") is not None:
                 _reg.setdefault(d["date"], []).append(d["lv"])
     _reg = {k: sorted(x)[len(x) // 2] for k, x in _reg.items() if len(x) >= 3}
-    for k in list(_reg):  # se una vetta prende neve quel giorno, «dai X m» non può stare sopra quella vetta
-        snowy = [p["elev"] for p in pts.values() for d in p["days"] if d["date"] == k and (d.get("snow") or 0) >= 1]
+    tops = {max(loc["points"], key=lambda q: pts[q]["elev"] if q in pts else 0) for loc in base_locs}
+    for k in list(_reg):  # se una vetta prende neve vera quel giorno, «dai X m» non può stare sopra quella vetta
+        snowy = [pts[q]["elev"] for q in tops if q in pts
+                 for d in pts[q]["days"] if d["date"] == k and (d.get("snow") or 0) >= 2]
         if snowy:
             _reg[k] = min(_reg[k], min(snowy) - 100)
     REG_LV = dict(_reg)
@@ -312,6 +314,13 @@ def main() -> None:
             zd = (pro.load().get("zones") or {}).get(pro.ZONE_FOR.get(loc["slug"], ""))
             L["snowline"] = None if IS_SUMMER else pro.snowline(loc, pts, today, zd, levels=LEVELS,
                                                                      offset=(CAL.get(loc["slug"]) or {}).get("level", 0))
+            # una sola quota neve per giorno su tutta la pagina: quella dei titoli (REG_LV) dove c'è
+            for x in (L["snowline"] or []):
+                if x["date"] in REG_LV and not x["dry"]:
+                    x["lv"], x["late"] = int(round(REG_LV[x["date"]] / 100) * 100), None
+            for e in L["engine"]:
+                if e["date"] in REG_LV and e.get("qn") is not None:
+                    e["qn"] = REG_LV[e["date"]]
             L["seo"] = location_seo(L, site, IS_SUMMER)
             locs.append(L)
         loc_by_slug = {L["slug"]: L for L in locs}

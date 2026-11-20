@@ -96,7 +96,11 @@ def syn_view(rows: list[dict], reg_lv: dict | None = None, z_station: int = 1300
         head = T("🥶 Arriva il freddo vero: da {d} aria abbastanza fredda per la neve fino alle stazioni",
                  d=nice_date(fav["date"]))
     elif mar:
-        head = T("📉 Si rinfresca da {d}: neve possibile, ma solo sulle cime", d=nice_date(mar["date"]))
+        _z = reg_lv.get(mar["date"])
+        head = (T("📉 Si rinfresca da {d}: neve dai {z} m circa in su, le stazioni più basse restano al limite",
+                  d=nice_date(mar["date"]), z=int(round(_z / 100.0) * 100))
+                if _z is not None else
+                T("📉 Si rinfresca da {d}: neve possibile, ma solo sulle cime", d=nice_date(mar["date"])))
     else:
         head = T("🌡️ Aria troppo mite per tutto il periodo: in quota si resta sopra lo zero (minimo {t} °C {d})",
                  t=f"{coldest['t']:+.0f}", d=nice_date(coldest["date"]))
