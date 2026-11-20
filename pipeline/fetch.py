@@ -24,7 +24,7 @@ LAM_MODELS = ["italia_meteo_arpae_icon_2i", "icon_d2", "meteoswiss_icon_ch2", "m
 GLOBAL_MODELS = ["ecmwf_ifs025", "gfs_global", "icon_global"]
 ENSEMBLE_MODELS = ["ecmwf_ifs025"]
 SURFACE_VARS = ("temperature_2m,relative_humidity_2m,precipitation,freezing_level_height,wind_gusts_10m,"
-                "cape,cloud_cover")
+                "cape,cloud_cover,cloud_cover_low")
 # ensemble per la tendenza: chiave, modello Open-Meteo, temperatura usata, giorni richiesti
 TREND_MODELS = [
     ("ecmwf", "ecmwf_ifs025", "temperature_850hPa", 15),

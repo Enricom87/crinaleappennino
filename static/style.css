@@ -575,3 +575,12 @@ table.pg tr:last-child td{border-bottom:0}
 .ph-models summary::after{content:"▾";transition:transform .2s}
 .ph-models[open] summary::after{transform:rotate(180deg)}
 .ph-models table{margin-top:8px}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px}
+.vis-nebbia{background:#e5e7eb;color:#1f2937}.vis-variabile{background:#fef9c3;color:#713f12}.vis-ottima{background:#dcfce7;color:#14532d}
+.vis-tag{display:inline-flex;font-size:13px;font-weight:700;padding:5px 11px;border-radius:999px}
+.road-tag{background:#ffedd5;color:#9a3412}
+.road-alert{background:#fff7ed;border:1.5px solid #fb923c;color:#7c2d12;border-radius:16px;padding:12px 14px;margin:10px 0;font-size:14.5px;line-height:1.45}
+.wg-lab{display:block;font-weight:700;margin:18px 0 8px}
+.wg-sel{width:100%;font:inherit;font-size:16px;padding:10px 12px;border-radius:12px;border:1px solid #cfdbe7;background:#fff}
+.wg-prev{width:100%;max-width:520px;height:220px;border:0;display:block}
+.wg-code{width:100%;font:13px/1.4 ui-monospace,Menlo,monospace;padding:10px;border-radius:12px;border:1px solid #cfdbe7;background:#f7fafc;margin-bottom:10px}

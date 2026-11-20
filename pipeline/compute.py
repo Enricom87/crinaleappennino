@@ -332,5 +332,36 @@ def hourly_point(glob: dict, lam: dict | None, start: str, elev: float | None = 
         out.append({"time": ts, "t": round(t, 1), "precip": round(p, 1), "snow": round(snow, 1),
                     "rain": round(max(p - snow, 0), 1), "gust": round(mean("wind_gusts_10m") or 0),
                     "cloud": round(mean("cloud_cover") or 0), "cape": round(mean("cape") or 0),
+                    "rh": round(mean("relative_humidity_2m")) if mean("relative_humidity_2m") is not None else None,
+                    "cl": round(mean("cloud_cover_low")) if mean("cloud_cover_low") is not None else None,
                     "fl": round(fl, -1) if fl is not None else None})
+    return out
+
+
+def visibility(rh: float | None, cl: float | None) -> str:
+    """Visibilità alla quota del punto: umidità relativa a 2 m (alla quota vera) e nubi basse."""
+    if rh is None:
+        return "nd"
+    cl = cl if cl is not None else 0
+    if rh >= 95 and cl >= 80:
+        return "nebbia"
+    if 85 <= rh or 50 <= cl:
+        return "variabile"
+    return "ottima"
+
+
+def visibility_days(hours: list[dict]) -> dict[str, str]:
+    """Visibilità di giorno (8-17): nebbia se almeno 4 ore di nebbia fitta, variabile se almeno 4 ore non limpide."""
+    by: dict[str, list[str]] = defaultdict(list)
+    for h in hours:
+        if 8 <= int(h["time"][11:13]) <= 17:
+            v = visibility(h.get("rh"), h.get("cl"))
+            if v == "ottima" and (h.get("precip") or 0) >= 0.5:  # mentre piove o nevica la visibilità non è ottima
+                v = "variabile"
+            by[h["time"][:10]].append(v)
+    out = {}
+    for d, v in by.items():
+        if len(v) < 4 or all(x == "nd" for x in v):
+            continue
+        out[d] = "nebbia" if v.count("nebbia") >= 4 else ("variabile" if v.count("nebbia") + v.count("variabile") >= 4 else "ottima")
     return out

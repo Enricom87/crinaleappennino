@@ -10,7 +10,7 @@ from zoneinfo import ZoneInfo
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from compute import blend_point, ensemble_probs, hourly_point, name_configuration, synoptic_days
+from compute import blend_point, ensemble_probs, hourly_point, name_configuration, synoptic_days, visibility_days
 from cards import cards, hourly_strip
 from summer import mountain_days, overview_mtn, summer_text
 from i18n import T
@@ -115,6 +115,10 @@ def main() -> None:
         days = blend_point(glob[pid], lam.get(pid), today, meta["elev"])
         probs = ensemble_probs(ens[pid], today, meta["elev"]) if pid in ens else {}
         hours = hourly_point(glob[pid], lam.get(pid), now.strftime("%Y-%m-%dT%H:00"), meta["elev"])
+        vis = visibility_days(hourly_point(glob[pid], lam.get(pid), today + "T00:00", meta["elev"], hours=24 * 5))
+        for d in days:
+            if d["date"] in vis:
+                d["vis"] = vis[d["date"]]
         pts[pid] = {"id": pid, **meta, "days": days, "probs": probs, "hours": hours}
 
     syn_rows = synoptic_days(syn, today) if syn else []
@@ -252,6 +256,14 @@ def main() -> None:
                           "qn": (min(int(round(_z / 100.0) * 100), int(max(p["elev"] for p in L["pts"]) // 100 * 100)) if _z else None),
                           "gust": max((e["gust"] or 0) for e in _e) if _e else None,
                           "q": engine_overlay.QUALITY.get(loc["slug"])}
+            _top = max(L["pts"], key=lambda p: p["elev"])
+            _vis = {d["date"]: d.get("vis") for d in _top["days"]}
+            for e in L["engine"]:
+                e["vis"] = _vis.get(e["date"])
+            _vnext = [v for d, v in sorted(_vis.items()) if d >= today and v][:2]
+            L["stats"]["vis"] = ("nebbia" if "nebbia" in _vnext else ("variabile" if "variabile" in _vnext else
+                                 ("ottima" if _vnext else None)))
+            L["roadsnow"] = [{"date": d, "name": day_short(d)} for d in engine_overlay.ROADS.get(loc["slug"], [])]
             if L["stats"]["q"]:
                 L["stats"]["q"] = {**L["stats"]["q"], "label": T(L["stats"]["q"]["label"])}
             L["road"] = [pts[p] for p in loc.get("road_points", []) if p in pts]
@@ -446,8 +458,13 @@ def main() -> None:
             render("articolo.html", f"tendenze/{a['date']}/", art=a)
         for L in locs:
             render("location.html", f"{L['slug']}/", loc=L)
-        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline", "segnala", "segnala-neve", "inverni", "come-funziona", "pagella", "radar"):
+        for pg in ("metodo", "sponsor", "newsletter", "privacy", "app", "offline", "segnala", "segnala-neve", "inverni", "come-funziona", "pagella", "radar", "widget"):
             render(f"{pg}.html", f"{pg}/")
+        if lang == "it":  # widget incorporabili (in italiano): un file per località, aggiornato a ogni giro
+            (OUT / "widget").mkdir(parents=True, exist_ok=True)
+            for L in locs:
+                (OUT / "widget" / f"{L['slug']}.html").write_text(
+                    env.get_template("widget_loc.html").render(**ctx, L=L))
         render("percorsi.html", "percorsi/")
         for r in routes:
             render("percorso.html", f"percorsi/{r['slug']}/", route=r)

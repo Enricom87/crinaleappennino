@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}{{ t("Widget meteo neve gratuito per rifugi, hotel e noleggi") }} · {{ site.name }}{% endblock %}
+{% block desc %}{{ t("Metti le previsioni neve della tua località sul tuo sito: widget gratuito, aggiornato più volte al giorno, si incolla in un minuto.") }}{% endblock %}
+{% block main %}
+<section class="hero small"><div class="wrap">
+  <h1>🧩 {{ t("Widget gratuito per il tuo sito") }}</h1>
+  <p class="lead">{{ t("Hai un rifugio, un hotel o un noleggio? Mostra ai tuoi clienti neve, quota neve, vento e visibilità della tua località, aggiornati più volte al giorno. Gratis, senza registrazione.") }}</p>
+</div></section>
+<section class="wrap narrow">
+  <label class="wg-lab" for="wg-loc">{{ t("1. Scegli la località") }}</label>
+  <select id="wg-loc" class="wg-sel">{% for L in locs %}<option value="{{ L.slug }}">{{ L.name.split(' · ')[0] }}</option>{% endfor %}</select>
+  <p class="wg-lab">{{ t("2. Anteprima") }}</p>
+  <iframe id="wg-prev" class="wg-prev" title="{{ t('Anteprima del widget') }}" src="{{ u('widget/' ~ locs[0].slug ~ '.html') }}" loading="lazy"></iframe>
+  <label class="wg-lab" for="wg-code">{{ t("3. Copia il codice e incollalo nel tuo sito") }}</label>
+  <textarea id="wg-code" class="wg-code" rows="4" readonly></textarea>
+  <button id="wg-copy" class="btn" type="button">📋 {{ t("Copia il codice") }}</button>
+  <p class="small muted">{{ t("Il widget si aggiorna da solo: non devi fare niente. Funziona su WordPress, Wix, Squarespace e qualsiasi sito che accetti codice HTML. Lascia il link in basso: è l'unica cosa che chiediamo.") }}</p>
+</section>
+<script>
+(function () {
+  const base = {{ site.base_url|tojson }}, sel = document.getElementById('wg-loc'), prev = document.getElementById('wg-prev'),
+        code = document.getElementById('wg-code'), btn = document.getElementById('wg-copy');
+  function upd() {
+    const s = sel.value, name = sel.options[sel.selectedIndex].text;
+    prev.src = {{ u('widget/')|tojson }} + s + '.html';
+    code.value = '<iframe src="' + base + '/widget/' + s + '.html" title="Neve ' + name + ' – Crinale Appennino" ' +
+      'style="width:100%;max-width:520px;height:220px;border:0" loading="lazy"></iframe>';
+  }
+  sel.onchange = upd; upd();
+  btn.onclick = () => { code.select(); (navigator.clipboard ? navigator.clipboard.writeText(code.value) : Promise.reject())
+    .catch(() => document.execCommand('copy')).finally(() => { btn.textContent = '✅ ' + {{ t("Copiato")|tojson }}; setTimeout(() => btn.textContent = '📋 ' + {{ t("Copia il codice")|tojson }}, 2000); }); };
+})();
+</script>
+{% endblock %}

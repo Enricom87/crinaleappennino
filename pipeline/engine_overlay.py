@@ -23,6 +23,7 @@ DAYS = 5
 CONCHE = {"val-di-luce"}  # conche chiuse che non sono il punto più basso della località (cuscinetto freddo)
 
 
+ROADS: dict[str, list[str]] = {}  # slug -> giorni con neve possibile su strada alla quota della stazione/passo
 QUALITY: dict[str, dict] = {}  # slug -> qualità della neve prevista in cima nei primi 5 giorni
 
 
@@ -147,7 +148,14 @@ def apply(base_locs: list[dict], pts: dict, cal: dict, today: str) -> dict:
             break  # per le ore basta la prima località che contiene il punto
     print(f"motore fisico: {len(acc)} punti, {n} giorni-punto dai primi {DAYS} giorni")
     QUALITY.clear()
+    ROADS.clear()
     for slug, r in per_loc.items():
+        # neve su strada: un'ora con almeno 1 mm/h e quota neve alla quota della base (stazione o passo) o più giù
+        qb = eng.LOCALITA_CONFIG[slug.replace("-", "_")]["quota_base"]
+        days_ = sorted({h["time"][:10] for h in r["orario"] if h["time"][:10] >= today and (h["precip_mm"] or 0) >= 1
+                        and h["quota_neve_m"] is not None and h["quota_neve_m"] <= qb})
+        if days_:
+            ROADS[slug] = days_[:DAYS]
         q = quality(r, eng.LOCALITA_CONFIG[slug.replace("-", "_")], today)
         if q:
             QUALITY[slug] = q

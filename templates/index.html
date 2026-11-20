@@ -105,7 +105,11 @@
         <div><span aria-hidden="true">❄️</span><b>{{ (L.stats.qn ~ ' m') if L.stats.qn else '–' }}</b><small>{{ t("quota neve") }}</small></div>
         <div><span aria-hidden="true">💨</span><b>{{ L.stats.gust }}<i> km/h</i></b><small>{{ t("raffica max") }}</small></div>
       </div>
-      {% if L.stats.q %}<span class="q-tag q-{{ L.stats.q.key }}">{{ L.stats.q.label }}</span>{% endif %}
+      {% if L.stats.q or L.stats.vis or L.roadsnow %}<span class="tag-row">
+        {% if L.roadsnow %}<span class="q-tag road-tag">❄️ {{ t("Neve su strada") }} · {{ L.roadsnow[0].name }}</span>{% endif %}
+        {% if L.stats.q %}<span class="q-tag q-{{ L.stats.q.key }}">{{ L.stats.q.label }}</span>{% endif %}
+        {% if L.stats.vis == 'nebbia' %}<span class="q-tag vis-nebbia">🌫️ {{ t("Whiteout in cresta") }}</span>{% elif L.stats.vis == 'variabile' %}<span class="q-tag vis-variabile">⛅ {{ t("Visibilità variabile") }}</span>{% elif L.stats.vis == 'ottima' %}<span class="q-tag vis-ottima">☀️ {{ t("Visibilità ottima") }}</span>{% endif %}
+      </span>{% endif %}
       {% endif %}
       {% if L.cards_home %}<div class="mini-icons">{% for c in L.cards_home[:4] %}<span title="{{ c.phrase }}"><svg viewBox="0 0 64 64"><use href="#ic-{{ c.icon }}"/></svg>{{ c.short }}{% if c.snow %}<strong>{{ c.snow }} cm</strong>{% elif c.zq %}<strong class="zq">{{ t("da {z} m", z=c.zq) }}</strong>{% endif %}</span>{% endfor %}</div>{% endif %}
       {% endif %}
@@ -239,6 +243,6 @@
     <h2>{{ t("Lavori in montagna?") }}</h2>
     <p>{{ t("Noleggi, scuole sci, rifugi e hotel: raggiungi chi controlla la neve prima di partire. Spazi sponsor per località, a partire da pochi euro al giorno.") }}</p>
   </div>
-  <a class="btn" href="{{ u('sponsor/') }}">{{ t("Scopri gli spazi") }}</a>
+  <span class="promo-btns"><a class="btn" href="{{ u('sponsor/') }}">{{ t("Scopri gli spazi") }}</a> <a class="btn ghost" href="{{ u('widget/') }}">🧩 {{ t("Widget gratis per il tuo sito") }}</a></span>
 </section>
 {% endblock %}
