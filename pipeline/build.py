@@ -170,8 +170,8 @@ def main() -> None:
                 d["lv"] = d["engine"]["qn"] + pid_off.get(pid, 0)
             elif v and v.get("wet"):
                 d["lv"] = v.get("lv_min", v["lv"]) + pid_off.get(pid, 0)
-            elif d.get("fl_min") is not None and (d.get("precip") or 0) >= 1:
-                d["lv"] = d["fl_min"] - 300
+            # oltre il profilo verticale (7 giorni) niente quota neve: lo zero termico minimo della giornata
+            # (spesso di notte, a secco) dava numeri assurdi come «neve dai 90 m»
     # una sola quota neve al giorno per tutto il crinale (mediana dei punti con precipitazione, media
     # pesata e non il minimo notturno): «dai X m» deve essere lo stesso numero all'Abetone e al Cimone
     _reg = {}
