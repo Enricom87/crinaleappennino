@@ -185,6 +185,7 @@ def fetch_runs(raw_dir: Path) -> None:
                       "every": j.get("update_interval_seconds", 21600)}
         except Exception as e:  # noqa: BLE001
             print(f"orario corsa {k}: {e}")
+    raw_dir.mkdir(parents=True, exist_ok=True)
     (raw_dir / "runs.json").write_text(json.dumps(out))
 
 
