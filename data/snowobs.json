@@ -177,7 +177,7 @@
     "license": "CC BY 4.0",
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
-   "raw_cm": 4,
+   "raw_cm": 0,
    "model_cm": 0,
    "valid": false
   },
@@ -245,7 +245,7 @@
     "license": "CC BY 4.0",
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
-   "raw_cm": 7,
+   "raw_cm": 0,
    "model_cm": 0,
    "valid": false
   },
@@ -313,7 +313,7 @@
     "license": "CC BY 4.0",
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
-   "raw_cm": 4,
+   "raw_cm": 0,
    "model_cm": 0,
    "valid": false
   },
@@ -381,7 +381,7 @@
     "license": "CC BY 4.0",
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
-   "raw_cm": 1,
+   "raw_cm": 0,
    "model_cm": 0,
    "valid": false
   },
@@ -517,7 +517,7 @@
     "license": "CC BY 4.0",
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
-   "raw_cm": 1,
+   "raw_cm": 0,
    "model_cm": 0,
    "valid": false
   },
@@ -585,7 +585,7 @@
     "license": "CC BY 4.0",
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
-   "raw_cm": 18,
+   "raw_cm": 0,
    "model_cm": 0,
    "valid": false
   },
@@ -653,7 +653,7 @@
     "license": "CC BY 4.0",
     "url": "https://dati.arpae.it/dataset/dati-dalle-stazioni-meteo-locali-della-rete-idrometeorologica-regionale"
    },
-   "raw_cm": 13,
+   "raw_cm": 0,
    "model_cm": 0,
    "valid": false
   },
@@ -731,14 +731,10 @@
    "lat": 44.139,
    "lon": 10.674,
    "cm": 0,
-   "time": "2026-11-20T17:15:00Z",
+   "time": "2026-11-20T17:30:00Z",
    "delta": 0,
-   "delta_h": 59,
+   "delta_h": 57,
    "series": [
-    [
-     "2026-11-18T06:30:00Z",
-     0.0
-    ],
     [
      "2026-11-18T08:45:00Z",
      0.0
@@ -858,6 +854,10 @@
     [
      "2026-11-20T17:15:00Z",
      0.0
+    ],
+    [
+     "2026-11-20T17:30:00Z",
+     0.0
     ]
    ],
    "source": {
@@ -875,9 +875,9 @@
    "lat": 44.21,
    "lon": 10.447,
    "cm": 0,
-   "time": "2026-11-20T16:45:00Z",
+   "time": "2026-11-20T17:30:00Z",
    "delta": 0,
-   "delta_h": 73,
+   "delta_h": 74,
    "series": [
     [
      "2026-11-17T15:30:00Z",
@@ -982,6 +982,10 @@
     [
      "2026-11-20T16:45:00Z",
      0.0
+    ],
+    [
+     "2026-11-20T17:30:00Z",
+     0.0
     ]
    ],
    "source": {
@@ -999,14 +1003,10 @@
    "lat": 44.118,
    "lon": 10.609,
    "cm": 0,
-   "time": "2026-11-20T17:15:00Z",
+   "time": "2026-11-20T17:30:00Z",
    "delta": 0,
    "delta_h": 56,
    "series": [
-    [
-     "2026-11-18T08:45:00Z",
-     0.0
-    ],
     [
      "2026-11-18T09:45:00Z",
      0.0
@@ -1125,6 +1125,10 @@
     ],
     [
      "2026-11-20T17:15:00Z",
+     0.0
+    ],
+    [
+     "2026-11-20T17:30:00Z",
      0.0
     ]
    ],
