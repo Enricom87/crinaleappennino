@@ -90,10 +90,12 @@ jobs:
         working-directory: pipeline
         run: python -u fetch_and_run.py --giorni 5 --out ../data/raw/engine.json --grezzi ../data/raw/engine_raw.json
       - name: Quadro generale (NAO, AO, vortice polare)
+        timeout-minutes: 6
         if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/teleconn.py
       - name: Sponsor venduti con Stripe
+        timeout-minutes: 6
         if: steps.mode.outputs.mode == 'full'
         env:
           STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
@@ -105,30 +107,37 @@ jobs:
         timeout-minutes: 3
         run: python pipeline/lifts.py
       - name: Eventi dagli open data ufficiali
+        timeout-minutes: 6
         if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/events.py
       - name: Rifugi e strutture da OpenStreetMap (settimanale)
+        timeout-minutes: 6
         if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/places.py
       - name: Bollettino Montagna LaMMA (controllo dei meteorologi)
+        timeout-minutes: 6
         if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/pro.py
       - name: Storico stagioni 1 dic - 31 mar (rianalisi ERA5)
+        timeout-minutes: 6
         if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/climate.py
       - name: Segnalazioni dal territorio (archivio)
+        timeout-minutes: 6
         if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/reports.py
       - name: Pericolo valanghe (Meteomont)
+        timeout-minutes: 6
         if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/avalanche.py
       - name: Neve al suolo misurata (stazioni Arpae)
+        timeout-minutes: 6
         if: steps.mode.outputs.mode == 'full'
         continue-on-error: true
         run: python pipeline/snowobs.py
