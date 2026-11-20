@@ -141,7 +141,7 @@
   <p class="kicker-dark">{{ t("La configurazione dei prossimi giorni") }}</p>
   <h2>{{ synv.head }}</h2>
   <div class="syn-card">
-    <div class="syn-chart-wrap">{{ synv.chart|safe }}<p class="muted small">{{ t("Temperatura a circa 1.500 m (ECMWF). Quando la linea scende nella fascia azzurra, sotto i −3 °C, la neve arriva di solito fino alle stazioni.") }}</p></div>
+    <div class="syn-chart-wrap">{{ synv.chart|safe }}<p class="muted small">{{ t("Temperatura a circa 1.500 m (ECMWF). Sotto 0 °C, nella fascia azzurra, la neve può scendere fino alle stazioni; sotto +2,5 °C imbianca le cime. La quota esatta di ogni località è nella sua pagina, calcolata ora per ora.") }}</p></div>
     <div class="syn-days">
     {% for d in synv.days %}
       <div class="syn-day v-{{ d.vcls }}">

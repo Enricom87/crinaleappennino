@@ -2,20 +2,19 @@ name: Aggiorna previsioni
 
 on:
   schedule:
-    # orari UTC (+1 in Italia d'inverno), agganciati a quando i modelli sono pronti:
-    # 04:40 LAM notturni (ICON-2I, AROME, ICON-CH2/D2) · 07:40 ECMWF 00 completo · 11:10 GFS 06 e LAM del mattino
-    # 15:40 ICON-2I e AROME delle 12 · 20:20 ECMWF 12 e GFS 12
-    - cron: "40 4 * * *"
-    - cron: "40 7 * * *"
-    - cron: "10 11 * * *"
-    - cron: "40 15 * * *"
-    - cron: "20 20 * * *"
-    # aggiornamenti leggeri (solo se c'è neve nelle 48 ore): AROME, ICON-2I e motore fisico, primi giorni
-    - cron: "50 1 * * *"
-    - cron: "50 9 * * *"
-    - cron: "50 13 * * *"
-    - cron: "50 17 * * *"
-    - cron: "50 22 * * *"
+    # giri completi allineati a quando escono i modelli (orari UTC, +1 h in Italia):
+    # 02:05 corsa europea delle 18 e scenari delle 12 · 07:35 europea delle 00 · 10:35 scenari delle 00
+    # 16:35 europea e scenari delle 06 · 19:55 europea delle 12 · 22:35 scenari delle 12
+    - cron: "5 2 * * *"
+    - cron: "35 7 * * *"
+    - cron: "35 10 * * *"
+    - cron: "35 16 * * *"
+    - cron: "55 19 * * *"
+    - cron: "35 22 * * *"
+    # giri leggeri (solo se c'è neve nelle 48 ore): AROME, ICON-2I e motore fisico
+    - cron: "50 4 * * *"
+    - cron: "50 12 * * *"
+    - cron: "50 14 * * *"
   workflow_dispatch:
     inputs:
       mode:

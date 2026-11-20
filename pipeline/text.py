@@ -85,7 +85,7 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
         when = nice_date(days[0]) if days else T("la prossima settimana")
         bd = {d["date"]: d.get("snow") or 0 for d in base["days"]}
         b10 = bd.get(days[0], 0) if days else 0  # neve alla base nello stesso giorno indicato nel titolo
-        title = (T("👀 Occhio a {when}: i modelli vedono neve fino a {nbase} ({zbase} m), da confermare", when=when, **v)
+        title = (T("👀 Occhio a {when}: i modelli vedono neve fino alla base, a {nbase} ({zbase} m), da confermare", when=when, **v)
                  if b10 >= 2 else
                  T("👀 Occhio a {when}: neve in arrivo dai {z} m in su, fino al {ntop} ({ztop} m). Da seguire!",
                    when=when, z=zfrom(days[0] if days else None), **v))
@@ -120,15 +120,14 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
     # tendenza
     spread = [r for r in top["days"] if 3 <= r["idx"] < 10]
     if spread:
-        hi = max(r["snow_max"] for r in spread)
+        hi = sum(r["snow_max"] for r in spread)  # totale dello scenario più generoso, da confrontare col totale medio
         lo = sum(min(r["per_model"].values()) for r in spread if r["per_model"])
         if t10 < 1 and hi < 5:
             paras.append(T("E dopo? Dal quarto al decimo giorno i grandi modelli non vedono nevicate degne di nota."))
         else:
             agree = T("sono d'accordo") if (hi - lo) < max(8, t10) else T("litigano")
             paras.append(T("E dopo? Tra 4 e 10 giorni la media dei modelli dice {word} in quota "
-                           "(circa {t10}). ECMWF, GFS e ICON {agree}: lo scenario più generoso arriva a "
-                           "{hi} cm.", word=snow_word(t10), t10=cm(t10), agree=agree, hi=f"{hi:.0f}"))
+                           "(circa {t10}). ECMWF, GFS e ICON {agree}: al massimo si arriva a {hi} cm.", word=snow_word(t10), t10=cm(t10), agree=agree, hi=f"{hi:.0f}"))
 
     # probabilità
     if pr.get("d7"):
@@ -169,7 +168,7 @@ def location_text(loc: dict, pts: dict[str, dict], syn_rows: list[dict]) -> dict
 
     return {"title": title, "level": level, "paragraphs": paras,
             "snow3_top": round(t3, 1), "snow3_base": round(b3, 1), "snow10_top": round(t10, 1), "p7": p7,
-            "snow10_base": round(window_sum(base["days"], 0, 10), 1),
+            "snow10_base": round(window_sum(base["days"], 0, 10), 1), "base_elev": base["elev"],
             "top_name": top["name"], "top_elev": top["elev"]}
 
 
@@ -180,7 +179,9 @@ def overview_text(locs: list[dict]) -> str:
     if best_top["text"]["level"] in ("none", "low"):
         return T("La neve si fa desiderare, ma noi teniamo d'occhio i modelli più volte al giorno: "
                  "appena si apre una finestra te lo diciamo qui per primi (e per email, se ti iscrivi).")
-    ranked = sorted(locs, key=lambda l: -l["text"]["snow10_base"])
+    # confronto equo: solo località con la base a quota da stazione (Lago Scaffaiolo, 1775 m, è già una vetta)
+    ranked = sorted([l for l in locs if l["text"].get("base_elev", 0) <= 1600] or locs,
+                    key=lambda l: -l["text"]["snow10_base"])
     if ranked[0]["text"]["snow10_base"] < 3:
         peaks = {}
         for l in locs:

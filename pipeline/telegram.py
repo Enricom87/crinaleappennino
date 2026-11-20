@@ -118,6 +118,8 @@ def main() -> None:
     fresh = [a for a in latest.get("alerts", [])
              if not tg["alerted"].get(a["slug"])
              or now - datetime.fromisoformat(tg["alerted"][a["slug"]]) > timedelta(hours=48)]
+    if not 7 <= now.hour < 22:  # di notte niente notifiche: l'allerta parte al primo giro del mattino
+        fresh = []
     if fresh and post(token, chat, alert_text(site, fresh, sponsor)):
         for a in fresh:
             tg["alerted"][a["slug"]] = now.isoformat()

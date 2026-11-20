@@ -67,7 +67,7 @@ def chart(days: list[dict]) -> str:
     return "".join(out)
 
 
-def syn_view(rows: list[dict]) -> dict:
+def syn_view(rows: list[dict], reg_lv: dict | None = None, z_station: int = 1300) -> dict:
     days = []
     for r in rows[:10]:
         e = r.get("ec") or r.get("gfs")
@@ -85,7 +85,14 @@ def syn_view(rows: list[dict]) -> dict:
     fav = next((d for d in days if d["vcls"] == "fav"), None)
     mar = next((d for d in days if d["vcls"] == "mar"), None)
     coldest = min(days, key=lambda d: d["t"])
-    if fav:
+    reg_lv = reg_lv or {}
+    lv_fav = reg_lv.get(fav["date"]) if fav else None
+    if fav and lv_fav is not None and lv_fav > z_station + 150:
+        # l'aria a 1.500 m sarebbe abbastanza fredda, ma il calcolo quota per quota dice che la neve resta più su:
+        # il titolo deve dire la stessa cosa delle località
+        head = T("📉 Si rinfresca da {d}: neve dai {z} m circa in su, le stazioni più basse restano al limite",
+                 d=nice_date(fav["date"]), z=int(round(lv_fav / 100.0) * 100))
+    elif fav:
         head = T("🥶 Arriva il freddo vero: da {d} aria abbastanza fredda per la neve fino alle stazioni",
                  d=nice_date(fav["date"]))
     elif mar:

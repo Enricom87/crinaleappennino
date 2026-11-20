@@ -200,6 +200,8 @@ def main() -> None:
         last = state["alerted"].get(a["slug"])
         if not last or now - datetime.fromisoformat(last) > timedelta(hours=48):
             fresh.append(a)
+    if not 7 <= now.hour < 22:  # di notte niente email: l'allerta parte al primo giro del mattino
+        fresh = []
     if fresh:
         names = ", ".join(a["name"].split(" · ")[0] for a in fresh)
         sent = send(f"❄️ Arriva la neve: {names}" if len(fresh) < 3 else f"❄️ Nevica su tutto il crinale: {names}",

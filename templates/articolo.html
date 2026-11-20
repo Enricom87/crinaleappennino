@@ -5,6 +5,7 @@
   <p class="muted small"><a href="{{ u('tendenze/') }}">{{ t("Tendenze neve") }}</a> · {{ art.pub }}</p>
   <h1>{{ art.title }}</h1>
   {% if art.sections %}
+  {% if art.date < today %}<div class="cfg stale"><p>🕒 {{ t("Questo articolo è del {d}. Per i prossimi giorni le previsioni nel frattempo possono essere cambiate: quelle aggiornate, più volte al giorno, sono nella home e nelle pagine delle località.", d=art.date[8:10] ~ "/" ~ art.date[5:7]) }} <a href="{{ u('') }}">{{ t("Previsione aggiornata") }} →</a></p></div>{% endif %}
   {% if art.brief %}<div class="art-brief"><p class="small muted">{{ t("In breve") }}</p><ul>{% for b in art.brief %}<li>{{ b }}</li>{% endfor %}</ul></div>{% endif %}
   {% for s in art.sections %}<h2>{{ s.h }}</h2>{% for p in s.p %}<p>{{ p }}</p>{% endfor %}
   {% if loop.index == 1 and art.chart %}<figure class="art-chart">{{ art.chart|safe }}<figcaption class="small muted">{{ t("Scenari nevosi giorno per giorno, modello per modello.") }}</figcaption></figure>{% endif %}{% endfor %}

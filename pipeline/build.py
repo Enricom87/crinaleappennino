@@ -166,6 +166,11 @@ def main() -> None:
             elif d.get("lv") is not None:
                 _reg.setdefault(d["date"], []).append(d["lv"])
     _reg = {k: sorted(x)[len(x) // 2] for k, x in _reg.items() if len(x) >= 3}
+    for k in list(_reg):  # se una vetta prende neve quel giorno, «dai X m» non può stare sopra quella vetta
+        snowy = [p["elev"] for p in pts.values() for d in p["days"] if d["date"] == k and (d.get("snow") or 0) >= 1]
+        if snowy:
+            _reg[k] = min(_reg[k], min(snowy) - 100)
+    REG_LV = dict(_reg)
     for p in pts.values():
         for d in p["days"]:
             if d["date"] in _reg:
@@ -367,7 +372,7 @@ def main() -> None:
                "local_sources": [{**s, "about": T(s["about"]), "links": {k: [{**l, "label": T(l["label"])} for l in v]
                                                                        for k, v in s["links"].items()}}
                                  for s in local_sources],
-               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows, "synv": syn_view(syn_rows), "trendv": decorate(trend_view(), locs), "telev": tele_view(today),
+               "routes": routes, "activity_labels": {k: T(v) for k, v in LABELS.items()}, "syn": syn_rows, "synv": syn_view(syn_rows, REG_LV, min(L["low_pt"]["elev"] for L in locs if L["low_pt"]["elev"] <= 1600)), "trendv": decorate(trend_view(), locs), "telev": tele_view(today),
                "summer": IS_SUMMER, "home_events": home_events(locs), "bestpick": best_pick(locs, IS_SUMMER),
                "overview": ((overview_mtn(locs) if IS_SUMMER else overview_text(locs)) if locs else ""),
                "updated": now.strftime("%d/%m/%Y %H:%M"), "updated_iso": now.isoformat(timespec="minutes"),
