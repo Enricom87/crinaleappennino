@@ -1,5 +1,7 @@
 # Interfaccia: menu, titoli, pulsanti, etichette. (it, en, de, fr, es, zh)
 ROWS = [
+("Siti amici:", "Friends of the site:", "Befreundete Seiten:", "Sites amis :", "Webs amigas:", "友情链接："),
+("Liguria e temporali", "Liguria and thunderstorms", "Ligurien und Gewitter", "Ligurie et orages", "Liguria y tormentas", "利古里亚与雷暴"),
 ("Tocca <b>Condividi</b> ⬆️ e poi <b>Aggiungi alla schermata Home</b>",
  "Tap <b>Share</b> ⬆️ then <b>Add to Home Screen</b>",
  "Tippe auf <b>Teilen</b> ⬆️ und dann <b>Zum Home-Bildschirm</b>",

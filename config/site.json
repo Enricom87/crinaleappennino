@@ -26,5 +26,12 @@
   "telegram_chat": "@crinaleappennino",
   "telegram_brand_version": "2026-11-logo",
   "event_endpoint": "https://crinale-bot.enrico-marchionni.workers.dev/event",
-  "report_endpoint": "https://crinale-bot.enrico-marchionni.workers.dev/report"
+  "report_endpoint": "https://crinale-bot.enrico-marchionni.workers.dev/report",
+  "friends": [
+    {
+      "name": "Meteostorm",
+      "url": "https://www.meteostorm.it/",
+      "note": "Liguria e temporali"
+    }
+  ]
 }
