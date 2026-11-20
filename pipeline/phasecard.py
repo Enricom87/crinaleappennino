@@ -4,14 +4,20 @@ from __future__ import annotations
 from i18n import T, nice_date
 
 
-def engine_phase(p: dict, engine: dict, reg_lv: dict) -> None:
-    """«Prossimi 5 giorni»: numeri e titolo dal motore fisico (gli stessi delle località), non dagli scenari."""
-    base = max((sum(e["base"] or 0 for e in v) for v in engine.values()), default=0)
+def engine_phase(p: dict, engine: dict, reg_lv: dict, locs: list) -> None:
+    """«Prossimi 5 giorni»: numeri e titolo dal motore fisico (gli stessi delle località), non dagli scenari.
+    «Stazioni» = solo località con la base a quota da stazione (≤ 1.600 m, non Lago Scaffaiolo)."""
+    low = {L["slug"] for L in locs if L["low_pt"]["elev"] <= 1600}
+    st_eng = {k: v for k, v in engine.items() if k in low} or engine
+    base = max((sum(e["base"] or 0 for e in v) for v in st_eng.values()), default=0)
     top = max((sum(e["top"] or 0 for e in v) for v in engine.values()), default=0)
     mm = max((sum(e["mm"] or 0 for e in v) for v in engine.values()), default=0)
-    dates = sorted({e["date"] for v in engine.values() for e in v})
-    wet = [reg_lv[d] for d in dates if d in reg_lv and any((e["mm"] or 0) >= 1 for v in engine.values() for e in v if e["date"] == d)]
-    qn = int(round(min(wet) / 100) * 100) if wet else None
+    by_day: dict[str, float] = {}
+    for v in engine.values():
+        for e in v:
+            by_day[e["date"]] = max(by_day.get(e["date"], 0), e["top"] or 0)
+    snowiest = max(by_day, key=by_day.get) if by_day and max(by_day.values()) >= 1 else None
+    qn = int(round(reg_lv[snowiest] / 100) * 100) if snowiest in reg_lv else None  # stessa quota dell'etichetta
     if base >= 3:
         e, h = "❄️", T("Neve fino alle stazioni")
     elif top >= 5:
@@ -67,6 +73,6 @@ def decorate(tv: dict | None, locs: list | None, engine: dict | None = None, reg
                      "conf": {T("alta"): T("affidabile"), T("media"): T("abbastanza affidabile"),
                               T("bassa"): T("ancora incerta")}.get(conf, conf)}
         if i == 0 and engine:
-            engine_phase(p, engine, reg_lv or {})
+            engine_phase(p, engine, reg_lv or {}, locs or [])
             p["card"]["tag"] = tag
     return tv
