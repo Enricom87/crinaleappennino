@@ -50,6 +50,9 @@ def quality(r: dict, cfg: dict, today: str) -> dict | None:
     return {"key": key, "label": label, "slr": round(slr, 1), "gust": round(gust)}
 
 
+DEBUG: dict = {}  # ore con precipitazione, punto per punto: per controllare i conti
+
+
 def load() -> dict:
     try:
         return json.loads(RAW.read_text())
@@ -99,6 +102,10 @@ def apply(base_locs: list[dict], pts: dict, cal: dict, today: str) -> dict:
                 print(f"motore fisico: {pid} saltato ({e})")
                 continue
             f = (cal.get(loc["slug"]) or {}).get("snow", 1.0)
+            DEBUG[pid] = [{"t": h["time"], "mm": h["precip_mm"], "ztw": h["zero_tw_m"], "qn": h["quota_neve_m"],
+                           "tw": h["base"]["tw_c"], "tw_eff": h["base"]["tw_eff_c"], "cm": h["base"]["neve_cm"],
+                           "reg": h["regime"], "sett": h["settore_850"]}
+                          for h in r["orario"] if (h.get("precip_mm") or 0) > 0][:120]
             acc.setdefault(pid, []).append({"r": r, "blk": "cima" if top else "base", "f": f})
     n = 0
     for pid, outs in acc.items():

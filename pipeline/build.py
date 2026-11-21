@@ -532,6 +532,7 @@ def main() -> None:
                                      for p in L["pts"]]} for L in locs],
            "synoptic": syn_rows}
     (OUT / "api" / "v1" / "forecast.json").write_text(json.dumps(api, ensure_ascii=False))
+    (OUT / "api" / "v1" / "engine_points.json").write_text(json.dumps(engine_overlay.DEBUG, ensure_ascii=False))
     _eng = ROOT / "data" / "raw" / "engine.json"
     if _eng.exists():  # uscita del motore fisico, formato colonnare schema 2.0
         (OUT / "api" / "v2").mkdir(parents=True, exist_ok=True)
