@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-21T04:28+01:00",
+ "generated": "2026-11-21T04:46+01:00",
  "alerts": [
   {
    "slug": "cimone",
@@ -94,7 +94,7 @@
       "date": "2026-11-21",
       "name": "Sabato",
       "color": "yellow",
-      "why": "vento forte in cresta (65 km/h)",
+      "why": "vento forte in cresta (66 km/h)",
       "idx": 0,
       "snow": 0,
       "snow_base": 0
@@ -136,7 +136,7 @@
       "date": "2026-11-21",
       "name": "Sabato",
       "color": "yellow",
-      "why": "vento forte in cresta (65 km/h)",
+      "why": "vento forte in cresta (66 km/h)",
       "idx": 0,
       "snow": 0,
       "snow_base": 0
@@ -178,7 +178,7 @@
       "date": "2026-11-21",
       "name": "Sabato",
       "color": "yellow",
-      "why": "vento forte in cresta (65 km/h)",
+      "why": "vento forte in cresta (66 km/h)",
       "idx": 0,
       "snow": 0,
       "snow_base": 0
@@ -220,7 +220,7 @@
       "date": "2026-11-21",
       "name": "Sabato",
       "color": "yellow",
-      "why": "vento forte in cresta (52 km/h)",
+      "why": "vento forte in cresta (50 km/h)",
       "idx": 0,
       "snow": 0,
       "snow_base": 0
@@ -229,7 +229,7 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "red",
-      "why": "pioggia (63 mm)",
+      "why": "pioggia (64 mm)",
       "idx": 1,
       "snow": 0,
       "snow_base": 0
@@ -313,7 +313,7 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "red",
-      "why": "pioggia (59 mm)",
+      "why": "pioggia (61 mm)",
       "idx": 1,
       "snow": 0.2,
       "snow_base": 0.2
@@ -335,7 +335,7 @@
    "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago Santo modenese (1501 m), da confermare",
    "level": "watch",
    "snow3_top": 3.4,
-   "verdict": "Meglio di no",
+   "verdict": "Occhio",
    "back_by": null,
    "weekend": {
     "color": "yellow",
@@ -345,8 +345,8 @@
      {
       "date": "2026-11-21",
       "name": "Sabato",
-      "color": "red",
-      "why": "vento molto forte in cresta (71 km/h)",
+      "color": "yellow",
+      "why": "vento forte in cresta (69 km/h)",
       "idx": 0,
       "snow": 0,
       "snow_base": 0
@@ -430,7 +430,7 @@
       "date": "2026-11-21",
       "name": "Sabato",
       "color": "yellow",
-      "why": "vento forte in cresta (61 km/h)",
+      "why": "vento forte in cresta (62 km/h)",
       "idx": 0,
       "snow": 0,
       "snow_base": 0
@@ -461,7 +461,7 @@
    "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 7-15 cm al Monte Cusna (2121 m)",
    "level": "alert",
    "snow3_top": 11.1,
-   "verdict": "Occhio",
+   "verdict": "Meglio di no",
    "back_by": null,
    "weekend": {
     "color": "yellow",
@@ -471,8 +471,8 @@
      {
       "date": "2026-11-21",
       "name": "Sabato",
-      "color": "yellow",
-      "why": "vento forte in cresta (70 km/h)",
+      "color": "red",
+      "why": "vento molto forte in cresta (73 km/h)",
       "idx": 0,
       "snow": 0,
       "snow_base": 0
@@ -515,28 +515,28 @@
      "slug": "cimone",
      "name": "Cimone",
      "color": "yellow",
-     "why": "vento forte in cresta (65 km/h)",
+     "why": "vento forte in cresta (66 km/h)",
      "lifts": null
     },
     {
      "slug": "le-polle",
      "name": "Le Polle",
      "color": "yellow",
-     "why": "vento forte in cresta (65 km/h)",
+     "why": "vento forte in cresta (66 km/h)",
      "lifts": null
     },
     {
      "slug": "cimoncino",
      "name": "Cimoncino",
      "color": "yellow",
-     "why": "vento forte in cresta (65 km/h)",
+     "why": "vento forte in cresta (66 km/h)",
      "lifts": null
     },
     {
      "slug": "doganaccia",
      "name": "Doganaccia",
      "color": "yellow",
-     "why": "vento forte in cresta (52 km/h)",
+     "why": "vento forte in cresta (50 km/h)",
      "lifts": null
     }
    ],
@@ -619,7 +619,7 @@
     "conf": "ancora incerta"
    },
    "snow": 35,
-   "snow_low": 12,
+   "snow_low": 11,
    "cold": 15
   },
   {
