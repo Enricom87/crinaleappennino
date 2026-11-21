@@ -179,12 +179,15 @@ RUN_META = {  # quando è partita e quando è uscita l'ultima corsa di ogni mode
 def fetch_runs(raw_dir: Path) -> None:
     out = {}
     for k, url in RUN_META.items():
-        try:
-            j = requests.get(url, timeout=20).json()
-            out[k] = {"init": j["last_run_initialisation_time"], "avail": j["last_run_availability_time"],
-                      "every": j.get("update_interval_seconds", 21600)}
-        except Exception as e:  # noqa: BLE001
-            print(f"orario corsa {k}: {e}")
+        for tent in range(3):  # Open-Meteo a volte è lento: meglio riprovare che mostrare «europeo delle ·»
+            try:
+                j = requests.get(url, timeout=30).json()
+                out[k] = {"init": j["last_run_initialisation_time"], "avail": j["last_run_availability_time"],
+                          "every": j.get("update_interval_seconds", 21600)}
+                break
+            except Exception as e:  # noqa: BLE001
+                print(f"orario corsa {k} (tentativo {tent + 1}): {e}")
+                time.sleep(5)
     raw_dir.mkdir(parents=True, exist_ok=True)
     (raw_dir / "runs.json").write_text(json.dumps(out))
 
