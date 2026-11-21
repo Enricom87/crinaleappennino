@@ -1,38 +1,44 @@
 {
- "generated": "2026-11-21T10:08+01:00",
+ "generated": "2026-11-21T13:08+01:00",
  "alerts": [
   {
    "slug": "cimone",
    "name": "Cimone · Sestola e Passo del Lupo",
-   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 4-9 cm al Monte Cimone (2165 m)",
-   "snow3_top": 6.8
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 3-8 cm al Monte Cimone (2165 m)",
+   "snow3_top": 5.6
   },
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
-   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 4-9 cm al Monte Cimone (2165 m)",
-   "snow3_top": 6.8
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 3-8 cm al Monte Cimone (2165 m)",
+   "snow3_top": 5.6
   },
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 4-9 cm al Monte Cimone (2165 m)",
-   "snow3_top": 6.8
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 3-8 cm al Monte Cimone (2165 m)",
+   "snow3_top": 5.6
+  },
+  {
+   "slug": "lago-santo",
+   "name": "Lago Santo · Monte Giovo",
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 3-7 cm al Monte Giovo (1991 m)",
+   "snow3_top": 5.2
   },
   {
    "slug": "garfagnana",
    "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
-   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 5-11 cm al Monte Prado (2054 m)",
-   "snow3_top": 8.0
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 4-10 cm al Monte Prado (2054 m)",
+   "snow3_top": 7.0
   },
   {
    "slug": "febbio",
    "name": "Febbio · Monte Cusna",
-   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 5-11 cm al Monte Cusna (2121 m)",
-   "snow3_top": 8.0
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 7-14 cm al Monte Cusna (2121 m)",
+   "snow3_top": 10.2
   }
  ],
- "overview": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 4-9 cm al Monte Cimone (2165 m). Nei prossimi 10 giorni chi ne prende di più alla base: Cimone, Cimoncino, Corno alle Scale. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
+ "overview": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 3-8 cm al Monte Cimone (2165 m). Nei prossimi 10 giorni chi ne prende di più alla base: Cimone, Lago Santo, Cimoncino. Scegli la tua località e guarda quanta ne arriva, quota per quota.",
  "summer": false,
  "locs": [
   {
@@ -40,7 +46,7 @@
    "name": "Abetone",
    "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Passo dell'Abetone (1388 m), da confermare",
    "level": "watch",
-   "snow3_top": 2.9,
+   "snow3_top": 2.1,
    "verdict": "Meglio di no",
    "back_by": null,
    "weekend": {
@@ -61,9 +67,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (circa 3 cm al Monte Gomito, 1892 m)",
+      "why": "neve in quota dai 1800 m in su (circa 2 cm al Monte Gomito, 1892 m)",
       "idx": 1,
-      "snow": 2.9,
+      "snow": 2.0,
       "snow_base": 0
      }
     ],
@@ -80,9 +86,9 @@
   {
    "slug": "cimone",
    "name": "Cimone · Sestola e Passo del Lupo",
-   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 4-9 cm al Monte Cimone (2165 m)",
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 3-8 cm al Monte Cimone (2165 m)",
    "level": "alert",
-   "snow3_top": 6.8,
+   "snow3_top": 5.6,
    "verdict": "Occhio",
    "back_by": null,
    "weekend": {
@@ -103,9 +109,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (circa 7 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 1800 m in su (circa 6 cm al Monte Cimone, 2165 m)",
       "idx": 1,
-      "snow": 6.8,
+      "snow": 5.6,
       "snow_base": 0
      }
     ],
@@ -122,9 +128,9 @@
   {
    "slug": "le-polle",
    "name": "Le Polle · Riolunato",
-   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 4-9 cm al Monte Cimone (2165 m)",
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 3-8 cm al Monte Cimone (2165 m)",
    "level": "alert",
-   "snow3_top": 6.8,
+   "snow3_top": 5.6,
    "verdict": "Occhio",
    "back_by": null,
    "weekend": {
@@ -145,9 +151,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (circa 7 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 1800 m in su (circa 6 cm al Monte Cimone, 2165 m)",
       "idx": 1,
-      "snow": 6.8,
+      "snow": 5.6,
       "snow_base": 0
      }
     ],
@@ -164,9 +170,9 @@
   {
    "slug": "cimoncino",
    "name": "Cimoncino · Fanano",
-   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 4-9 cm al Monte Cimone (2165 m)",
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 3-8 cm al Monte Cimone (2165 m)",
    "level": "alert",
-   "snow3_top": 6.8,
+   "snow3_top": 5.6,
    "verdict": "Occhio",
    "back_by": null,
    "weekend": {
@@ -187,9 +193,9 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (circa 7 cm al Monte Cimone, 2165 m)",
+      "why": "neve in quota dai 1800 m in su (circa 6 cm al Monte Cimone, 2165 m)",
       "idx": 1,
-      "snow": 6.8,
+      "snow": 5.6,
       "snow_base": 0
      }
     ],
@@ -208,19 +214,19 @@
    "name": "Doganaccia",
    "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Doganaccia (1540 m), da confermare",
    "level": "watch",
-   "snow3_top": 0.3,
-   "verdict": "Giornata top",
+   "snow3_top": 0.4,
+   "verdict": "Occhio",
    "back_by": null,
    "weekend": {
-    "color": "green",
-    "title": "Si sale sabato",
-    "advice": "Scegli sabato: è il giorno migliore del weekend.",
+    "color": "yellow",
+    "title": "Si può, con attenzione",
+    "advice": "Parti presto e tieni d'occhio il cielo.",
     "days": [
      {
       "date": "2026-11-21",
       "name": "Sabato",
-      "color": "green",
-      "why": "asciutto, con qualche nuvola",
+      "color": "yellow",
+      "why": "vento forte in cresta (54 km/h)",
       "idx": 0,
       "snow": 0,
       "snow_base": 0
@@ -229,7 +235,7 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "red",
-      "why": "pioggia (60 mm)",
+      "why": "pioggia (58 mm)",
       "idx": 1,
       "snow": 0,
       "snow_base": 0
@@ -250,217 +256,7 @@
    "name": "Corno alle Scale",
    "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Cavone (1430 m), da confermare",
    "level": "watch",
-   "snow3_top": 2.0,
-   "verdict": "Occhio",
-   "back_by": null,
-   "weekend": {
-    "color": "yellow",
-    "title": "Si può, con attenzione",
-    "advice": "Parti presto e tieni d'occhio il cielo.",
-    "days": [
-     {
-      "date": "2026-11-21",
-      "name": "Sabato",
-      "color": "yellow",
-      "why": "vento forte in cresta (67 km/h)",
-      "idx": 0,
-      "snow": 0,
-      "snow_base": 0
-     },
-     {
-      "date": "2026-11-22",
-      "name": "Domenica",
-      "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (circa 2 cm al Corno alle Scale, 1945 m)",
-      "idx": 1,
-      "snow": 2.0,
-      "snow_base": 0
-     }
-    ],
-    "sure": {
-     "key": "sure",
-     "label": "Affidabile",
-     "icon": "🔒"
-    },
-    "note": "",
-    "uncertain": false
-   },
-   "region": null
-  },
-  {
-   "slug": "lago-scaffaiolo",
-   "name": "Lago Scaffaiolo",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago Scaffaiolo (1775 m), da confermare",
-   "level": "watch",
-   "snow3_top": 0.7,
-   "verdict": "Occhio",
-   "back_by": null,
-   "weekend": {
-    "color": "yellow",
-    "title": "Si può, con attenzione",
-    "advice": "Parti presto e tieni d'occhio il cielo.",
-    "days": [
-     {
-      "date": "2026-11-21",
-      "name": "Sabato",
-      "color": "yellow",
-      "why": "vento forte in cresta (67 km/h)",
-      "idx": 0,
-      "snow": 0,
-      "snow_base": 0
-     },
-     {
-      "date": "2026-11-22",
-      "name": "Domenica",
-      "color": "red",
-      "why": "pioggia (60 mm)",
-      "idx": 1,
-      "snow": 0.3,
-      "snow_base": 0.3
-     }
-    ],
-    "sure": {
-     "key": "sure",
-     "label": "Affidabile",
-     "icon": "🔒"
-    },
-    "note": "",
-    "uncertain": false
-   },
-   "region": null
-  },
-  {
-   "slug": "lago-santo",
-   "name": "Lago Santo · Monte Giovo",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago Santo modenese (1501 m), da confermare",
-   "level": "watch",
-   "snow3_top": 3.8,
-   "verdict": "Occhio",
-   "back_by": null,
-   "weekend": {
-    "color": "yellow",
-    "title": "Si può, con attenzione",
-    "advice": "Parti presto e tieni d'occhio il cielo.",
-    "days": [
-     {
-      "date": "2026-11-21",
-      "name": "Sabato",
-      "color": "yellow",
-      "why": "vento forte in cresta (65 km/h)",
-      "idx": 0,
-      "snow": 0,
-      "snow_base": 0
-     },
-     {
-      "date": "2026-11-22",
-      "name": "Domenica",
-      "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (circa 4 cm al Monte Giovo, 1991 m)",
-      "idx": 1,
-      "snow": 3.8,
-      "snow_base": 0
-     }
-    ],
-    "sure": {
-     "key": "sure",
-     "label": "Affidabile",
-     "icon": "🔒"
-    },
-    "note": "",
-    "uncertain": false
-   },
-   "region": null
-  },
-  {
-   "slug": "garfagnana",
-   "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
-   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 5-11 cm al Monte Prado (2054 m)",
-   "level": "alert",
-   "snow3_top": 8.0,
-   "verdict": "Occhio",
-   "back_by": null,
-   "weekend": {
-    "color": "yellow",
-    "title": "Si può, con attenzione",
-    "advice": "Parti presto e tieni d'occhio il cielo.",
-    "days": [
-     {
-      "date": "2026-11-21",
-      "name": "Sabato",
-      "color": "yellow",
-      "why": "vento forte in cresta (62 km/h)",
-      "idx": 0,
-      "snow": 0,
-      "snow_base": 0
-     },
-     {
-      "date": "2026-11-22",
-      "name": "Domenica",
-      "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (circa 8 cm al Monte Prado, 2054 m)",
-      "idx": 1,
-      "snow": 8.0,
-      "snow_base": 0
-     }
-    ],
-    "sure": {
-     "key": "sure",
-     "label": "Affidabile",
-     "icon": "🔒"
-    },
-    "note": "",
-    "uncertain": false
-   },
-   "region": null
-  },
-  {
-   "slug": "cerreto-laghi",
-   "name": "Cerreto Laghi",
-   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Cerreto Laghi (1340 m), da confermare",
-   "level": "watch",
-   "snow3_top": 0.6,
-   "verdict": "Occhio",
-   "back_by": null,
-   "weekend": {
-    "color": "yellow",
-    "title": "Si può, con attenzione",
-    "advice": "Parti presto e tieni d'occhio il cielo.",
-    "days": [
-     {
-      "date": "2026-11-21",
-      "name": "Sabato",
-      "color": "yellow",
-      "why": "vento forte in cresta (63 km/h)",
-      "idx": 0,
-      "snow": 0,
-      "snow_base": 0
-     },
-     {
-      "date": "2026-11-22",
-      "name": "Domenica",
-      "color": "red",
-      "why": "pioggia (53 mm)",
-      "idx": 1,
-      "snow": 0.6,
-      "snow_base": 0
-     }
-    ],
-    "sure": {
-     "key": "sure",
-     "label": "Affidabile",
-     "icon": "🔒"
-    },
-    "note": "",
-    "uncertain": false
-   },
-   "region": null
-  },
-  {
-   "slug": "febbio",
-   "name": "Febbio · Monte Cusna",
-   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 5-11 cm al Monte Cusna (2121 m)",
-   "level": "alert",
-   "snow3_top": 8.0,
+   "snow3_top": 1.8,
    "verdict": "Meglio di no",
    "back_by": null,
    "weekend": {
@@ -481,9 +277,219 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "yellow",
-      "why": "neve in quota dai 1800 m in su (circa 8 cm al Monte Cusna, 2121 m)",
+      "why": "neve in quota dai 1800 m in su (circa 2 cm al Corno alle Scale, 1945 m)",
       "idx": 1,
-      "snow": 8.0,
+      "snow": 1.6,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "sure",
+     "label": "Affidabile",
+     "icon": "🔒"
+    },
+    "note": "",
+    "uncertain": false
+   },
+   "region": null
+  },
+  {
+   "slug": "lago-scaffaiolo",
+   "name": "Lago Scaffaiolo",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Lago Scaffaiolo (1775 m), da confermare",
+   "level": "watch",
+   "snow3_top": 0.6,
+   "verdict": "Meglio di no",
+   "back_by": null,
+   "weekend": {
+    "color": "red",
+    "title": "Meglio rimandare",
+    "advice": "Il weekend non si annuncia bene in quota.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "red",
+      "why": "vento molto forte in cresta (73 km/h)",
+      "idx": 0,
+      "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "red",
+      "why": "pioggia (55 mm)",
+      "idx": 1,
+      "snow": 0.1,
+      "snow_base": 0.1
+     }
+    ],
+    "sure": {
+     "key": "sure",
+     "label": "Affidabile",
+     "icon": "🔒"
+    },
+    "note": "",
+    "uncertain": false
+   },
+   "region": null
+  },
+  {
+   "slug": "lago-santo",
+   "name": "Lago Santo · Monte Giovo",
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 3-7 cm al Monte Giovo (1991 m)",
+   "level": "alert",
+   "snow3_top": 5.2,
+   "verdict": "Occhio",
+   "back_by": null,
+   "weekend": {
+    "color": "yellow",
+    "title": "Si può, con attenzione",
+    "advice": "Parti presto e tieni d'occhio il cielo.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "yellow",
+      "why": "vento forte in cresta (66 km/h)",
+      "idx": 0,
+      "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 1800 m in su (circa 5 cm al Monte Giovo, 1991 m)",
+      "idx": 1,
+      "snow": 5.1,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "sure",
+     "label": "Affidabile",
+     "icon": "🔒"
+    },
+    "note": "",
+    "uncertain": false
+   },
+   "region": null
+  },
+  {
+   "slug": "garfagnana",
+   "name": "Garfagnana · Passo delle Radici e Casone di Profecchia",
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 4-10 cm al Monte Prado (2054 m)",
+   "level": "alert",
+   "snow3_top": 7.0,
+   "verdict": "Occhio",
+   "back_by": null,
+   "weekend": {
+    "color": "yellow",
+    "title": "Si può, con attenzione",
+    "advice": "Parti presto e tieni d'occhio il cielo.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "yellow",
+      "why": "vento forte in cresta (62 km/h)",
+      "idx": 0,
+      "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 1800 m in su (circa 7 cm al Monte Prado, 2054 m)",
+      "idx": 1,
+      "snow": 7.0,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "sure",
+     "label": "Affidabile",
+     "icon": "🔒"
+    },
+    "note": "",
+    "uncertain": false
+   },
+   "region": null
+  },
+  {
+   "slug": "cerreto-laghi",
+   "name": "Cerreto Laghi",
+   "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Cerreto Laghi (1340 m), da confermare",
+   "level": "watch",
+   "snow3_top": 2.7,
+   "verdict": "Occhio",
+   "back_by": null,
+   "weekend": {
+    "color": "yellow",
+    "title": "Si può, con attenzione",
+    "advice": "Parti presto e tieni d'occhio il cielo.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "yellow",
+      "why": "vento forte in cresta (63 km/h)",
+      "idx": 0,
+      "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 1800 m in su (circa 3 cm al Monte La Nuda, 1894 m)",
+      "idx": 1,
+      "snow": 2.7,
+      "snow_base": 0
+     }
+    ],
+    "sure": {
+     "key": "sure",
+     "label": "Affidabile",
+     "icon": "🔒"
+    },
+    "note": "",
+    "uncertain": false
+   },
+   "region": null
+  },
+  {
+   "slug": "febbio",
+   "name": "Febbio · Monte Cusna",
+   "title": "❄️ Torna la neve da domenica 22 novembre: dai 1800 m in su, fino a 7-14 cm al Monte Cusna (2121 m)",
+   "level": "alert",
+   "snow3_top": 10.2,
+   "verdict": "Meglio di no",
+   "back_by": null,
+   "weekend": {
+    "color": "yellow",
+    "title": "Si può, con attenzione",
+    "advice": "Parti presto e tieni d'occhio il cielo.",
+    "days": [
+     {
+      "date": "2026-11-21",
+      "name": "Sabato",
+      "color": "red",
+      "why": "vento molto forte in cresta (73 km/h)",
+      "idx": 0,
+      "snow": 0,
+      "snow_base": 0
+     },
+     {
+      "date": "2026-11-22",
+      "name": "Domenica",
+      "color": "yellow",
+      "why": "neve in quota dai 1800 m in su (circa 10 cm al Monte Cusna, 2121 m)",
+      "idx": 1,
+      "snow": 10.2,
       "snow_base": 0
      }
     ],
@@ -500,10 +506,10 @@
  ],
  "bestpick": [
   {
-   "tie": false,
+   "tie": true,
    "date": "2026-11-21",
    "name": "Sabato",
-   "head": "Il posto migliore è Doganaccia",
+   "head": "Bel tempo un po' ovunque: scegli la località più comoda.",
    "sure": {
     "key": "sure",
     "label": "Affidabile",
@@ -511,13 +517,6 @@
    },
    "red": false,
    "rows": [
-    {
-     "slug": "doganaccia",
-     "name": "Doganaccia",
-     "color": "green",
-     "why": "asciutto, con qualche nuvola",
-     "lifts": null
-    },
     {
      "slug": "cimone",
      "name": "Cimone",
@@ -538,9 +537,16 @@
      "color": "yellow",
      "why": "vento forte in cresta (66 km/h)",
      "lifts": null
+    },
+    {
+     "slug": "doganaccia",
+     "name": "Doganaccia",
+     "color": "yellow",
+     "why": "vento forte in cresta (54 km/h)",
+     "lifts": null
     }
    ],
-   "plan_b": "doganaccia"
+   "plan_b": "cimone"
   },
   {
    "tie": true,
@@ -558,35 +564,35 @@
      "slug": "abetone",
      "name": "Abetone",
      "color": "yellow",
-     "why": "neve in quota dai 1800 m in su (circa 3 cm al Monte Gomito, 1892 m)",
+     "why": "neve in quota dai 1800 m in su (circa 2 cm al Monte Gomito, 1892 m)",
      "lifts": "0/17 impianti"
     },
     {
      "slug": "cimone",
      "name": "Cimone",
      "color": "yellow",
-     "why": "neve in quota dai 1800 m in su (circa 7 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 1800 m in su (circa 6 cm al Monte Cimone, 2165 m)",
      "lifts": null
     },
     {
      "slug": "le-polle",
      "name": "Le Polle",
      "color": "yellow",
-     "why": "neve in quota dai 1800 m in su (circa 7 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 1800 m in su (circa 6 cm al Monte Cimone, 2165 m)",
      "lifts": null
     },
     {
      "slug": "cimoncino",
      "name": "Cimoncino",
      "color": "yellow",
-     "why": "neve in quota dai 1800 m in su (circa 7 cm al Monte Cimone, 2165 m)",
+     "why": "neve in quota dai 1800 m in su (circa 6 cm al Monte Cimone, 2165 m)",
      "lifts": null
     }
    ],
    "plan_b": "abetone"
   }
  ],
- "snow48": 8.0,
+ "snow48": 10.2,
  "phases": [
   {
    "label": "Prossimi 5 giorni",
@@ -597,13 +603,13 @@
     "head": "Neve fino alle stazioni",
     "tag": [
      "snow",
-     "Mercoledì neve dai 1300 m"
+     "Mercoledì neve dai 1100 m"
     ],
     "conf": "calcolo fisico ora per ora"
    },
    "snow": 17,
    "snow_low": 3,
-   "cold": 6
+   "cold": 4
   },
   {
    "label": "Dal 6° al 10° giorno",
@@ -618,9 +624,9 @@
     ],
     "conf": "abbastanza affidabile"
    },
-   "snow": 32,
-   "snow_low": 11,
-   "cold": 19
+   "snow": 29,
+   "snow_low": 10,
+   "cold": 22
   },
   {
    "label": "Dall'11° al 15° giorno",
@@ -631,12 +637,12 @@
     "head": "Arriva il freddo",
     "tag": [
      "cold",
-     "Freddo verso sabato 5 dicembre"
+     "Freddo verso venerdì 4 dicembre"
     ],
     "conf": "ancora incerta"
    },
-   "snow": 12,
-   "snow_low": 8,
+   "snow": 14,
+   "snow_low": 7,
    "cold": 25
   },
   {

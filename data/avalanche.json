@@ -1,15 +1,22 @@
 {
- "fetched": "2026-11-21T09:08:20Z",
+ "fetched": "2026-11-21T12:07:54Z",
  "sectors": {
   "08/2": {
    "name": "Appennino Emiliano Centrale",
    "days": [
     {
      "offset": 0,
-     "ref": "2026-11-20T00:00:00",
+     "ref": "2026-11-21T00:00:00",
      "grade": 0,
      "hs": "--",
      "hn": "--"
+    },
+    {
+     "offset": 1,
+     "ref": "2026-11-21T00:00:00",
+     "grade": 0,
+     "hs": null,
+     "hn": null
     }
    ]
   },
@@ -18,10 +25,17 @@
    "days": [
     {
      "offset": 0,
-     "ref": "2026-11-20T00:00:00",
+     "ref": "2026-11-21T00:00:00",
      "grade": 0,
      "hs": "--",
      "hn": "--"
+    },
+    {
+     "offset": 1,
+     "ref": "2026-11-21T00:00:00",
+     "grade": 0,
+     "hs": null,
+     "hn": null
     }
    ]
   }
