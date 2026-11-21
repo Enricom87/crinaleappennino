@@ -787,6 +787,13 @@ def elabora_localita(
     for r, ore_ev in zip(blend_rows, eventi):
         quota_neve, corr = calcola_quota_neve(r["z_tw"], r["precip"], cfg["is_valle_chiusa"], ore_ev)
         corr_tot = corr["omotermia_m"] + corr["valle_chiusa_m"]
+        # Tw al punto dalla stessa retta che dà la quota neve (zero Tw a 850 hPa, gradiente saturo):
+        # così più in alto = mai meno neve, e i cm sono coerenti con la quota neve mostrata.
+        # Interpolare tra i 2 m (al suolo della località) e 850 hPa creava finte inversioni:
+        # con aria calda in quota il Passo (1388 m) prendeva più neve della Val di Luce (1540 m).
+        if r["z_tw"] is not None:
+            r["tw_base"] = (r["z_tw"] - q_base) * GRADIENTE_SATURO_C_PER_M
+            r["tw_cima"] = (r["z_tw"] - q_cima) * GRADIENTE_SATURO_C_PER_M
         tw_eff_b = tw_effettiva(r["tw_base"], corr_tot)
         tw_eff_c = tw_effettiva(r["tw_cima"], corr_tot)
         cm_b, slr_b, _ = accumulo_neve_cm(r["precip"], tw_eff_b)
@@ -1021,6 +1028,24 @@ if __name__ == "__main__":
             attesa = (h["correzioni"]["omotermia_m"] + h["correzioni"]["valle_chiusa_m"]) * GRADIENTE_SATURO_C_PER_M
             assert abs((h["base"]["tw_c"] - h["base"]["tw_eff_c"]) - attesa) < 0.11
     json.dumps(risultato)  # serializzabilità
+
+    # Più in alto mai meno neve, anche con aria calda in quota sopra un suolo freddo
+    import copy as _copy
+    inv = _copy.deepcopy(risposta)
+    hh = inv["hourly"] if isinstance(inv, dict) and "hourly" in inv else inv[0]["hourly"]
+    for k in list(hh):
+        if k.startswith(("temperature_850hPa", "temperature_700hPa")):
+            hh[k] = [v + 3 if v is not None else None for v in hh[k]]
+        elif k.startswith("temperature_2m"):
+            hh[k] = [v - 1.5 if v is not None else None for v in hh[k]]
+    prec = -1.0
+    for z in (1200, 1388, 1450, 1540, 1892, 2165):
+        cfg_t = dict(LOCALITA_CONFIG["abetone"], quota_base=z, quota_cima=z, is_cresta_esposta=False)
+        LOCALITA_CONFIG["_test_quota"] = cfg_t
+        tot = sum(g["base"]["neve_cm"] for g in elabora_localita("_test_quota", inv, riferimento=t0)["giornaliero"])
+        assert tot >= prec - 0.05, f"Neve non monotona con la quota a {z} m"
+        prec = tot
+    LOCALITA_CONFIG.pop("_test_quota", None)
 
     # --- Report ----------------------------------------------------------------
     print(f"\n{risultato['localita']['nome']} — base {risultato['localita']['quota_base']} m, "
