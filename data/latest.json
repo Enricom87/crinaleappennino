@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-21T07:17+01:00",
+ "generated": "2026-11-21T07:35+01:00",
  "alerts": [
   {
    "slug": "cimone",
@@ -209,18 +209,18 @@
    "title": "👀 Occhio a mercoledì 25 novembre: i modelli vedono neve fino alla base, a Doganaccia (1540 m), da confermare",
    "level": "watch",
    "snow3_top": 0.3,
-   "verdict": "Occhio",
+   "verdict": "Giornata top",
    "back_by": null,
    "weekend": {
-    "color": "yellow",
-    "title": "Si può, con attenzione",
-    "advice": "Parti presto e tieni d'occhio il cielo.",
+    "color": "green",
+    "title": "Si sale sabato",
+    "advice": "Scegli sabato: è il giorno migliore del weekend.",
     "days": [
      {
       "date": "2026-11-21",
       "name": "Sabato",
-      "color": "yellow",
-      "why": "vento forte in cresta (50 km/h)",
+      "color": "green",
+      "why": "asciutto, con qualche nuvola",
       "idx": 0,
       "snow": 0,
       "snow_base": 0
@@ -439,7 +439,7 @@
       "date": "2026-11-22",
       "name": "Domenica",
       "color": "red",
-      "why": "pioggia (60 mm)",
+      "why": "pioggia (57 mm)",
       "idx": 1,
       "snow": 0.6,
       "snow_base": 0
@@ -500,10 +500,10 @@
  ],
  "bestpick": [
   {
-   "tie": true,
+   "tie": false,
    "date": "2026-11-21",
    "name": "Sabato",
-   "head": "Bel tempo un po' ovunque: scegli la località più comoda.",
+   "head": "Il posto migliore è Doganaccia",
    "sure": {
     "key": "sure",
     "label": "Affidabile",
@@ -511,6 +511,13 @@
    },
    "red": false,
    "rows": [
+    {
+     "slug": "doganaccia",
+     "name": "Doganaccia",
+     "color": "green",
+     "why": "asciutto, con qualche nuvola",
+     "lifts": null
+    },
     {
      "slug": "cimone",
      "name": "Cimone",
@@ -531,16 +538,9 @@
      "color": "yellow",
      "why": "vento forte in cresta (66 km/h)",
      "lifts": null
-    },
-    {
-     "slug": "doganaccia",
-     "name": "Doganaccia",
-     "color": "yellow",
-     "why": "vento forte in cresta (50 km/h)",
-     "lifts": null
     }
    ],
-   "plan_b": "cimone"
+   "plan_b": "doganaccia"
   },
   {
    "tie": false,
