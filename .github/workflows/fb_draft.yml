@@ -1,0 +1,35 @@
+name: Bozza Facebook
+
+on:
+  workflow_dispatch:
+    inputs:
+      text:
+        description: "Testo del post"
+        required: true
+      link:
+        description: "Link (facoltativo)"
+        default: "https://crinaleappennino.it/"
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Manda la bozza all'amministratore su Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TEXT: ${{ inputs.text }}
+          LINK: ${{ inputs.link }}
+        run: |
+          python - <<'PY'
+          import os, sys
+          sys.path.insert(0, "pipeline")
+          from telegram import to_fb
+          ok = to_fb(os.environ["TELEGRAM_BOT_TOKEN"], os.environ["TEXT"], os.environ.get("LINK", ""), "manual")
+          print("bozza inviata" if ok else "bozza NON inviata")
+          sys.exit(0 if ok else 1)
+          PY

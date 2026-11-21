@@ -88,6 +88,29 @@ def to_admin(token: str, text: str) -> bool:
         return False
 
 
+def to_fb(token: str, text: str, link: str = "", kind: str = "") -> bool:
+    """Bozza per la pagina Facebook: arriva all'amministratore su Telegram con «Pubblica» / «Scarta»."""
+    import hashlib
+    sec = hashlib.sha256(("crinale:" + token).encode()).hexdigest()[:40]
+    try:
+        r = requests.post(BOT_URL + "/fb-draft", json={"text": text, "link": link, "kind": kind},
+                          headers={"X-Secret": sec}, timeout=30)
+        return r.ok
+    except Exception as ex:  # noqa: BLE001
+        print("bozza Facebook non inviata:", ex)
+        return False
+
+
+def fb_alert_text(site: dict, latest: dict, fresh: list[dict]) -> str:
+    lines = ["❄️ ALLERTA NEVE SUL CRINALE", ""]
+    if latest.get("overview"):
+        lines += [latest["overview"], ""]
+    for a in fresh:
+        lines.append(f"🏔️ {a['name'].split(' · ')[0]}: {a['title']}")
+    lines += ["", "Tutti i numeri, quota per quota e stazione per stazione 👇"]
+    return "\n".join(lines)
+
+
 def alert_text(site: dict, fresh: list[dict], sponsor: dict | None) -> str:
     base = site["base_url"]
     lines = ["<b>🚨 Allerta neve: ci siamo!</b>", ""]
@@ -125,6 +148,7 @@ def main() -> None:
             tg["alerted"][a["slug"]] = now.isoformat()
         if site["social"].get("whatsapp"):
             to_admin(token, "📲 Da inoltrare sul canale WhatsApp:\n\n" + wa_text(site, latest, fresh))
+        to_fb(token, fb_alert_text(site, latest, fresh), site["base_url"] + "/", "alert")
 
     # logo e descrizione del canale: si aggiornano da soli quando cambia la versione in config/site.json
     brand = site.get("telegram_brand_version", "")
@@ -154,6 +178,8 @@ def main() -> None:
                     f"👉 <a href=\"{site['base_url']}/tendenze/{last}/\">Leggi l'analisi completa</a>")
             if post(token, chat, text):
                 tg["article"] = last
+                to_fb(token, f"📰 {a.get('title', '')}\n\n{(a.get('lead') or [''])[0]}\n\nL'analisi completa 👇",
+                      f"{site['base_url']}/tendenze/{last}/", "article")
 
     STATE.write_text(json.dumps(state, indent=1))
 

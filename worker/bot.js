@@ -192,6 +192,68 @@ async function moderate(env, cq) {
     parse_mode: "HTML", text: (cq.message.text || "").slice(0, 3500) + "\n\n<b>" + note + "</b>" });
 }
 
+// ---------- Facebook: bozze preparate dalla pipeline, pubblicate solo dopo l'ok dell'amministratore ----------
+const FB_API = "https://graph.facebook.com/v21.0";
+
+async function fbDraft(req, env) {
+  if (req.headers.get("X-Secret") !== (await secretOf(env))) return new Response("no", { status: 403 });
+  const admin = await env.SUBS.get("admin");
+  if (!admin) return new Response("nessun amministratore: manda /admin al bot", { status: 409 });
+  const { text, link, kind } = await req.json();
+  const id = Date.now().toString(36);
+  await env.SUBS.put("fbd:" + id, JSON.stringify({ text: String(text || "").slice(0, 5000), link: link || "", kind: kind || "" }), { expirationTtl: 3 * 86400 });
+  await fbAsk(env, admin, id, text, link);
+  return new Response("ok");
+}
+
+async function fbAsk(env, chat, id, text, link) {
+  const ready = !!(env.FB_PAGE_TOKEN && env.FB_PAGE_ID);
+  return tg(env, "sendMessage", { chat_id: chat, link_preview_options: { is_disabled: true },
+    text: "📘 Bozza per la pagina Facebook" + (ready ? "" : " (Facebook non ancora collegato: copiala a mano)") +
+      ":\n\n" + String(text || "").slice(0, 3600) + (link ? "\n\n🔗 " + link : "") +
+      "\n\n✏️ Per modificarla rispondi a questo messaggio con il testo nuovo.\n#fb" + id,
+    reply_markup: { inline_keyboard: [[{ text: "✅ Pubblica", callback_data: "fp:" + id }, { text: "❌ Scarta", callback_data: "fx:" + id }]] } });
+}
+
+async function fbDecide(env, cq) {
+  const admin = await env.SUBS.get("admin");
+  if (String(cq.message.chat.id) !== admin) return tg(env, "answerCallbackQuery", { callback_query_id: cq.id });
+  const id = cq.data.slice(3), go = cq.data.startsWith("fp:");
+  const raw = await env.SUBS.get("fbd:" + id);
+  let note = "Già gestita";
+  if (raw) {
+    const d = JSON.parse(raw);
+    if (go) {
+      if (!(env.FB_PAGE_TOKEN && env.FB_PAGE_ID)) note = "Facebook non collegato";
+      else {
+        const body = new URLSearchParams({ message: d.text, access_token: env.FB_PAGE_TOKEN });
+        if (d.link) body.set("link", d.link);
+        const r = await fetch(`${FB_API}/${env.FB_PAGE_ID}/feed`, { method: "POST", body });
+        const j = await r.json().catch(() => ({}));
+        note = r.ok && j.id ? "✅ Pubblicato su Facebook" : "⚠️ Facebook ha rifiutato: " + ((j.error && j.error.message) || r.status);
+        if (r.ok && j.id) await env.SUBS.delete("fbd:" + id);
+      }
+    } else { await env.SUBS.delete("fbd:" + id); note = "❌ Scartata"; }
+  }
+  await tg(env, "answerCallbackQuery", { callback_query_id: cq.id, text: note.slice(0, 190) });
+  return tg(env, "editMessageText", { chat_id: cq.message.chat.id, message_id: cq.message.message_id,
+    link_preview_options: { is_disabled: true }, text: (cq.message.text || "").slice(0, 3800) + "\n\n" + note });
+}
+
+async function fbEdit(env, msg) {
+  // l'amministratore risponde alla bozza con il testo corretto: si aggiorna e si richiede l'ok
+  const m = /#fb([a-z0-9]+)/.exec((msg.reply_to_message && msg.reply_to_message.text) || "");
+  if (!m) return false;
+  const admin = await env.SUBS.get("admin");
+  if (String(msg.chat.id) !== admin) return false;
+  const raw = await env.SUBS.get("fbd:" + m[1]);
+  if (!raw) { await tg(env, "sendMessage", { chat_id: msg.chat.id, text: "Bozza scaduta o già gestita." }); return true; }
+  const d = { ...JSON.parse(raw), text: msg.text.slice(0, 5000) };
+  await env.SUBS.put("fbd:" + m[1], JSON.stringify(d), { expirationTtl: 3 * 86400 });
+  await fbAsk(env, msg.chat.id, m[1], d.text, d.link);
+  return true;
+}
+
 async function listEvents(req, env) {
   const out = [];
   let cursor;
@@ -288,6 +350,7 @@ async function onMessage(env, msg) {
 async function onCallback(env, cq) {
   if (/^e[ar]:/.test(cq.data || "")) return moderate(env, cq);
   if (/^rr:/.test(cq.data || "")) return removeReport(env, cq);
+  if (/^f[bpx]:/.test(cq.data || "")) return fbDecide(env, cq);
   const id = cq.message.chat.id;
   const slug = (cq.data || "").slice(2);
   const data = await feed();
@@ -394,7 +457,8 @@ export default {
       if (req.headers.get("X-Telegram-Bot-Api-Secret-Token") !== (await secretOf(env))) return new Response("no", { status: 403 });
       const up = await req.json();
       try {
-        if (up.message && up.message.text) await onMessage(env, up.message);
+        if (up.message && up.message.text && up.message.reply_to_message && (await fbEdit(env, up.message))) {}
+        else if (up.message && up.message.text) await onMessage(env, up.message);
         else if (up.callback_query) await onCallback(env, up.callback_query);
       } catch (e) { console.log("errore", e && e.stack); }
       return new Response("ok");
@@ -412,6 +476,7 @@ export default {
       await tg(env, "sendMessage", { chat_id: admin, text: String(text || "").slice(0, 4000), link_preview_options: { is_disabled: true } });
       return new Response("ok");
     }
+    if (url.pathname === "/fb-draft" && req.method === "POST") return fbDraft(req, env);
     if (url.pathname === "/reports.json") return listReports(req, env);
     if (url.pathname === "/setup") {
       // Collega il bot a questo worker. Ripeterlo non fa danni: reimposta sempre lo stesso indirizzo.

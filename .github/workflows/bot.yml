@@ -38,6 +38,8 @@ jobs:
           wrangler deploy | tee deploy.log
           echo "${{ secrets.TELEGRAM_BOT_TOKEN }}" | wrangler secret put TELEGRAM_BOT_TOKEN
           if [ -n "${{ secrets.GH_DISPATCH_TOKEN }}" ]; then echo "${{ secrets.GH_DISPATCH_TOKEN }}" | wrangler secret put GH_DISPATCH_TOKEN; fi
+          if [ -n "${{ secrets.FB_PAGE_TOKEN }}" ]; then echo "${{ secrets.FB_PAGE_TOKEN }}" | wrangler secret put FB_PAGE_TOKEN; fi
+          if [ -n "${{ secrets.FB_PAGE_ID }}" ]; then echo "${{ secrets.FB_PAGE_ID }}" | wrangler secret put FB_PAGE_ID; fi
       - name: Collega Telegram al bot
         if: steps.chk.outputs.skip != '1'
         working-directory: worker
