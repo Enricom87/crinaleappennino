@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-21T09:33+01:00",
+ "generated": "2026-11-21T10:08+01:00",
  "alerts": [
   {
    "slug": "cimone",
@@ -618,7 +618,7 @@
     ],
     "conf": "abbastanza affidabile"
    },
-   "snow": 33,
+   "snow": 32,
    "snow_low": 11,
    "cold": 19
   },
