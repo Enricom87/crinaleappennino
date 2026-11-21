@@ -149,7 +149,7 @@
     <tr class="{% if r.snow >= 5 %}snowy{% elif r.snow >= 1 %}flakes{% endif %}">
       <td>{{ nice_date(r.date, True) }}</td>
       <td class="num"><strong>{{ '%.0f'|format(r.snow) }} cm</strong></td>
-      <td class="num muted">{{ '%.0f'|format(r.snow_min) }}–{{ '%.0f'|format(r.snow_max) }}</td>
+      <td class="num muted">{% if r.rng %}{{ r.rng[0] }}–{{ r.rng[1] }}{% if r.conf %} <span class="conf conf-{{ r.conf }}">{{ t(r.conf) }}</span>{% endif %}{% else %}{{ '%.0f'|format(r.snow_min) }}–{{ '%.0f'|format(r.snow_max) }}{% endif %}</td>
       <td class="num">{{ '%.0f'|format(r.precip) }} mm</td>
       <td class="num">{{ r.tmin|n0 }}° / {{ r.tmax|n0 }}°</td>
       <td class="num">{% if r.fl_min %}{{ r.fl_min }} m{% else %}–{% endif %}</td>

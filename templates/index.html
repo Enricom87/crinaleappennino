@@ -101,7 +101,7 @@
       <p class="card-title">{{ L.text.title }}</p>
       {% if L.stats and L.stats.top is not none %}
       <div class="loc-stats">
-        <div><span aria-hidden="true">🏔️</span> <b>{{ L.stats.top }} cm</b> <small>{{ t("in vetta, 5 giorni") }}</small></div>
+        <div><span aria-hidden="true">🏔️</span> <b>{% if L.stats.top_rng and L.stats.top >= 3 %}{{ L.stats.top_rng[0] }}–{{ L.stats.top_rng[1] }}{% else %}{{ L.stats.top }}{% endif %} cm</b> <small>{{ t("in vetta, 5 giorni") }}{% if L.stats.top_conf and L.stats.top >= 3 %} · <span class="conf conf-{{ L.stats.top_conf }}">{{ t(L.stats.top_conf) }}</span>{% endif %}</small></div>
         <div><span aria-hidden="true">❄️</span> <b>{{ (L.stats.qn ~ ' m') if L.stats.qn else '–' }}</b> <small>{{ t("quota neve") }}</small></div>
         <div><span aria-hidden="true">💨</span> <b>{{ L.stats.gust }}<i> km/h</i></b> <small>{{ t("raffica max") }}</small></div>
       </div>

@@ -588,3 +588,10 @@ table.pg tr:last-child td{border-bottom:0}
 .wg-code{width:100%;font:13px/1.4 ui-monospace,Menlo,monospace;padding:10px;border-radius:12px;border:1px solid #cfdbe7;background:#f7fafc;margin-bottom:10px}
 .runs-line{display:block;font-size:12px;opacity:.85;margin-top:4px;line-height:1.4}
 .runs-k{margin-top:-4px}
+
+/* affidabilità del numero (forbice dagli scenari) */
+.conf{font-size:11px;font-weight:600;padding:1px 6px;border-radius:999px;white-space:nowrap}
+.conf-probabile{background:#e3f4e8;color:#1d6b38}
+.conf-possibile{background:#fff3d6;color:#8a5a00}
+.conf-incerto{background:#fde6e4;color:#a3261c}
+@media (prefers-color-scheme:dark){.conf-probabile{background:#173a24;color:#9fe0b3}.conf-possibile{background:#3a2f12;color:#f3cf7a}.conf-incerto{background:#3d1a17;color:#f2a49b}}

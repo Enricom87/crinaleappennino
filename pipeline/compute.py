@@ -212,6 +212,59 @@ def ensemble_probs(ens: dict, today: str, elev: float | None = None) -> dict:
     return out
 
 
+def ensemble_days(ens: dict, today: str, elev: float | None = None, days: int = 5) -> dict:
+    """Neve stimata da ogni membro degli scenari, giorno per giorno e sul totale dei primi `days` giorni.
+    Serve a dire quanto è sicuro il numero del motore: si usa la forma della distribuzione (q25/q50/q75), non il valore."""
+    h = ens["hourly"]
+    times = h["time"]
+    T, P, FL = split_members(h, "temperature_2m"), split_members(h, "precipitation"), split_members(h, "freezing_level_height")
+    n = min(len(T), len(P))
+    start = datetime.fromisoformat(today + "T00:00")
+    end = start + timedelta(days=days)
+    per_day: dict[str, list[float]] = {}
+    tot: list[float] = []
+    for m in range(n):
+        acc: dict[str, float] = {}
+        for i, ts in enumerate(times):
+            t, p = T[m][i], P[m][i]
+            if t is None or p is None:
+                continue
+            dt = datetime.fromisoformat(ts)
+            if dt < start or dt >= end:
+                continue
+            fl = FL[m][i] if m < len(FL) and i < len(FL[m]) else None
+            acc[ts[:10]] = acc.get(ts[:10], 0.0) + p * snow_fraction(t, fl, elev)
+        for d, v in acc.items():
+            per_day.setdefault(d, []).append(v)
+        tot.append(sum(acc.values()))
+
+    def stats(vals: list[float]) -> dict:
+        v = sorted(vals)
+        q = lambda x: v[min(len(v) - 1, int(x * (len(v) - 1)))]  # noqa: E731
+        return {"q25": q(0.25), "q50": q(0.5), "q75": q(0.75), "p1": round(100 * sum(x >= 1 for x in v) / len(v)), "n": len(v)}
+
+    out = {d: stats(v) for d, v in per_day.items() if len(v) >= 10}
+    if len(tot) >= 10:
+        out["tot"] = stats(tot)
+    return out
+
+
+def snow_range(value: float, e: dict | None) -> tuple[list[int] | None, str | None]:
+    """Forbice e affidabilità del numero del motore, dalla dispersione degli scenari."""
+    if value is None or e is None:
+        return None, None
+    if value < 1 and e["p1"] < 30:
+        return None, None
+    if e["q50"] >= 1:
+        lo, hi = value * e["q25"] / e["q50"], value * min(e["q75"] / e["q50"], 3.0)
+    else:  # gli scenari quasi a secco: il numero del motore è il caso più nevoso
+        lo, hi = 0.0, max(value, e["q75"])
+    lo, hi = min(lo, value), max(hi, value)
+    rel = (hi - lo) / max(value, 1.0)
+    conf = "probabile" if rel <= 0.6 and e["p1"] >= 70 else "possibile" if rel <= 1.2 and e["p1"] >= 50 else "incerto"
+    return [int(round(lo)), int(round(hi))], conf
+
+
 # ---------- configurazione sinottica ----------
 
 FLOW_LABELS = [((180, 270), "libeccio/ostro", "stau sul versante toscano"),

@@ -150,6 +150,20 @@ def main() -> None:
     # primi 5 giorni dal motore fisico-statistico (appennino_engine.py): neve, pioggia, quota neve, raffiche
     import engine_overlay
     ENGINE_LOC = engine_overlay.apply(base_locs, pts, CAL, today)
+    # forbice e affidabilità: quanto sono d'accordo gli scenari (ECMWF/GFS ensemble) sul numero del motore
+    from compute import ensemble_days, snow_range
+    ENS_D = {}
+    for pid, p in pts.items():
+        if pid not in ens:
+            continue
+        try:
+            ENS_D[pid] = ed = ensemble_days(ens[pid], today, p["elev"])
+        except Exception as e:  # noqa: BLE001
+            print(f"forbice {pid}: {e}")
+            continue
+        for d in p["days"]:
+            if d["idx"] < 5:
+                d["rng"], d["conf"] = snow_range(d.get("snow"), ed.get(d["date"]))
     # grafico «configurazione»: giorni 1-5 dal motore (ICON-2I, AROME, ICON-CH2, ECMWF, GFS pesati per regime),
     # dal 6° la mediana pesata dei modelli a scenari (famiglie bilanciate); ECMWF grezzo solo se manca il resto
     TV = trend_view()
@@ -276,7 +290,10 @@ def main() -> None:
             _e = L["engine"]
             _first = next((e for e in _e if (e["top"] or 0) >= 1), None)
             _z = REG_LV.get(_first["date"]) if _first else None
-            L["stats"] = {"top": round(sum(e["top"] or 0 for e in _e)) if _e else None,
+            _toppid = max(L["pts"], key=lambda p: p["elev"])["id"]
+            _tot = round(sum(e["top"] or 0 for e in _e)) if _e else None
+            _rng, _conf = snow_range(_tot, (ENS_D.get(_toppid) or {}).get("tot")) if _tot is not None else (None, None)
+            L["stats"] = {"top": _tot, "top_rng": _rng if _rng and _rng[0] != _rng[1] else None, "top_conf": _conf,
                           "qn": (min(int(round(_z / 100.0) * 100), int(max(p["elev"] for p in L["pts"]) // 100 * 100)) if _z else None),
                           "gust": max((e["gust"] or 0) for e in _e) if _e else None,
                           "q": engine_overlay.QUALITY.get(loc["slug"])}

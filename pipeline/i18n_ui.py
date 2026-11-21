@@ -1,5 +1,8 @@
 # Interfaccia: menu, titoli, pulsanti, etichette. (it, en, de, fr, es, zh)
 ROWS = [
+("probabile", "likely", "wahrscheinlich", "probable", "probable", "很可能"),
+("possibile", "possible", "möglich", "possible", "posible", "可能"),
+("incerto", "uncertain", "unsicher", "incertain", "incierto", "不确定"),
 ("Siti amici:", "Friends of the site:", "Befreundete Seiten:", "Sites amis :", "Webs amigas:", "友情链接："),
 ("Liguria e temporali", "Liguria and thunderstorms", "Ligurien und Gewitter", "Ligurie et orages", "Liguria y tormentas", "利古里亚与雷暴"),
 ("Tocca <b>Condividi</b> ⬆️ e poi <b>Aggiungi alla schermata Home</b>",
